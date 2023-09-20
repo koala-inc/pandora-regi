@@ -1,30 +1,26 @@
 "use client";
 
+import DebugMenu from "@/components/debugMenu";
+import Footer from "@/components/footer";
 import Header from "@/components/header";
+import OverlayNav from "@/components/overlayNav";
 import Seat from "@/components/seat";
 import seatMap from "@/configs/seatMap";
+import useIsDebugGlobal from "@/globalstates/isDebug";
+import useIsHeaderGlobal from "@/globalstates/isHeader";
+import useIsFooterGlobal from "@/globalstates/isFooter";
 import { AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-
-const makeFullScreen = (el: any) => {
-  if (!document.fullscreenElement) {
-    el.requestFullscreen();
-    return;
-  }
-  document.exitFullscreen();
-};
 
 export default function Home() {
-  const DEBUG = true;
-
-  const [isHeader, setIsHeader] = useState(false);
+  const [isDebug, setIsDebug] = useIsDebugGlobal();
+  const [isHeader] = useIsHeaderGlobal();
+  const [isFooter] = useIsFooterGlobal();
 
   return (
     <main className="relative h-full w-full">
-      <AnimatePresence>
-        {isHeader && <Header setIsHeader={setIsHeader} />}
-      </AnimatePresence>
+      <AnimatePresence>{isHeader && <Header />}</AnimatePresence>
+      <AnimatePresence>{isFooter && <Footer />}</AnimatePresence>
       <Image
         src={"/assets/background.jpg"}
         fill
@@ -58,51 +54,21 @@ export default function Home() {
               );
           }
         })}
-        {DEBUG && (
-          <>
-            <Seat id="admin" area="[grid-area:7/5/7/17]">
-              デバッグメニュー
-            </Seat>
-            <Seat id="purchaseOrderAllReset" area="[grid-area:8/5/8/9]">
-              全伝票リセット
-            </Seat>
-            <Seat id="0" area="[grid-area:8/9/8/13]">
-              勤怠リセット
-            </Seat>
-            <Seat id="1" area="[grid-area:8/13/8/17]">
-              -
-            </Seat>
-          </>
-        )}
       </section>
-      <nav
-        className="border-black absolute right-[15px] top-[15px] rounded-full border cursor-pointer"
-        onClick={() => setIsHeader(true)}
+      <div
+        className="absolute z-50 w-[50px] h-[50px] top-[15px] left-[15px]"
+        onClick={() => setIsDebug(!isDebug)}
       >
-        <div className="rounded-full border-4 border-secondary">
-          <span className="border-black flex h-[50px] w-[50px] items-center justify-center rounded-full border bg-primary p-[12px]">
-            <Image
-              src={"/assets/menu.svg"}
-              width={26}
-              height={26}
-              className="z-10 !h-full !w-full"
-              alt=""
-            />
-          </span>
-        </div>
-      </nav>
-      <nav
-        className="bg-blue-300/40 h-2/3 w-[80px] rounded-full absolute left-0 top-1/2 transform -translate-y-1/2"
-        onClick={() => setIsHeader(true)}
-      ></nav>
-      <nav
-        className="bg-blue-300/40 h-[80px] w-2/3 absolute bottom-0 left-1/2 transform -translate-x-1/2"
-        onClick={() => makeFullScreen(document.querySelector("main"))}
-      ></nav>
-      <nav
-        className="bg-blue-300/40 h-2/3 w-[80px] absolute right-0 top-1/2 transform -translate-y-1/2"
-        onClick={() => setIsHeader(true)}
-      ></nav>
+        <Image
+          src="/assets/debug.svg"
+          width={30}
+          height={30}
+          className="!h-full !w-full"
+          alt=""
+        />
+      </div>
+      <OverlayNav />
+      {isDebug && <DebugMenu />}
     </main>
   );
 }
