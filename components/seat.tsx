@@ -15,7 +15,7 @@ export default function Seat({
       }
     >
       <div className={"absolute opacity-20"}>{children}</div>
-      <div className="absolute w-[200%] scale-50 text-center text-[0.5rem] leading-[0.8rem] text-black">
+      <div className="absolute w-[200%] scale-50 text-center text-[0.5rem] font-bold leading-[0.8rem] text-black">
         ◯キャストXA
         <br />
         ◯キャストXB
