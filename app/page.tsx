@@ -1,113 +1,108 @@
-import Image from 'next/image'
+"use client";
+
+import Header from "@/components/header";
+import Seat from "@/components/seat";
+import seatMap from "@/configs/seatMap";
+import { AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+
+const makeFullScreen = (el: any) => {
+  if (!document.fullscreenElement) {
+    el.requestFullscreen();
+    return;
+  }
+  document.exitFullscreen();
+};
 
 export default function Home() {
+  const DEBUG = true;
+
+  const [isHeader, setIsHeader] = useState(false);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
+    <main className="relative h-full w-full">
+      <AnimatePresence>
+        {isHeader && <Header setIsHeader={setIsHeader} />}
+      </AnimatePresence>
+      <Image
+        src={"/assets/background.jpg"}
+        fill
+        className="-z-50 object-cover object-center"
+        alt=""
+      />
+      <section id="map" className="h-full w-full">
+        {seatMap.map((seat, index) => {
+          switch (seat.type) {
+            case "seat":
+              return (
+                <Seat key={index} id={seat.id} area={seat.area}>
+                  {seat.id.toLocaleUpperCase()}
+                </Seat>
+              );
+            case "object":
+              return (
+                <Image
+                  width={30}
+                  height={30}
+                  className={seat.area + " !w-full !h-full"}
+                  src={seat.objectUrl}
+                  alt=""
+                />
+              );
+            case "text":
+              return (
+                <Seat key={index} id={seat.id} area={seat.area}>
+                  {seat.body}
+                </Seat>
+              );
+          }
+        })}
+        {DEBUG && (
+          <>
+            <Seat id="admin" area="[grid-area:9/7/9/19]">
+              デバッグメニュー
+            </Seat>
+            <Seat id="purchaseOrderAllReset" area="[grid-area:10/7/10/11]">
+              全伝票リセット
+            </Seat>
+            <Seat id="0" area="[grid-area:10/11/10/15]">
+              勤怠リセット
+            </Seat>
+            <Seat id="1" area="[grid-area:10/15/10/19]">
+              -
+            </Seat>
+          </>
+        )}
+      </section>
+      <nav
+        className="border-black absolute right-[15px] top-[15px] rounded-full border cursor-pointer"
+        onClick={() => setIsHeader(true)}
+      >
+        <div className="rounded-full border-4 border-secondary">
+          <span className="border-black flex h-[50px] w-[50px] items-center justify-center rounded-full border bg-primary p-[12px]">
             <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+              src={"/assets/menu.svg"}
+              width={26}
+              height={26}
+              className="z-10 !h-full !w-full"
+              alt=""
             />
-          </a>
+          </span>
         </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      </nav>
+      <nav
+        className="bg-blue-300/40 h-2/3 w-[80px] rounded-full absolute left-0 top-1/2 transform -translate-y-1/2"
+        onClick={() => setIsHeader(true)}
+      ></nav>
+      <nav
+        className="bg-blue-300/40 h-[80px] w-2/3 absolute bottom-0 left-1/2 transform -translate-x-1/2"
+        onClick={() => makeFullScreen(document.querySelector("main"))}
+      ></nav>
+      <nav
+        className="bg-blue-300/40 h-2/3 w-[80px] absolute right-0 top-1/2 transform -translate-y-1/2"
+        onClick={() => setIsHeader(true)}
+      ></nav>
     </main>
-  )
+  );
 }
