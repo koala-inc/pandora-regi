@@ -7,6 +7,10 @@ export default function Seat({
   id: string;
   area: string;
 }) {
+  const overlay = true;
+
+  // 指名は0.5rem
+  // 入退店は0.8rem
   return (
     <div
       className={
@@ -14,14 +18,20 @@ export default function Seat({
         area
       }
     >
-      <div className={"absolute opacity-20"}>{children}</div>
-      <div className="absolute w-[200%] scale-50 text-center text-[0.5rem] font-bold leading-[0.8rem] text-black">
-        ◯キャストXA
-        <br />
-        ◯キャストXB
-        <br />
-        ◯キャストXC
-      </div>
+      {overlay ? (
+        <>
+          <div className="absolute opacity-20">{children}</div>
+          <div className="absolute w-[200%] scale-50 text-center text-[1.5rem] font-bold leading-[1.5rem] text-black">
+            20:00
+            <br />
+            ~
+            <br />
+            21:00
+          </div>
+        </>
+      ) : (
+        <>{children}</>
+      )}
     </div>
   );
 }

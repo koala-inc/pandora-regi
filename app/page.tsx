@@ -60,16 +60,16 @@ export default function Home() {
         })}
         {DEBUG && (
           <>
-            <Seat id="admin" area="[grid-area:9/7/9/19]">
+            <Seat id="admin" area="[grid-area:7/5/7/17]">
               デバッグメニュー
             </Seat>
-            <Seat id="purchaseOrderAllReset" area="[grid-area:10/7/10/11]">
+            <Seat id="purchaseOrderAllReset" area="[grid-area:8/5/8/9]">
               全伝票リセット
             </Seat>
-            <Seat id="0" area="[grid-area:10/11/10/15]">
+            <Seat id="0" area="[grid-area:8/9/8/13]">
               勤怠リセット
             </Seat>
-            <Seat id="1" area="[grid-area:10/15/10/19]">
+            <Seat id="1" area="[grid-area:8/13/8/17]">
               -
             </Seat>
           </>
