@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import useGlobalSWR from "@/globalstates/useGlobalSWR";
+import useGlobalSWR from "./useGlobalSWR";
 
 const key = "isDebug";
 let initialState = false;

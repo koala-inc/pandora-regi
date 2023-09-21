@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import useGlobalSWR from "@/globalstates/useGlobalSWR";
+import useGlobalSWR from "./useGlobalSWR";
 import { v4 } from "uuid";
 
 const key = "isLicense";

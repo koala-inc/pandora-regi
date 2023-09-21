@@ -1,5 +1,4 @@
 import "./globals.css";
-import "@/configs/mapStyle.css";
 
 export const metadata = {
   title: process.env.npm_package_name,

@@ -11,23 +11,35 @@ import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
 import { AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Card from "@/components/card";
+import useIsCardGlobal from "@/globalstates/isCard";
 
 export default function Home() {
   const [isDebug, setIsDebug] = useIsDebugGlobal();
-  const [isHeader] = useIsHeaderGlobal();
-  const [isFooter] = useIsFooterGlobal();
+  const [isHeader, setIsHeader] = useIsHeaderGlobal();
+  const [isFooter, setIsFooter] = useIsFooterGlobal();
+  const [isCard, setIsCard] = useIsCardGlobal();
 
   return (
     <main className="relative h-full w-full">
       <AnimatePresence>{isHeader && <Header />}</AnimatePresence>
       <AnimatePresence>{isFooter && <Footer />}</AnimatePresence>
+      <AnimatePresence>{isCard && <Card>aaa</Card>}</AnimatePresence>
       <Image
         src={"/assets/background.jpg"}
         fill
         className="-z-50 object-cover object-center"
         alt=""
       />
-      <section id="map" className="h-full w-full">
+      <section
+        id="map"
+        className="h-full w-full"
+        onClick={() => {
+          if (isHeader) setIsHeader(false);
+          if (isFooter) setIsFooter(false);
+          if (isCard) setIsCard(false);
+        }}
+      >
         {seatMap.map((seat, index) => {
           switch (seat.type) {
             case "seat":
@@ -56,7 +68,7 @@ export default function Home() {
         })}
       </section>
       <div
-        className="absolute z-50 w-[50px] h-[50px] top-[15px] left-[15px]"
+        className="absolute z-50 w-[50px] h-[50px] bottom-[15px] left-[15px]"
         onClick={() => setIsDebug(!isDebug)}
       >
         <Image

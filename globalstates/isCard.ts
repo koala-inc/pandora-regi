@@ -1,10 +1,12 @@
+"use client";
+
 import { useCallback } from "react";
 import useGlobalSWR from "./useGlobalSWR";
 
-const key = "isFooter";
-let initialState = false;
+const key = "isCard";
+let initialState = true;
 
-export default function useIsFooterGlobal(): [
+export default function useIsCardGlobal(): [
   typeof initialState,
   (data: typeof initialState) => void
 ] {

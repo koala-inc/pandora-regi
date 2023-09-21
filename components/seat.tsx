@@ -1,3 +1,5 @@
+import useIsCardGlobal from "@/globalstates/isCard";
+
 export default function Seat({
   children,
   id,
@@ -9,6 +11,8 @@ export default function Seat({
 }) {
   const overlay = true;
 
+  const [isCard, setIsCard] = useIsCardGlobal();
+
   // 指名は0.5rem
   // 入退店は0.8rem
   return (
@@ -17,6 +21,7 @@ export default function Seat({
         "relative flex h-full w-full cursor-pointer items-center justify-center rounded-xl border border-black bg-[#f3e1bc] font-bold text-[#e97e00] shadow-md transition-all " +
         area
       }
+      onClick={() => setIsCard(true)}
     >
       {overlay ? (
         <>

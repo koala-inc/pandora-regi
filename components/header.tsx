@@ -18,9 +18,9 @@ export default function Header() {
 
   return (
     <motion.header
-      initial={{ y: -90 }}
-      animate={{ y: 0 }}
-      exit={{ y: -90 }}
+      initial={{ top: -90 }}
+      animate={{ top: 0 }}
+      exit={{ top: -90 }}
       transition={{ ease: "easeInOut", bounce: 0, duration: 0.1 }}
       className="absolute top-0 z-30 h-[90px] w-full border-y-2 border-black"
     >
