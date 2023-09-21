@@ -14,10 +14,10 @@ export default function Footer() {
       animate={{ bottom: 15 }}
       exit={{ bottom: -160 }}
       transition={{ ease: "easeInOut", bounce: 0, duration: 0.1 }}
-      className="absolute bottom-[15px] left-1/2 z-30 h-[160px] w-2/3 -translate-x-1/2 rounded-md border-2 border-black"
+      className="absolute bottom-[15px] left-1/2 z-30 h-auto w-2/3 -translate-x-1/2 rounded-md border-2 border-black"
     >
       <div className="h-full w-full rounded-md border-4 border-secondary bg-primary">
-        <div className="flex h-full w-full items-center justify-start rounded-md border border-black px-5">
+        <div className="flex h-full w-full items-center justify-start rounded-md border border-black px-5 py-3">
           <div className="flex w-[calc(100%-65px)] flex-wrap items-start justify-around">
             <Button>タイムカード</Button>
             <Button disabled>送り/日払い</Button>
