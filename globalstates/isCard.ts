@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import useGlobalSWR from "./useGlobalSWR";
 
 const key = "isCard";
-let initialState = true;
+let initialState = false;
 
 export default function useIsCardGlobal(): [
   typeof initialState,
