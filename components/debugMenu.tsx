@@ -3,11 +3,13 @@ import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsLicenseGlobal from "@/globalstates/isLicense";
 import { useState } from "react";
+import useIsCardGlobal from "@/globalstates/isCard";
 
 export default function DebugMenu() {
   const [isDebug, setIsDebug] = useIsDebugGlobal();
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
+  const [isCard, setIsCard] = useIsCardGlobal();
   const [isLicense] = useIsLicenseGlobal();
   const [activeTab, setActiveTab] = useState(0);
 
@@ -32,6 +34,9 @@ export default function DebugMenu() {
             </li>
             <li className="flex">
               <div className="w-[6rem]">isFooter</div>: {String(isFooter)}
+            </li>
+            <li className="flex">
+              <div className="w-[6rem]">isCard</div>: {String(isCard)}
             </li>
             <li className="flex">
               <div className="w-[6rem]">isLicense</div>: {String(isLicense)}
@@ -88,6 +93,12 @@ export default function DebugMenu() {
                 onClick={() => setIsFooter(!isFooter)}
               >
                 フッター
+              </button>
+              <button
+                className="m-3 rounded-md bg-accent px-4 py-2"
+                onClick={() => setIsCard(!isCard)}
+              >
+                カード
               </button>
             </>
           )}
