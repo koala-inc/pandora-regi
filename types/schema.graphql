@@ -1,0 +1,3195 @@
+type Query {
+  attendanceManagementCast(
+    cast_id: [Int]
+    id: [Int]
+    working_date_from: Date
+    working_date_to: Date
+    work_schedule_date_time_start_from: DateTime
+    work_schedule_date_time_start_to: DateTime
+    work_schedule_date_time_end_from: DateTime
+    work_schedule_date_time_end_to: DateTime
+    attendance_status: Int
+    time_card_date_time_start_from: DateTime
+    time_card_date_time_start_to: DateTime
+    time_card_date_time_end_from: DateTime
+    time_card_date_time_end_to: DateTime
+    work_date_time_start_from: DateTime
+    work_date_time_start_to: DateTime
+    work_date_time_end_from: DateTime
+    work_date_time_end_to: DateTime
+    is_processed: Int
+  ): [AttendanceManagementCast]
+  attendanceManagementStaff(
+    staff_id: [Int]
+    id: [Int]
+    working_date_from: Date
+    working_date_to: Date
+    work_schedule_date_time_start_from: DateTime
+    work_schedule_date_time_start_to: DateTime
+    work_schedule_date_time_end_from: DateTime
+    work_schedule_date_time_end_to: DateTime
+    time_card_date_time_start_from: DateTime
+    time_card_date_time_start_to: DateTime
+    time_card_date_time_end_from: DateTime
+    time_card_date_time_end_to: DateTime
+    work_date_time_start_from: DateTime
+    work_date_time_start_to: DateTime
+    work_date_time_end_from: DateTime
+    work_date_time_end_to: DateTime
+  ): [AttendanceManagementStaff]
+  bottle(
+    id: [Int]
+    item_code: [Int]
+    item_category_id: [Int]
+    name: String
+    price_from: Int
+    price_to: Int
+    cost_from: Int
+    cost_to: Int
+    display: Int
+    is_notice_kitchen: Int
+  ): [Bottle]
+  bottleControl(
+    id: [Int]
+    item_id: [Int]
+    type: Int
+    trade_store_code: [Int]
+  ): [BottleControl]
+  bottleSales(start_ordered_at: String, end_ordered_at: String): [BottleSales!]
+  cast(
+    id: [Int]
+    cast_code: [Int]
+    staff_id: [Int]
+    name: String
+    name_syllabary_search_code: Int
+    real_name: String
+    real_name_ruby: String
+    section: [Int]
+    entry_date_from: Date
+    entry_date_to: Date
+    leaving_date_from: Date
+    leaving_date_to: Date
+    birthday_from: Date
+    birthday_to: Date
+    phone_number: String
+    media_id: [Int]
+    introducer_id: [Int]
+    display: Int
+  ): [Cast]
+  category(id: [Int], parent_id: [Int]): [ItemCategory]
+  champagne(
+    id: [Int]
+    item_code: [Int]
+    item_category_id: [Int]
+    name: String
+    price_from: Int
+    price_to: Int
+    cost_from: Int
+    cost_to: Int
+    display: Int
+    is_notice_kitchen: Int
+  ): [Champagne]
+  course(
+    id: [Int]
+    name: String
+    accompany: Int
+    extend: Int
+    nomination: Int
+    start_time: String
+    end_time: String
+  ): [Course]
+  designate(
+    id: [Int]
+    item_category_id: [Int]
+    type: Int
+    name: String
+    price_from: Int
+    price_to: Int
+    cost_from: Int
+    cost_to: Int
+    is_tax_service: Int
+  ): [Designate]
+  discount(id: ID): [DiscountType!]
+  discounts: [DiscountType!]
+  event(
+    id: [Int]
+    course_id: [Int]
+    seat_area_id: [Int]
+    item_category_id: [Int]
+    name: String
+    display: Int
+    is_tax_service: Int
+    is_information_center: Int
+  ): [EventItem]
+  itemAlias(id: [Int], item_id: [Int], alias_name: String): [ItemAlias]
+  keepBottleControl(
+    id: [Int]
+    item_id: [Int]
+    user_id: [Int]
+    tag_name: String
+    keep_date_start_from: Date
+    keep_date_start_to: Date
+    keep_date_end_from: Date
+    keep_date_end_to: Date
+  ): [KeepBottleControl]
+  license(id: ID): License
+  menu(
+    id: [Int]
+    item_category_id: [Int]
+    type: Int
+    name: String
+    price_from: Int
+    price_to: Int
+    cost_from: Int
+    cost_to: Int
+    display: Int
+    is_notice_kitchen: Int
+  ): [Menu]
+  menuSales(start_ordered_at: String, end_ordered_at: String): [MenuSales!]
+  purchaseOrder(
+    id: [Int]
+    user_id: [Int]
+    seat_id: [Int]
+    seat_user_id: [Int]
+    cast_id: [Int]
+    staff_id: [Int]
+    slip_key: [String]
+    item_id: [Int]
+    item_type: Int
+    item_group_code: Int
+    item_group_type: Int
+    item_category_id: [Int]
+    ordered_at_form: DateTime
+    ordered_at_to: DateTime
+    is_closed: Int
+    closed_at_form: DateTime
+    closed_at_to: DateTime
+    is_deleted: Int
+    deleted_at_from: DateTime
+    deleted_at_to: DateTime
+  ): [PurchaseOrder]
+  purchaseOrderTotalAmount(
+    slip_key: String
+    seat_id: Int
+    user_id: Int
+    setting_id: Int
+  ): [PurchaseOrderTotalAmount]
+  purchaseOrderSales(
+    start_ordered_at: String
+    end_ordered_at: String
+  ): [PurchaseOrderSales!]
+  salaryCast(cast_id: [Int], id: [Int], is_apply: Int): [SalaryCast]
+  salaryStaff(staff_id: [Int], id: [Int], is_apply: Int): [SalaryStaff]
+  seat(id: [Int], seat_area_id: [Int]): [Seat]
+  seatArea(id: Int, name: String, area_key: String, area_code: Int): [SeatArea]
+  seatChecked(slip_key: String!): SeatChecked!
+  seatCheckedPayment(seat_checked_id: Int!): TotalCheckedPayment!
+  seatCombine(id: Int, seat_id: [Int]): [SeatCombine]
+  seatSetPriceChange(id: Int, slip_key: String): [SeatSetPriceChange]
+  service(
+    id: [Int]
+    item_id: [Int]
+    parent_id: [Int]
+    item_category_id: [Int]
+    name: String
+    display: Int
+  ): [Service]
+  setting(id: Int): [Setting]
+  staff(
+    id: [Int]
+    staff_code: [Int]
+    name: String
+    name_ruby: String
+    name_ruby_syllabary_search_code: Int
+    employment_type: [Int]
+    section: Int
+    staff_role_id: [Int]
+    entry_date_from: Date
+    entry_date_to: Date
+    leaving_date_from: Date
+    leaving_date_to: Date
+    birthday_from: Date
+    birthday_to: Date
+    phone_number: String
+    media_id: [Int]
+    introducer_id: [Int]
+    display: Int
+  ): [Staff]
+  store(id: Int): [Store]
+  user(id: ID): User
+  users: [User!]
+  versionControl: [Version!]
+  visit(
+    id: [Int]
+    is_checked: Int
+    checked_at_from: DateTime
+    checked_at_to: DateTime
+    seat_id: [Int]
+    user_id: [Int]
+    started_at_from: DateTime
+    started_at_to: DateTime
+    is_ended: Int
+    ended_at_form: DateTime
+    ended_at_to: DateTime
+  ): [Visit]
+  backDesignate(salary_system_id: Int, id: Int, detail_id: Int): [BackDesignate]
+  backDesignateConditions(
+    back_designate_id: Int
+    conditions_code: Int
+    detail_id: Int
+  ): [BackDesignateConditions]
+  backOrder(salary_system_id: Int, id: Int, detail_id: Int): [BackOrder]
+  backOrderConditions(
+    back_order_id: Int
+    conditions_code: Int
+    detail_id: Int
+  ): [BackOrderConditions]
+  backSales(salary_system_id: Int, id: Int, detail_id: Int): [BackSales]
+  backSalesConditions(
+    back_sales_id: Int
+    conditions_code: Int
+    detail_id: Int
+  ): [BackSalesConditions]
+  backWorkingDays(
+    salary_system_id: Int
+    id: Int
+    detail_id: Int
+  ): [BackWorkingDays]
+  backWorkingDaysConditions(
+    back_working_days_id: Int
+    conditions_code: Int
+    detail_id: Int
+  ): [BackWorkingDaysConditions]
+  penalty(salary_system_id: Int, category_code: Int, detail_id: Int): [Penalty]
+  salaryPay(salary_system_id: Int, id: Int): [SalaryPay]
+  salaryPayCalculation(salary_system_id: Int): SalaryPayCalculation
+  salaryPayPointCalculation(salary_system_id: Int): SalaryPayPointCalculation
+  salaryPaySalesCalculation(salary_system_id: Int): SalaryPayPointCalculation
+  salaryPayChangeDesignate(
+    salary_pay_id: Int
+    detail_id: Int
+  ): [SalaryPayChangeDesignate]
+  salaryPayConditions(
+    salary_pay_id: Int
+    conditions_code: Int
+    detail_id: Int
+  ): [SalaryPayConditions]
+  salaryPayHourlyWageFixedTime(
+    salary_pay_id: Int
+    detail_id: Int
+  ): [SalaryPayHourlyWageFixedTime]
+  salaryPaySlide(
+    salary_pay_id: Int
+    slide_code: Int
+    detail_id: Int
+  ): [SalaryPaySlide]
+  salaryPoint(salary_system_id: Int, id: Int): [SalaryPoint]
+  salaryPointConditions(
+    salary_point_id: Int
+    conditions_code: Int
+    detail_id: Int
+  ): [SalaryPointConditions]
+  salaryPointDesignate(
+    salary_point_id: Int
+    salary_point_time_range_detail_id: Int
+    salary_point_set_time_shift_detail_id: Int
+    id: Int
+  ): [SalaryPointDesignate]
+  salaryPointItems(salary_point_id: Int, id: Int): [SalaryPointItems]
+  salaryPointSalaryPayChange(
+    salary_point_id: Int
+    id: Int
+  ): [SalaryPointSalaryPayChange]
+  salaryPointSalaryRate(salary_point_id: Int, id: Int): [SalaryPointSalaryRate]
+  salaryPointSales(salary_point_id: Int, id: Int): [SalaryPointSales]
+  salaryPointSetTimeShift(
+    salary_point_id: Int
+    salary_point_time_range_detail_id: Int
+    detail_id: Int
+  ): [SalaryPointSetTimeShift]
+  salaryPointTimeRange(
+    salary_point_id: Int
+    detail_id: Int
+  ): [SalaryPointTimeRange]
+  salarySales(salary_system_id: Int, id: Int, detail_id: Int): [SalarySales]
+  salarySalesConditions(
+    salary_sales_id: Int
+    conditions_code: Int
+    detail_id: Int
+  ): [SalarySalesConditions]
+  salarySystem(id: Int): [SalarySystem]
+  salarySystemForCast(
+    salary_system_id: Int
+    cast_id: Int
+  ): [SalarySystemForCast]
+  salarySystemForStaff(
+    salary_system_id: Int
+    staff_id: Int
+  ): [SalarySystemForStaff]
+  penaltyDesignateCast(cast_id: Int): [PenaltyDesignateCast]
+}
+
+# A date string with format `Y-m-d`, e.g. `2011-05-23`.
+scalar Date
+
+# A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`.
+scalar DateTime
+
+type AttendanceManagementCast {
+  id: Int
+  cast_id: Int
+  working_date: Date
+  work_schedule_date_time_start: DateTime
+  work_schedule_date_time_end: DateTime
+  attendance_status: Int
+  time_card_date_time_start: DateTime
+  time_card_date_time_end: DateTime
+  work_date_time_start: DateTime
+  work_date_time_end: DateTime
+  late_time: Int
+  is_processed: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type AttendanceManagementStaff {
+  id: Int
+  staff_id: Int
+  working_date: Date
+  work_schedule_date_time_start: DateTime
+  work_schedule_date_time_end: DateTime
+  time_card_date_time_start: DateTime
+  time_card_date_time_end: DateTime
+  work_date_time_start: DateTime
+  work_date_time_end: DateTime
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type Bottle {
+  id: Int
+  type: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  bottle_revision: BottleRevision
+}
+
+type BottleRevision {
+  id: Int
+  item_id: Int
+  item_code: Int
+  item_category_id: Int
+  group_code: Int
+  type: Int
+  name: String
+  price: Int
+  cost: Int
+  default_stock: Int
+  display: Int
+  is_notice_kitchen: Int
+  point: Int
+  edited_at: DateTime
+}
+
+type BottleControl {
+  id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  bottle_control_revision: BottleControlRevision
+}
+
+type BottleControlRevision {
+  id: Int
+  bottle_control_id: Int
+  item_id: Int
+  type: Int
+  trade_store_code: Int
+  quantity: Int
+  control_at: DateTime
+  edited_at: DateTime
+}
+
+type BottleSales {
+  id: ID!
+  name: String
+  listing_count: Int
+  sales: Int
+}
+
+type Cast {
+  id: Int
+  cast_code: Int
+  staff_id: Int
+  name: String
+  real_name: String
+  real_name_ruby: String
+  section: Int
+  entry_date: Date
+  leaving_date: Date
+  birthday: Date
+  phone_number: String
+  address: String
+  media_id: Int
+  introducer_id: Int
+  display: Int
+  remarks: String
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type ItemCategory {
+  id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  category_revision: ItemCategoryRevision
+}
+
+type ItemCategoryRevision {
+  id: Int
+  item_category_id: Int
+  parent_id: Int
+  name: String
+  edited_at: DateTime
+}
+
+type Champagne {
+  id: Int
+  type: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  champagne_revision: ChampagneRevision
+}
+
+type ChampagneRevision {
+  id: Int
+  item_id: Int
+  item_code: Int
+  item_category_id: Int
+  group_code: Int
+  type: Int
+  name: String
+  price: Int
+  cost: Int
+  default_stock: Int
+  display: Int
+  is_notice_kitchen: Int
+  point: Int
+  edited_at: DateTime
+}
+
+type Course {
+  id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  course_revision: CourseRevision
+}
+
+type CourseRevision {
+  id: Int
+  course_id: Int
+  name: String
+  price: Int
+  accompany: Int
+  extend: Int
+  nomination: Int
+  time: Int
+  start_time: String
+  end_time: String
+  calling_time: Int
+  status: Int
+  edited_at: DateTime
+}
+
+type Designate {
+  id: Int
+  type: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  designate_revision: DesignateRevision
+}
+
+type DesignateRevision {
+  id: Int
+  item_id: Int
+  item_category_id: Int
+  group_code: Int
+  type: Int
+  name: String
+  price: Int
+  cost: Int
+  default_stock: String
+  display: Int
+  extra_time: Int
+  extra_price: Int
+  is_tax_service: Int
+  point: Int
+  symbol: String
+  edited_at: DateTime
+}
+
+type DiscountType {
+  id: ID!
+  created_at: DateTime!
+  discount_revision: DiscountTypeRevision
+}
+
+type DiscountTypeRevision {
+  id: ID!
+  discount_type_id: Int!
+  name: String!
+  detail: String
+  edited_at: DateTime!
+}
+
+type EventItem {
+  id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  event_revision: EventItemRevision
+}
+
+type EventItemRevision {
+  id: Int
+  event_item_id: Int
+  item_id: Int
+  course_id: Int
+  seat_area_id: Int
+  item_category_id: Int
+  name: String
+  price: Int
+  cost: Int
+  default_stock: String
+  display: Int
+  point: Int
+  set_adaptation_start_time: String
+  set_adaptation_end_time: String
+  set_time: Int
+  is_tax_service: Int
+  is_information_center: Int
+  edited_at: DateTime
+}
+
+type ItemAlias {
+  id: Int
+  item_id: Int
+  alias_name: String
+  deleted_at: DateTime
+  edited_at: DateTime
+}
+
+type KeepBottleControl {
+  id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  keep_bottle_control_revision: KeepBottleControlRevision
+}
+
+type KeepBottleControlRevision {
+  id: Int
+  keep_bottle_control_id: Int
+  item_id: Int
+  user_id: Int
+  tag_name: String
+  keep_date_start: Date
+  keep_date_end: Date
+  release_date: Date
+  remaining_percent: Int
+  edited_at: DateTime
+}
+
+type License {
+  id: ID!
+  company: String!
+  payment: Int
+  main_limit: Int
+  main: [SubLicense]
+  admin_limit: Int
+  admin: [SubLicense]
+  staff_limit: Int
+  staff: [SubLicense]
+  cast_limit: Int
+  cast: [SubLicense]
+  created_at: DateTime!
+}
+
+type SubLicense {
+  id: Int
+  license_id: Int
+  account_code: Int
+  license_key: String
+  device: String
+  mail_address: String
+  password: String
+  edited_at: DateTime
+}
+
+type Menu {
+  id: Int
+  type: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  menu_revision: MenuRevision
+}
+
+type MenuRevision {
+  id: Int
+  item_id: Int
+  item_category_id: Int
+  group_code: Int
+  type: Int
+  name: String
+  price: Int
+  cost: Int
+  default_stock: Int
+  display: Int
+  is_notice_kitchen: Int
+  point: Int
+  edited_at: DateTime
+}
+
+type MenuSales {
+  id: ID!
+  name: String
+  listing_count: Int
+  sales: Int
+}
+
+type PurchaseOrder {
+  id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  purchase_order_revision: PurchaseOrderRevision
+  purchase_order_cast: [PurchaseOrderCast]
+  purchase_order_staff: [PurchaseOrderStaff]
+}
+
+type PurchaseOrderRevision {
+  id: Int
+  purchase_order_id: Int
+  item_id: Int
+  user_id: Int
+  seat_id: Int
+  seat_user_id: Int
+  slip_key: String
+  price: Int
+  discount: Int
+  discount_type_id: Int
+  service_tax: Int
+  tax: Int
+  ordered_at: DateTime
+  closed_at: DateTime
+}
+
+type PurchaseOrderCast {
+  id: Int
+  purchase_order_id: Int
+  cast_id: Int
+}
+
+type PurchaseOrderStaff {
+  id: Int
+  purchase_order_id: Int
+  staff_id: Int
+}
+
+type PurchaseOrderTotalAmount {
+  total_amount: Int
+  purchase_order_amount: [PurchaseOrderAmount]
+}
+
+type PurchaseOrderAmount {
+  slip_key: String
+  seat_id: Int
+  user_id: Int
+  item_id: Int
+  price: Int
+}
+
+type PurchaseOrderSales {
+  bottle_total_sales: BottleTotalSales
+  menu_total_sales: MenuTotalSales
+  designate_total_sales: DesignateTotalSales
+}
+
+type BottleTotalSales {
+  total_sales: Int
+  bottle_sales: [BottleSales]
+}
+
+type MenuTotalSales {
+  total_sales: Int
+  menu_sales: [MenuSales]
+}
+
+type DesignateTotalSales {
+  total_sales: Int
+  designate_sales: [DesignateSales]
+}
+
+type DesignateSales {
+  id: ID!
+  name: String
+  listing_count: Int
+  sales: Int
+}
+
+type SalaryCast {
+  id: Int
+  cast_id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  salary_cast_revision: [SalaryCastRevision]
+}
+
+type SalaryCastRevision {
+  id: Int
+  salary_cast_id: Int
+  is_apply: Int
+  salary_type: Int
+  wage_hourly: Int
+  wage_daily: Int
+  edited_at: DateTime
+}
+
+type SalaryStaff {
+  id: Int
+  staff_id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  salary_staff_revision: [SalaryStaffRevision]
+}
+
+type SalaryStaffRevision {
+  id: Int
+  salary_staff_id: Int
+  is_apply: Int
+  salary_type: Int
+  wage_hourly: Int
+  wage_daily: Int
+  wage_monthly: Int
+  edited_at: DateTime
+}
+
+type Seat {
+  id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  seat_revision: SeatRevision
+}
+
+type SeatRevision {
+  id: Int
+  seat_id: Int
+  seat_area_id: Int
+  name: String
+  type: Int
+  edited_at: DateTime
+}
+
+type SeatArea {
+  id: Int
+  name: String
+  area_key: String
+  area_code: Int
+  price: Int
+  charge_price: Int
+  extra_time: Int
+  extra_price: Int
+  extra_charge_time: Int
+  extra_charge_price: Int
+  service_tax: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SeatChecked {
+  id: ID!
+  seat_id: Int
+  staff_id: Int
+  payment: Int
+  no_discount_total_payment: Int
+  total_payment: Int
+  service_tax: Int
+  tax: Int
+  order_discount: Int
+  discount_percent: Int
+  discount: Int
+  commission_percent: Int
+  commission: Int
+  checked_at: DateTime
+  order_payment: OrderPayment
+}
+
+type OrderPayment {
+  sub_payment: Int
+  items: [Items]
+}
+
+type Items {
+  name: String
+  discount: Int
+  price: Int
+}
+
+type TotalCheckedPayment {
+  id: ID!
+  seat_id: Int
+  staff_id: Int
+  payment: Int
+  no_discount_total_payment: Int
+  total_payment: Int
+  service_tax: Int
+  tax: Int
+  order_discount: Int
+  discount_percent: Int
+  discount: Int
+  commission_percent: Int
+  commission: Int
+  checked_at: DateTime
+  seat_checked_payment: [SeatCheckedPayment]
+}
+
+type SeatCheckedPayment {
+  id: ID!
+  seat_checked_id: Int
+  payment_type_id: Int
+  payment: Int
+  total_payment: Int
+  service_tax: Int
+  tax: Int
+  commission_percent: Int
+  commission: Int
+  is_cancel: Int
+  checked_at: DateTime
+}
+
+type SeatCombine {
+  id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  seat_combine_revision: [SeatCombineRevision]
+}
+
+type SeatCombineRevision {
+  id: Int
+  seat_combine_id: Int
+  seat_id: Int
+  is_combine: Int
+  edited_at: DateTime
+}
+
+type SeatSetPriceChange {
+  id: Int
+  slip_key: String
+  charge_price: Int
+  set_price: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type Service {
+  id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  service_revision: ServiceRevision
+}
+
+type ServiceRevision {
+  id: Int
+  service_item_id: Int
+  item_id: Int
+  parent_id: Int
+  item_category_id: Int
+  name: String
+  price: Int
+  display: Int
+  point: Int
+  edited_at: DateTime
+}
+
+type Setting {
+  id: Int
+  service_tax: Int
+  tax: Int
+  vat_relief: Int
+  round: Int
+  up_digit: Int
+  down_digit: Int
+  calc_type: Int
+}
+
+type Staff {
+  id: Int
+  staff_code: Int
+  name: String
+  name_ruby: String
+  employment_type: Int
+  section: Int
+  staff_role_id: Int
+  entry_date: Date
+  leaving_date: Date
+  birthday: Date
+  phone_number: String
+  address: String
+  media_id: Int
+  introducer_id: Int
+  display: Int
+  remarks: String
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type Store {
+  id: Int
+  name: String
+  post_code: String
+  address_1: String
+  address_2: String
+  phone_number: String
+  business_hours_start: String
+  business_hours_end: String
+  is_auto_extra: Int
+  final_extra_time: Int
+  call_time: Int
+  final_call_time: Int
+  time_card_time_operation_interval: Int
+  others_time_operation_interval: Int
+  logo_mage_path: String
+  receipt_message: String
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type User {
+  id: ID!
+  name: String
+  created_at: DateTime!
+}
+
+type Version {
+  version: String!
+}
+
+type Visit {
+  id: Int
+  checked_at: DateTime
+  deleted_at: DateTime
+  created_at: DateTime
+  visit_revision: VisitRevision
+}
+
+type VisitRevision {
+  id: Int
+  seat_user_id: Int
+  seat_id: Int
+  user_id: Int
+  inflow_section: Int
+  information_office_id: Int
+  external_sales_id: Int
+  started_at: DateTime
+  ended_at: DateTime
+  calling_time: DateTime
+  is_auto_extension: Int
+  is_non_room_charge: Int
+  edited_at: DateTime
+}
+
+type BackDesignate {
+  id: Int
+  salary_system_id: Int
+  period_type: Int
+  period_week: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  back_designate_detail: [BackDesignateDetail]
+}
+
+type BackDesignateDetail {
+  id: Int
+  back_designate_id: Int
+  designate_code: Int
+  number_from: Int
+  number_to: Int
+  amount: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type BackDesignateConditions {
+  id: Int
+  back_designate_id: Int
+  conditions_code: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  back_designate_conditions_detail: [BackDesignateConditionsDetail]
+}
+
+type BackDesignateConditionsDetail {
+  id: Int
+  back_designate_conditions_id: Int
+  name: String
+  period_type: Int
+  period_week: Int
+  is_back_payment_rate: Int
+  back_payment_rate: Int
+  companion_from: Int
+  companion_to: Int
+  designate_from: Int
+  designate_to: Int
+  hall_from: Int
+  hall_to: Int
+  working_days_from: Int
+  working_days_to: Int
+  working_time_from: Int
+  working_time_to: Int
+  point_from: Int
+  point_to: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type BackOrder {
+  id: Int
+  salary_system_id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  back_order_detail: [BackOrderDetail]
+}
+
+type BackOrderDetail {
+  id: Int
+  back_order_id: Int
+  item_group_code: Int
+  item_type: Int
+  price_from: Int
+  price_to: Int
+  is_back_amount: Int
+  is_back_percent: Int
+  back_amount: Int
+  back_percent: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type BackOrderConditions {
+  id: Int
+  back_order_id: Int
+  conditions_code: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  back_order_conditions_detail: [BackOrderConditionsDetail]
+}
+
+type BackOrderConditionsDetail {
+  id: Int
+  back_order_conditions_id: Int
+  name: String
+  period_type: Int
+  period_week: Int
+  is_back_payment_rate: Int
+  back_payment_rate: Int
+  companion_from: Int
+  companion_to: Int
+  designate_from: Int
+  designate_to: Int
+  hall_from: Int
+  hall_to: Int
+  sales_judg_type: Int
+  sales_from: Int
+  sales_to: Int
+  salary_rate_from: Int
+  salary_rate_to: Int
+  salary_rate_inequality_type: Int
+  working_days_from: Int
+  working_days_to: Int
+  working_time_from: Int
+  working_time_to: Int
+  point_from: Int
+  point_to: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type BackSales {
+  id: Int
+  salary_system_id: Int
+  period_type: Int
+  period_week: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  back_sales_detail: [BackSalesDetail]
+}
+
+type BackSalesDetail {
+  id: Int
+  back_sales_id: Int
+  time_period_from: String
+  time_period_to: String
+  sales_from: Int
+  sales_to: Int
+  companion_from: Int
+  companion_to: Int
+  designate_from: Int
+  designate_to: Int
+  hall_from: Int
+  hall_to: Int
+  payment_rate: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type BackSalesConditions {
+  id: Int
+  back_sales_id: Int
+  conditions_code: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  back_sales_conditions_detail: [BackSalesConditionsDetail]
+}
+
+type BackSalesConditionsDetail {
+  id: Int
+  back_sales_conditions_id: Int
+  name: String
+  period_type: Int
+  period_week: Int
+  is_back_payment_rate: Int
+  back_payment_rate: Int
+  companion_from: Int
+  companion_to: Int
+  designate_from: Int
+  designate_to: Int
+  hall_from: Int
+  hall_to: Int
+  working_days_from: Int
+  working_days_to: Int
+  working_time_from: Int
+  working_time_to: Int
+  point_from: Int
+  point_to: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type BackWorkingDays {
+  id: Int
+  salary_system_id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  back_working_days_detail: [BackWorkingDaysDetail]
+}
+
+type BackWorkingDaysDetail {
+  id: Int
+  back_working_days_id: Int
+  sales_from: Int
+  sales_to: Int
+  working_days_from: Int
+  working_days_to: Int
+  back_amount: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type BackWorkingDaysConditions {
+  id: Int
+  back_working_days_id: Int
+  conditions_code: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  back_working_days_conditions_detail: [BackWorkingDaysConditionsDetail]
+}
+
+type BackWorkingDaysConditionsDetail {
+  id: Int
+  back_working_days_conditions_id: Int
+  name: String
+  period_type: Int
+  period_week: Int
+  is_back_payment_rate: Int
+  back_payment_rate: Int
+  companion_from: Int
+  companion_to: Int
+  designate_from: Int
+  designate_to: Int
+  hall_from: Int
+  hall_to: Int
+  sales_judg_type: Int
+  sales_from: Int
+  sales_to: Int
+  salary_rate_from: Int
+  salary_rate_to: Int
+  salary_rate_inequality_type: Int
+  working_time_from: Int
+  working_time_to: Int
+  point_from: Int
+  point_to: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type Penalty {
+  id: Int
+  salary_system_id: Int
+  category_code: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  penalty_detail: [PenaltyDetail]
+}
+
+type PenaltyDetail {
+  id: Int
+  penalty_id: Int
+  is_point_subtraction: Int
+  period_type: Int
+  period_week_code: Int
+  target_adaptation_type: Int
+  penalty_abatement_type: Int
+  penalty_abatement_amount: Int
+  penalty_abatement_percent: Int
+  penalty_abatement_point: Int
+  designate_type: Int
+  designate_number_from: Int
+  designate_number_to: Int
+  sales_from: Int
+  sales_to: Int
+  salary_rate: Int
+  salary_rate_inequality_type: Int
+  working_days_from: Int
+  working_days_to: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalaryPay {
+  id: Int
+  salary_system_id: Int
+  pay_type: Int
+  period_type: Int
+  period_week_code: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalaryPayCalculation {
+  salary_pay_cast: [SalaryPayCast]
+  salary_pay_staff: [SalaryPayStaff]
+}
+
+type SalaryPayCast {
+  id: Int
+  cast_id: Int
+  salary_number: String
+  salary_calculation_period_type: Int
+  salary_calculation_period_from: String
+  salary_calculation_period_to: String
+  work_time: Int
+  work_day: Int
+  companion_number: Int
+  designate_number: Int
+  hall_number: Int
+  sales: Int
+  point: Int
+  salary_pay: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalaryPayStaff {
+  id: Int
+  staff_id: Int
+  salary_number: String
+  salary_calculation_period_type: Int
+  salary_calculation_period_from: String
+  salary_calculation_period_to: String
+  work_time: Int
+  work_day: Int
+  sales: Int
+  point: Int
+  salary_pay: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalaryPayPointCalculation {
+  salary_pay_cast: [SalaryPayCast]
+  salary_pay_staff: [SalaryPayStaff]
+}
+
+type SalaryPayChangeDesignate {
+  id: Int
+  salary_pay_id: Int
+  reflection_timing_type: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  salary_pay_change_designate_detail: [SalaryPayChangeDesignateDetail]
+}
+
+type SalaryPayChangeDesignateDetail {
+  id: Int
+  salary_pay_change_designate_id: Int
+  companion_from: Int
+  companion_to: Int
+  designate_from: Int
+  designate_to: Int
+  hall_from: Int
+  hall_to: Int
+  applicable_range_type: Int
+  is_ratio_amount: Int
+  is_ratio_percent: Int
+  ratio_amount: Int
+  ratio_percent: Int
+  start_type: Int
+  continuation_period: Int
+  reflection_timing_type: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalaryPayConditions {
+  id: Int
+  salary_pay_id: Int
+  conditions_code: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  salary_pay_conditions_detail: [SalaryPayConditionsDetail]
+}
+
+type SalaryPayConditionsDetail {
+  id: Int
+  salary_pay_conditions_id: Int
+  name: String
+  period_type: Int
+  period_week: Int
+  pay_form_type: Int
+  fixed_pay_amount: Int
+  pay_amount: Int
+  pay_percent: Int
+  companion_from: Int
+  companion_to: Int
+  designate_from: Int
+  designate_to: Int
+  hall_from: Int
+  hall_to: Int
+  sales_judg_type: Int
+  sales_from: Int
+  sales_to: Int
+  salary_rate_from: Int
+  salary_rate_to: Int
+  salary_rate_inequality_type: Int
+  working_days_from: Int
+  working_days_to: Int
+  working_time_from: Int
+  working_time_to: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalaryPayHourlyWageFixedTime {
+  id: Int
+  salary_pay_id: Int
+  is_contract_hourly_wage: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  salary_pay_hourly_wage_fixed_time_detail: [SalaryPayHourlyWageFixedTimeDetail]
+}
+
+type SalaryPayHourlyWageFixedTimeDetail {
+  id: Int
+  salary_pay_hourly_wage_fixed_time_id: Int
+  time_period_from: String
+  time_period_to: String
+  amount: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalaryPaySlide {
+  id: Int
+  salary_pay_id: Int
+  period_type: Int
+  period_week_code: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  salary_pay_slide_detail: [SalaryPaySlideDetail]
+}
+
+type SalaryPaySlideDetail {
+  id: Int
+  salary_pay_slide_id: Int
+  slide_code: Int
+  sales_from: Int
+  sales_to: Int
+  companion_from: Int
+  companion_to: Int
+  designate_from: Int
+  designate_to: Int
+  hall_from: Int
+  hall_to: Int
+  pay_amount: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalaryPoint {
+  id: Int
+  salary_system_id: Int
+  period_type: Int
+  period_week_code: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalaryPointConditions {
+  id: Int
+  salary_point_id: Int
+  conditions_code: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  salary_point_conditions_detail: [SalaryPointConditionsDetail]
+}
+
+type SalaryPointConditionsDetail {
+  id: Int
+  salary_point_conditions_id: Int
+  name: String
+  period_type: Int
+  period_week: Int
+  pay_form_type: Int
+  is_subtraction_point_percent: Int
+  fixed_pay_amount: Int
+  pay_amount: Int
+  pay_percent: Int
+  subtraction_point_percent: Int
+  companion_from: Int
+  companion_to: Int
+  designate_from: Int
+  designate_to: Int
+  hall_from: Int
+  hall_to: Int
+  sales_judg_type: Int
+  sales_from: Int
+  sales_to: Int
+  salary_rate_from: Int
+  salary_rate_to: Int
+  salary_rate_inequality_type: Int
+  working_days_from: Int
+  working_days_to: Int
+  working_time_from: Int
+  working_time_to: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalaryPointDesignate {
+  id: Int
+  salary_point_id: Int
+  salary_point_time_range_detail_id: Int
+  salary_point_set_time_shift_detail_id: Int
+  is_free: Int
+  companion: Int
+  designate: Int
+  hall: Int
+  free: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalaryPointItems {
+  id: Int
+  salary_point_id: Int
+  item_id: Int
+  item_group_code: Int
+  item_type: Int
+  amount_from: Int
+  amount_to: Int
+  point: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalaryPointSalaryPayChange {
+  id: Int
+  salary_point_id: Int
+  point_from: Int
+  point_to: Int
+  pay_type: Int
+  pay_amount: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalaryPointSalaryRate {
+  id: Int
+  salary_point_id: Int
+  salary_rate_from: Int
+  salary_rate_to: Int
+  point: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalaryPointSales {
+  id: Int
+  salary_point_id: Int
+  sales_from: Int
+  sales_to: Int
+  point: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalaryPointSetTimeShift {
+  id: Int
+  salary_point_id: Int
+  salary_point_time_range_detail_id: Int
+  is_unused: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  salary_point_set_time_shift_detail: [SalaryPointSetTimeShiftDetail]
+}
+
+type SalaryPointSetTimeShiftDetail {
+  id: Int
+  salary_point_set_time_shift_id: Int
+  is_use: Int
+  item_id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalaryPointTimeRange {
+  id: Int
+  salary_point_id: Int
+  is_unused: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  salary_point_time_range_detail: [SalaryPointTimeRangeDetail]
+}
+
+type SalaryPointTimeRangeDetail {
+  id: Int
+  salary_point_time_range_id: Int
+  is_use: Int
+  time_range_from: String
+  time_range_to: String
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalarySales {
+  id: Int
+  salary_system_id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  salary_sales_detail: [SalarySalesDetail]
+}
+
+type SalarySalesDetail {
+  id: Int
+  salary_sales_id: Int
+  sales_from: Int
+  sales_to: Int
+  companion_from: Int
+  companion_to: Int
+  designate_from: Int
+  designate_to: Int
+  hall_from: Int
+  hall_to: Int
+  payment_rate: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalarySalesConditions {
+  id: Int
+  salary_sales_id: Int
+  conditions_code: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+  salary_sales_conditions_detail: [SalarySalesConditionsDetail]
+}
+
+type SalarySalesConditionsDetail {
+  id: Int
+  salary_sales_conditions_id: Int
+  name: String
+  period_type: Int
+  period_week: Int
+  share_rate_type: Int
+  sales_share_rate: Int
+  salary_share_rate: Int
+  companion_from: Int
+  companion_to: Int
+  designate_from: Int
+  designate_to: Int
+  hall_from: Int
+  hall_to: Int
+  working_days_from: Int
+  working_days_to: Int
+  working_time_from: Int
+  working_time_to: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalarySystem {
+  id: Int
+  name: String
+  start_time: String
+  end_time: String
+  regulation_time_type: Int
+  regulation_time_from: Int
+  regulation_time_to: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalarySystemForCast {
+  id: Int
+  salary_system_id: Int
+  cast_id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type SalarySystemForStaff {
+  id: Int
+  salary_system_id: Int
+  staff_id: Int
+  deleted_at: DateTime
+  created_at: DateTime
+  edited_at: DateTime
+}
+
+type PenaltyDesignateCast {
+  cast_id: Int
+}
+
+type Mutation {
+  createAttendanceManagementCast(
+    cast_id: Int!
+    working_date: Date!
+    work_schedule_date_time_start: DateTime
+    work_schedule_date_time_end: DateTime
+    attendance_status: Int
+    time_card_date_time_start: DateTime
+    time_card_date_time_end: DateTime
+    work_date_time_start: DateTime
+    work_date_time_end: DateTime
+    late_time: Int
+    is_processed: Int
+  ): AttendanceManagementCast
+  updateAttendanceManagementCast(
+    id: Int!
+    work_schedule_date_time_start: DateTime
+    work_schedule_date_time_end: DateTime
+    attendance_status: Int
+    time_card_date_time_start: DateTime
+    time_card_date_time_end: DateTime
+    work_date_time_start: DateTime
+    work_date_time_end: DateTime
+    late_time: Int
+    is_processed: Int
+    is_leaving_work_cancel: Int
+  ): AttendanceManagementCast
+  deleteAttendanceManagementCast(id: Int!): AttendanceManagementCast
+  createAttendanceManagementStaff(
+    staff_id: Int!
+    working_date: Date!
+    work_schedule_date_time_start: DateTime
+    work_schedule_date_time_end: DateTime
+    time_card_date_time_start: DateTime
+    time_card_date_time_end: DateTime
+    work_date_time_start: DateTime
+    work_date_time_end: DateTime
+  ): AttendanceManagementStaff
+  updateAttendanceManagementStaff(
+    id: Int!
+    work_schedule_date_time_start: DateTime
+    work_schedule_date_time_end: DateTime
+    time_card_date_time_start: DateTime
+    time_card_date_time_end: DateTime
+    work_date_time_start: DateTime
+    work_date_time_end: DateTime
+    is_leaving_work_cancel: Int
+  ): AttendanceManagementStaff
+  deleteAttendanceManagementStaff(id: Int!): AttendanceManagementStaff
+  createBottle(
+    item_code: Int
+    item_category_id: Int
+    name: String!
+    price: Int
+    cost: Int
+    default_stock: Int
+    display: Int
+    is_notice_kitchen: Int
+    point: Int
+  ): Bottle
+  updateBottle(
+    id: Int!
+    item_code: Int
+    item_category_id: Int
+    name: String
+    price: Int
+    cost: Int
+    default_stock: Int
+    display: Int
+    is_notice_kitchen: Int
+    point: Int
+  ): Bottle
+  deleteBottle(id: Int!): Bottle
+  createBottleControl(
+    item_id: Int!
+    type: Int
+    trade_store_code: Int
+    quantity: Int
+    control_at: DateTime
+  ): BottleControl
+  updateBottleControl(
+    id: Int!
+    item_id: Int
+    type: Int
+    trade_store_code: Int
+    quantity: Int
+    control_at: DateTime
+  ): BottleControl
+  deleteBottleControl(id: Int!): BottleControl
+  createCast(
+    cast_code: Int!
+    staff_id: Int
+    name: String!
+    real_name: String
+    real_name_ruby: String
+    section: Int
+    entry_date: Date
+    birthday: Date
+    phone_number: String
+    address: String
+    media_id: Int
+    introducer_id: Int
+    display: Int
+    remarks: String
+  ): Cast
+  updateCast(
+    id: Int!
+    cast_code: Int
+    staff_id: Int
+    name: String
+    real_name: String
+    real_name_ruby: String
+    section: Int
+    entry_date: Date
+    leaving_date: Date
+    birthday: Date
+    phone_number: String
+    address: String
+    media_id: Int
+    introducer_id: Int
+    display: Int
+    remarks: String
+  ): Cast
+  deleteCast(id: Int!): Cast
+  createCategory(name: String!, parent_id: Int): ItemCategory
+  updateCategory(id: Int!, name: String, parent_id: Int): ItemCategory
+  deleteCategory(id: Int!, is_parent: Int): [ItemCategory]
+  createChampagne(
+    item_code: Int
+    item_category_id: Int
+    name: String!
+    price: Int
+    cost: Int
+    default_stock: Int
+    display: Int
+    is_notice_kitchen: Int
+    point: Int
+  ): Champagne
+  updateChampagne(
+    id: Int!
+    item_code: Int
+    item_category_id: Int
+    name: String
+    price: Int
+    cost: Int
+    default_stock: Int
+    display: Int
+    is_notice_kitchen: Int
+    point: Int
+  ): Champagne
+  deleteChampagne(id: Int!): Champagne
+  createCourse(
+    name: String
+    price: Int
+    accompany: Int
+    extend: Int
+    nomination: Int
+    time: Int
+    start_time: String
+    end_time: String
+    calling_time: Int
+    status: Int
+  ): Course
+  updateCourse(
+    id: Int!
+    name: String
+    price: Int
+    accompany: Int
+    extend: Int
+    nomination: Int
+    time: Int
+    start_time: String
+    end_time: String
+    calling_time: Int
+    status: Int
+  ): Course
+  deleteCourse(id: Int!): Course
+  createDesignate(
+    item_category_id: Int
+    type: Int
+    name: String!
+    price: Int
+    cost: Int
+    default_stock: Int
+    display: Int
+    extra_time: Int
+    extra_price: Int
+    is_tax_service: Int
+    point: Int
+    symbol: String
+  ): Designate
+  updateDesignate(
+    id: Int!
+    item_category_id: Int
+    type: Int
+    name: String
+    price: Int
+    cost: Int
+    default_stock: Int
+    display: Int
+    extra_time: Int
+    extra_price: Int
+    is_tax_service: Int
+    point: Int
+    symbol: String
+  ): Designate
+  deleteDesignate(id: Int!): Designate
+  createDiscount(name: String!, detail: String): DiscountType
+  updateDiscount(id: Int!, name: String!, detail: String): DiscountType
+  deleteDiscount(id: ID!): DiscountType
+  createEvent(
+    course_id: Int
+    seat_area_id: Int
+    item_category_id: Int
+    name: String!
+    price: Int
+    cost: Int
+    default_stock: Int
+    display: Int
+    point: Int
+    set_adaptation_start_time: String
+    set_adaptation_end_time: String
+    set_time: Int
+    is_tax_service: Int
+    is_information_center: Int
+  ): EventItem
+  updateEvent(
+    id: Int!
+    course_id: Int
+    seat_area_id: Int
+    item_category_id: Int
+    name: String
+    price: Int
+    cost: Int
+    default_stock: Int
+    display: Int
+    point: Int
+    set_adaptation_start_time: String
+    set_adaptation_end_time: String
+    set_time: Int
+    is_tax_service: Int
+    is_information_center: Int
+  ): EventItem
+  deleteEvent(id: Int!): EventItem
+  createItemAlias(item_id: Int!, alias_name: String!): ItemAlias
+  updateItemAlias(id: Int!, item_id: Int, alias_name: String): ItemAlias
+  deleteItemAlias(id: Int!): ItemAlias
+  createKeepBottleControl(
+    item_id: Int!
+    user_id: Int!
+    tag_name: String!
+    keep_date_start: Date!
+    keep_date_end: Date!
+    release_date: Date
+    remaining_percent: Int
+  ): KeepBottleControl
+  updateKeepBottleControl(
+    id: Int!
+    item_id: Int
+    user_id: Int
+    tag_name: String
+    keep_date_start: Date
+    keep_date_end: Date
+    release_date: Date
+    remaining_percent: Int
+  ): KeepBottleControl
+  deleteKeepBottleControl(id: Int!): KeepBottleControl
+  createMenu(
+    item_category_id: Int
+    type: Int
+    name: String!
+    price: Int
+    cost: Int
+    default_stock: Int
+    display: Int
+    is_notice_kitchen: Int
+    point: Int
+  ): Menu
+  updateMenu(
+    id: Int!
+    item_category_id: Int
+    type: Int
+    name: String
+    price: Int
+    cost: Int
+    default_stock: Int
+    display: Int
+    is_notice_kitchen: Int
+    point: Int
+  ): Menu
+  deleteMenu(id: Int!): Menu
+  createPurchaseOrder(
+    item_id: Int!
+    user_id: Int
+    seat_id: Int!
+    seat_user_id: Int
+    slip_key: String!
+    price: Int
+    discount: Int
+    discount_type_id: Int
+    service_tax: Int
+    tax: Int
+    ordered_at: DateTime!
+    cast_id: [Int]
+    staff_id: [Int]
+  ): PurchaseOrder
+  updatePurchaseOrder(
+    id: Int!
+    item_id: Int
+    user_id: Int
+    seat_id: Int
+    seat_user_id: Int
+    slip_key: String
+    price: Int
+    discount: Int
+    discount_type_id: Int
+    service_tax: Int
+    tax: Int
+    ordered_at: DateTime
+    closed_at: DateTime
+    cast_id: [Int]
+    staff_id: [Int]
+  ): PurchaseOrder
+  movePurchaseOrder(
+    target_slip_key: [String!]
+    slip_key: String!
+    purchase_order_id: [Int]
+  ): [PurchaseOrder]
+  deletePurchaseOrder(id: Int!): PurchaseOrder
+  createSalaryCast(
+    cast_id: Int!
+    salary_type: Int!
+    wage_hourly: Int
+    wage_daily: Int
+  ): SalaryCast
+  updateSalaryCast(
+    cast_id: Int!
+    salary_type: Int
+    wage_hourly: Int
+    wage_daily: Int
+  ): SalaryCast
+  deleteSalaryCast(cast_id: Int!): SalaryCast
+  createSalaryStaff(
+    staff_id: Int!
+    salary_type: Int!
+    wage_hourly: Int
+    wage_daily: Int
+    wage_monthly: Int
+  ): SalaryStaff
+  updateSalaryStaff(
+    staff_id: Int!
+    salary_type: Int
+    wage_hourly: Int
+    wage_daily: Int
+    wage_monthly: Int
+  ): SalaryStaff
+  deleteSalaryStaff(staff_id: Int!): SalaryStaff
+  createSeat(seat_area_id: Int, name: String!, type: Int): Seat
+  updateSeat(id: Int!, seat_area_id: Int, name: String, type: Int): Seat
+  deleteSeat(id: Int!): Seat
+  createSeatArea(
+    name: String!
+    area_key: String
+    area_code: Int
+    price: Int
+    charge_price: Int
+    extra_time: Int
+    extra_price: Int
+    extra_charge_time: Int
+    extra_charge_price: Int
+    service_tax: Int
+  ): SeatArea
+  updateSeatArea(
+    id: Int!
+    name: String
+    area_key: String
+    area_code: Int
+    price: Int
+    charge_price: Int
+    extra_time: Int
+    extra_price: Int
+    extra_charge_time: Int
+    extra_charge_price: Int
+    service_tax: Int
+  ): SeatArea
+  deleteSeatArea(id: Int!): SeatArea
+  createSeatChecked(
+    slip_key: String!
+    seat_user_id: [Int!]
+    ended_at: DateTime!
+    staff_id: Int!
+    service_tax: Int
+    tax: Int
+    discount_percent: Int
+    discount: Int
+    commission_percent: Int
+    commission: Int
+    setting_id: Int
+  ): SeatChecked
+  updateSeatChecked(
+    slip_key: String!
+    staff_id: Int
+    service_tax: Int
+    tax: Int
+    discount_percent: Int
+    discount: Int
+    commission_percent: Int
+    commission: Int
+    setting_id: Int
+  ): SeatChecked
+  deleteSeatChecked(id: ID!): SeatChecked
+  createSeatCheckedPayment(
+    seat_checked_id: Int!
+    payment_type_id: Int!
+    seat_user_id: [Int!]
+    payment: Int
+    commission_percent: Int
+    commission: Int
+  ): TotalCheckedPayment
+  updateSeatCheckedPayment(
+    id: Int!
+    payment_type_id: Int
+    payment: Int
+    commission_percent: Int
+    commission: Int
+  ): TotalCheckedPayment
+  checkeSeatCheckedPayment(
+    seat_checked_id: Int!
+    seat_user_id: [Int!]
+    checked_at: DateTime
+  ): TotalCheckedPayment
+  cancelSeatCheckedPayment(id: Int!): SeatCheckedPayment
+  restoreCheckeSeatCheckedPayment(seat_checked_id: Int!): RestoreCheckedPayment
+  deleteSeatCheckedPayment(id: ID!): SeatCheckedPayment
+  createSeatCombine(seat_id: [Int!]): SeatCombine
+  updateSeatCombine(
+    seat_combine_id: Int!
+    seat_id: [Int!]
+    is_combine: Int!
+  ): SeatCombine
+  deleteSeatCombine(id: Int!): SeatCombine
+  createSeatSetPriceChange(
+    slip_key: String!
+    charge_price: Int
+    set_price: Int
+  ): SeatSetPriceChange
+  updateSeatSetPriceChange(
+    id: Int!
+    charge_price: Int
+    set_price: Int
+  ): SeatSetPriceChange
+  deleteSeatSetPriceChange(id: Int!): SeatSetPriceChange
+  createService(
+    parent_id: Int
+    item_category_id: Int
+    name: String!
+    price: Int
+    display: Int
+    point: Int
+  ): Service
+  updateService(
+    id: Int!
+    parent_id: Int
+    item_category_id: Int
+    name: String
+    price: Int
+    display: Int
+    point: Int
+  ): Service
+  deleteService(id: Int!): Service
+  createSetting(
+    service_tax: Int
+    tax: Int
+    vat_relief: Int
+    round: Int
+    up_digit: Int
+    down_digit: Int
+    calc_type: Int
+  ): Setting
+  updateSetting(
+    id: Int!
+    service_tax: Int
+    tax: Int
+    vat_relief: Int
+    round: Int
+    up_digit: Int
+    down_digit: Int
+    calc_type: Int
+  ): Setting
+  deleteSetting(id: Int!): Setting
+  createStaff(
+    staff_code: Int!
+    name: String!
+    name_ruby: String
+    employment_type: Int
+    section: Int
+    staff_role_id: Int
+    entry_date: Date
+    birthday: Date
+    phone_number: String
+    address: String
+    media_id: Int
+    introducer_id: Int
+    display: Int
+    remarks: String
+  ): Staff
+  updateStaff(
+    id: Int!
+    staff_code: Int
+    name: String
+    name_ruby: String
+    employment_type: Int
+    section: Int
+    staff_role_id: Int
+    entry_date: Date
+    leaving_date: Date
+    birthday: Date
+    phone_number: String
+    address: String
+    media_id: Int
+    introducer_id: Int
+    display: Int
+    remarks: String
+  ): Staff
+  deleteStaff(id: Int!): Staff
+  createStore(
+    name: String!
+    post_code: String
+    address_1: String
+    address_2: String
+    phone_number: String
+    business_hours_start: String
+    business_hours_end: String
+    is_auto_extra: Int
+    final_extra_time: Int
+    call_time: Int
+    final_call_time: Int
+    time_card_time_operation_interval: Int
+    others_time_operation_interval: Int
+    logo_mage_path: String
+    receipt_message: String
+  ): Store
+  updateStore(
+    id: Int!
+    name: String
+    post_code: String
+    address_1: String
+    address_2: String
+    phone_number: String
+    business_hours_start: String
+    business_hours_end: String
+    is_auto_extra: Int
+    final_extra_time: Int
+    call_time: Int
+    final_call_time: Int
+    time_card_time_operation_interval: Int
+    others_time_operation_interval: Int
+    logo_mage_path: String
+    receipt_message: String
+  ): Store
+  deleteStore(id: Int!): Store
+  createUser(name: String): User
+  updateUser(id: ID!, name: String): User
+  deleteUser(id: ID!): User
+  createVisit(
+    seat_id: Int!
+    user_id: Int!
+    inflow_section: Int
+    information_office_id: Int
+    external_sales_id: Int
+    started_at: DateTime
+    ended_at: DateTime
+    calling_time: DateTime
+    is_auto_extension: Int
+    is_non_room_charge: Int
+  ): Visit
+  updateVisit(
+    id: Int!
+    checked_at: DateTime
+    seat_id: Int
+    user_id: Int
+    inflow_section: Int
+    information_office_id: Int
+    external_sales_id: Int
+    started_at: DateTime
+    ended_at: DateTime
+    calling_time: DateTime
+    is_auto_extension: Int
+    is_non_room_charge: Int
+  ): Visit
+  deleteVisit(id: Int!): Visit
+  createBackDesignate(
+    salary_system_id: Int!
+    period_type: Int
+    period_week: Int
+    designate_code: Int
+    number_from: Int
+    number_to: Int
+    amount: Int
+  ): BackDesignate
+  updateBackDesignate(
+    id: Int
+    detail_id: Int
+    period_type: Int
+    period_week: Int
+    designate_code: Int
+    number_from: Int
+    number_to: Int
+    amount: Int
+  ): BackDesignate
+  deleteBackDesignate(id: Int, detail_id: [Int]): SalarySales
+  createBackDesignateConditions(
+    back_designate_id: Int!
+    conditions_code: Int!
+    name: String!
+    period_type: Int
+    period_week: Int
+    is_back_payment_rate: Int
+    back_payment_rate: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    working_days_from: Int
+    working_days_to: Int
+    working_time_from: Int
+    working_time_to: Int
+    point_from: Int
+    point_to: Int
+  ): BackDesignateConditions
+  updateBackDesignateConditions(
+    detail_id: Int!
+    period_type: Int
+    period_week: Int
+    is_back_payment_rate: Int
+    back_payment_rate: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    working_days_from: Int
+    working_days_to: Int
+    working_time_from: Int
+    working_time_to: Int
+    point_from: Int
+    point_to: Int
+  ): BackDesignateConditions
+  deleteBackDesignateConditions(
+    id: Int
+    detail_id: [Int]
+  ): BackDesignateConditions
+  createBackOrder(
+    salary_system_id: Int!
+    item_group_code: Int
+    item_type: Int
+    price_from: Int
+    price_to: Int
+    is_back_amount: Int
+    is_back_percent: Int
+    back_amount: Int
+    back_percent: Int
+  ): BackOrder
+  updateBackOrder(
+    detail_id: Int
+    item_group_code: Int
+    item_type: Int
+    price_from: Int
+    price_to: Int
+    is_back_amount: Int
+    is_back_percent: Int
+    back_amount: Int
+    back_percent: Int
+  ): BackOrder
+  deleteBackOrder(id: Int, detail_id: [Int]): BackOrder
+  createBackOrderConditions(
+    back_order_id: Int!
+    conditions_code: Int!
+    name: String!
+    period_type: Int
+    period_week: Int
+    is_back_payment_rate: Int
+    back_payment_rate: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    sales_judg_type: Int
+    sales_from: Int
+    sales_to: Int
+    salary_rate_from: Int
+    salary_rate_to: Int
+    salary_rate_inequality_type: Int
+    working_days_from: Int
+    working_days_to: Int
+    working_time_from: Int
+    working_time_to: Int
+    point_from: Int
+    point_to: Int
+  ): BackOrderConditions
+  updateBackOrderConditions(
+    detail_id: Int!
+    period_type: Int
+    period_week: Int
+    is_back_payment_rate: Int
+    back_payment_rate: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    sales_judg_type: Int
+    sales_from: Int
+    sales_to: Int
+    salary_rate_from: Int
+    salary_rate_to: Int
+    salary_rate_inequality_type: Int
+    working_days_from: Int
+    working_days_to: Int
+    working_time_from: Int
+    working_time_to: Int
+    point_from: Int
+    point_to: Int
+  ): BackOrderConditions
+  deleteBackOrderConditions(id: Int, detail_id: [Int]): BackOrderConditions
+  createBackSales(
+    salary_system_id: Int!
+    period_type: Int
+    period_week: Int
+    time_period_from: String
+    time_period_to: String
+    sales_from: Int
+    sales_to: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    payment_rate: Int
+  ): BackSales
+  updateBackSales(
+    id: Int
+    detail_id: Int
+    period_type: Int
+    period_week: Int
+    time_period_from: String
+    time_period_to: String
+    sales_from: Int
+    sales_to: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    payment_rate: Int
+  ): BackSales
+  deleteBackSales(id: Int, detail_id: [Int]): BackSales
+  createBackSalesConditions(
+    back_sales_id: Int!
+    conditions_code: Int!
+    name: String!
+    period_type: Int
+    period_week: Int
+    is_back_payment_rate: Int
+    back_payment_rate: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    working_days_from: Int
+    working_days_to: Int
+    working_time_from: Int
+    working_time_to: Int
+    point_from: Int
+    point_to: Int
+  ): BackSalesConditions
+  updateBackSalesConditions(
+    detail_id: Int!
+    period_type: Int
+    period_week: Int
+    is_back_payment_rate: Int
+    back_payment_rate: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    working_days_from: Int
+    working_days_to: Int
+    working_time_from: Int
+    working_time_to: Int
+    point_from: Int
+    point_to: Int
+  ): BackSalesConditions
+  deleteBackSalesConditions(id: Int, detail_id: [Int]): BackSalesConditions
+  createBackWorkingDays(
+    salary_system_id: Int!
+    sales_from: Int
+    sales_to: Int
+    working_days_from: Int
+    working_days_to: Int
+    back_amount: Int
+  ): BackWorkingDays
+  updateBackWorkingDays(
+    detail_id: Int
+    sales_from: Int
+    sales_to: Int
+    working_days_from: Int
+    working_days_to: Int
+    back_amount: Int
+  ): BackWorkingDays
+  deleteBackWorkingDays(id: Int, detail_id: [Int]): BackWorkingDays
+  createBackWorkingDaysConditions(
+    back_working_days_id: Int!
+    conditions_code: Int!
+    name: String!
+    period_type: Int
+    period_week: Int
+    is_back_payment_rate: Int
+    back_payment_rate: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    sales_judg_type: Int
+    sales_from: Int
+    sales_to: Int
+    salary_rate_from: Int
+    salary_rate_to: Int
+    salary_rate_inequality_type: Int
+    working_time_from: Int
+    working_time_to: Int
+    point_from: Int
+    point_to: Int
+  ): BackWorkingDaysConditions
+  updateBackWorkingDaysConditions(
+    detail_id: Int!
+    period_type: Int
+    period_week: Int
+    is_back_payment_rate: Int
+    back_payment_rate: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    sales_judg_type: Int
+    sales_from: Int
+    sales_to: Int
+    salary_rate_from: Int
+    salary_rate_to: Int
+    salary_rate_inequality_type: Int
+    working_time_from: Int
+    working_time_to: Int
+    point_from: Int
+    point_to: Int
+  ): BackWorkingDaysConditions
+  deleteBackWorkingDaysConditions(
+    id: Int
+    detail_id: [Int]
+  ): BackWorkingDaysConditions
+  createPenalty(
+    salary_system_id: Int!
+    category_code: Int!
+    is_point_subtraction: Int
+    period_type: Int
+    period_week_code: Int
+    target_adaptation_type: Int
+    penalty_abatement_type: Int
+    penalty_abatement_amount: Int
+    penalty_abatement_percent: Int
+    penalty_abatement_point: Int
+    designate_type: Int
+    designate_number_from: Int
+    designate_number_to: Int
+    sales_from: Int
+    sales_to: Int
+    salary_rate: Int
+    salary_rate_inequality_type: Int
+    working_days_from: Int
+    working_days_to: Int
+  ): Penalty
+  updatePenalty(
+    detail_id: Int!
+    is_point_subtraction: Int
+    period_type: Int
+    period_week_code: Int
+    target_adaptation_type: Int
+    penalty_abatement_type: Int
+    penalty_abatement_amount: Int
+    penalty_abatement_percent: Int
+    penalty_abatement_point: Int
+    designate_type: Int
+    designate_number_from: Int
+    designate_number_to: Int
+    sales_from: Int
+    sales_to: Int
+    salary_rate: Int
+    salary_rate_inequality_type: Int
+    working_days_from: Int
+    working_days_to: Int
+  ): Penalty
+  deletePenalty(id: Int, detail_id: [Int]): Penalty
+  createSalaryPay(salary_system_id: Int!, pay_type: Int!): SalaryPay
+  updateSalaryPay(id: Int!, pay_type: Int): SalaryPay
+  deleteSalaryPay(id: ID!): SalaryPay
+  createSalaryPayChangeDesignate(
+    salary_pay_id: Int!
+    reflection_timing_type: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    applicable_range_type: Int
+    is_ratio_amount: Int
+    is_ratio_percent: Int
+    ratio_amount: Int
+    ratio_percent: Int
+    start_type: Int
+    continuation_period: Int
+  ): SalaryPayChangeDesignate
+  updateSalaryPayChangeDesignate(
+    id: Int
+    detail_id: Int
+    reflection_timing_type: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    applicable_range_type: Int
+    is_ratio_amount: Int
+    is_ratio_percent: Int
+    ratio_amount: Int
+    ratio_percent: Int
+    start_type: Int
+    continuation_period: Int
+  ): SalaryPayChangeDesignate
+  deleteSalaryPayChangeDesignate(
+    id: Int
+    detail_id: [Int]
+  ): [SalaryPayChangeDesignate]
+  createSalaryPayConditions(
+    salary_pay_id: Int!
+    conditions_code: Int!
+    name: String!
+    period_type: Int
+    period_week: Int
+    pay_form_type: Int
+    fixed_pay_amount: Int
+    pay_amount: Int
+    pay_percent: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    sales_judg_type: Int
+    sales_from: Int
+    sales_to: Int
+    salary_rate_from: Int
+    salary_rate_to: Int
+    salary_rate_inequality_type: Int
+    working_days_from: Int
+    working_days_to: Int
+    working_time_from: Int
+    working_time_to: Int
+  ): SalaryPayConditions
+  updateSalaryPayConditions(
+    detail_id: Int!
+    period_type: Int
+    period_week: Int
+    pay_form_type: Int
+    fixed_pay_amount: Int
+    pay_amount: Int
+    pay_percent: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    sales_judg_type: Int
+    sales_from: Int
+    sales_to: Int
+    salary_rate_from: Int
+    salary_rate_to: Int
+    salary_rate_inequality_type: Int
+    working_days_from: Int
+    working_days_to: Int
+    working_time_from: Int
+    working_time_to: Int
+  ): SalaryPayConditions
+  deleteSalaryPayConditions(id: Int, detail_id: [Int]): SalaryPayConditions
+  createSalaryPayHourlyWageFixedTime(
+    salary_pay_id: Int!
+    is_contract_hourly_wage: Int
+    time_period_from: String
+    time_period_to: String
+    amount: Int
+  ): SalaryPayHourlyWageFixedTime
+  updateSalaryPayHourlyWageFixedTime(
+    id: Int
+    detail_id: Int
+    time_period_from: String
+    time_period_to: String
+    amount: Int
+    is_contract_hourly_wage: Int
+  ): SalaryPayHourlyWageFixedTime
+  deleteSalaryPayHourlyWageFixedTime(
+    id: Int
+    detail_id: [Int]
+  ): [SalaryPayHourlyWageFixedTime]
+  createSalaryPaySlide(
+    salary_pay_id: Int!
+    period_type: Int!
+    period_week_code: Int
+    slide_code: Int
+    sales_from: Int
+    sales_to: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    pay_amount: Int
+  ): SalaryPaySlide
+  updateSalaryPaySlide(
+    id: Int
+    detail_id: Int
+    period_type: Int
+    period_week_code: Int
+    sales_from: Int
+    sales_to: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    pay_amount: Int
+  ): SalaryPaySlide
+  deleteSalaryPaySlide(
+    id: Int
+    slide_code: Int
+    detail_id: [Int]
+  ): SalaryPaySlide
+  createSalaryPoint(
+    salary_system_id: Int!
+    period_type: Int!
+    period_week_code: Int
+  ): SalaryPoint
+  updateSalaryPoint(
+    id: Int!
+    period_type: Int
+    period_week_code: Int
+  ): SalaryPoint
+  deleteSalaryPoint(id: Int!): SalaryPoint
+  createSalaryPointConditions(
+    salary_point_id: Int!
+    conditions_code: Int!
+    name: String!
+    period_type: Int
+    period_week: Int
+    pay_form_type: Int
+    is_subtraction_point_percent: Int
+    fixed_pay_amount: Int
+    pay_amount: Int
+    pay_percent: Int
+    subtraction_point_percent: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    sales_judg_type: Int
+    sales_from: Int
+    sales_to: Int
+    salary_rate_from: Int
+    salary_rate_to: Int
+    salary_rate_inequality_type: Int
+    working_days_from: Int
+    working_days_to: Int
+    working_time_from: Int
+    working_time_to: Int
+  ): SalaryPointConditions
+  updateSalaryPointConditions(
+    detail_id: Int
+    period_type: Int
+    period_week: Int
+    pay_form_type: Int
+    is_subtraction_point_percent: Int
+    fixed_pay_amount: Int
+    pay_amount: Int
+    pay_percent: Int
+    subtraction_point_percent: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    sales_judg_type: Int
+    sales_from: Int
+    sales_to: Int
+    salary_rate_from: Int
+    salary_rate_to: Int
+    salary_rate_inequality_type: Int
+    working_days_from: Int
+    working_days_to: Int
+    working_time_from: Int
+    working_time_to: Int
+  ): SalaryPointConditions
+  deleteSalaryPointConditions(id: Int, detail_id: [Int]): SalaryPointConditions
+  createSalaryPointDesignate(
+    salary_point_id: Int!
+    salary_point_time_range_detail_id: Int
+    salary_point_set_time_shift_detail_id: Int
+    is_free: Int
+    companion: Int
+    designate: Int
+    hall: Int
+    free: Int
+  ): SalaryPointDesignate
+  updateSalaryPointDesignate(
+    id: Int!
+    salary_point_time_range_detail_id: Int
+    salary_point_set_time_shift_detail_id: Int
+    is_free: Int
+    companion: Int
+    designate: Int
+    hall: Int
+    free: Int
+  ): SalaryPointDesignate
+  deleteSalaryPointDesignate(id: Int!): SalaryPointDesignate
+  createSalaryPointItems(
+    salary_point_id: Int!
+    item_id: Int
+    item_group_code: Int
+    item_type: Int
+    amount_from: Int
+    amount_to: Int
+    point: Int
+  ): SalaryPointItems
+  updateSalaryPointItems(
+    id: Int!
+    item_id: Int
+    amount_from: Int
+    amount_to: Int
+    point: Int
+  ): SalaryPointItems
+  deleteSalaryPointItems(id: Int!): SalaryPointItems
+  createSalaryPointSalaryPayChange(
+    salary_point_id: Int!
+    point_from: Int
+    point_to: Int
+    pay_type: Int
+    pay_amount: Int
+  ): SalaryPointSalaryPayChange
+  updateSalaryPointSalaryPayChange(
+    id: Int!
+    point_from: Int
+    point_to: Int
+    pay_type: Int
+    pay_amount: Int
+  ): SalaryPointSalaryPayChange
+  deleteSalaryPointSalaryPayChange(id: Int!): SalaryPointSalaryPayChange
+  createSalaryPointSalaryRate(
+    salary_point_id: Int!
+    salary_rate_from: Int
+    salary_rate_to: Int
+    point: Int
+  ): SalaryPointSalaryRate
+  updateSalaryPointSalaryRate(
+    id: Int!
+    salary_rate_from: Int
+    salary_rate_to: Int
+    point: Int
+  ): SalaryPointSalaryRate
+  deleteSalaryPointSalaryRate(id: Int!): SalaryPointSalaryRate
+  createSalaryPointSales(
+    salary_point_id: Int!
+    sales_from: Int
+    sales_to: Int
+    point: Int
+  ): SalaryPointSales
+  updateSalaryPointSales(
+    id: Int!
+    sales_from: Int
+    sales_to: Int
+    point: Int
+  ): SalaryPointSales
+  deleteSalaryPointSales(id: Int!): SalaryPointSales
+  createSalaryPointSetTimeShift(
+    salary_point_id: Int!
+    salary_point_time_range_detail_id: Int
+    is_unused: Int
+    is_use: Int
+    item_id: Int
+  ): SalaryPointSetTimeShift
+  updateSalaryPointSetTimeShift(
+    id: Int
+    detail_id: Int
+    salary_point_time_range_detail_id: Int
+    is_unused: Int
+    is_use: Int
+  ): SalaryPointSetTimeShift
+  deleteSalaryPointSetTimeShift(
+    id: Int
+    detail_id: [Int]
+  ): SalaryPointSetTimeShift
+  createSalaryPointTimeRange(
+    salary_point_id: Int!
+    is_unused: Int
+    is_use: Int
+    time_range_from: String
+    time_range_to: String
+  ): SalaryPointTimeRange
+  updateSalaryPointTimeRange(
+    id: Int
+    detail_id: Int
+    is_unused: Int
+    is_use: Int
+    time_range_from: String
+    time_range_to: String
+  ): SalaryPointTimeRange
+  deleteSalaryPointTimeRange(id: Int, detail_id: [Int]): SalaryPointTimeRange
+  createSalarySales(
+    salary_system_id: Int!
+    sales_from: Int
+    sales_to: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    payment_rate: Int
+  ): SalarySales
+  updateSalarySales(
+    id: Int
+    detail_id: Int
+    sales_from: Int
+    sales_to: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    payment_rate: Int
+  ): SalarySales
+  deleteSalarySales(id: Int, detail_id: [Int]): SalarySales
+  createSalarySalesConditions(
+    salary_sales_id: Int!
+    conditions_code: Int!
+    name: String!
+    period_type: Int
+    period_week: Int
+    share_rate_type: Int
+    sales_share_rate: Int
+    salary_share_rate: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    working_days_from: Int
+    working_days_to: Int
+    working_time_from: Int
+    working_time_to: Int
+  ): SalarySalesConditions
+  updateSalarySalesConditions(
+    detail_id: Int!
+    period_type: Int
+    period_week: Int
+    share_rate_type: Int
+    sales_share_rate: Int
+    salary_share_rate: Int
+    companion_from: Int
+    companion_to: Int
+    designate_from: Int
+    designate_to: Int
+    hall_from: Int
+    hall_to: Int
+    working_days_from: Int
+    working_days_to: Int
+    working_time_from: Int
+    working_time_to: Int
+  ): SalarySalesConditions
+  deleteSalarySalesConditions(id: Int, detail_id: [Int]): SalarySalesConditions
+  createSalarySystem(
+    name: String!
+    start_time: String
+    end_time: String
+    regulation_time_type: Int
+    regulation_time_from: Int
+    regulation_time_to: Int
+  ): SalarySystem
+  updateSalarySystem(
+    id: Int!
+    name: String
+    start_time: String
+    end_time: String
+    regulation_time_type: Int
+    regulation_time_from: Int
+    regulation_time_to: Int
+  ): SalarySystem
+  deleteSalarySystem(id: ID!): SalarySystem
+  createSalarySystemForCast(
+    salary_system_id: Int!
+    cast_id: Int!
+  ): SalarySystemForCast
+  updateSalarySystemForCast(
+    id: Int!
+    salary_system_id: Int
+  ): SalarySystemForCast
+  deleteSalarySystemForCast(id: Int!): SalarySystemForCast
+  createSalarySystemForStaff(
+    salary_system_id: Int!
+    staff_id: Int!
+  ): SalarySystemForStaff
+  updateSalarySystemForStaff(
+    id: Int!
+    salary_system_id: Int
+  ): SalarySystemForStaff
+  deleteSalarySystemForStaff(id: Int!): SalarySystemForStaff
+}
+
+type RestoreCheckedPayment {
+  id: Int
+  seat_checked_payment: [SeatCheckedPaymentIdList]
+}
+
+type SeatCheckedPaymentIdList {
+  id: Int
+}
+
+# A datetime and timezone string in ISO 8601 format `Y-m-dTH:i:sO`, e.g. `2020-04-20T13:53:12+02:00`.
+scalar DateTimeTz
+
+type Item {
+  id: ID!
+  created_at: DateTime!
+  item_revision: ItemRevision
+}
+
+type ItemRevision {
+  id: ID!
+  item_id: Int!
+  item_category_id: Int
+  group_code: Int!
+  name: String
+  price: Int!
+  cost: Int
+  default_stock: String
+  display: Int!
+  type: Int!
+  time: Int
+  point: Int
+  edited_at: DateTime!
+}
+
+type SalaryPointItemsByGroup {
+  drink: [SalaryPointItems]
+  food: [SalaryPointItems]
+  bottle: [SalaryPointItems]
+}
+
+# Pagination information about the corresponding list of items.
+type PaginatorInfo {
+  # Total count of available items in the page.
+  count: Int!
+
+  # Current pagination page.
+  currentPage: Int!
+
+  # Index of first item in the current page.
+  firstItem: Int
+
+  # If collection has more pages.
+  hasMorePages: Boolean!
+
+  # Index of last item in the current page.
+  lastItem: Int
+
+  # Last page number of the collection.
+  lastPage: Int!
+
+  # Number of items per page in the collection.
+  perPage: Int!
+
+  # Total items available in the collection.
+  total: Int!
+}
+
+# Pagination information about the corresponding list of items.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+
+  # Total number of node in connection.
+  total: Int
+
+  # Count of nodes in current request.
+  count: Int
+
+  # Current page of request.
+  currentPage: Int
+
+  # Last page in connection.
+  lastPage: Int
+}
+
+# The available directions for ordering a list of records.
+enum SortOrder {
+  # Sort records in ascending order.
+  ASC
+
+  # Sort records in descending order.
+  DESC
+}
+
+# Allows ordering a list of records.
+input OrderByClause {
+  # The column that is used for ordering.
+  field: String!
+
+  # The direction that is used for ordering.
+  order: SortOrder!
+}
+
+# Specify if you want to include or exclude trashed results from a query.
+enum Trashed {
+  # Only return trashed results.
+  ONLY
+
+  # Return both trashed and non-trashed results.
+  WITH
+
+  # Only return non-trashed results.
+  WITHOUT
+}

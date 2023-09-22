@@ -7,7 +7,7 @@ import useLicenseGlobal from "@/globalstates/license";
 import { useState } from "react";
 import useIsCardGlobal from "@/globalstates/isCard";
 import useIsFullscreenGlobal from "@/globalstates/isFullscreen";
-import makeFullscreen from "./makeFullscreen";
+import makeFullscreen from "@/utils/makeFullscreen";
 
 export default function DebugMenu() {
   const [license] = useLicenseGlobal();

@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import useIsFooterGlobal from "@/globalstates/isFooter";
-import Button from "./button";
-import Border from "./border";
+import Button from "../templates/button";
+import Border from "../templates/border";
 
 export default function Footer() {
   const [isFooter, setIsFooter] = useIsFooterGlobal();
