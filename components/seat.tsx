@@ -18,7 +18,7 @@ export default function Seat({
   return (
     <div
       className={
-        "relative flex h-full w-full cursor-pointer items-center justify-center rounded-xl border border-black bg-[#f3e1bc] font-bold text-[#e97e00] shadow-md transition-all " +
+        "relative flex h-full w-full cursor-pointer items-center justify-center rounded-xl border border-black bg-natural font-bold text-accent shadow-md transition-all " +
         area
       }
       onClick={() => setIsCard(true)}

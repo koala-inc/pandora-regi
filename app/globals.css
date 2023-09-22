@@ -10,6 +10,7 @@ body {
   position: fixed;
   padding: 0;
   margin: 0;
+  user-select: none;
 }
 
 #map {
@@ -20,4 +21,6 @@ body {
   align-items: start;
   grid-template-columns: repeat(auto-fill, 60px);
   grid-template-rows: repeat(auto-fill, 60px);
+  justify-content: center;
+  align-content: center;
 }

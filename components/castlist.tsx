@@ -6,19 +6,16 @@ import Loading from "./loading";
 import { searchCastQuery } from "@/gqls/query/casts";
 import ErrorMessage from "./errorMessage";
 
-preload(searchCastQuery, (q) =>
-  client.request(q, {
-    store_code: 1,
-  })
-);
+const gql = searchCastQuery;
+const variables = {
+  store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
+};
+
+preload(gql, (q) => client.request(q, variables));
 
 export default function CastList() {
-  const { data, error, isLoading } = useSWR<SEARCH_CASTS>(
-    searchCastQuery,
-    (q) =>
-      client.request(q, {
-        store_code: 1,
-      })
+  const { data, error, isLoading } = useSWR<SEARCH_CASTS>(gql, (q) =>
+    client.request(q, variables)
   );
   if (isLoading) return <Loading />;
   if (error) return <ErrorMessage message={error.message} />;

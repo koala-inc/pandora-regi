@@ -1,21 +1,8 @@
-import { useCallback } from "react";
-import useGlobalSWR from "./useGlobalSWR";
+import useGlobal from "./useGlobal";
 
-const key = "isFooter";
-let initialState = false;
-
-export default function useIsFooterGlobal(): [
-  typeof initialState,
-  (data: typeof initialState) => void
-] {
-  const { data: state, mutate } = useGlobalSWR(key, initialState);
-
-  const setData = useCallback(
-    (data: typeof initialState) => {
-      mutate(data, false);
-    },
-    [mutate]
-  );
-
-  return [state, setData];
+export default function useIsFooterGlobal() {
+  return useGlobal({
+    key: "isFooter",
+    initialState: false,
+  });
 }

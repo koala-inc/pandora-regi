@@ -1,8 +1,8 @@
 import useGlobal from "./useGlobal";
 
-export default function useIsHeaderGlobal() {
+export default function useIsFullscreenGlobal() {
   return useGlobal({
-    key: "isHeader",
+    key: "isFullscreen",
     initialState: false,
   });
 }
