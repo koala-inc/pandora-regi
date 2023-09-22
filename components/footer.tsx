@@ -13,7 +13,7 @@ export default function Footer() {
       animate={{ bottom: 15 }}
       exit={{ bottom: -160 }}
       transition={{ ease: "easeInOut", bounce: 0, duration: 0.1 }}
-      className="absolute bottom-[15px] left-1/2 z-30 h-auto w-2/3 max-w-[1000px] -translate-x-1/2"
+      className="absolute bottom-[15px] left-1/2 z-30 h-auto w-[90%] max-w-[1000px] -translate-x-1/2"
     >
       <Border size="px-5 py-3">
         <div className="flex w-full flex-wrap items-start justify-around pr-[65px]">
