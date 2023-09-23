@@ -1,4 +1,4 @@
-import Seat from "@/components/seat";
+import Seat from "@/components/templates/seat";
 import seatMap from "@/configs/seatMap";
 import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";

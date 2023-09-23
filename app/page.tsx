@@ -10,8 +10,8 @@ import useIsFooterGlobal from "@/globalstates/isFooter";
 import Card from "@/components/templates/card";
 import useIsCardGlobal from "@/globalstates/isCard";
 import DebugButton from "@/components/debug/debugButton";
-import SeatMap from "@/components/seatMap";
-import Background from "@/components/background";
+import SeatMap from "@/components/templates/seatMap";
+import Background from "@/components/parts/background";
 import { AnimatePresence } from "framer-motion";
 
 export default function Home() {
