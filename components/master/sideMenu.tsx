@@ -59,8 +59,11 @@ export default function SideMenu() {
 
   return (
     <div className="asbolute top-0 left-0 w-[200px] h-[100dvh] overflow-y-scroll bg-thirdary border-t-8 border-secondary">
-      {nav.map((item) => (
-        <div className="relative flex justify-center items-center text-white w-full h-[60px] border-b-8 border-secondary">
+      {nav.map((item, index) => (
+        <div
+          key={index}
+          className="relative flex justify-center items-center text-white w-full h-[60px] border-b-8 border-secondary"
+        >
           <p className="pr-[30px] text-center w-full">{item.name}</p>
           <nav className="absolute right-[5px] top-[14px] z-10 cursor-pointer">
             <Border rounded="rounded-full" size="h-[20px] w-[20px] p-[3px]">

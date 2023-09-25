@@ -17,7 +17,7 @@ function Content() {
     setInterval(() => {
       setDatetime(new Date());
     }, 60 * 1000);
-  }, []);
+  }, [datetime]);
 
   return (
     <div className="h-full w-full border-y-4 border-secondary bg-primary">
