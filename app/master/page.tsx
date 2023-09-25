@@ -5,6 +5,7 @@ import Background from "@/components/parts/background";
 import TestForm from "@/components/forms/test";
 import DebugButton from "@/components/debug/debugButton";
 import DebugMenu from "@/components/debug/debugMenu";
+import SideMenu from "@/components/master/sideMenu";
 
 export default function Home() {
   const [isDebug] = useIsDebugGlobal();
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <main className="relative h-full w-full">
       <Background />
+      <SideMenu />
       <TestForm />
       <DebugButton />
       {isDebug && <DebugMenu />}

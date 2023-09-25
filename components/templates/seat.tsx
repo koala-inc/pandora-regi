@@ -13,8 +13,8 @@ export default function Seat({
   const overlay = true;
 
   const [isCard, setIsCard] = useIsCardGlobal();
-  const editMode = useLongPress(() => {
-    alert("転卓、拡張、縮小モード移行");
+  const editMode = useLongPress(() => alert("モード移行"), {
+    threshold: Number(process.env.NEXT_PUBLIC_LONG_TAP_MILLI_SECOND) || 1000,
   });
 
   // 指名は0.5rem
@@ -26,7 +26,7 @@ export default function Seat({
         area
       }
       onClick={() => setIsCard(true)}
-      {...editMode()}
+      {...editMode(id)}
     >
       {overlay ? (
         <>
