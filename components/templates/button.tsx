@@ -17,7 +17,7 @@ export default function Button({
         <span
           className={
             "flex min-h-[50px] min-w-[110px] tracking-wider leading-4 items-center justify-center rounded-md border border-black bg-primary px-4 py-1 text-xs " +
-            disabledCss
+            disabled
           }
         >
           {children}

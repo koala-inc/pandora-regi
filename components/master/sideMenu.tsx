@@ -58,7 +58,7 @@ export default function SideMenu() {
   ];
 
   return (
-    <div className="asbolute top-0 left-0 w-[200px] h-[100dvh] overflow-y-scroll bg-thirdary border-t-8 border-secondary">
+    <div className="absolute font-bold top-0 left-0 w-[200px] h-[100dvh] overflow-y-scroll bg-thirdary border-t-8 border-secondary">
       {nav.map((item, index) => (
         <div
           key={index}
