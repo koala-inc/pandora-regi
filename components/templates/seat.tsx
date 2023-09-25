@@ -1,4 +1,5 @@
 import useIsCardGlobal from "@/globalstates/isCard";
+import { useLongPress } from "use-long-press";
 
 export default function Seat({
   children,
@@ -12,6 +13,9 @@ export default function Seat({
   const overlay = true;
 
   const [isCard, setIsCard] = useIsCardGlobal();
+  const editMode = useLongPress(() => {
+    alert("転卓、拡張、縮小モード移行");
+  });
 
   // 指名は0.5rem
   // 入退店は0.8rem
@@ -22,6 +26,7 @@ export default function Seat({
         area
       }
       onClick={() => setIsCard(true)}
+      {...editMode()}
     >
       {overlay ? (
         <>
