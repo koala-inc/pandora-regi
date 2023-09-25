@@ -13,19 +13,31 @@ import DebugButton from "@/components/debug/debugButton";
 import SeatMap from "@/components/templates/seatMap";
 import Background from "@/components/parts/background";
 import { AnimatePresence } from "framer-motion";
+import useIsAnimateGlobal from "@/globalstates/isAnimate";
 
 export default function Home() {
   const [isDebug] = useIsDebugGlobal();
   const [isHeader] = useIsHeaderGlobal();
   const [isFooter] = useIsFooterGlobal();
   const [isCard] = useIsCardGlobal();
+  const [isAnimate] = useIsAnimateGlobal();
 
   return (
     <main className="relative h-full w-full">
       <Background />
-      <AnimatePresence>{isHeader && <Header />}</AnimatePresence>
-      <AnimatePresence>{isFooter && <Footer />}</AnimatePresence>
-      <AnimatePresence>{isCard && <Card>aaa</Card>}</AnimatePresence>
+      {isAnimate ? (
+        <>
+          <AnimatePresence>{isHeader && <Header />}</AnimatePresence>
+          <AnimatePresence>{isFooter && <Footer />}</AnimatePresence>
+          <AnimatePresence>{isCard && <Card>aaa</Card>}</AnimatePresence>
+        </>
+      ) : (
+        <>
+          {isHeader && <Header />}
+          {isFooter && <Footer />}
+          {isCard && <Card>aaa</Card>}
+        </>
+      )}
       <SeatMap />
       <OverlayNav />
       <DebugButton />
