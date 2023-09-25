@@ -2,9 +2,9 @@
 
 import useSWR, { preload } from "swr";
 import client from "@/connection";
-import Loading from "./loading";
+import Loading from "@/components/templates/loading";
 import { searchCastQuery } from "@/gqls/query/casts";
-import ErrorMessage from "./errorMessage";
+import ErrorMessage from "@/components/templates/errorMessage";
 
 const gql = searchCastQuery;
 const variables = {

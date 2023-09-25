@@ -3,7 +3,7 @@ import useIsFooterGlobal from "@/globalstates/isFooter";
 import Image from "next/image";
 import useIsFullscreenGlobal from "@/globalstates/isFullscreen";
 import makeFullscreen from "@/utils/makeFullscreen";
-import Border from "../templates/border";
+import Border from "@/components/templates/border";
 
 export default function OverlayNav() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();

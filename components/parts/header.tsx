@@ -2,17 +2,19 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import useIsHeaderGlobal from "@/globalstates/isHeader";
+import { format } from "date-fns";
+import { ja } from "date-fns/locale";
 
 export default function Header() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
-  const [datetime, setDatetime] = useState(DateTime.now());
+  const [datetime, setDatetime] = useState(new Date());
 
   useEffect(() => {
+    setTimeout(() => {}, (60 - datetime.getSeconds()) * 1000);
     setInterval(() => {
-      setDatetime(DateTime.now());
+      setDatetime(new Date());
     }, 60 * 1000);
   }, []);
 
@@ -29,7 +31,7 @@ export default function Header() {
           <div className="px-6">
             <div className="text-accent">時間</div>
             <div className="text-4xl text-white">
-              {datetime.toFormat("HH:mm")}
+              {format(datetime, "HH:mm:ss", { locale: ja })}
             </div>
           </div>
           <nav

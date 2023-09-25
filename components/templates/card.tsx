@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import Border from "./border";
+import Border from "@/components/templates/border";
 import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
 

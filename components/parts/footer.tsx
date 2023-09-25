@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import useIsFooterGlobal from "@/globalstates/isFooter";
-import Button from "../templates/button";
-import Border from "../templates/border";
+import Button from "@/components/templates/button";
+import Border from "@/components/templates/border";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Footer() {
+  const router = useRouter();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
 
   return (
@@ -32,7 +35,9 @@ export default function Footer() {
             <br />
             伝票履歴
           </Button>
-          <Button>マスター</Button>
+          <Link href={"/master"}>
+            <Button>マスター</Button>
+          </Link>
           <Button disabled>ログ</Button>
           <Button disabled>コール票発行</Button>
         </div>
