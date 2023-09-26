@@ -8,6 +8,13 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 
-module.exports = withBundleAnalyzer({
-  nextConfig,
+const withPWA = require("next-pwa")({
+  enabled: process.env.ANALYZE !== "true",
+  dest: "public",
 });
+
+module.exports = withPWA(
+  withBundleAnalyzer({
+    nextConfig,
+  })
+);

@@ -1,6 +1,4 @@
-"use client";
-
-import { useEffect } from "react";
+import { useCallback } from "react";
 import useSWR from "swr";
 
 export default function useGlobalSWR<T>(key: string, initialData: T) {
@@ -12,7 +10,7 @@ export default function useGlobalSWR<T>(key: string, initialData: T) {
     revalidateIfStale: false,
   });
 
-  useEffect(() => {
+  useCallback(() => {
     mutate((_data) => _data || initialData, false);
   }, [mutate, initialData]);
 
