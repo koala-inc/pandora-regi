@@ -14,6 +14,7 @@ export default function SeatMap() {
     <div className="h-full w-full overflow-scroll">
       <section
         id="map"
+        className="touch-manipulation"
         onClick={() => {
           if (isHeader) setIsHeader(false);
           if (isFooter) setIsFooter(false);

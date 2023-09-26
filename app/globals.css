@@ -15,7 +15,6 @@ body {
 
 #map {
   display: grid;
-  touch-action: manipulation;
   width: 100%;
   min-width: 1370px;
   height: 100%;
