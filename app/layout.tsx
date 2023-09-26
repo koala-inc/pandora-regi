@@ -1,10 +1,8 @@
 import { Metadata } from "next";
 import "./globals.css";
 
-const appRoot = "https://laverna.vercel.app";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(appRoot),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || ""),
   title: process.env.npm_package_name || "",
   description: "バージョン：" + process.env.npm_package_version || "",
   applicationName: process.env.npm_package_name || "",
@@ -29,7 +27,7 @@ export const metadata: Metadata = {
   robots:
     "noarchive nositelinkssearchbox nosnippet max-image-preview:none max-video-preview:0 noimageindex",
   alternates: {
-    canonical: appRoot,
+    canonical: process.env.NEXT_PUBLIC_SITE_URL || "",
   },
   icons: [
     { rel: "icon", url: "/icons/logo.png" },
@@ -40,7 +38,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: process.env.npm_package_name || "",
     description: process.env.npm_package_description || "",
-    url: appRoot,
+    url: process.env.NEXT_PUBLIC_SITE_URL || "",
     siteName: process.env.npm_package_name || "",
     images: [
       {
