@@ -9,24 +9,24 @@
     "description": "laverna POS",
     "icons": [
         {
-            "src": "/icon-192x192.png",
+            "src": "/icons/logo.jpg",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/jpg"
         },
         {
-            "src": "/icon-256x256.png",
+            "src": "/icons/logo.jpg",
             "sizes": "256x256",
-            "type": "image/png"
+            "type": "image/jpg"
         },
         {
-            "src": "/icon-384x384.png",
+            "src": "/icons/logo.jpg",
             "sizes": "384x384",
-            "type": "image/png"
+            "type": "image/jpg"
         },
         {
-            "src": "/icon-512x512.png",
+            "src": "/icons/logo.jpg",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/jpg"
         }
     ]
 }
