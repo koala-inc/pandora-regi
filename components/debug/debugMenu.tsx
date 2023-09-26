@@ -6,8 +6,6 @@ import useIsFooterGlobal from "@/globalstates/isFooter";
 import useLicenseGlobal from "@/globalstates/license";
 import { useState } from "react";
 import useIsCardGlobal from "@/globalstates/isCard";
-import useIsFullscreenGlobal from "@/globalstates/isFullscreen";
-import makeFullscreen from "@/utils/makeFullscreen";
 import useIsAnimateGlobal from "@/globalstates/isAnimate";
 
 export default function DebugMenu() {
@@ -17,7 +15,6 @@ export default function DebugMenu() {
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isCard, setIsCard] = useIsCardGlobal();
   const [isAnimate, setIsAnimate] = useIsAnimateGlobal();
-  const [isFullscreen, setIsFullscreen] = useIsFullscreenGlobal();
   const [activeTab, setActiveTab] = useState(0);
   const [activeTab2, setActiveTab2] = useState(0);
 
@@ -70,10 +67,6 @@ export default function DebugMenu() {
               <li className="flex">
                 <div className="w-[6rem]">isAnimate</div>:
                 {JSON.stringify(isAnimate)}
-              </li>
-              <li className="flex">
-                <div className="w-[6rem]">isFullscreen</div>:
-                {String(isFullscreen)}
               </li>
             </ul>
           )}
@@ -157,15 +150,6 @@ export default function DebugMenu() {
                 onClick={() => setIsCard(!isCard)}
               >
                 カード
-              </button>
-              <button
-                className="m-3 rounded-md bg-accent px-4 py-2"
-                onClick={() => {
-                  setIsFullscreen(!isFullscreen);
-                  makeFullscreen(document.querySelector("main"));
-                }}
-              >
-                フルスクリーン
               </button>
               <button
                 className="m-3 rounded-md bg-accent px-4 py-2"

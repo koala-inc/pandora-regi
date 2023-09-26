@@ -9,15 +9,9 @@ import SideMenu from "@/components/master/sideMenu";
 import Border from "@/components/templates/border";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
-import makeFullscreen from "@/utils/makeFullscreen";
 
 export default function Home() {
   const [isDebug] = useIsDebugGlobal();
-
-  useEffect(() => {
-    makeFullscreen(document.querySelector("main"));
-  }, []);
 
   return (
     <main className="relative h-full w-full">
