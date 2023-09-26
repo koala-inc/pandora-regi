@@ -14,7 +14,7 @@ export default function SeatMap() {
   return (
     <TransformWrapper initialScale={1}>
       <TransformComponent>
-        <div className="flex justify-center items-center w-[200dvw] h-[100dvh]">
+        <div className="flex justify-center items-center w-[100dvw] h-[100dvh]">
           <section
             id="map"
             onClick={() => {
