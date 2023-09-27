@@ -14,6 +14,7 @@ import SeatMap from "@/components/templates/seatMap";
 import Background from "@/components/parts/background";
 import { AnimatePresence } from "framer-motion";
 import useIsAnimateGlobal from "@/globalstates/isAnimate";
+import OrderSheet from "@/components/templates/orderSheet";
 
 export default function Home() {
   const [isDebug] = useIsDebugGlobal();
@@ -29,13 +30,23 @@ export default function Home() {
         <>
           <AnimatePresence>{isHeader && <Header />}</AnimatePresence>
           <AnimatePresence>{isFooter && <Footer />}</AnimatePresence>
-          <AnimatePresence>{isCard && <Card>aaa</Card>}</AnimatePresence>
+          <AnimatePresence>
+            {isCard && (
+              <Card>
+                <OrderSheet />
+              </Card>
+            )}
+          </AnimatePresence>
         </>
       ) : (
         <>
           {isHeader && <Header />}
           {isFooter && <Footer />}
-          {isCard && <Card>aaa</Card>}
+          {isCard && (
+            <Card>
+              <OrderSheet />
+            </Card>
+          )}
         </>
       )}
       <SeatMap />

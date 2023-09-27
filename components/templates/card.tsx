@@ -3,9 +3,10 @@ import Border from "@/components/templates/border";
 import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsAnimateGlobal from "@/globalstates/isAnimate";
+import Control from "./control";
 
 function Content({ children }: { children: any }) {
-  return <Border size="min-h-[90dvh] px-4 py-2">{children}</Border>;
+  return <Border size="min-h-[calc(100dvh-40px)] px-4 py-2">{children}</Border>;
 }
 
 export default function Card({ children }: { children: any }) {
@@ -16,19 +17,22 @@ export default function Card({ children }: { children: any }) {
   return (
     <>
       {isAnimate.decoration ? (
-        <motion.div
-          initial={{ left: -360 }}
-          animate={{ left: 15 }}
-          exit={{ left: -360 }}
-          transition={{ ease: "easeInOut", bounce: 0, duration: 0.15 }}
-          className="absolute left-[15px] top-1/2 z-20 min-w-[360px] -translate-y-1/2"
-          onClick={() => {
-            if (isHeader) setIsHeader(false);
-            if (isFooter) setIsFooter(false);
-          }}
-        >
-          <Content>{children}</Content>
-        </motion.div>
+        <>
+          <motion.div
+            initial={{ left: -360 }}
+            animate={{ left: 15 }}
+            exit={{ left: -360 }}
+            transition={{ ease: "easeInOut", bounce: 0, duration: 0.15 }}
+            className="absolute left-[15px] top-1/2 z-20 min-w-[360px] -translate-y-1/2"
+            onClick={() => {
+              if (isHeader) setIsHeader(false);
+              if (isFooter) setIsFooter(false);
+            }}
+          >
+            <Content>{children}</Content>
+          </motion.div>
+          <Control>aaa</Control>
+        </>
       ) : (
         <div
           className="absolute left-[15px] top-1/2 z-20 min-w-[360px] -translate-y-1/2"
