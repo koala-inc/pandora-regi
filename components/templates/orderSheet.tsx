@@ -17,7 +17,7 @@ function Lists({
   }[];
 }) {
   return (
-    <ul className="h-[90px] w-full overflow-y-scroll">
+    <ul className="hidden-scrollbar h-[90px] w-full overflow-y-scroll">
       {lists.map((list, index) => (
         <li
           key={index}
