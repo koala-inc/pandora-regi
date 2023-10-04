@@ -5,22 +5,25 @@ import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsCardGlobal from "@/globalstates/isCard";
 import Image from "next/image";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import useIsControlGlobal from "@/globalstates/isControl";
 
 export default function SeatMap() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isCard, setIsCard] = useIsCardGlobal();
+  const [isControl, setIsControl] = useIsControlGlobal();
 
   return (
     <TransformWrapper initialScale={1}>
       <TransformComponent>
-        <div className="flex justify-center items-center w-[100dvw] h-[100dvh]">
+        <div className="flex h-[100dvh] w-[100dvw] items-center justify-center">
           <section
             id="map"
             onClick={() => {
               if (isHeader) setIsHeader(false);
               if (isFooter) setIsFooter(false);
               if (isCard) setIsCard(false);
+              if (isControl) setIsControl(false);
             }}
           >
             {seatMap.map((seat, index) => {

@@ -65,6 +65,7 @@ export default function SideMenu() {
           className="relative flex h-[60px] w-full items-center justify-center border-b-8 border-secondary text-white"
         >
           <p className="w-full pr-[30px] text-center">{item.name}</p>
+          
           <nav className="absolute right-[5px] top-[14px] z-10 cursor-pointer">
             <Border rounded="rounded-full" size="h-[20px] w-[20px] p-[3px]">
               <Image
@@ -76,6 +77,7 @@ export default function SideMenu() {
               />
             </Border>
           </nav>
+          
         </div>
       ))}
     </div>

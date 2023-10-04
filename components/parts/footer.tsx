@@ -69,9 +69,9 @@ export default function Footer() {
           <Content />
         </motion.footer>
       ) : (
-        <header className="absolute bottom-[15px] left-1/2 z-30 h-auto w-[90%] max-w-[960px] -translate-x-1/2">
+        <footer className="absolute bottom-[15px] left-1/2 z-30 h-auto w-[90%] max-w-[960px] -translate-x-1/2">
           <Content />
-        </header>
+        </footer>
       )}
     </>
   );

@@ -25,8 +25,17 @@ export default function Control({ children }: { children: any }) {
 
   return (
     <>
-      <div
-        className="absolute left-[390px] min-h-[calc(100dvh-30px)] top-1/2 z-20 min-w-[calc(100dvw-405px)] -translate-y-1/2"
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 100 }}
+        exit={{ opacity: 0 }}
+        transition={{
+          ease: "easeInOut",
+          bounce: 0,
+          duration: 0.15,
+          delay: 0.15,
+        }}
+        className="absolute left-[390px] top-1/2 z-20 min-h-[calc(100dvh-30px)] min-w-[calc(100dvw-405px)] -translate-y-1/2"
         onClick={() => {
           if (isHeader) setIsHeader(false);
           if (isFooter) setIsFooter(false);
@@ -34,7 +43,7 @@ export default function Control({ children }: { children: any }) {
       >
         <ContentHeader>{children}</ContentHeader>
         <Content>{children}</Content>
-      </div>
+      </motion.div>
     </>
   );
 }

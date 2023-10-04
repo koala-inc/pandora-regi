@@ -16,11 +16,11 @@ export default function SubBorder({
         size
       }
     >
-      <div className="absolute top-[-3px] w-[101%] h-2 border border-black rounded-full">
-        <div className="bg-secondary rounded-full w-full h-full"></div>
+      <div className="absolute top-[-3px] h-2 w-[101%] rounded-full border border-black">
+        <div className="h-full w-full rounded-full bg-secondary"></div>
       </div>
-      <div className="absolute bottom-[-3px] h-2 w-[101%] border border-black rounded-full">
-        <div className="bg-secondary rounded-full w-full h-full"></div>
+      <div className="absolute bottom-[-3px] h-2 w-[101%] rounded-full border border-black">
+        <div className="h-full w-full rounded-full bg-secondary"></div>
       </div>
       {children}
     </div>
