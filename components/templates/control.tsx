@@ -6,17 +6,11 @@ import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsAnimateGlobal from "@/globalstates/isAnimate";
 
 function ContentHeader({ children }: { children: any }) {
-  return (
-    <SubBorder size="min-h-[calc(20dvh-15px)] w-full px-4 py-2">
-      {children}
-    </SubBorder>
-  );
+  return <SubBorder size="h-[147.5px] w-full px-4 py-2">{children}</SubBorder>;
 }
 
 function Content({ children }: { children: any }) {
-  return (
-    <Border size="min-h-[calc(80dvh-40px)] w-full px-4 py-2">{children}</Border>
-  );
+  return <Border size="h-[582.5px] w-full px-4 py-2">{children}</Border>;
 }
 
 export default function Control({ children }: { children: any }) {
