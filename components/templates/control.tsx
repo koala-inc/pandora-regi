@@ -29,7 +29,7 @@ export default function Control({ children }: { children: any }) {
           duration: 0.15,
           delay: 0.15,
         }}
-        className="absolute left-[390px] top-1/2 z-20 min-h-[calc(100dvh-30px)] min-w-[calc(100dvw-405px)] -translate-y-1/2"
+        className="absolute left-[390px] top-1/2 z-20 min-h-[745px] min-w-[calc(100dvw-405px)] -translate-y-1/2"
         onClick={() => {
           if (isHeader) setIsHeader(false);
           if (isFooter) setIsFooter(false);
