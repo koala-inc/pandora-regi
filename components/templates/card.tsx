@@ -7,7 +7,7 @@ import Control from "./control";
 import useIsControlGlobal from "@/globalstates/isControl";
 
 function Content({ children }: { children: any }) {
-  return <Border size="h-[720px] px-4 py-2">{children}</Border>;
+  return <Border size="h-[740px] p-4">{children}</Border>;
 }
 
 export default function Card({ children }: { children: any }) {
