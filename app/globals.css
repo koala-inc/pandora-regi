@@ -11,6 +11,10 @@
     /* Chrome, Safari 対応 */
     display: none;
   }
+  .disabled {
+    filter: grayscale(1);
+    opacity: 0.5;
+  }
 }
 
 html,

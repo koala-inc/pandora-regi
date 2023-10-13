@@ -7,6 +7,7 @@ import useLicenseGlobal from "@/globalstates/license";
 import { useState } from "react";
 import useIsCardGlobal from "@/globalstates/isCard";
 import useIsAnimateGlobal from "@/globalstates/isAnimate";
+import useIsCalculatorGlobal from "@/globalstates/isCalculator";
 
 export default function DebugMenu() {
   const [license] = useLicenseGlobal();
@@ -15,6 +16,7 @@ export default function DebugMenu() {
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isCard, setIsCard] = useIsCardGlobal();
   const [isAnimate, setIsAnimate] = useIsAnimateGlobal();
+  const [isCalculator, setIsCalculator] = useIsCalculatorGlobal();
   const [activeTab, setActiveTab] = useState(0);
   const [activeTab2, setActiveTab2] = useState(0);
 
@@ -63,6 +65,10 @@ export default function DebugMenu() {
               </li>
               <li className="flex">
                 <div className="w-[6rem]">isCard</div>: {String(isCard)}
+              </li>
+              <li className="flex">
+                <div className="w-[6rem]">isCalculator</div>:{" "}
+                {String(isCalculator)}
               </li>
               <li className="flex">
                 <div className="w-[6rem]">isAnimate</div>:
@@ -150,6 +156,12 @@ export default function DebugMenu() {
                 onClick={() => setIsCard(!isCard)}
               >
                 カード
+              </button>
+              <button
+                className="m-3 rounded-md bg-accent px-4 py-2"
+                onClick={() => setIsCalculator(!isCalculator)}
+              >
+                電卓
               </button>
               <button
                 className="m-3 rounded-md bg-accent px-4 py-2"

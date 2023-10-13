@@ -15,7 +15,10 @@ module.exports = {
         accent: "#e97e00",
         natural: "#f3e1bc",
       },
+      gridTemplateRows: {
+        7: "repeat(7, minmax(0, 1fr))",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };

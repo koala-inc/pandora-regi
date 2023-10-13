@@ -10,7 +10,7 @@ export default function Seat({
   id: string;
   area: string;
 }) {
-  const overlay = true;
+  const overlay = false;
 
   const [isCard, setIsCard] = useIsCardGlobal();
   const editMode = useLongPress(() => alert("モード移行"), {

@@ -5,6 +5,8 @@ import Border from "./border";
 import Button from "./button";
 import useIsControlGlobal from "@/globalstates/isControl";
 import Toggle from "./toggle";
+import Toggle2 from "./toggle2";
+import Toggle3 from "./toggle3";
 
 function Lists({
   lists,
@@ -17,7 +19,7 @@ function Lists({
   }[];
 }) {
   return (
-    <ul className="hidden-scrollbar h-[90px] w-full overflow-y-scroll">
+    <ul className="hidden-scrollbar w-full overflow-y-scroll">
       {lists.map((list, index) => (
         <li
           key={index}
@@ -59,7 +61,7 @@ export default function OrderSheet() {
   return (
     <>
       <div
-        className="h-full w-full font-bold"
+        className="flex h-full w-[340px] flex-col font-bold"
         onClick={() => {
           if (isHeader) setIsHeader(false);
           if (isFooter) setIsFooter(false);
@@ -110,193 +112,14 @@ export default function OrderSheet() {
             </div>
           </div>
         </section>
-        <nav className="flex items-start justify-around py-3">
-          <div>
-            <Border rounded="rounded-full" stroke="md">
-              <Image
-                src={"/assets/custody.svg"}
-                width={24}
-                height={24}
-                alt=""
-                className="p-1"
-              />
-            </Border>
-            <div className="w-full text-center text-[0.5rem] text-accent">
-              荷物
-            </div>
-          </div>
-          <div>
-            <Border rounded="rounded-full" stroke="md">
-              <Image
-                src={"/assets/customer.svg"}
-                width={24}
-                height={24}
-                alt=""
-                className="p-1"
-              />
-            </Border>
-            <div className="w-full text-center text-[0.5rem] text-accent">
-              顧客
-            </div>
-          </div>
-          <div>
-            <Border rounded="rounded-full" stroke="md">
-              <Image
-                src={"/assets/keepbottle.svg"}
-                width={24}
-                height={24}
-                alt=""
-                className="p-1"
-              />
-            </Border>
-            <div className="w-full text-center text-[0.5rem] text-accent">
-              ボトル
-            </div>
-          </div>
-          <div>
-            <Border rounded="rounded-full" stroke="md">
-              <Image
-                src={"/assets/manager.svg"}
-                width={24}
-                height={24}
-                alt=""
-                className="p-1"
-              />
-            </Border>
-            <div className="w-full text-center text-[0.5rem] text-accent">
-              販促
-            </div>
-          </div>
-          <div>
-            <Border rounded="rounded-full" size="px-2" stroke="md">
-              1
-            </Border>
-          </div>
-          <div>
-            <Border rounded="rounded-full" size="px-2" stroke="md">
-              2
-            </Border>
-          </div>
-          <div>
-            <Border rounded="rounded-full" size="px-2" stroke="md">
-              3
-            </Border>
-          </div>
-          <div>
-            <Border rounded="rounded-full" size="px-2" stroke="md">
-              4
-            </Border>
-          </div>
-        </nav>
-        <section className="text-xs">
-          <div className="mb-3">
-            <div className="mb-1 flex w-full">
-              <div className="text-sm text-accent">セット料金</div>
-              <Line ml="ml-10" />
-            </div>
-            <div className="flex">
-              <Lists
-                lists={[
-                  {
-                    title: "メイン",
-                    lot: 1,
-                    price: 1000,
-                  },
-                  {
-                    title: "┗特別クーポン",
-                    lot: 1,
-                    price: -1000,
-                  },
-                  {
-                    title: "メイン",
-                    lot: 1,
-                    price: 1000,
-                  },
-                  {
-                    title: "延長",
-                    lot: 1,
-                    price: 1000,
-                  },
-                ]}
-              />
-              <div className="flex h-[90px] w-[60px] flex-col items-center justify-center pl-3">
-                <Border rounded="rounded-full" stroke="lg">
-                  <Image
-                    src={"/assets/add-customer.svg"}
-                    width={36}
-                    height={36}
-                    alt=""
-                    className="p-[6px]"
-                  />
-                </Border>
-                <div className="w-full text-center text-[0.5rem] text-accent">
-                  合流
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mb-3">
-            <div className="mb-1 flex w-full">
-              <div className="text-sm text-accent">指名キャスト</div>
-              <Line ml="ml-10" />
-            </div>
-            <div className="flex">
-              <Lists
-                lists={[
-                  {
-                    title: "キャストA",
-                    subTitle: "◯",
-                    lot: 1,
-                    price: 1000,
-                  },
-                  {
-                    title: "A",
-                    subTitle: "◯",
-                    lot: 100,
-                    price: 1000,
-                  },
-                  {
-                    title: "aaaaaaaaaA",
-                    subTitle: "◯",
-                    lot: 1,
-                    price: 105500,
-                  },
-                  {
-                    title: "キャストA",
-                    subTitle: "◯",
-                    lot: 12,
-                    price: 1000,
-                  },
-                  {
-                    title: "キャストA",
-                    subTitle: "◯",
-                    lot: 1,
-                    price: 1000,
-                  },
-                ]}
-              />
-              <div className="flex h-[90px] w-[60px] flex-col items-center justify-center pl-3">
-                <Border rounded="rounded-full" stroke="lg">
-                  <Image
-                    src={"/assets/cast.svg"}
-                    width={36}
-                    height={36}
-                    alt=""
-                    className="p-[2px]"
-                  />
-                </Border>
-                <div className="w-full text-center text-[0.5rem] text-accent">
-                  指名
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mb-3">
+
+        <section className="flex flex-1 flex-col text-xs">
+          <div className="mb-1 flex-1">
             <div className="mb-1 flex w-full">
               <div className="text-sm text-accent">オーダー</div>
               <Line ml="ml-10" />
             </div>
-            <div className="flex">
+            <div className="flex h-[13.1%] max-h-[107px] min-h-[98px]">
               <Lists
                 lists={[
                   {
@@ -316,67 +139,78 @@ export default function OrderSheet() {
                   },
                 ]}
               />
-              <div className="flex h-[90px] w-[60px] flex-col items-center justify-center pl-3">
-                <Border rounded="rounded-full" stroke="lg">
-                  <Image
-                    src={"/assets/order.svg"}
-                    width={36}
-                    height={36}
-                    alt=""
-                    className="p-[2px]"
+            </div>
+            <div className="mb-1 flex w-full">
+              <div className="text-sm text-accent">追加オーダー</div>
+              <Line ml="ml-10" />
+            </div>
+            <div className="flex h-[33.1%] max-h-[107px] min-h-[98px]">
+              <ul className="h-full w-full">
+                <li className="flex w-full justify-between rounded-md border border-white bg-neutral-900 px-1 py-2">
+                  <div className="flex h-[50px] flex-col justify-between">
+                    <Toggle2 />
+                    <Toggle3 />
+                  </div>
+                  <p className="my-auto flex-1 px-4">鏡月</p>
+                  <Border
+                    className="my-auto"
+                    size="px-2 text-red-700"
+                    natural
+                    stroke="md"
+                  >
+                    -
+                  </Border>
+                  <input className="my-auto w-[20px] rounded-md" />
+                  <Border
+                    className="my-auto"
+                    size="px-2 text-blue-700"
+                    natural
+                    stroke="md"
+                  >
+                    +
+                  </Border>
+                  <p className="my-auto">￥</p>
+                  <input
+                    className="my-auto w-[70px] rounded-md text-left"
+                    type="text"
                   />
-                </Border>
-                <div className="w-full text-center text-[0.5rem] text-accent">
-                  オーダー
-                </div>
-              </div>
+                  <p className="my-auto">込</p>
+                </li>
+              </ul>
             </div>
           </div>
-          <Line />
+          <div className="flex w-full">
+            <Line />
+          </div>
           <div className="flex">
             <div className="w-full">
-              <div className="mt-3 flex w-full items-center justify-between">
-                <div>小計</div>
-                <div>¥10,000-</div>
+              <div className="mt-4 flex w-full items-center justify-between text-base text-white">
+                <div className="w-[15%]"></div>
+                <div className="w-[30%] text-center">現在</div>
+                <div className="w-[5%]"></div>
+                <div className="w-[30%] text-center">見込み</div>
               </div>
-              <div className="mt-1 flex w-full items-center justify-between">
-                <div>サービス</div>
-                <div>¥3,000-</div>
+              <div className="mt-2 flex w-full items-center justify-between text-xl text-accent">
+                <div className="w-[15%] text-white">小計</div>
+                <div className="w-[30%] text-right">¥10,000-</div>
+                <div className="mx-2 w-[5%]">⇒</div>
+                <div className="w-[30%] text-right">¥12,000-</div>
               </div>
-              <div className="mt-1 flex w-full items-center justify-between">
-                <div>税</div>
-                <div>¥1,300-</div>
-              </div>
-              <div className="mt-4 flex w-full items-center justify-between text-2xl text-accent">
-                <div>合計</div>
-                <div className="flex-1 text-right">¥15,300-</div>
-              </div>
-            </div>
-            <div
-              onClick={() => setIsControl(true)}
-              className="flex h-[116px] w-[60px] flex-col items-center justify-center pl-3"
-            >
-              <Border rounded="rounded-full" stroke="lg" natural>
-                <Image
-                  src={"/assets/check.svg"}
-                  width={36}
-                  height={36}
-                  alt=""
-                  className="p-[6px]"
-                />
-              </Border>
-              <div className="w-full text-center text-[0.5rem] text-accent">
-                会計
+              <div className="mt-2 flex w-full items-center justify-between text-xl text-accent">
+                <div className="w-[15%] text-white">合計</div>
+                <div className="w-[30%] text-right">¥15,300-</div>
+                <div className="mx-2 w-[5%]">⇒</div>
+                <div className="w-[30%] text-right">¥16,000-</div>
               </div>
             </div>
           </div>
         </section>
         <nav className="mt-4 flex w-full items-center justify-center">
           <Button className="mr-2 min-w-[8rem]" natural>
-            分伝/合算
+            キャンセル
           </Button>
           <Button className="min-w-[8rem]" natural>
-            概算
+            確定
           </Button>
         </nav>
       </div>

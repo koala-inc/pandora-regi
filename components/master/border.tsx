@@ -4,15 +4,17 @@ export default function Border({
   rounded = "rounded-md",
   size,
   natural = false,
+  black = false,
 }: {
   children: any;
   className?: string;
   rounded?: string;
   size?: string;
   natural?: boolean;
+  black?: boolean;
 }) {
   const text = natural ? "text-black" : "text-white";
-  const bg = natural ? "bg-natural" : "bg-primary";
+  const bg = natural ? "bg-natural" : black ? "bg-neutral-900" : "bg-primary";
   return (
     <div
       className={

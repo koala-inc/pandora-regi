@@ -15,6 +15,9 @@ import Background from "@/components/parts/background";
 import { AnimatePresence } from "framer-motion";
 import useIsAnimateGlobal from "@/globalstates/isAnimate";
 import OrderSheet from "@/components/templates/orderSheet";
+import useIsControlGlobal from "@/globalstates/isControl";
+import useIsCalculatorGlobal from "@/globalstates/isCalculator";
+import Calculator from "@/components/parts/calculator";
 
 export default function Home() {
   const [isDebug] = useIsDebugGlobal();
@@ -22,22 +25,22 @@ export default function Home() {
   const [isFooter] = useIsFooterGlobal();
   const [isCard] = useIsCardGlobal();
   const [isAnimate] = useIsAnimateGlobal();
+  const [isControl] = useIsControlGlobal();
+  const [isCalculator] = useIsCalculatorGlobal();
 
   return (
     <main className="relative h-full w-full">
       <Background />
       {isAnimate ? (
-        <>
-          <AnimatePresence>{isHeader && <Header />}</AnimatePresence>
-          <AnimatePresence>{isFooter && <Footer />}</AnimatePresence>
-          <AnimatePresence>
-            {isCard && (
-              <Card>
-                <OrderSheet />
-              </Card>
-            )}
-          </AnimatePresence>
-        </>
+        <AnimatePresence>
+          {isHeader && <Header />}
+          {isFooter && <Footer />}
+          {isCard && (
+            <Card>
+              <OrderSheet />
+            </Card>
+          )}
+        </AnimatePresence>
       ) : (
         <>
           {isHeader && <Header />}
@@ -49,8 +52,9 @@ export default function Home() {
           )}
         </>
       )}
-      <SeatMap />
+      {!isControl && <SeatMap />}
       <OverlayNav />
+      {isCalculator && <Calculator />}
       <DebugButton />
       {isDebug && <DebugMenu />}
     </main>
