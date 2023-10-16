@@ -3,8 +3,11 @@ import Border from "@/components/templates/border";
 import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsAnimateGlobal from "@/globalstates/isAnimate";
-import Control from "./control2";
+import ControlOrderSet from "./controls/orderSet";
+import OrderItemAdd from "./controls/orderItemAdd";
 import useIsControlGlobal from "@/globalstates/isControl";
+import useIsControlOrderItemAddGlobal from "@/globalstates/controls/isControlOrderItemAdd";
+import useIsControlOrderSetGlobal from "@/globalstates/controls/isControlOrderSet";
 
 function Content({ children }: { children: any }) {
   return (
@@ -18,6 +21,10 @@ export default function Card({ children }: { children: any }) {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
+  const [isControlOrderSet, setIsControlOrderSet] =
+    useIsControlOrderSetGlobal();
+  const [isControlOrderItemAdd, setIsControlOrderItemAdd] =
+    useIsControlOrderItemAddGlobal();
   const [isAnimate] = useIsAnimateGlobal();
 
   return (
@@ -36,7 +43,8 @@ export default function Card({ children }: { children: any }) {
             }}
           >
             <Content>{children}</Content>
-            {isControl && <Control>aaa</Control>}
+            {isControlOrderSet && <ControlOrderSet />}
+            {isControlOrderItemAdd && <OrderItemAdd />}
           </motion.div>
         </>
       ) : (

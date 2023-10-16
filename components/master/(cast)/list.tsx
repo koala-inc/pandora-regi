@@ -2,8 +2,11 @@ import Control from "@/components/master/(component)/control";
 import Border from "@/components/master/border";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Schema, schema } from "@/components/master/(cast)/validations/test";
+import { Schema, schema } from "@/validations/test";
 import Button from "@/components/templates/button";
+import { useState } from "react";
+import Image from "next/image";
+import Modal from "@/components/parts/modal";
 
 export default function CastList() {
   const {
@@ -15,6 +18,8 @@ export default function CastList() {
     resolver: zodResolver(schema),
   });
   const onSubmit: SubmitHandler<Schema> = (data) => alert(JSON.stringify(data));
+
+  const [addModal, setAddModal] = useState(false);
 
   const baitais = [
     {
@@ -64,174 +69,12 @@ export default function CastList() {
   return (
     <>
       <Control>
-        <Border className="hidden w-full" size="p-4 flex flex-col" black>
-          <p className="w-full text-left">新規キャスト登録</p>
-          <form
-            className="flex w-full flex-wrap"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">ID</label>
-              <input
-                type="number"
-                {...register("age")}
-                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                placeholder="IDを入力"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">
-                キャスト名
-              </label>
-              <input
-                {...register("firstName")}
-                className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
-                placeholder="源氏名を入力"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">本名</label>
-              <input
-                {...register("firstName")}
-                className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
-                placeholder="本名を入力"
-              />
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
-            </div>
-            <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">
-                フリガナ
-              </label>
-              <input
-                {...register("firstName")}
-                className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
-                placeholder="フリガナを入力"
-              />
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
-            </div>
-            <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">時給</label>
-              <input
-                type="number"
-                {...register("age2")}
-                className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
-                placeholder="時給を入力"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">日給</label>
-              <input
-                {...register("age3")}
-                className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
-                placeholder="日給を入力"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">
-                入店日
-              </label>
-              <input
-                type="date"
-                {...register("date")}
-                className="mr-2 h-[30px] rounded-md px-2 text-sm"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">
-                生年月日
-              </label>
-              <input
-                type="date"
-                {...register("birthday")}
-                className="mr-2 h-[30px] rounded-md px-2 text-sm"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">住所</label>
-              <input
-                {...register("address")}
-                className="mr-2 h-[30px] w-[17rem] rounded-md px-2 text-sm"
-                placeholder="住所を入力"
-              />
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
-            </div>
-            <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">
-                電話番号
-              </label>
-              <input
-                type="tel"
-                {...register("tel")}
-                className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
-                placeholder="電話番号を入力"
-              />
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
-            </div>
-            <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">
-                その他
-              </label>
-              <input
-                {...register("address")}
-                className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
-                placeholder="備考を入力"
-              />
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
-            </div>
-            <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">媒体</label>
-              <select
-                {...register("baitai")}
-                className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
-              >
-                <option value="" selected disabled>
-                  媒体を選択
-                </option>
-                {baitais.map((pref) => {
-                  return (
-                    <option key={pref.prefCode} value={pref.prefCode}>
-                      {pref.prefName}
-                    </option>
-                  );
-                })}
-              </select>
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
-            </div>
-            <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">
-                紹介者
-              </label>
-              <select
-                {...register("syokai")}
-                className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
-              >
-                <option value="" selected disabled>
-                  紹介者を選択
-                </option>
-                {syokai.map((pref) => {
-                  return (
-                    <option key={pref.prefCode} value={pref.prefCode}>
-                      {pref.prefName}
-                    </option>
-                  );
-                })}
-              </select>
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
-            </div>
-
-            <div className="ml-auto mr-4 flex flex-col justify-end">
-              <Button natural>
-                <input type="submit" value="登録" />
-              </Button>
-            </div>
-          </form>
-        </Border>
         <Border
           className="my-2 w-full"
           size="p-4 flex flex-col min-h-[calc(98dvh-40px)] overflow-scroll"
           black
         >
-          <p className="w-full text-left">検索</p>
+          <p className="w-full text-left">キャストを検索</p>
           <form
             className="flex w-full flex-wrap"
             onSubmit={handleSubmit(onSubmit)}
@@ -337,7 +180,7 @@ export default function CastList() {
               </Button>
             </div>
           </form>
-          <table className="table table-xs mt-2">
+          <table className="table table-xs mt-2 min-h-[500px]">
             {/* head */}
             <thead>
               <tr>
@@ -355,8 +198,7 @@ export default function CastList() {
               </tr>
             </thead>
             <tbody>
-              {/* row 1 */}
-              <tr>
+              {/* <tr>
                 <td>1000</td>
                 <td>
                   <div className="flex items-center space-x-3">
@@ -537,11 +379,215 @@ export default function CastList() {
                 <th>
                   <button className="btn btn-ghost btn-xs">編集</button>
                 </th>
-              </tr>
+              </tr> */}
             </tbody>
           </table>
         </Border>
       </Control>
+      <nav
+        className="absolute bottom-[15px] right-[15px] z-10 cursor-pointer"
+        onClick={() => setAddModal(true)}
+      >
+        <Border rounded="rounded-full" size="h-[50px] w-[50px] p-[12px]">
+          <Image
+            src={"/assets/add-customer.svg"}
+            width={26}
+            height={26}
+            className="!h-full !w-full"
+            alt=""
+          />
+        </Border>
+      </nav>
+      {addModal && (
+        <Modal setModal={setAddModal}>
+          <Border className="w-full" size="p-4 flex flex-col" black>
+            <p className="w-full text-left">新規キャスト登録</p>
+            <form
+              className="flex w-full flex-wrap"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">ID</label>
+                <input
+                  type="number"
+                  {...register("age")}
+                  className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                  placeholder="IDを入力"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  キャスト名
+                </label>
+                <input
+                  {...register("firstName")}
+                  className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                  placeholder="源氏名を入力"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  本名
+                </label>
+                <input
+                  {...register("firstName")}
+                  className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                  placeholder="本名を入力"
+                />
+                {errors.firstName?.message && (
+                  <p>{errors.firstName?.message}</p>
+                )}
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  フリガナ
+                </label>
+                <input
+                  {...register("firstName")}
+                  className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                  placeholder="フリガナを入力"
+                />
+                {errors.firstName?.message && (
+                  <p>{errors.firstName?.message}</p>
+                )}
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  時給
+                </label>
+                <input
+                  type="number"
+                  {...register("age2")}
+                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                  placeholder="時給を入力"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  日給
+                </label>
+                <input
+                  {...register("age3")}
+                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                  placeholder="日給を入力"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  入店日
+                </label>
+                <input
+                  type="date"
+                  {...register("date")}
+                  className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  生年月日
+                </label>
+                <input
+                  type="date"
+                  {...register("birthday")}
+                  className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  住所
+                </label>
+                <input
+                  {...register("address")}
+                  className="mr-2 h-[30px] w-[17rem] rounded-md px-2 text-sm"
+                  placeholder="住所を入力"
+                />
+                {errors.firstName?.message && (
+                  <p>{errors.firstName?.message}</p>
+                )}
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  電話番号
+                </label>
+                <input
+                  type="tel"
+                  {...register("tel")}
+                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                  placeholder="電話番号を入力"
+                />
+                {errors.firstName?.message && (
+                  <p>{errors.firstName?.message}</p>
+                )}
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  その他
+                </label>
+                <input
+                  {...register("address")}
+                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                  placeholder="備考を入力"
+                />
+                {errors.firstName?.message && (
+                  <p>{errors.firstName?.message}</p>
+                )}
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  媒体
+                </label>
+                <select
+                  {...register("baitai")}
+                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                >
+                  <option value="" selected disabled>
+                    媒体を選択
+                  </option>
+                  {baitais.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefCode}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
+                {errors.firstName?.message && (
+                  <p>{errors.firstName?.message}</p>
+                )}
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  紹介者
+                </label>
+                <select
+                  {...register("syokai")}
+                  className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                >
+                  <option value="" selected disabled>
+                    紹介者を選択
+                  </option>
+                  {syokai.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefCode}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
+                {errors.firstName?.message && (
+                  <p>{errors.firstName?.message}</p>
+                )}
+              </div>
+
+              <div className="ml-auto mr-4 flex flex-col justify-end">
+                <Button natural>
+                  <input type="submit" value="登録" />
+                </Button>
+              </div>
+            </form>
+          </Border>
+        </Modal>
+      )}
     </>
   );
 }

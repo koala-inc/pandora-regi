@@ -14,10 +14,12 @@ import SeatMap from "@/components/templates/seatMap";
 import Background from "@/components/parts/background";
 import { AnimatePresence } from "framer-motion";
 import useIsAnimateGlobal from "@/globalstates/isAnimate";
-import OrderSheet from "@/components/templates/orderSheet";
+import OrderSheet from "@/components/templates/orderSheetBK";
+import OrderSet from "@/components/templates/orderSet";
 import useIsControlGlobal from "@/globalstates/isControl";
 import useIsCalculatorGlobal from "@/globalstates/isCalculator";
 import Calculator from "@/components/parts/calculator";
+import useIsControlOrderSetGlobal from "@/globalstates/controls/isControlOrderSet";
 
 export default function Home() {
   const [isDebug] = useIsDebugGlobal();
@@ -26,6 +28,7 @@ export default function Home() {
   const [isCard] = useIsCardGlobal();
   const [isAnimate] = useIsAnimateGlobal();
   const [isControl] = useIsControlGlobal();
+  const [isControlOrderSet] = useIsControlOrderSetGlobal();
   const [isCalculator] = useIsCalculatorGlobal();
 
   return (
@@ -46,9 +49,7 @@ export default function Home() {
           {isHeader && <Header />}
           {isFooter && <Footer />}
           {isCard && (
-            <Card>
-              <OrderSheet />
-            </Card>
+            <Card>{isControlOrderSet ? <OrderSet /> : <OrderSheet />}</Card>
           )}
         </>
       )}

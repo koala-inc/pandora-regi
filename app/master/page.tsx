@@ -156,7 +156,6 @@ export default function Home() {
           }
         })}
       </AnimatePresence>
-      <TestForm />
       <DebugButton />
       <Link href={"/"}>
         <nav className="absolute right-[15px] top-[15px] z-10 cursor-pointer">
