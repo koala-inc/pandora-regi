@@ -8,6 +8,8 @@ import OrderItemAdd from "./controls/orderItemAdd";
 import useIsControlGlobal from "@/globalstates/isControl";
 import useIsControlOrderItemAddGlobal from "@/globalstates/controls/isControlOrderItemAdd";
 import useIsControlOrderSetGlobal from "@/globalstates/controls/isControlOrderSet";
+import OrderEnd from "./controls/orderEnd";
+import useIsControlOrderEndGlobal from "@/globalstates/controls/isControlOrderEnd";
 
 function Content({ children }: { children: any }) {
   return (
@@ -25,6 +27,8 @@ export default function Card({ children }: { children: any }) {
     useIsControlOrderSetGlobal();
   const [isControlOrderItemAdd, setIsControlOrderItemAdd] =
     useIsControlOrderItemAddGlobal();
+  const [isControlOrderEnd, setIsControlOrderEnd] =
+    useIsControlOrderEndGlobal();
   const [isAnimate] = useIsAnimateGlobal();
 
   return (
@@ -45,6 +49,7 @@ export default function Card({ children }: { children: any }) {
             <Content>{children}</Content>
             {isControlOrderSet && <OrderSet />}
             {isControlOrderItemAdd && <OrderItemAdd />}
+            {isControlOrderEnd && <OrderEnd />}
           </motion.div>
         </>
       ) : (
