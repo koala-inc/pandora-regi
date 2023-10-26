@@ -3,7 +3,7 @@ import Border from "@/components/templates/border";
 import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsAnimateGlobal from "@/globalstates/isAnimate";
-import ControlOrderSet from "./controls/orderSet";
+import OrderSet from "./controls/orderSet";
 import OrderItemAdd from "./controls/orderItemAdd";
 import useIsControlGlobal from "@/globalstates/isControl";
 import useIsControlOrderItemAddGlobal from "@/globalstates/controls/isControlOrderItemAdd";
@@ -43,7 +43,7 @@ export default function Card({ children }: { children: any }) {
             }}
           >
             <Content>{children}</Content>
-            {isControlOrderSet && <ControlOrderSet />}
+            {isControlOrderSet && <OrderSet />}
             {isControlOrderItemAdd && <OrderItemAdd />}
           </motion.div>
         </>

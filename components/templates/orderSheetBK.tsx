@@ -5,6 +5,11 @@ import Border from "./border";
 import Button from "./button";
 import useIsControlGlobal from "@/globalstates/isControl";
 import Toggle from "./toggle";
+import useIsControlOrderCustomerAddGlobal from "@/globalstates/controls/isControlOrderCustomerAdd";
+import useIsControlOrderItemAddGlobal from "@/globalstates/controls/isControlOrderItemAdd";
+import useIsControlOrderCastAddGlobal from "@/globalstates/controls/isControlOrderCastAdd";
+import useIsControlOrderSetGlobal from "@/globalstates/controls/isControlOrderSet";
+import useIsControlOrderEndGlobal from "@/globalstates/controls/isControlOrderEnd";
 
 function Lists({
   lists,
@@ -55,6 +60,16 @@ export default function OrderSheet() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
+  const [isControlOrderSet, setIsControlOrderSet] =
+    useIsControlOrderSetGlobal();
+  const [isControlOrderCastAdd, setIsControlOrderCastAdd] =
+    useIsControlOrderCastAddGlobal();
+  const [isControlOrderItemAdd, setIsControlOrderItemAdd] =
+    useIsControlOrderItemAddGlobal();
+  const [isControlOrderCustomerAdd, setIsControlOrderCustomerAdd] =
+    useIsControlOrderCustomerAddGlobal();
+  const [isControlOrderEnd, setIsControlOrderEnd] =
+    useIsControlOrderEndGlobal();
 
   return (
     <>
@@ -219,7 +234,18 @@ export default function OrderSheet() {
                   },
                 ]}
               />
-              <div className="my-auto flex w-[60px] flex-col items-center justify-center pl-3">
+              <div
+                className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
+                onClick={() => {
+                  if (!isControl) setIsControl(true);
+                  if (isControlOrderCastAdd) setIsControlOrderCastAdd(false);
+                  if (!isControlOrderCustomerAdd)
+                    setIsControlOrderCustomerAdd(true);
+                  if (isControlOrderItemAdd) setIsControlOrderItemAdd(false);
+                  if (isControlOrderSet) setIsControlOrderSet(false);
+                  if (isControlOrderEnd) setIsControlOrderEnd(false);
+                }}
+              >
                 <Border rounded="rounded-full" stroke="lg">
                   <Image
                     src={"/assets/add-customer.svg"}
@@ -376,7 +402,18 @@ export default function OrderSheet() {
                   },
                 ]}
               />
-              <div className="my-auto flex w-[60px] flex-col items-center justify-center pl-3">
+              <div
+                className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
+                onClick={() => {
+                  if (!isControl) setIsControl(true);
+                  if (isControlOrderCastAdd) setIsControlOrderCastAdd(false);
+                  if (isControlOrderCustomerAdd)
+                    setIsControlOrderCustomerAdd(false);
+                  if (!isControlOrderItemAdd) setIsControlOrderItemAdd(true);
+                  if (isControlOrderSet) setIsControlOrderSet(false);
+                  if (isControlOrderEnd) setIsControlOrderEnd(false);
+                }}
+              >
                 <Border rounded="rounded-full" stroke="lg">
                   <Image
                     src={"/assets/order.svg"}
@@ -415,7 +452,15 @@ export default function OrderSheet() {
               </div>
             </div>
             <div
-              onClick={() => setIsControl(true)}
+              onClick={() => {
+                if (!isControl) setIsControl(true);
+                if (isControlOrderCastAdd) setIsControlOrderCastAdd(false);
+                if (isControlOrderCustomerAdd)
+                  setIsControlOrderCustomerAdd(false);
+                if (isControlOrderItemAdd) setIsControlOrderItemAdd(false);
+                if (isControlOrderSet) setIsControlOrderSet(false);
+                if (!isControlOrderEnd) setIsControlOrderEnd(true);
+              }}
               className="flex h-[116px] w-[60px] flex-col items-center justify-center pl-3"
             >
               <Border rounded="rounded-full" stroke="lg" natural>

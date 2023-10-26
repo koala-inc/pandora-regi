@@ -397,22 +397,12 @@ export default function StaffList() {
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
-                  キャスト名
+                  氏名
                 </label>
                 <input
                   {...register("firstName")}
                   className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
-                  placeholder="源氏名を入力"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="mt-3 text-xs font-bold text-accent">
-                  本名
-                </label>
-                <input
-                  {...register("firstName")}
-                  className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
-                  placeholder="本名を入力"
+                  placeholder="氏名を入力"
                 />
                 {errors.firstName?.message && (
                   <p>{errors.firstName?.message}</p>
@@ -450,16 +440,6 @@ export default function StaffList() {
                   {...register("age3")}
                   className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
                   placeholder="日給を入力"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="mt-3 text-xs font-bold text-accent">
-                  入店日
-                </label>
-                <input
-                  type="date"
-                  {...register("date")}
-                  className="mr-2 h-[30px] rounded-md px-2 text-sm"
                 />
               </div>
               <div className="flex flex-col">
@@ -508,52 +488,6 @@ export default function StaffList() {
                   className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
                   placeholder="備考を入力"
                 />
-                {errors.firstName?.message && (
-                  <p>{errors.firstName?.message}</p>
-                )}
-              </div>
-              <div className="flex flex-col">
-                <label className="mt-3 text-xs font-bold text-accent">
-                  媒体
-                </label>
-                <select
-                  {...register("baitai")}
-                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
-                >
-                  <option value="" selected disabled>
-                    媒体を選択
-                  </option>
-                  {baitais.map((pref) => {
-                    return (
-                      <option key={pref.prefCode} value={pref.prefCode}>
-                        {pref.prefName}
-                      </option>
-                    );
-                  })}
-                </select>
-                {errors.firstName?.message && (
-                  <p>{errors.firstName?.message}</p>
-                )}
-              </div>
-              <div className="flex flex-col">
-                <label className="mt-3 text-xs font-bold text-accent">
-                  紹介者
-                </label>
-                <select
-                  {...register("syokai")}
-                  className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
-                >
-                  <option value="" selected disabled>
-                    紹介者を選択
-                  </option>
-                  {syokai.map((pref) => {
-                    return (
-                      <option key={pref.prefCode} value={pref.prefCode}>
-                        {pref.prefName}
-                      </option>
-                    );
-                  })}
-                </select>
                 {errors.firstName?.message && (
                   <p>{errors.firstName?.message}</p>
                 )}
