@@ -46,7 +46,8 @@ export default function Card({ children }: { children: any }) {
               if (isFooter) setIsFooter(false);
             }}
           >
-            <Content>{children}</Content>
+            {/* <Content>{children}</Content> */}
+            <Content>-</Content>
             {isControlOrderSet && <OrderSet />}
             {isControlOrderItemAdd && <OrderItemAdd />}
             {isControlOrderEnd && <OrderEnd />}

@@ -5,7 +5,7 @@ import useIsFooterGlobal from "@/globalstates/isFooter";
 import Button from "../button";
 import Image from "next/image";
 
-export default function OrderEnd({ children }: { children: any }) {
+export default function OrderEnd() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
 
@@ -32,7 +32,7 @@ export default function OrderEnd({ children }: { children: any }) {
             className="mr-1 h-[300px] w-[calc(100%-360px)]"
             size="h-[290px] w-full"
           >
-            {children}
+            -
           </Border>
           <Border className="mr-2 h-[210px] w-[146px]" size="h-[200px] w-full">
             <div className="flex w-full flex-col p-1">
