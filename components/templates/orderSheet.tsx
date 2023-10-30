@@ -1,15 +1,13 @@
-import useIsHeaderGlobal from "@/globalstates/isHeader";
-import useIsFooterGlobal from "@/globalstates/isFooter";
 import Image from "next/image";
 import Border from "./border";
 import Button from "./button";
-import useIsControlGlobal from "@/globalstates/isControl";
 import Toggle from "./toggle";
-import useIsControlOrderCustomerAddGlobal from "@/globalstates/controls/isControlOrderCustomerAdd";
-import useIsControlOrderItemAddGlobal from "@/globalstates/controls/isControlOrderItemAdd";
-import useIsControlOrderCastAddGlobal from "@/globalstates/controls/isControlOrderCastAdd";
-import useIsControlOrderSetGlobal from "@/globalstates/controls/isControlOrderSet";
-import useIsControlOrderEndGlobal from "@/globalstates/controls/isControlOrderEnd";
+import Card from "@/components/templates/card";
+
+// グローバルステート
+import useIsHeaderGlobal from "@/globalstates/isHeader";
+import useIsFooterGlobal from "@/globalstates/isFooter";
+import useIsControlGlobal from "@/globalstates/isControl";
 
 function Lists({
   lists,
@@ -60,24 +58,15 @@ export default function OrderSheet() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
-  const [isControlOrderSet, setIsControlOrderSet] =
-    useIsControlOrderSetGlobal();
-  const [isControlOrderCastAdd, setIsControlOrderCastAdd] =
-    useIsControlOrderCastAddGlobal();
-  const [isControlOrderItemAdd, setIsControlOrderItemAdd] =
-    useIsControlOrderItemAddGlobal();
-  const [isControlOrderCustomerAdd, setIsControlOrderCustomerAdd] =
-    useIsControlOrderCustomerAddGlobal();
-  const [isControlOrderEnd, setIsControlOrderEnd] =
-    useIsControlOrderEndGlobal();
 
   return (
-    <>
+    <Card>
       <div
         className="flex h-full w-[340px] flex-col font-bold"
         onClick={() => {
           if (isHeader) setIsHeader(false);
           if (isFooter) setIsFooter(false);
+          if (isControl != "") setIsControl("");
         }}
       >
         <section className="flex h-[70px] items-center justify-between">
@@ -90,8 +79,13 @@ export default function OrderSheet() {
                 <p className="text-[0.5rem] text-accent">人数</p>
                 <p>1名</p>
               </div>
-              <div className="flex min-w-[7em] flex-col items-center justify-center">
-                <p className="text-[0.5rem] text-accent">時間🕛</p>
+              <div
+                className="flex min-w-[7em] flex-col items-center justify-center"
+                onClick={() => {
+                  setIsControl("TIME");
+                }}
+              >
+                <p className="text-[0.5rem] text-accent">時間</p>
                 <p>20:00〜23:00</p>
               </div>
               <div className="flex min-w-[5em] flex-col items-center justify-center">
@@ -237,13 +231,7 @@ export default function OrderSheet() {
               <div
                 className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
                 onClick={() => {
-                  if (!isControl) setIsControl(true);
-                  if (isControlOrderCastAdd) setIsControlOrderCastAdd(false);
-                  if (!isControlOrderCustomerAdd)
-                    setIsControlOrderCustomerAdd(true);
-                  if (isControlOrderItemAdd) setIsControlOrderItemAdd(false);
-                  if (isControlOrderSet) setIsControlOrderSet(false);
-                  if (isControlOrderEnd) setIsControlOrderEnd(false);
+                  setIsControl("SET");
                 }}
               >
                 <Border rounded="rounded-full" stroke="lg">
@@ -361,7 +349,12 @@ export default function OrderSheet() {
                   },
                 ]}
               />
-              <div className="my-auto flex w-[60px] flex-col items-center justify-center pl-3">
+              <div
+                className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
+                onClick={() => {
+                  setIsControl("CAST");
+                }}
+              >
                 <Border rounded="rounded-full" stroke="lg">
                   <Image
                     src={"/assets/cast.svg"}
@@ -405,13 +398,7 @@ export default function OrderSheet() {
               <div
                 className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
                 onClick={() => {
-                  if (!isControl) setIsControl(true);
-                  if (isControlOrderCastAdd) setIsControlOrderCastAdd(false);
-                  if (isControlOrderCustomerAdd)
-                    setIsControlOrderCustomerAdd(false);
-                  if (!isControlOrderItemAdd) setIsControlOrderItemAdd(true);
-                  if (isControlOrderSet) setIsControlOrderSet(false);
-                  if (isControlOrderEnd) setIsControlOrderEnd(false);
+                  setIsControl("ITEM");
                 }}
               >
                 <Border rounded="rounded-full" stroke="lg">
@@ -453,13 +440,7 @@ export default function OrderSheet() {
             </div>
             <div
               onClick={() => {
-                if (!isControl) setIsControl(true);
-                if (isControlOrderCastAdd) setIsControlOrderCastAdd(false);
-                if (isControlOrderCustomerAdd)
-                  setIsControlOrderCustomerAdd(false);
-                if (isControlOrderItemAdd) setIsControlOrderItemAdd(false);
-                if (isControlOrderSet) setIsControlOrderSet(false);
-                if (!isControlOrderEnd) setIsControlOrderEnd(true);
+                setIsControl("END");
               }}
               className="flex h-[116px] w-[60px] flex-col items-center justify-center pl-3"
             >
@@ -482,11 +463,17 @@ export default function OrderSheet() {
           <Button className="mr-2 min-w-[8rem]" natural>
             分伝/合算
           </Button>
-          <Button className="min-w-[8rem]" natural>
+          <Button
+            className="min-w-[8rem]"
+            natural
+            onClick={() => {
+              setIsControl("APPOROX");
+            }}
+          >
             概算
           </Button>
         </nav>
       </div>
-    </>
+    </Card>
   );
 }

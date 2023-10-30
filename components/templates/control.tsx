@@ -3,7 +3,7 @@ import Border from "@/components/templates/border";
 import SubBorder from "@/components/templates/subBorder";
 import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
-import useIsAnimateGlobal from "@/globalstates/isAnimate";
+import useIsAnimateGlobal from "@/globalstates/settings";
 import useIsCardGlobal from "@/globalstates/isCard";
 import useIsControlGlobal from "@/globalstates/isControl";
 

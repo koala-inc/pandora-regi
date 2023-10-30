@@ -1,29 +1,24 @@
 "use client";
 
-import useIsDebugGlobal from "@/globalstates/isDebug";
+import { useState } from "react";
+
 import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
-import useLicenseGlobal from "@/globalstates/license";
-import { useState } from "react";
 import useIsCardGlobal from "@/globalstates/isCard";
-import useIsAnimateGlobal from "@/globalstates/isAnimate";
-import useIsCalculatorGlobal from "@/globalstates/isCalculator";
+import useSettingsGlobal from "@/globalstates/settings";
 
 export default function DebugMenu() {
-  const [license] = useLicenseGlobal();
-  const [isDebug, setIsDebug] = useIsDebugGlobal();
+  const [settings, setSettings] = useSettingsGlobal();
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isCard, setIsCard] = useIsCardGlobal();
-  const [isAnimate, setIsAnimate] = useIsAnimateGlobal();
-  const [isCalculator, setIsCalculator] = useIsCalculatorGlobal();
   const [activeTab, setActiveTab] = useState(0);
   const [activeTab2, setActiveTab2] = useState(0);
 
   return (
     <div
       className="absolute left-0 top-0 z-40 flex h-[100dvh] w-[100dvw] items-center justify-center  bg-black/70 p-10 text-white"
-      onClick={() => setIsDebug(false)}
+      onClick={() => setSettings({ ...settings, isDebug: false })}
     >
       <div
         className="flex w-full max-w-[600px] flex-col items-center justify-center"
@@ -52,10 +47,8 @@ export default function DebugMenu() {
           {activeTab == 0 && (
             <ul>
               <li className="flex">
-                <div className="w-[6rem]">license</div>: {String(license)}
-              </li>
-              <li className="flex">
-                <div className="w-[6rem]">isDebug</div>: {String(isDebug)}
+                <div className="w-[6rem]">settings</div>:{" "}
+                {JSON.stringify(settings)}
               </li>
               <li className="flex">
                 <div className="w-[6rem]">isHeader</div>: {String(isHeader)}
@@ -65,14 +58,6 @@ export default function DebugMenu() {
               </li>
               <li className="flex">
                 <div className="w-[6rem]">isCard</div>: {String(isCard)}
-              </li>
-              <li className="flex">
-                <div className="w-[6rem]">isCalculator</div>:{" "}
-                {String(isCalculator)}
-              </li>
-              <li className="flex">
-                <div className="w-[6rem]">isAnimate</div>:
-                {JSON.stringify(isAnimate)}
               </li>
             </ul>
           )}
@@ -86,7 +71,7 @@ export default function DebugMenu() {
                 <div className="w-[9rem]">X-API-Key</div>:
                 {process.env.NEXT_PUBLIC_X_API_KEY?.replace(
                   /.*/i,
-                  "*********"
+                  "****************"
                 ) || ""}
               </li>
               <li className="flex">
@@ -123,12 +108,30 @@ export default function DebugMenu() {
             }
             onClick={() => setActiveTab2(2)}
           >
+            テスト系
+          </div>
+          <div
+            className={
+              activeTab2 == 3 ? "m-2 border-b-2 border-white p-2" : "m-2 p-2"
+            }
+            onClick={() => setActiveTab2(3)}
+          >
             その他
           </div>
         </div>
         <div className="flex w-full flex-wrap">
           {activeTab2 == 0 && (
             <>
+              <button
+                className="m-3 rounded-md bg-accent px-4 py-2"
+                onClick={() =>
+                  confirm(
+                    "キャストや顧客も含め全てのこのストアに関するデータが全て削除されます。よろしいですか？"
+                  )
+                }
+              >
+                全データリセット
+              </button>
               <button className="m-3 rounded-md bg-accent px-4 py-2">
                 全伝票リセット
               </button>
@@ -159,14 +162,8 @@ export default function DebugMenu() {
               </button>
               <button
                 className="m-3 rounded-md bg-accent px-4 py-2"
-                onClick={() => setIsCalculator(!isCalculator)}
-              >
-                電卓
-              </button>
-              <button
-                className="m-3 rounded-md bg-accent px-4 py-2"
                 onClick={() => {
-                  setIsAnimate({ decoration: !isAnimate.decoration });
+                  setSettings({ ...settings, animation: false });
                 }}
               >
                 アニメーション
@@ -174,6 +171,28 @@ export default function DebugMenu() {
             </>
           )}
           {activeTab2 == 2 && (
+            <>
+              <button className="m-3 rounded-md bg-accent px-4 py-2">
+                テストデータをランダムにまとめて追加
+              </button>
+              <button className="m-3 rounded-md bg-accent px-4 py-2">
+                ダミーキャスト追加
+              </button>
+              <button className="m-3 rounded-md bg-accent px-4 py-2">
+                ダミースタッフ追加
+              </button>
+              <button className="m-3 rounded-md bg-accent px-4 py-2">
+                ダミー顧客追加
+              </button>
+              <button className="m-3 rounded-md bg-accent px-4 py-2">
+                ダミー伝票追加
+              </button>
+              <button className="m-3 rounded-md bg-accent px-4 py-2">
+                ダミーオーダー追加
+              </button>
+            </>
+          )}
+          {activeTab2 == 3 && (
             <>
               <button className="m-3 rounded-md bg-accent px-4 py-2">-</button>
               <button className="m-3 rounded-md bg-accent px-4 py-2">-</button>

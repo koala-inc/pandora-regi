@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Border from "@/components/master/border";
-import useActiveMasterGlobal from "@/globalstates/activeMaster";
+import useMasterActivePageGlobal from "@/globalstates/masterActivePage";
 
 export default function SideMenu({
   nav,
@@ -16,7 +16,7 @@ export default function SideMenu({
     component?: JSX.Element;
   }[];
 }) {
-  const [, setActiveMaster] = useActiveMasterGlobal();
+  const [, setMasterActivePage] = useMasterActivePageGlobal();
 
   return (
     <div className="absolute left-0 top-0 h-[100dvh] w-[200px] overflow-y-scroll border-t-8 border-secondary bg-thirdary font-bold">
@@ -30,7 +30,7 @@ export default function SideMenu({
           >
             <p className="w-full pr-[30px] text-center">{item.name}</p>
 
-            <nav className="absolute right-[5px] top-[14px] z-10 rotate-90 cursor-pointer transition-transform">
+            <div className="absolute right-[5px] top-[14px] z-10 rotate-90 cursor-pointer transition-transform">
               <Border rounded="rounded-full" size="h-[20px] w-[20px] p-[3px]">
                 <Image
                   src={"/assets/arrows.svg"}
@@ -40,7 +40,7 @@ export default function SideMenu({
                   alt=""
                 />
               </Border>
-            </nav>
+            </div>
           </div>
           {item.submenu && (
             <div
@@ -53,7 +53,7 @@ export default function SideMenu({
                 <div
                   key={index}
                   className="my-2 w-full text-center"
-                  onClick={() => setActiveMaster(item.name)}
+                  onClick={() => setMasterActivePage(item.name)}
                 >
                   {item.name}
                   <div className="mx-auto mt-1 w-1/2 border-[0.5px]" />

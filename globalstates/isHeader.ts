@@ -1,8 +1,13 @@
-import useGlobal from "./useGlobal";
+"use client";
+
+import useGlobal from "@/globalstates/useGlobal";
+
+/*
+ * Header
+ * フッターメニューの表示非表示のフラグ
+ *
+ */
 
 export default function useIsHeaderGlobal() {
-  return useGlobal({
-    key: "isHeader",
-    initialState: false,
-  });
+  return useGlobal("isHeader", false);
 }

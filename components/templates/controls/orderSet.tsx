@@ -3,7 +3,7 @@ import Border from "@/components/templates/border";
 import SubBorder from "@/components/templates/subBorder";
 import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
-import useIsAnimateGlobal from "@/globalstates/isAnimate";
+import useIsAnimateGlobal from "@/globalstates/settings";
 import Button from "../button";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

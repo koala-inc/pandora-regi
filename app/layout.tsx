@@ -1,5 +1,7 @@
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import "./globals.css";
+import DevTool from "@/components/debug/devTool";
+import Background from "@/components/parts/background";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || ""),
@@ -12,16 +14,6 @@ export const metadata: Metadata = {
   },
   generator: process.env.npm_package_author || "",
   referrer: "origin",
-  themeColor: "#000",
-  colorScheme: "dark",
-  viewport: {
-    width: "device-width",
-    minimumScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-    viewportFit: "cover",
-    interactiveWidget: "resizes-visual",
-  },
   creator: process.env.npm_package_author || "",
   publisher: process.env.npm_package_author || "",
   robots:
@@ -81,6 +73,17 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#000",
+  colorScheme: "dark",
+  width: "device-width",
+  minimumScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
+  interactiveWidget: "resizes-visual",
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -88,7 +91,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body>{children}</body>
+      <body className="relative h-full w-full">
+        <Background />
+        {children}
+        <DevTool />
+      </body>
     </html>
   );
 }

@@ -23,7 +23,7 @@ export default function SeatMap() {
               if (isHeader) setIsHeader(false);
               if (isFooter) setIsFooter(false);
               if (isCard) setIsCard(false);
-              if (isControl) setIsControl(false);
+              if (isControl == "") setIsControl("");
             }}
           >
             {seatMap.map((seat, index) => {

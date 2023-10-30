@@ -1,15 +1,15 @@
 "use client";
 
-import useIsDebugGlobal from "@/globalstates/isDebug";
+import { AnimatePresence } from "framer-motion";
+
+// 開発用コンポーネント
+import DevTool from "@/components/debug/devTool";
+
+// コンポーネント
 import Background from "@/components/parts/background";
-import DebugButton from "@/components/debug/debugButton";
-import DebugMenu from "@/components/debug/debugMenu";
 import SideMenu from "@/components/master/sideMenu";
-import Border from "@/components/templates/border";
-import Image from "next/image";
-import Link from "next/link";
+import HomeButton from "@/components/templates/homeButton";
 import CastList from "@/components/master/(cast)/list";
-import useActiveMasterGlobal from "@/globalstates/activeMaster";
 import HelpCastList from "@/components/master/(cast)/helpCast";
 import StaffList from "@/components/master/(staff)/list";
 import ArbeitList from "@/components/master/(staff)/arbeit";
@@ -17,11 +17,12 @@ import ItemCategoryList from "@/components/master/(item)/category";
 import OrderSet from "@/components/master/(item)/orderSet";
 import OrderAdd from "@/components/master/(item)/orderAdd";
 import BottleAdd from "@/components/master/(item)/bottleAdd";
-import { AnimatePresence } from "framer-motion";
 
-export default function Home() {
-  const [isDebug] = useIsDebugGlobal();
-  const [activeMaster] = useActiveMasterGlobal();
+// グローバルステート
+import useMasterActivePageGlobal from "@/globalstates/masterActivePage";
+
+export default function Mater() {
+  const [masterActivePage, setMasterActivePage] = useMasterActivePageGlobal();
 
   const nav = [
     {
@@ -148,28 +149,15 @@ export default function Home() {
         {nav.map((item) => {
           if (item.submenu) {
             return item.submenu?.map(
-              (item) => item.name == activeMaster && item.component
+              (item) => item.name == masterActivePage && item.component
             );
           } else {
-            return item.name == activeMaster && item.component;
+            return item.name == masterActivePage && item.component;
           }
         })}
       </AnimatePresence>
-      <DebugButton />
-      <Link href={"/"}>
-        <nav className="absolute right-[15px] top-[15px] z-10 cursor-pointer">
-          <Border rounded="rounded-full" size="h-[50px] w-[50px]">
-            <Image
-              src={"/assets/home.svg"}
-              width={26}
-              height={26}
-              className="!h-full !w-full"
-              alt=""
-            />
-          </Border>
-        </nav>
-      </Link>
-      {isDebug && <DebugMenu />}
+      <HomeButton />
+      <DevTool />
     </main>
   );
 }

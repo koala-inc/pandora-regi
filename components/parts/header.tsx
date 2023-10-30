@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import useIsHeaderGlobal from "@/globalstates/isHeader";
 import { format } from "date-fns";
 import { ja } from "date-fns/locale";
-import useIsAnimateGlobal from "@/globalstates/isAnimate";
+import useIsAnimateGlobal from "@/globalstates/settings";
 
 function Content() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();

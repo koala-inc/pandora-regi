@@ -1,10 +1,6 @@
-import useIsCardGlobal from "@/globalstates/isCard";
 import { useLongPress } from "use-long-press";
-import useIsControlOrderCustomerAddGlobal from "@/globalstates/controls/isControlOrderCustomerAdd";
-import useIsControlOrderItemAddGlobal from "@/globalstates/controls/isControlOrderItemAdd";
-import useIsControlOrderCastAddGlobal from "@/globalstates/controls/isControlOrderCastAdd";
-import useIsControlOrderSetGlobal from "@/globalstates/controls/isControlOrderSet";
-import useIsControlOrderEndGlobal from "@/globalstates/controls/isControlOrderEnd";
+
+import useIsCardGlobal from "@/globalstates/isCard";
 import useIsControlGlobal from "@/globalstates/isControl";
 
 export default function Seat({
@@ -18,18 +14,8 @@ export default function Seat({
 }) {
   const overlay = false;
 
-  const [isCard, setIsCard] = useIsCardGlobal();
+  const [, setIsCard] = useIsCardGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
-  const [isControlOrderSet, setIsControlOrderSet] =
-    useIsControlOrderSetGlobal();
-  const [isControlOrderCastAdd, setIsControlOrderCastAdd] =
-    useIsControlOrderCastAddGlobal();
-  const [isControlOrderItemAdd, setIsControlOrderItemAdd] =
-    useIsControlOrderItemAddGlobal();
-  const [isControlOrderCustomerAdd, setIsControlOrderCustomerAdd] =
-    useIsControlOrderCustomerAddGlobal();
-  const [isControlOrderEnd, setIsControlOrderEnd] =
-    useIsControlOrderEndGlobal();
   const editMode = useLongPress(() => alert("モード移行"), {
     threshold: Number(process.env.NEXT_PUBLIC_LONG_TAP_MILLI_SECOND) || 1000,
   });
@@ -44,12 +30,7 @@ export default function Seat({
       }
       onClick={() => {
         setIsCard(true);
-        if (!isControl) setIsControl(true);
-        if (isControlOrderCastAdd) setIsControlOrderCastAdd(false);
-        if (isControlOrderCustomerAdd) setIsControlOrderCustomerAdd(false);
-        if (isControlOrderItemAdd) setIsControlOrderItemAdd(false);
-        if (!isControlOrderSet) setIsControlOrderSet(true);
-        if (isControlOrderEnd) setIsControlOrderEnd(false);
+        if (isControl != "") setIsControl("");
       }}
       {...editMode(id)}
     >

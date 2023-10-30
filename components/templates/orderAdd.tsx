@@ -2,8 +2,6 @@ import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
 import Image from "next/image";
 import Button from "./button";
-import useIsControlGlobal from "@/globalstates/isControl";
-import useIsControlOrderSetGlobal from "@/globalstates/controls/isControlOrderSet";
 
 function Lists({
   lists,
@@ -53,9 +51,6 @@ function Line({ ml }: { ml?: string }) {
 export default function OrderAdd() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
-  const [isControl, setIsControl] = useIsControlGlobal();
-  const [isControlOrderSet, setIsControlOrderSet] =
-    useIsControlOrderSetGlobal();
 
   return (
     <>
@@ -71,13 +66,7 @@ export default function OrderAdd() {
           <Button className="mr-2 min-w-[8rem]" natural>
             キャンセル
           </Button>
-          <Button
-            className="min-w-[8rem]"
-            natural
-            onClick={() => {
-              setIsControlOrderSet(false);
-            }}
-          >
+          <Button className="min-w-[8rem]" natural onClick={() => {}}>
             確定
           </Button>
         </nav>

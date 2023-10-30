@@ -4,7 +4,7 @@ import useIsFooterGlobal from "@/globalstates/isFooter";
 import Button from "@/components/templates/button";
 import Border from "@/components/templates/border";
 import Link from "next/link";
-import useIsAnimateGlobal from "@/globalstates/isAnimate";
+import useIsAnimateGlobal from "@/globalstates/settings";
 
 function Content() {
   const [isFooter, setIsFooter] = useIsFooterGlobal();
