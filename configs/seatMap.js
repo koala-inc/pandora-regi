@@ -1,12 +1,5 @@
 const seatMap = [
   {
-    id: "",
-    area: "[grid-area:2/5/2/17]",
-    type: "text",
-    body: "デバッグ用マップ",
-    objectUrl: "",
-  },
-  {
     id: "01",
     area: "[grid-area:3/5]",
     type: "seat",

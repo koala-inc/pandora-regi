@@ -1,11 +1,9 @@
 "use client";
 
-import useIsCalculatorGlobal from "@/globalstates/isCalculator";
 import { useState } from "react";
 import Image from "next/image";
 
 export default function Calculator() {
-  const [, setIsCalculator] = useIsCalculatorGlobal();
   const [result, setResult] = useState("");
   const [tax, setTax] = useState(false);
   const max = 999999999;
@@ -13,7 +11,7 @@ export default function Calculator() {
   return (
     <div
       className="absolute left-0 top-0 z-40 flex h-[100dvh] w-[100dvw] items-center justify-center bg-black/70 p-10 text-white"
-      onClick={() => setIsCalculator(false)}
+      onClick={() => {}}
     >
       <div
         className="relative h-[400px] w-[300px] rounded-md border border-secondary bg-primary p-4"
@@ -21,7 +19,7 @@ export default function Calculator() {
       >
         <div
           className="absolute right-[-15px] top-[-15px] rounded-full border-4 border-secondary"
-          onClick={() => setIsCalculator(false)}
+          onClick={() => {}}
         >
           <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full border border-black bg-primary p-[6px]">
             <Image
