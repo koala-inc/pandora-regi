@@ -205,28 +205,30 @@ export default function OrderSheet() {
             </div>
             <div className="flex h-[13.1%] max-h-[107px] min-h-[98px]">
               <Lists
-                lists={[
-                  {
-                    title: "メイン",
-                    lot: 1,
-                    price: 1000,
-                  },
-                  {
-                    title: "┗特別クーポン",
-                    lot: 1,
-                    price: -1000,
-                  },
-                  {
-                    title: "メイン",
-                    lot: 1,
-                    price: 1000,
-                  },
-                  {
-                    title: "延長",
-                    lot: 1,
-                    price: 1000,
-                  },
-                ]}
+                lists={
+                  [
+                    // {
+                    //   title: "メイン",
+                    //   lot: 1,
+                    //   price: 1000,
+                    // },
+                    // {
+                    //   title: "┗特別クーポン",
+                    //   lot: 1,
+                    //   price: -1000,
+                    // },
+                    // {
+                    //   title: "メイン",
+                    //   lot: 1,
+                    //   price: 1000,
+                    // },
+                    // {
+                    //   title: "延長",
+                    //   lot: 1,
+                    //   price: 1000,
+                    // },
+                  ]
+                }
               />
               <div
                 className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
@@ -256,98 +258,100 @@ export default function OrderSheet() {
             </div>
             <div className="flex h-[13.1%] max-h-[107px] min-h-[98px]">
               <Lists
-                lists={[
-                  {
-                    title: "キャストA",
-                    subTitle: "◯",
-                    lot: 1,
-                    price: 1000,
-                  },
-                  {
-                    title: "A",
-                    subTitle: "◯",
-                    lot: 100,
-                    price: 1000,
-                  },
-                  {
-                    title: "aaaaaaaaaA",
-                    subTitle: "◯",
-                    lot: 1,
-                    price: 105500,
-                  },
-                  {
-                    title: "キャストA",
-                    subTitle: "◯",
-                    lot: 12,
-                    price: 1000,
-                  },
-                  {
-                    title: "キャストA",
-                    subTitle: "◯",
-                    lot: 1,
-                    price: 1000,
-                  },
-                  {
-                    title: "キャストA",
-                    subTitle: "◯",
-                    lot: 1,
-                    price: 1000,
-                  },
-                  {
-                    title: "A",
-                    subTitle: "◯",
-                    lot: 100,
-                    price: 1000,
-                  },
-                  {
-                    title: "aaaaaaaaaA",
-                    subTitle: "◯",
-                    lot: 1,
-                    price: 105500,
-                  },
-                  {
-                    title: "キャストA",
-                    subTitle: "◯",
-                    lot: 12,
-                    price: 1000,
-                  },
-                  {
-                    title: "キャストA",
-                    subTitle: "◯",
-                    lot: 1,
-                    price: 1000,
-                  },
-                  {
-                    title: "キャストA",
-                    subTitle: "◯",
-                    lot: 1,
-                    price: 1000,
-                  },
-                  {
-                    title: "A",
-                    subTitle: "◯",
-                    lot: 100,
-                    price: 1000,
-                  },
-                  {
-                    title: "aaaaaaaaaA",
-                    subTitle: "◯",
-                    lot: 1,
-                    price: 105500,
-                  },
-                  {
-                    title: "キャストA",
-                    subTitle: "◯",
-                    lot: 12,
-                    price: 1000,
-                  },
-                  {
-                    title: "キャストA",
-                    subTitle: "◯",
-                    lot: 1,
-                    price: 1000,
-                  },
-                ]}
+                lists={
+                  [
+                    // {
+                    //   title: "キャストA",
+                    //   subTitle: "◯",
+                    //   lot: 1,
+                    //   price: 1000,
+                    // },
+                    // {
+                    //   title: "A",
+                    //   subTitle: "◯",
+                    //   lot: 100,
+                    //   price: 1000,
+                    // },
+                    // {
+                    //   title: "aaaaaaaaaA",
+                    //   subTitle: "◯",
+                    //   lot: 1,
+                    //   price: 105500,
+                    // },
+                    // {
+                    //   title: "キャストA",
+                    //   subTitle: "◯",
+                    //   lot: 12,
+                    //   price: 1000,
+                    // },
+                    // {
+                    //   title: "キャストA",
+                    //   subTitle: "◯",
+                    //   lot: 1,
+                    //   price: 1000,
+                    // },
+                    // {
+                    //   title: "キャストA",
+                    //   subTitle: "◯",
+                    //   lot: 1,
+                    //   price: 1000,
+                    // },
+                    // {
+                    //   title: "A",
+                    //   subTitle: "◯",
+                    //   lot: 100,
+                    //   price: 1000,
+                    // },
+                    // {
+                    //   title: "aaaaaaaaaA",
+                    //   subTitle: "◯",
+                    //   lot: 1,
+                    //   price: 105500,
+                    // },
+                    // {
+                    //   title: "キャストA",
+                    //   subTitle: "◯",
+                    //   lot: 12,
+                    //   price: 1000,
+                    // },
+                    // {
+                    //   title: "キャストA",
+                    //   subTitle: "◯",
+                    //   lot: 1,
+                    //   price: 1000,
+                    // },
+                    // {
+                    //   title: "キャストA",
+                    //   subTitle: "◯",
+                    //   lot: 1,
+                    //   price: 1000,
+                    // },
+                    // {
+                    //   title: "A",
+                    //   subTitle: "◯",
+                    //   lot: 100,
+                    //   price: 1000,
+                    // },
+                    // {
+                    //   title: "aaaaaaaaaA",
+                    //   subTitle: "◯",
+                    //   lot: 1,
+                    //   price: 105500,
+                    // },
+                    // {
+                    //   title: "キャストA",
+                    //   subTitle: "◯",
+                    //   lot: 12,
+                    //   price: 1000,
+                    // },
+                    // {
+                    //   title: "キャストA",
+                    //   subTitle: "◯",
+                    //   lot: 1,
+                    //   price: 1000,
+                    // },
+                  ]
+                }
               />
               <div
                 className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
@@ -377,23 +381,25 @@ export default function OrderSheet() {
             </div>
             <div className="flex h-[13.1%] max-h-[107px] min-h-[98px]">
               <Lists
-                lists={[
-                  {
-                    title: "吉四六",
-                    lot: 1,
-                    price: 1000,
-                  },
-                  {
-                    title: "生ビール",
-                    lot: 1,
-                    price: 1000,
-                  },
-                  {
-                    title: "ドンペリ白",
-                    lot: 1,
-                    price: 1000,
-                  },
-                ]}
+                lists={
+                  [
+                    // {
+                    //   title: "吉四六",
+                    //   lot: 1,
+                    //   price: 1000,
+                    // },
+                    // {
+                    //   title: "生ビール",
+                    //   lot: 1,
+                    //   price: 1000,
+                    // },
+                    // {
+                    //   title: "ドンペリ白",
+                    //   lot: 1,
+                    //   price: 1000,
+                    // },
+                  ]
+                }
               />
               <div
                 className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
@@ -423,19 +429,21 @@ export default function OrderSheet() {
             <div className="w-full">
               <div className="mt-3 flex w-full items-center justify-between">
                 <div>小計</div>
-                <div>¥10,000-</div>
+                <div>¥{(0).toLocaleString()}-</div>
               </div>
               <div className="mt-1 flex w-full items-center justify-between">
                 <div>サービス</div>
-                <div>¥3,000-</div>
+                <div>¥{(0).toLocaleString()}-</div>
               </div>
               <div className="mt-1 flex w-full items-center justify-between">
                 <div>税</div>
-                <div>¥1,300-</div>
+                <div>¥{(0).toLocaleString()}-</div>
               </div>
               <div className="mt-4 flex w-full items-center justify-between text-2xl text-accent">
                 <div>合計</div>
-                <div className="flex-1 text-right">¥15,300-</div>
+                <div className="flex-1 text-right">
+                  ¥{(0).toLocaleString()}-
+                </div>
               </div>
             </div>
             <div

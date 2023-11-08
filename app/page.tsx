@@ -60,7 +60,7 @@ export default function Home() {
           </>
         )}
       </AnimatePresence>
-      {isControl == "NONE" && <SeatMap />}
+      {isControl == "" && <SeatMap />}
       <OverlayNav />
     </main>
   );

@@ -3,13 +3,13 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import useIsHeaderGlobal from "@/globalstates/isHeader";
 import { format } from "date-fns";
 import { ja } from "date-fns/locale";
-import useIsAnimateGlobal from "@/globalstates/settings";
+
+import useIsHeaderGlobal from "@/globalstates/isHeader";
 
 function Content() {
-  const [isHeader, setIsHeader] = useIsHeaderGlobal();
+  const [, setIsHeader] = useIsHeaderGlobal();
   const [datetime, setDatetime] = useState(new Date());
 
   useEffect(() => {
@@ -50,25 +50,15 @@ function Content() {
 }
 
 export default function Header() {
-  const [isAnimate] = useIsAnimateGlobal();
-
   return (
-    <>
-      {isAnimate.decoration ? (
-        <motion.header
-          initial={{ top: -90 }}
-          animate={{ top: 0 }}
-          exit={{ top: -90 }}
-          transition={{ ease: "easeInOut", bounce: 0, duration: 0.1 }}
-          className="absolute top-0 z-30 h-[90px] w-full border-y-2 border-black"
-        >
-          <Content />
-        </motion.header>
-      ) : (
-        <header className="absolute top-0 z-30 h-[90px] w-full border-y-2 border-black">
-          <Content />
-        </header>
-      )}
-    </>
+    <motion.header
+      initial={{ top: -90 }}
+      animate={{ top: 0 }}
+      exit={{ top: -90 }}
+      transition={{ ease: "easeInOut", bounce: 0, duration: 0.1 }}
+      className="absolute top-0 z-30 h-[90px] w-full border-y-2 border-black"
+    >
+      <Content />
+    </motion.header>
   );
 }
