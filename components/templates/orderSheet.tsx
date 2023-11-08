@@ -81,7 +81,8 @@ export default function OrderSheet() {
               </div>
               <div
                 className="flex min-w-[7em] flex-col items-center justify-center"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setIsControl("TIME");
                 }}
               >
@@ -232,7 +233,8 @@ export default function OrderSheet() {
               />
               <div
                 className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setIsControl("SET");
                 }}
               >
@@ -355,7 +357,8 @@ export default function OrderSheet() {
               />
               <div
                 className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setIsControl("CAST");
                 }}
               >
@@ -403,7 +406,8 @@ export default function OrderSheet() {
               />
               <div
                 className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setIsControl("ITEM");
                 }}
               >
@@ -447,7 +451,8 @@ export default function OrderSheet() {
               </div>
             </div>
             <div
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setIsControl("END");
               }}
               className="flex h-[116px] w-[60px] flex-col items-center justify-center pl-3"

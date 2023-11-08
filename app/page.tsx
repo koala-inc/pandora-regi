@@ -56,7 +56,7 @@ export default function Home() {
         {isCard && (
           <>
             <OrderSheet />
-            <Control isControl={isControl} />
+            <OrderSet />
           </>
         )}
       </AnimatePresence>

@@ -6,12 +6,14 @@ import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsCardGlobal from "@/globalstates/isCard";
 import useSettingsGlobal from "@/globalstates/settings";
+import useIsControlGlobal from "@/globalstates/isControl";
 
 export default function DebugMenu() {
   const [settings, setSettings] = useSettingsGlobal();
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isCard, setIsCard] = useIsCardGlobal();
+  const [isControl] = useIsControlGlobal();
   const [activeTab, setActiveTab] = useState(0);
   const [activeTab2, setActiveTab2] = useState(0);
 
@@ -58,6 +60,9 @@ export default function DebugMenu() {
               </li>
               <li className="flex">
                 <div className="w-[6rem]">isCard</div>: {String(isCard)}
+              </li>
+              <li className="flex">
+                <div className="w-[6rem]">isControl</div>: {String(isControl)}
               </li>
             </ul>
           )}
