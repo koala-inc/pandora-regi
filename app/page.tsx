@@ -22,21 +22,45 @@ function Control(isControl: any) {
   switch (isControl) {
     case "TIME":
       // セット時間の管理コンポーネント
-      break;
+      return (
+        <div className="absolute right-[15px] top-1/2 flex w-full max-w-[calc(100%-420px)] items-center justify-center bg-primary text-white">
+          セット時間管理コンポーネント
+        </div>
+      );
     case "SET":
       // 合流コンポーネント
-      break;
+      return (
+        <div className="absolute right-[15px] top-1/2 flex w-full max-w-[calc(100%-420px)] items-center justify-center bg-primary text-white">
+          顧客追加コンポーネント
+        </div>
+      );
     case "CAST":
       // セットの追加コンポーネント
-      return <OrderSet />;
+      return (
+        <div className="absolute right-[15px] top-1/2 flex w-full max-w-[calc(100%-420px)] items-center justify-center bg-primary text-white">
+          指名追加コンポーネント
+        </div>
+      );
     case "ITEM":
       // オーダー追加コンポーネント
-      return <OrderItemAdd />;
+      return (
+        <div className="absolute right-[15px] top-1/2 flex w-full max-w-[calc(100%-420px)] items-center justify-center bg-primary text-white">
+          オーダー追加コンポーネント
+        </div>
+      );
     case "APPROX":
       // 概算コンポーネント
-      break;
+      return (
+        <div className="absolute right-[15px] top-1/2 flex w-full max-w-[calc(100%-420px)] items-center justify-center bg-primary text-white">
+          概算表示コンポーネント
+        </div>
+      );
     case "END":
-      return <OrderEnd />;
+      return (
+        <div className="absolute right-[15px] top-1/2 flex w-full max-w-[calc(100%-420px)] items-center justify-center bg-primary text-white">
+          決済コンポーネント
+        </div>
+      );
     default:
       return <></>;
   }
@@ -56,7 +80,7 @@ export default function Home() {
         {isCard && (
           <>
             <OrderSheet />
-            <OrderSet />
+            {Control(isControl)}
           </>
         )}
       </AnimatePresence>

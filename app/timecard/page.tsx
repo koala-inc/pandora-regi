@@ -144,18 +144,9 @@ export default function Mater() {
   return (
     <main className="relative h-full w-full">
       <Background />
-      <SideMenu nav={nav} />
-      <AnimatePresence>
-        {nav.map((item) => {
-          if (item.submenu) {
-            return item.submenu?.map(
-              (item) => item.name == masterActivePage && item.component
-            );
-          } else {
-            return item.name == masterActivePage && item.component;
-          }
-        })}
-      </AnimatePresence>
+      <div className="flex h-full w-full items-center justify-center bg-primary text-white">
+        タイムカードコンポーネント
+      </div>
       <HomeButton />
       <DevTool />
     </main>

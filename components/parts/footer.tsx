@@ -12,7 +12,9 @@ function Content() {
   return (
     <Border size="px-5 py-3">
       <div className="flex w-full flex-wrap items-start justify-around pr-[65px]">
-        <Button>タイムカード</Button>
+        <Link href={"/timecard"}>
+          <Button>タイムカード</Button>
+        </Link>
         <Button disabled>送り/日払い</Button>
         <Button disabled>外販</Button>
         <Button disabled>出納帳</Button>

@@ -480,7 +480,7 @@ export default function OrderSheet() {
             className="min-w-[8rem]"
             natural
             onClick={() => {
-              setIsControl("APPOROX");
+              setIsControl("APPROX");
             }}
           >
             概算
