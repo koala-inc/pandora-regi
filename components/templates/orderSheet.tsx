@@ -479,7 +479,8 @@ export default function OrderSheet() {
           <Button
             className="min-w-[8rem]"
             natural
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               setIsControl("APPROX");
             }}
           >
