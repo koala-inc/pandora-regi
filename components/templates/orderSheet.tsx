@@ -473,19 +473,19 @@ export default function OrderSheet() {
           </div>
         </section>
         <nav className="mt-4 flex w-full items-center justify-center">
-          <Button className="mr-2 min-w-[8rem]" natural>
+          <Button className="mr-2 min-w-[8rem]" natural disabled>
             分伝/合算
           </Button>
-          <Button
-            className="min-w-[8rem]"
-            natural
+          <div
             onClick={(e) => {
               e.stopPropagation();
               setIsControl("APPROX");
             }}
           >
-            概算
-          </Button>
+            <Button className="min-w-[8rem]" natural>
+              概算
+            </Button>
+          </div>
         </nav>
       </div>
     </Card>
