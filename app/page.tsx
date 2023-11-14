@@ -8,6 +8,7 @@ import Footer from "@/components/parts/footer";
 import SeatMap from "@/components/templates/seatMap";
 import OverlayNav from "@/components/parts/overlayNav";
 import OrderSheet from "@/components/templates/orderSheet";
+import OrderAdd from "@/components/templates/orderAdd";
 import OrderSet from "@/components/templates/orderSet";
 import OrderItemAdd from "@/components/templates/controls/orderItemAdd";
 import OrderEnd from "@/components/templates/controls/orderEnd";
@@ -43,11 +44,7 @@ function Control(isControl: any) {
       );
     case "ITEM":
       // オーダー追加コンポーネント
-      return (
-        <div className="absolute right-[15px] top-1/2 flex w-full max-w-[calc(100%-420px)] items-center justify-center bg-primary text-white">
-          オーダー追加コンポーネント
-        </div>
-      );
+      return <OrderAdd />;
     case "APPROX":
       // 概算コンポーネント
       return (
