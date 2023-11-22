@@ -5,6 +5,7 @@ export const schema = z.object({
   lastName: z.string().max(50),
   email: z.string().min(1, { message: "必須" }),
   age: z.coerce.number().min(10, { message: "10以上にしてください" }),
+  check: z.boolean(),
 });
 
 export type Schema = z.infer<typeof schema>;

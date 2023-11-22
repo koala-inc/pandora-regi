@@ -1,13 +1,10 @@
 "use client";
 
-import { AnimatePresence } from "framer-motion";
-
 // 開発用コンポーネント
 import DevTool from "@/components/debug/devTool";
 
 // コンポーネント
 import Background from "@/components/parts/background";
-import SideMenu from "@/components/master/sideMenu";
 import HomeButton from "@/components/templates/homeButton";
 import CastList from "@/components/master/(cast)/list";
 import HelpCastList from "@/components/master/(cast)/helpCast";
