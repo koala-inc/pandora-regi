@@ -1,76 +1,152 @@
+import { motion } from "framer-motion";
+import Border from "@/components/templates/border";
+import Border2 from "@/components/master/border";
+import SubBorder from "@/components/templates/subBorder";
 import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
-import Image from "next/image";
+import useIsAnimateGlobal from "@/globalstates/settings";
 import Button from "./button";
+import { useState } from "react";
 
-function Lists({
-  lists,
-}: {
-  lists: {
-    title: string;
-    subTitle?: string;
-    lot: number;
-    price: number;
-  }[];
-}) {
-  return (
-    <ul className="hidden-scrollbar w-full overflow-y-scroll">
-      {lists.map((list, index) => (
-        <li
-          key={index}
-          className="mb-1 flex w-full items-center justify-between"
-        >
-          <div className="w-[40%] text-left">{list.title}</div>
-          <div className="w-[10%] text-left">{list.subTitle || ""}</div>
-          <div className="w-[20%] text-right">{list.lot}</div>
-          <div className="w-[30%] text-right">
-            ¥{list.price.toLocaleString()}-
-          </div>
-        </li>
-      ))}
-    </ul>
-  );
+function ContentHeader({ children }: { children: any }) {
+  return <SubBorder size="h-[100px] w-full px-4 py-2">{children}</SubBorder>;
 }
 
-function Line({ ml }: { ml?: string }) {
-  return (
-    <div className={"flex flex-1 justify-between items-center " + ml}>
-      <Image src={"/assets/line.svg"} width={26} height={26} alt="" />
-      <div className="h-[0.9px] w-[calc(100%-56px)] rounded-full bg-secondary"></div>
-      <Image
-        src={"/assets/line.svg"}
-        width={26}
-        height={26}
-        className="rotate-180"
-        alt=""
-      />
-    </div>
-  );
+function Content({ children }: { children: any }) {
+  return <Border size="h-[582.5px] w-full px-4 py-2">{children}</Border>;
 }
 
 export default function OrderAdd() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
+  const [activeTab, setActiveTab] = useState(0);
 
   return (
     <>
-      <div
-        className="flex h-full w-[340px] flex-col font-bold"
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 100 }}
+        exit={{ opacity: 0 }}
+        transition={{
+          ease: "easeInOut",
+          bounce: 0,
+          duration: 0.15,
+          delay: 0.15,
+        }}
+        className="absolute right-[15px] z-20 flex h-full min-h-[745px] w-full max-w-[calc(100%-420px)] flex-col justify-start"
         onClick={() => {
           if (isHeader) setIsHeader(false);
           if (isFooter) setIsFooter(false);
         }}
       >
-        <section className="flex flex-1 flex-col text-xs"></section>
-        <nav className="mt-4 flex w-full items-center justify-center">
-          <Button className="mr-2 min-w-[8rem]" natural>
-            キャンセル
-          </Button>
-          <Button className="min-w-[8rem]" natural onClick={() => {}}>
-            確定
-          </Button>
-        </nav>
-      </div>
+        <ContentHeader>
+          <Button>オーダー入力</Button>
+          <Button>店内履歴</Button>
+          <Button>オーダー修正</Button>
+
+          <div className="form-control ml-2">
+            <div className="input-group">
+              <input
+                type="text"
+                placeholder="商品を検索する..."
+                className="input input-bordered"
+              />
+              <button className="btn btn-square">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </ContentHeader>
+        <div className="flex py-2">
+          {/* <Button>カテゴリがありません。</Button> */}
+          <Button>ドリンク</Button>
+          <Button>フード</Button>
+          <Button>ボトル</Button>
+        </div>
+        <div className="tabs mt-3">
+          {/* <a
+            className={`tab tab-md mr-1 w-[17em] rounded-t-xl ${
+              activeTab == 0
+                ? "tab-active bg-primary text-white"
+                : "tab-lifted bg-secondary text-black"
+            }`}
+            onClick={() => setActiveTab(0)}
+          >
+            サブカテゴリがありません。
+          </a> */}
+          <a
+            className={`tab tab-md mr-1 w-[7em] rounded-t-xl ${
+              activeTab == 1
+                ? "tab-active bg-primary text-white"
+                : "tab-lifted bg-secondary text-black"
+            }`}
+            onClick={() => setActiveTab(1)}
+          >
+            果実酒
+          </a>
+          <a
+            className={`tab tab-md mr-1 w-[7em] rounded-t-xl ${
+              activeTab == 2
+                ? "tab-active bg-primary text-white"
+                : "tab-lifted bg-secondary text-black"
+            }`}
+            onClick={() => setActiveTab(2)}
+          >
+            日本酒
+          </a>
+          {/* <a className="tab tab-lifted tab-lg w-[8em] rounded-t-xl bg-neutral-400 text-black">
+          +
+        </a> */}
+        </div>
+        <div className="mt-[-1px] flex h-[520px] w-[1020px] rounded-b-xl rounded-r-xl bg-primary p-4 text-white">
+          <div className="grid w-full grid-cols-8 grid-rows-7 content-start items-center justify-center rounded-md border border-white bg-black p-4">
+            {/* <small>商品がありません。</small> */}
+            <div
+              className={
+                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+              }
+            >
+              ジンロ
+            </div>
+            <div
+              className={
+                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+              }
+            >
+              鏡月
+            </div>
+            <div
+              className={
+                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+              }
+            >
+              いいちこ
+            </div>
+            <div
+              className={
+                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+              }
+            >
+              鏡月
+              <br />
+              プレミアム
+            </div>
+          </div>
+        </div>
+      </motion.div>
     </>
   );
 }

@@ -12,7 +12,7 @@ export default function SubBorder({
   return (
     <div
       className={
-        "relative flex items-center justify-center bg-primary w-[80%] mb-[11px] mt-[4px] " +
+        "relative flex items-center justify-center bg-primary w-[80%] mb-[11px] mt-[14px] " +
         size
       }
     >

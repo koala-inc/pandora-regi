@@ -407,6 +407,16 @@ export default function CastList() {
               onSubmit={handleSubmit(onSubmit)}
             >
               <div className="flex flex-col">
+                <label className="mt-3 text-center text-xs font-bold text-accent">
+                  在籍
+                </label>
+                <input
+                  type="checkbox"
+                  {...register("check")}
+                  className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                />
+              </div>
+              <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">ID</label>
                 <input
                   type="number"
