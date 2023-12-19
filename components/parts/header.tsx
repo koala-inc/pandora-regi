@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import { ja } from "date-fns/locale";
+import { ja } from "date-fns/locale/ja";
 
 import useIsHeaderGlobal from "@/globalstates/isHeader";
 

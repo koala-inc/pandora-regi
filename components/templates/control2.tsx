@@ -1,10 +1,8 @@
 import { motion } from "framer-motion";
 import Border from "@/components/templates/border";
-import Border2 from "@/components/master/border";
 import SubBorder from "@/components/templates/subBorder";
 import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
-import useIsAnimateGlobal from "@/globalstates/settings";
 import Button from "./button";
 import { useState } from "react";
 
