@@ -28,14 +28,7 @@ export default function Build() {
           onClick={(e) => e.stopPropagation()}
         >
           <h2 className="mb-4">
-            Auto Setup Tool - Testing and Building
-            <div
-              className="radial-progress"
-              style={{ "--value": value }}
-              role="progressbar"
-            >
-              {value}
-            </div>
+            Auto Setup Tool - Testing and Building - {value}%（ {m}/92 ）
           </h2>
           <div className="flex w-full flex-wrap">
             <ul className="timeline timeline-vertical">
