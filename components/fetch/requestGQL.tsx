@@ -10,16 +10,18 @@ const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
 };
 
-export default function useGQL({
+export default function RequestGQL({
   gql,
   variables,
 }: {
-  gql: RequestDocument;
-  variables: Variables;
+  gql: string;
+  variables?: Variables;
 }) {
-  preload(gql, (q: RequestDocument) => client.request(q, variables));
+  preload(gql, (q: RequestDocument) =>
+    client.request(q, { ...variables, ...defaultVariables })
+  );
   const { data, error, isLoading } = useSWR<any>(gql, (q: RequestDocument) =>
-    client.request(q, variables)
+    client.request(q, { ...variables, ...defaultVariables })
   );
   if (isLoading) return <Loading />;
   if (error) return <ErrorMessage message={error.message} />;

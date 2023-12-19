@@ -3,7 +3,6 @@ import Border from "@/components/templates/border";
 import SubBorder from "@/components/templates/subBorder";
 import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
-import useIsAnimateGlobal from "@/globalstates/settings";
 import Button from "../button";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -150,10 +149,10 @@ export default function ControlOrderSet() {
           <div className="flex">
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">卓番</label>
-              <div className="flex flex-col">
+              <div className="flex">
                 <select
                   {...register("baitai")}
-                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                  className="mr-2 h-[30px] w-[3rem] rounded-md px-2 text-sm"
                 >
                   {seatAlphabet.map((pref) => {
                     return (
@@ -165,7 +164,7 @@ export default function ControlOrderSet() {
                 </select>
                 <select
                   {...register("baitai")}
-                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                  className="mr-2 h-[30px] w-[3rem] rounded-md px-2 text-sm"
                 >
                   {seatNumber.map((pref) => {
                     return (
@@ -213,8 +212,8 @@ export default function ControlOrderSet() {
             SWEET
           </a>
         </div>
-        <div className="mt-[-1px] flex h-[520px] w-[1020px] rounded-b-xl rounded-r-xl bg-primary p-4 text-white">
-          <div className="flex w-full overflow-x-scroll rounded-md border border-white bg-black p-4">
+        <div className="mt-[-1px] flex min-h-[520px] min-w-[1020px] flex-wrap rounded-b-xl rounded-r-xl bg-primary p-4 text-white">
+          <div className="flex max-h-[150px] min-w-full justify-center overflow-x-scroll rounded-md border border-white bg-black p-4">
             <div
               className={
                 "mx-auto flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"

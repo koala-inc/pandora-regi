@@ -2,6 +2,7 @@ import { Metadata, Viewport } from "next";
 import "./globals.css";
 import DevTool from "@/components/debug/devTool";
 import Background from "@/components/parts/background";
+import Build from "@/components/build/buildMenu";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || ""),
@@ -95,6 +96,7 @@ export default function RootLayout({
         <Background />
         {children}
         <DevTool />
+        <Build />
       </body>
     </html>
   );
