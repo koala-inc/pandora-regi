@@ -9,12 +9,12 @@ export default function Build() {
     new Date("Tue Dec 19 2023 18:22:55 GMT+0900")
   );
   const [m, setM] = useState(
-    Math.floor(differenceInMinutes(new Date(), startTime) / 12) + 1
+    Math.floor(differenceInMinutes(new Date(), startTime) / 16) + 1
   );
 
   useEffect(() => {
     setInterval(() => {
-      setM(Math.floor(differenceInMinutes(new Date(), startTime) / 12) + 1);
+      setM(Math.floor(differenceInMinutes(new Date(), startTime) / 16) + 1);
     }, 60 * 1000);
   }, [startTime]);
 
