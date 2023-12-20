@@ -14,7 +14,13 @@ export default function Build() {
 
   useEffect(() => {
     setInterval(() => {
-      setM(Math.floor(differenceInMinutes(new Date(), startTime) / 16) + 1);
+      const mm =
+        Math.floor(differenceInMinutes(new Date(), startTime) / 16) + 1;
+      if (mm > 90) {
+        setM(90);
+      } else {
+        setM(mm);
+      }
     }, 60 * 1000);
   }, [startTime]);
 
