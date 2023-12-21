@@ -8,7 +8,7 @@ export default function Build() {
           className="flex h-full w-full flex-col items-center justify-center overflow-y-scroll"
           onClick={(e) => e.stopPropagation()}
         >
-          <span className="loading loading-bars loading-lg"></span>
+          <p>ERROR: Could not complete.</p>
           <div role="alert" className="alert alert-error mt-5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
