@@ -96,7 +96,6 @@ export default function RootLayout({
         <Background />
         {children}
         <DevTool />
-        <Build />
       </body>
     </html>
   );
