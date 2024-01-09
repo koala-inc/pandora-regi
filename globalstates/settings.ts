@@ -18,5 +18,6 @@ export default function useSettingsGlobal() {
     license: process.env.NEXT_PUBLIC_LICENSE_KEY || "",
     isAnimation: true,
     isDebug: false,
+    isGlobalTime: true,
   });
 }
