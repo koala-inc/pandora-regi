@@ -378,10 +378,10 @@ export default function DebugMenu() {
                 <button
                   className="m-3 rounded-md bg-accent px-4 py-2"
                   onClick={() => {
-                    RequestGQL({
-                      gql: createCast,
-                      variables: { name: "テスト子ちゃん", cast_code: "0" },
-                    });
+                    // RequestGQL({
+                    //   gql: createCast,
+                    //   variables: { name: "テスト子ちゃん", cast_code: "0" },
+                    // });
                     alert("テストキャストを追加しました。");
                   }}
                 >
@@ -390,10 +390,10 @@ export default function DebugMenu() {
                 <button
                   className="m-3 rounded-md bg-accent px-4 py-2"
                   onClick={() => {
-                    RequestGQL({
-                      gql: createBottle,
-                      variables: { name: "テストボトル" },
-                    });
+                    // RequestGQL({
+                    //   gql: createBottle,
+                    //   variables: { name: "テストボトル" },
+                    // });
                     alert("テストボトルを追加しました。");
                   }}
                 >
