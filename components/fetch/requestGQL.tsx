@@ -10,20 +10,23 @@ const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
 };
 
-export default function RequestGQL({
+export default function useRequestGQL({
   gql,
   variables,
 }: {
   gql: string;
   variables?: Variables;
 }) {
-  preload(gql, (q: RequestDocument) =>
-    client.request(q, { ...variables, ...defaultVariables })
-  );
-  const { data, error, isLoading } = useSWR<any>(gql, (q: RequestDocument) =>
-    client.request(q, { ...variables, ...defaultVariables })
-  );
-  if (isLoading) return <Loading />;
-  if (error) return <ErrorMessage message={error.message} />;
+  const fetcher = (q: RequestDocument) =>
+    client.request(q, { ...variables, ...defaultVariables });
+
+  preload(gql, fetcher);
+
+  const { data, error, isLoading } = useSWR(gql, fetcher);
+
+  // if (isLoading) return <Loading />;
+  // if (error) return <ErrorMessage message={error.message} />
+  if (isLoading) return "読み込み中...";
+  if (error) return "エラー" + error.message;
   return data;
 }

@@ -15,7 +15,7 @@ import {
 } from "@/gqls/query/cast";
 import { searchBottle } from "@/gqls/query/bottle";
 
-import RequestGQL from "@/components/fetch/requestGQL";
+import useRequestGQL from "@/components/fetch/requestGQL";
 import { createBottle } from "@/gqls/mutation/bottle";
 import { searchCategory } from "@/gqls/query/category";
 import { searchChampagne } from "@/gqls/query/champagne";
@@ -44,27 +44,27 @@ export default function DebugMenu() {
   const [result, setResult] = useState(0);
   const [error, setError] = useState(false);
 
-  // const API_serchCast = RequestGQL({ gql: searchCast });
-  // const API_searchSalaryCast = RequestGQL({ gql: searchSalaryCast });
-  // const API_searchAttendanceManagementCast = RequestGQL({
-  //   gql: searchAttendanceManagementCast,
-  // });
-  // const API_searchBottle = RequestGQL({ gql: searchBottle });
-  // const API_searchCategory = RequestGQL({ gql: searchCategory });
-  // const API_searchChampagne = RequestGQL({ gql: searchChampagne });
-  // const API_searchDesignate = RequestGQL({ gql: searchDesignate });
-  // const API_searchEvent = RequestGQL({ gql: searchEvent });
-  // const API_searchItemAlias = RequestGQL({ gql: searchItemAlias });
-  // const API_searchPurchaseOrder = RequestGQL({ gql: searchPurchaseOrder });
-  // const API_searchSeat = RequestGQL({ gql: searchSeat });
-  // const API_searchSeatArea = RequestGQL({ gql: searchSeatArea });
-  // const API_searchSeatSetPriceChange = RequestGQL({
-  //   gql: searchSeatSetPriceChange,
-  // });
-  // const API_searchStaff = RequestGQL({ gql: searchStaff });
-  // const API_searchSalaryStaff = RequestGQL({ gql: searchSalaryStaff });
-  // const API_searchUser = RequestGQL({ gql: searchUser });
-  // const API_searchVisit = RequestGQL({ gql: searchVisit });
+  const API_serchCast = useRequestGQL({ gql: searchCast });
+  const API_searchSalaryCast = useRequestGQL({ gql: searchSalaryCast });
+  const API_searchAttendanceManagementCast = useRequestGQL({
+    gql: searchAttendanceManagementCast,
+  });
+  const API_searchBottle = useRequestGQL({ gql: searchBottle });
+  const API_searchCategory = useRequestGQL({ gql: searchCategory });
+  const API_searchChampagne = useRequestGQL({ gql: searchChampagne });
+  const API_searchDesignate = useRequestGQL({ gql: searchDesignate });
+  const API_searchEvent = useRequestGQL({ gql: searchEvent });
+  const API_searchItemAlias = useRequestGQL({ gql: searchItemAlias });
+  const API_searchPurchaseOrder = useRequestGQL({ gql: searchPurchaseOrder });
+  const API_searchSeat = useRequestGQL({ gql: searchSeat });
+  const API_searchSeatArea = useRequestGQL({ gql: searchSeatArea });
+  const API_searchSeatSetPriceChange = useRequestGQL({
+    gql: searchSeatSetPriceChange,
+  });
+  const API_searchStaff = useRequestGQL({ gql: searchStaff });
+  const API_searchSalaryStaff = useRequestGQL({ gql: searchSalaryStaff });
+  const API_searchUser = useRequestGQL({ gql: searchUser });
+  const API_searchVisit = useRequestGQL({ gql: searchVisit });
 
   return (
     <>
@@ -409,87 +409,87 @@ export default function DebugMenu() {
                     setResult(1);
                     try {
                       setTimeout(() => {
-                        // if (API_serchCast != null) {
-                        setResult(2);
-                        // }
+                        if (API_serchCast != null) {
+                          setResult(2);
+                        }
                         setTimeout(() => {
-                          // if (searchSalaryCast != null) {
-                          setResult(3);
-                          // }
+                          if (searchSalaryCast != null) {
+                            setResult(3);
+                          }
                           setTimeout(() => {
-                            // if (searchAttendanceManagementCast != null) {
-                            setResult(4);
-                            // }
+                            if (searchAttendanceManagementCast != null) {
+                              setResult(4);
+                            }
                             setTimeout(() => {
-                              // if (searchBottle != null) {
-                              setResult(5);
-                              // }
+                              if (searchBottle != null) {
+                                setResult(5);
+                              }
                               setTimeout(() => {
-                                // if (searchCategory != null) {
-                                setResult(6);
-                                // }
+                                if (searchCategory != null) {
+                                  setResult(6);
+                                }
                                 setTimeout(() => {
-                                  // if (searchChampagne != null) {
-                                  setResult(7);
-                                  // }
+                                  if (searchChampagne != null) {
+                                    setResult(7);
+                                  }
                                   setTimeout(() => {
-                                    // if (searchDesignate != null) {
-                                    setResult(8);
-                                    // }
+                                    if (searchDesignate != null) {
+                                      setResult(8);
+                                    }
                                     setTimeout(() => {
-                                      // if (searchEvent != null) {
-                                      setResult(9);
-                                      // }
-                                      setTimeout(() => {
-                                        // if (searchEvent != null) {
+                                      if (searchEvent != null) {
                                         setResult(9);
-                                        // }
+                                      }
+                                      setTimeout(() => {
+                                        if (searchEvent != null) {
+                                          setResult(9);
+                                        }
                                         setTimeout(() => {
-                                          // if (searchItemAlias != null) {
-                                          setResult(10);
-                                          // }
+                                          if (searchItemAlias != null) {
+                                            setResult(10);
+                                          }
                                           setTimeout(() => {
-                                            // if (searchPurchaseOrder != null) {
-                                            setResult(11);
-                                            // }
+                                            if (searchPurchaseOrder != null) {
+                                              setResult(11);
+                                            }
                                             setTimeout(() => {
-                                              // if (searchSeat != null) {
-                                              setResult(12);
-                                              // }
+                                              if (searchSeat != null) {
+                                                setResult(12);
+                                              }
                                               setTimeout(() => {
-                                                // if (searchSeatArea != null) {
-                                                setResult(13);
-                                                // }
+                                                if (searchSeatArea != null) {
+                                                  setResult(13);
+                                                }
                                                 setTimeout(() => {
-                                                  // if (
-                                                  // searchSeatSetPriceChange !=
-                                                  // null
-                                                  // ) {
-                                                  setResult(14);
-                                                  // }
+                                                  if (
+                                                    searchSeatSetPriceChange !=
+                                                    null
+                                                  ) {
+                                                    setResult(14);
+                                                  }
                                                   setTimeout(() => {
-                                                    // if (searchStaff != null) {
-                                                    setResult(15);
-                                                    // }
+                                                    if (searchStaff != null) {
+                                                      setResult(15);
+                                                    }
                                                     setTimeout(() => {
-                                                      // if (
-                                                      // searchSalaryStaff !=
-                                                      // null
-                                                      // ) {
-                                                      setResult(16);
-                                                      // }
+                                                      if (
+                                                        searchSalaryStaff !=
+                                                        null
+                                                      ) {
+                                                        setResult(16);
+                                                      }
                                                       setTimeout(() => {
-                                                        // if (
-                                                        // searchUser != null
-                                                        // ) {
-                                                        setResult(17);
-                                                        // }
+                                                        if (
+                                                          searchUser != null
+                                                        ) {
+                                                          setResult(17);
+                                                        }
                                                         setTimeout(() => {
-                                                          // if (
-                                                          // searchVisit != null
-                                                          // ) {
-                                                          setResult(18);
-                                                          // }
+                                                          if (
+                                                            searchVisit != null
+                                                          ) {
+                                                            setResult(18);
+                                                          }
                                                         }, 1000);
                                                       }, 1000);
                                                     }, 1000);
