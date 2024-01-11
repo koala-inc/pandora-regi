@@ -13,35 +13,35 @@ function Content() {
     <Border size="px-5 py-3">
       <div className="flex w-full flex-wrap items-start justify-around pr-[65px]">
         <Link href={"/timecard"}>
-          <Button>タイムカード</Button>
+          <Button disabled>タイムカード</Button>
         </Link>
         <Link href={"/dailyPayment"}>
           <Button>送り/日払い</Button>
         </Link>
         <Link href={"/directSales"}>
-          <Button>外販</Button>
+          <Button disabled>外販</Button>
         </Link>
         <Link href={"/receiptJournal"}>
-          <Button>出納帳</Button>
+          <Button disabled>出納帳</Button>
         </Link>
         <Link href={"/listForm"}>
           <Button>リスト票</Button>
         </Link>
         <Link href={"/baggage"}>
-          <Button>荷物</Button>
+          <Button disabled>荷物</Button>
         </Link>
         <Link href={"/customer"}>
-          <Button>顧客</Button>
+          <Button disabled>顧客</Button>
         </Link>
         <Button disabled>ポイント</Button>
         <Link href={"/keepBottle"}>
-          <Button>キープボトル</Button>
+          <Button disabled>キープボトル</Button>
         </Link>
         <Link href={"/inventory"}>
-          <Button>在庫</Button>
+          <Button disabled>在庫</Button>
         </Link>
         <Link href={"/voucherHistory"}>
-          <Button>
+          <Button disabled>
             キャスト
             <br />
             伝票履歴
@@ -52,7 +52,7 @@ function Content() {
         </Link>
         <Button disabled>ログ</Button>
         <Link href={"/callSlip"}>
-          <Button>コール票発行</Button>
+          <Button disabled>コール票発行</Button>
         </Link>
       </div>
       <nav
