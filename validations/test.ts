@@ -14,6 +14,7 @@ export const schema = z.object({
   baitai: z.string(),
   syokai: z.string(),
   kikan: z.string(),
+  check: z.boolean(),
 });
 
 export type Schema = z.infer<typeof schema>;

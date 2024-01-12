@@ -1,0 +1,93 @@
+✅query
+✅serchCast
+✅searchSalaryCast
+✅searchAttendanceManagementCast
+❌=>✅searchBottle
+✅searchCategory
+❌=>✅searchChampagne
+✅searchDesignate
+✅searchEvent
+✅searchItemAlias
+✅searchPurchaseOrder
+✅searchSeat
+✅searchSeatArea
+✅searchSeatSetPriceChange
+✅searchStaff
+✅searchSalaryStaff
+✅searchUser
+✅searchVisit
+
+mutation
+✅createBottle
+updateBottle
+deleteBottle
+createCast
+createSalaryCast
+createAttendanceManagementCast
+updateCast
+updateSalaryCast
+updateAttendanceManagementCast
+★★★deleteCast
+★★★deleteSalaryCast
+★★★deleteAttendanceManagementCast
+createCategory
+★★★updateCategory
+deleteCategory
+createChampagne
+updateChampagne
+★★★deleteChampagne
+createDesignate
+★★★updateDesignate
+deleteDesignate
+createEvent
+★★★updateEvent
+deleteEvent
+createItemAlias
+★★★udpateItemAlias
+★★★deleteItemAlias
+createMenu
+updateMenu
+★★★deleteMenu
+createPurchaseOrder
+★★★updatePurchaseOrder
+deletePurchaseOrder
+createSeatArea
+createSeatSetPriceChange
+★★★updateSeatArea
+★★★updateSeatSetPriceChange
+deleteSeatArea
+★★★deleteSeatSetPriceChange
+createStaff
+createSalaryStaff
+updateStaff,
+updateSalaryStaff
+★★★deleteStaff
+★★★deleteSalaryStaff
+createUser
+★★★updateUser
+★★★deleteUser
+createVisit
+★★★Visit
+deleteVisit
+
+
+API連携
+1,  deleteCast
+2,  deleteSalaryCast
+3,  deleteAttendanceManagementCast
+4,  updateCategory
+5,  deleteChampagne
+6,  updateDesignate
+7,  updateEvent
+8,  udpateItemAlias
+9,  deleteItemAlias
+10, deleteMenu
+11, updatePurchaseOrder
+12, updateSeatArea
+13, updateSeatSetPriceChange
+14, deleteSeatSetPriceChange
+15, deleteStaff
+16, deleteSalaryStaff
+17, updateUser
+18, deleteUser
+19, Visit

@@ -8,7 +8,8 @@ import Footer from "@/components/parts/footer";
 import SeatMap from "@/components/templates/seatMap";
 import OverlayNav from "@/components/parts/overlayNav";
 import OrderSheet from "@/components/templates/orderSheet";
-import OrderSet from "@/components/templates/orderSet";
+import OrderAdd from "@/components/templates/orderAdd";
+import OrderSet from "@/components/templates/controls/orderSet";
 import OrderItemAdd from "@/components/templates/controls/orderItemAdd";
 import OrderEnd from "@/components/templates/controls/orderEnd";
 
@@ -20,6 +21,13 @@ import useIsControlGlobal from "@/globalstates/isControl";
 
 function Control(isControl: any) {
   switch (isControl) {
+    case "START":
+      // セット時間の管理コンポーネント
+      return (
+        <div className="absolute right-[15px] top-1/2 flex w-full max-w-[calc(100%-420px)] items-center justify-center bg-primary text-white">
+          入店伝票
+        </div>
+      );
     case "TIME":
       // セット時間の管理コンポーネント
       return (
@@ -29,11 +37,7 @@ function Control(isControl: any) {
       );
     case "SET":
       // 合流コンポーネント
-      return (
-        <div className="absolute right-[15px] top-1/2 flex w-full max-w-[calc(100%-420px)] items-center justify-center bg-primary text-white">
-          顧客追加コンポーネント
-        </div>
-      );
+      return <OrderSet />;
     case "CAST":
       // セットの追加コンポーネント
       return (
@@ -43,11 +47,7 @@ function Control(isControl: any) {
       );
     case "ITEM":
       // オーダー追加コンポーネント
-      return (
-        <div className="absolute right-[15px] top-1/2 flex w-full max-w-[calc(100%-420px)] items-center justify-center bg-primary text-white">
-          オーダー追加コンポーネント
-        </div>
-      );
+      return <OrderAdd />;
     case "APPROX":
       // 概算コンポーネント
       return (
@@ -56,11 +56,7 @@ function Control(isControl: any) {
         </div>
       );
     case "END":
-      return (
-        <div className="absolute right-[15px] top-1/2 flex w-full max-w-[calc(100%-420px)] items-center justify-center bg-primary text-white">
-          決済コンポーネント
-        </div>
-      );
+      return <OrderEnd />;
     default:
       return <></>;
   }

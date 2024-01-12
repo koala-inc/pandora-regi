@@ -13,27 +13,47 @@ function Content() {
     <Border size="px-5 py-3">
       <div className="flex w-full flex-wrap items-start justify-around pr-[65px]">
         <Link href={"/timecard"}>
-          <Button>タイムカード</Button>
+          <Button disabled>タイムカード</Button>
         </Link>
-        <Button disabled>送り/日払い</Button>
-        <Button disabled>外販</Button>
-        <Button disabled>出納帳</Button>
-        <Button disabled>リスト票</Button>
-        <Button disabled>荷物</Button>
-        <Button disabled>顧客</Button>
+        <Link href={"/dailyPayment"}>
+          <Button>送り/日払い</Button>
+        </Link>
+        <Link href={"/directSales"}>
+          <Button disabled>外販</Button>
+        </Link>
+        <Link href={"/receiptJournal"}>
+          <Button disabled>出納帳</Button>
+        </Link>
+        <Link href={"/listForm"}>
+          <Button>リスト票</Button>
+        </Link>
+        <Link href={"/baggage"}>
+          <Button disabled>荷物</Button>
+        </Link>
+        <Link href={"/customer"}>
+          <Button disabled>顧客</Button>
+        </Link>
         <Button disabled>ポイント</Button>
-        <Button disabled>キープボトル</Button>
-        <Button disabled>在庫</Button>
-        <Button disabled>
-          キャスト
-          <br />
-          伝票履歴
-        </Button>
+        <Link href={"/keepBottle"}>
+          <Button disabled>キープボトル</Button>
+        </Link>
+        <Link href={"/inventory"}>
+          <Button disabled>在庫</Button>
+        </Link>
+        <Link href={"/voucherHistory"}>
+          <Button disabled>
+            キャスト
+            <br />
+            伝票履歴
+          </Button>
+        </Link>
         <Link href={"/master"}>
           <Button>マスター</Button>
         </Link>
         <Button disabled>ログ</Button>
-        <Button disabled>コール票発行</Button>
+        <Link href={"/callSlip"}>
+          <Button disabled>コール票発行</Button>
+        </Link>
       </div>
       <nav
         className="absolute right-[25px] top-1/2 -translate-y-1/2 cursor-pointer rounded-full border border-black"

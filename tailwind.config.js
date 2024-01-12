@@ -13,6 +13,8 @@ module.exports = {
         secondary: "#e9c365",
         thirdary: "#144b6e",
         accent: "#e97e00",
+        "secondary-accent": "#e97ea8",
+        "thirdary-accent": "#7dd5e8",
         natural: "#f3e1bc",
       },
       gridTemplateRows: {
