@@ -71,7 +71,7 @@ createVisit
 deleteVisit
 
 
-作るAPI連携
+API連携
 1,  deleteCast
 2,  deleteSalaryCast
 3,  deleteAttendanceManagementCast

@@ -16,6 +16,8 @@ import BottleAdd from "@/components/master/(item)/bottleAdd";
 
 // グローバルステート
 import useMasterActivePageGlobal from "@/globalstates/masterActivePage";
+import ShopInfo from "@/components/master/(system)/shopInfo";
+import Another from "@/components/master/(system)/another";
 
 export default function Mater() {
   const [masterActivePage, setMasterActivePage] = useMasterActivePageGlobal();
@@ -127,8 +129,24 @@ export default function Mater() {
     },
     {
       name: "システム",
-      disabled: true,
-      component: <></>,
+      disabled: false,
+      submenu: [
+        {
+          name: "店舗情報",
+          component: <ShopInfo />,
+          disabled: false,
+        },
+        {
+          name: "時間設定",
+          component: <></>,
+          disabled: true,
+        },
+        {
+          name: "その他",
+          component: <Another />,
+          disabled: true,
+        },
+      ],
     },
     {
       name: "ヘルプ",
