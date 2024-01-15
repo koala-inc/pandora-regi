@@ -18,18 +18,13 @@ export default function Border({
   return (
     <div
       className={
-        "border border-black hidden-scrollbar " +
-        className +
-        " " +
-        rounded +
-        " " +
-        text
+        "border border-black " + className + " " + rounded + " " + text
       }
     >
-      <div className={"border border-secondary hidden-scrollbar　" + rounded}>
+      <div className={"border border-secondary " + rounded}>
         <span
           className={
-            "flex items-center justify-center border border-black hidden-scrollbar　" +
+            "flex items-center justify-center border border-black " +
             rounded +
             " " +
             size +
