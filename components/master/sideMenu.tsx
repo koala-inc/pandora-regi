@@ -19,7 +19,7 @@ export default function SideMenu({
   const [, setMasterActivePage] = useMasterActivePageGlobal();
 
   return (
-    <div className="hidden-scrollbar absolute left-0 top-0 h-[100dvh] w-[200px] overflow-y-scroll border-t-8 border-secondary bg-thirdary font-bold">
+    <div className="absolute left-0 top-0 h-[100dvh] w-[200px] overflow-y-scroll border-t-8 border-secondary bg-thirdary font-bold">
       {nav.map((item, index) => (
         <>
           <div
