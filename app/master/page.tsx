@@ -156,7 +156,7 @@ export default function Mater() {
   ];
 
   return (
-    <main className="hidden-scrollbar relative h-full w-full">
+    <main className="relative h-full w-full">
       <SideMenu nav={nav} />
       <AnimatePresence>
         {nav.map((item) => {

@@ -24,7 +24,7 @@ export default function Border({
       <div className={"border border-secondary " + rounded}>
         <span
           className={
-            "flex items-center justify-center border border-black " +
+            "flex items-center justify-center border border-black hidden-scrollbar　" +
             rounded +
             " " +
             size +
