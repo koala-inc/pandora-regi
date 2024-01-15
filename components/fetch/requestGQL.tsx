@@ -22,7 +22,7 @@ export default function useRequestGQL({
 
   preload(gql, fetcher);
 
-  const { data, error, isLoading } = useSWR(gql, fetcher);
+  const { data, error, isLoading } = useSWR<any>(gql, fetcher);
 
   // if (isLoading) return <Loading />;
   // if (error) return <ErrorMessage message={error.message} />

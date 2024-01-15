@@ -7,6 +7,15 @@ import Button from "@/components/templates/button";
 import { useState } from "react";
 import Image from "next/image";
 import Modal from "@/components/parts/modal";
+import useRequestGQL from "@/components/fetch/requestGQL";
+import { searchCast } from "@/gqls/query/cast";
+import useSWR, { preload } from "swr";
+import client from "@/connection";
+import { RequestDocument } from "graphql-request";
+
+const defaultVariables = {
+  store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
+};
 
 export default function CastList() {
   const {
@@ -18,6 +27,13 @@ export default function CastList() {
     resolver: zodResolver(schema),
   });
   const onSubmit: SubmitHandler<Schema> = (data) => alert(JSON.stringify(data));
+
+  const fetcher = (q: RequestDocument) =>
+    client.request(q, { ...defaultVariables });
+
+  preload(searchCast, fetcher);
+
+  const { data, error, isLoading } = useSWR<any>(searchCast, fetcher);
 
   const [addModal, setAddModal] = useState(false);
 
@@ -197,7 +213,33 @@ export default function CastList() {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="relative h-[300px] max-h-[300px] overflow-scroll">
+              {/* <pre>{JSON.stringify(data.cast[0].store_cast[0].cast[0])}</pre> */}
+              {data?.cast[0].store_cast[0].cast.map((cast: any) => (
+                <tr key={cast.cast_code}>
+                  <td>{cast.cast_code}</td>
+                  <td>
+                    <div className="flex items-center space-x-3">
+                      <div>
+                        <div className="font-bold">{cast.name}</div>
+                        <div className="text-sm opacity-50">
+                          {cast.real_name}（{cast.real_name_ruby}）
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{cast.address}</td>
+                  <td>{cast.phone_number}</td>
+                  <td>1,000円</td>
+                  <td>30,000円</td>
+                  <td>{cast.birthday}</td>
+                  <td>-</td>
+                  <th>
+                    <button className="btn btn-ghost btn-xs">編集</button>
+                  </th>
+                </tr>
+              ))}
+
               {/* <tr>
                 <td>1000</td>
                 <td>
