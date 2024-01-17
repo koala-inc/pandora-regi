@@ -12,6 +12,7 @@ import { searchCast } from "@/gqls/query/cast";
 import useSWR, { preload } from "swr";
 import client from "@/connection";
 import { RequestDocument } from "graphql-request";
+import { createCast } from "@/gqls/mutation/cast";
 
 const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
@@ -443,7 +444,10 @@ export default function CastList() {
       {addModal && (
         <Modal setModal={setAddModal}>
           <Border className="w-full" size="p-4 flex flex-col" black>
-            <p className="w-full text-left">新規キャスト登録</p>
+            <p className="w-full text-left">
+              新規キャスト登録{" "}
+              <small className="ml-5 text-red-600">*は必須項目です。</small>
+            </p>
             <form
               className="flex w-full flex-wrap"
               onSubmit={handleSubmit(onSubmit)}
@@ -459,7 +463,9 @@ export default function CastList() {
                 />
               </div>
               <div className="flex flex-col">
-                <label className="mt-3 text-xs font-bold text-accent">ID</label>
+                <label className="mt-3 text-xs font-bold text-accent">
+                  ID <small className="text-red-600">*</small>
+                </label>
                 <input
                   type="number"
                   {...register("age")}
@@ -479,7 +485,7 @@ export default function CastList() {
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
-                  本名
+                  本名 <small className="text-red-600">*</small>
                 </label>
                 <input
                   {...register("firstName")}
@@ -633,7 +639,17 @@ export default function CastList() {
 
               <div className="ml-auto mr-4 flex flex-col justify-end">
                 <Button natural>
-                  <input type="submit" value="登録" />
+                  <input
+                    type="submit"
+                    value="登録"
+                    onClick={() => {
+                      client.request(createCast, {
+                        cast_code: 62345,
+                        name: "テストキャスト",
+                        ...defaultVariables,
+                      });
+                    }}
+                  />
                 </Button>
               </div>
             </form>

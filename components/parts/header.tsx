@@ -13,11 +13,10 @@ function Content() {
   const [datetime, setDatetime] = useState(new Date());
 
   useEffect(() => {
-    setTimeout(() => {}, (60 - datetime.getSeconds()) * 1000);
     setInterval(() => {
       setDatetime(new Date());
     }, 60 * 1000);
-  }, [datetime]);
+  }, []);
 
   return (
     <div className="h-full w-full border-y-4 border-secondary bg-primary">
