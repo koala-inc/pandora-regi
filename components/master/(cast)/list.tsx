@@ -191,25 +191,25 @@ export default function CastList() {
                 className="mr-2 h-[30px] rounded-md px-2 text-sm"
               />
             </div>
-            <div className="ml-auto mr-4 flex flex-col justify-end">
+            <div
+              className="ml-auto mr-4 flex flex-col justify-end"
+              onClick={() => {
+                mutate(
+                  () =>
+                    client.request(searchCast, {
+                      name: name,
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
+            >
               <Button natural>
-                <input
-                  type="button"
-                  value="検索"
-                  onClick={() => {
-                    mutate(
-                      () =>
-                        client.request(searchCast, {
-                          name: name,
-                          ...defaultVariables,
-                        }),
-                      {
-                        populateCache: true,
-                        revalidate: false,
-                      }
-                    );
-                  }}
-                />
+                検索
+                {/* <input type="button" value="検索" /> */}
               </Button>
             </div>
             <div className="mr-4 flex flex-col justify-end">
@@ -218,7 +218,7 @@ export default function CastList() {
               </Button>
             </div>
           </form>
-          <table className="table table-xs mt-2 min-h-[500px]">
+          <table className="table table-xs mt-2">
             {/* head */}
             <thead>
               <tr>
@@ -235,31 +235,35 @@ export default function CastList() {
                 </th>
               </tr>
             </thead>
-            <tbody className="relative h-[300px] max-h-[300px] overflow-scroll">
+            <tbody>
               {/* <pre>{JSON.stringify(data.cast[0].store_cast[0].cast[0])}</pre> */}
               {data?.cast[0]?.store_cast[0]?.cast?.map((cast: any) => (
-                <tr key={cast.cast_code}>
-                  <td>{cast.cast_code}</td>
-                  <td>
-                    <div className="flex items-center space-x-3">
-                      <div>
-                        <div className="font-bold">{cast.name}</div>
-                        <div className="text-sm opacity-50">
-                          {cast.real_name}（{cast.real_name_ruby}）
+                <>
+                  {cast.cast_code != 0 && (
+                    <tr key={cast.cast_code}>
+                      <td>{cast.cast_code}</td>
+                      <td>
+                        <div className="flex items-center space-x-3">
+                          <div>
+                            <div className="font-bold">{cast.name}</div>
+                            <div className="text-sm opacity-50">
+                              {cast.real_name}（{cast.real_name_ruby}）
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>{cast.address}</td>
-                  <td>{cast.phone_number}</td>
-                  <td>1,000円</td>
-                  <td>30,000円</td>
-                  <td>{cast.birthday}</td>
-                  <td>-</td>
-                  <th>
-                    <button className="btn btn-ghost btn-xs">編集</button>
-                  </th>
-                </tr>
+                      </td>
+                      <td>{cast.address}</td>
+                      <td>{cast.phone_number}</td>
+                      <td>1,000円</td>
+                      <td>30,000円</td>
+                      <td>{cast.birthday}</td>
+                      <td>-</td>
+                      <th>
+                        <button className="btn btn-ghost btn-xs">編集</button>
+                      </th>
+                    </tr>
+                  )}
+                </>
               ))}
 
               {/* <tr>

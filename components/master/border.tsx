@@ -29,7 +29,7 @@ export default function Border({
       >
         <span
           className={
-            "flex items-center justify-center border border-black " +
+            "flex items-center justify-start border border-black " +
             rounded +
             " " +
             size +
