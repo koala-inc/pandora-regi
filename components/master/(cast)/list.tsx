@@ -34,7 +34,9 @@ export default function CastList() {
 
   preload(searchCast, fetcher);
 
-  const { data, error, isLoading } = useSWR<any>(searchCast, fetcher);
+  const [name, setName] = useState("");
+
+  const { data, error, isLoading, mutate } = useSWR<any>(searchCast, fetcher);
 
   const [addModal, setAddModal] = useState(false);
 
@@ -110,9 +112,12 @@ export default function CastList() {
                 キャスト名
               </label>
               <input
-                {...register("firstName")}
+                // {...register("firstName")}
                 className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                 placeholder="源氏名を入力"
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
               />
             </div>
             <div className="flex flex-col">
@@ -188,7 +193,23 @@ export default function CastList() {
             </div>
             <div className="ml-auto mr-4 flex flex-col justify-end">
               <Button natural>
-                <input type="submit" value="検索" />
+                <input
+                  type="button"
+                  value="検索"
+                  onClick={() => {
+                    mutate(
+                      () =>
+                        client.request(searchCast, {
+                          name: name,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  }}
+                />
               </Button>
             </div>
             <div className="mr-4 flex flex-col justify-end">
@@ -216,7 +237,7 @@ export default function CastList() {
             </thead>
             <tbody className="relative h-[300px] max-h-[300px] overflow-scroll">
               {/* <pre>{JSON.stringify(data.cast[0].store_cast[0].cast[0])}</pre> */}
-              {data?.cast[0].store_cast[0].cast.map((cast: any) => (
+              {data?.cast[0]?.store_cast[0]?.cast?.map((cast: any) => (
                 <tr key={cast.cast_code}>
                   <td>{cast.cast_code}</td>
                   <td>
@@ -446,7 +467,7 @@ export default function CastList() {
           <Border className="w-full" size="p-4 flex flex-col" black>
             <p className="w-full text-left">
               新規キャスト登録{" "}
-              <small className="ml-5 text-red-600">*は必須項目です。</small>
+              <small className="ml-5 text-red-600">＊は必須項目です。</small>
             </p>
             <form
               className="flex w-full flex-wrap"
@@ -464,7 +485,7 @@ export default function CastList() {
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
-                  ID <small className="text-red-600">*</small>
+                  ID <small className="text-red-600">＊</small>
                 </label>
                 <input
                   type="number"
@@ -485,7 +506,7 @@ export default function CastList() {
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
-                  本名 <small className="text-red-600">*</small>
+                  本名 <small className="text-red-600">＊</small>
                 </label>
                 <input
                   {...register("firstName")}
