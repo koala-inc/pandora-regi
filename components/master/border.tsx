@@ -21,7 +21,12 @@ export default function Border({
         "border border-black " + className + " " + rounded + " " + text
       }
     >
-      <div className={"border border-secondary " + rounded}>
+      <div
+        className={
+          "border border-secondary max-h-[calc(100dvh-50px)] overflow-scroll " +
+          rounded
+        }
+      >
         <span
           className={
             "flex items-center justify-center border border-black " +
