@@ -102,7 +102,7 @@ export default function CastList() {
               <label className="mt-3 text-xs font-bold text-accent">ID</label>
               <input
                 type="number"
-                // {...register("age")}
+                {...register("age")}
                 className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                 placeholder="IDを入力"
               />
@@ -123,7 +123,7 @@ export default function CastList() {
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">本名</label>
               <input
-                // {...register("firstName")}
+                {...register("firstName")}
                 className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                 placeholder="本名を入力"
               />
@@ -134,7 +134,7 @@ export default function CastList() {
                 フリガナ
               </label>
               <input
-                // {...register("firstName")}
+                {...register("firstName")}
                 className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                 placeholder="フリガナを入力"
               />
@@ -146,7 +146,7 @@ export default function CastList() {
               </label>
               <input
                 type="tel"
-                // {...register("tel")}
+                {...register("tel")}
                 className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
                 placeholder="電話番号を入力"
               />
@@ -157,7 +157,7 @@ export default function CastList() {
                 期間カテゴリ
               </label>
               <select
-                // {...register("kikan")}
+                {...register("kikan")}
                 className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
               >
                 {kikan.map((pref) => {
@@ -174,7 +174,7 @@ export default function CastList() {
               <label className="mt-3 text-xs font-bold text-accent">期間</label>
               <input
                 type="date"
-                // {...register("birthday")}
+                {...register("birthday")}
                 className="mr-2 h-[30px] rounded-md px-2 text-sm"
               />
             </div>
@@ -187,7 +187,7 @@ export default function CastList() {
               <label className="mt-3 text-xs font-bold text-accent"></label>
               <input
                 type="date"
-                // {...register("birthday")}
+                {...register("birthday")}
                 className="mr-2 h-[30px] rounded-md px-2 text-sm"
               />
             </div>
