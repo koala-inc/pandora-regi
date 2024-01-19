@@ -342,9 +342,9 @@ export default function Mater() {
           )}
         </CommandPalette.Page>
 
-        <CommandPalette.Page id="projects">
-          {/* Projects page */}
-        </CommandPalette.Page>
+        {/* <CommandPalette.Page id="projects"> */}
+        {/* Projects page */}
+        {/* </CommandPalette.Page> */}
       </CommandPalette>
       <HomeButton />
     </main>
