@@ -34,6 +34,24 @@ export default function SideMenu({
             className={`relative flex h-[60px] w-full items-center justify-center border-b-8 border-secondary text-white first-letter:relative ${
               item.disabled ? "disabled" : ""
             }`}
+            onClick={() => {
+              if (!open[index].open) {
+                let temp = nav.map((item) => {
+                  item.open = false;
+                  return item;
+                });
+                temp[index].open = true;
+                setOpen(temp);
+              } else {
+                setOpen(
+                  nav.map((item) => {
+                    item.open = false;
+                    return item;
+                  })
+                );
+              }
+              setUpdate((update) => !update);
+            }}
           >
             <p className="w-full pr-[30px] text-center">{item.name}</p>
 
@@ -43,24 +61,6 @@ export default function SideMenu({
                   ? "absolute right-[5px] top-[14px] z-10 rotate-90 cursor-pointer transition-transform"
                   : "absolute right-[5px] top-[14px] z-10 cursor-pointer transition-transform"
               }
-              onClick={() => {
-                if (!open[index].open) {
-                  let temp = nav.map((item) => {
-                    item.open = false;
-                    return item;
-                  });
-                  temp[index].open = true;
-                  setOpen(temp);
-                } else {
-                  setOpen(
-                    nav.map((item) => {
-                      item.open = false;
-                      return item;
-                    })
-                  );
-                }
-                setUpdate((update) => !update);
-              }}
             >
               <Border rounded="rounded-full" size="h-[20px] w-[20px] p-[3px]">
                 <Image
