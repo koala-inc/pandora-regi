@@ -27,7 +27,6 @@ export default function CastList() {
   } = useForm<Schema>({
     resolver: zodResolver(schema),
   });
-  const onSubmit: SubmitHandler<Schema> = (data) => alert(JSON.stringify(data));
 
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
@@ -741,30 +740,36 @@ export default function CastList() {
                 <div
                   className="ml-auto mr-4 flex flex-col justify-end"
                   onClick={() => {
-                    createData.mutate(
-                      () =>
-                        client.request(createCast, {
-                          ...createForm,
-                          ...defaultVariables,
-                        }),
-                      {
-                        populateCache: true,
-                        revalidate: false,
-                      }
-                    );
-                    setCreateForm(() => {});
-                    searchData.mutate(
-                      () =>
-                        client.request(searchCast, {
-                          ...searchForm,
-                          ...defaultVariables,
-                        }),
-                      {
-                        populateCache: true,
-                        revalidate: false,
-                      }
-                    );
-                    setAddModal(false);
+                    createData
+                      .mutate(
+                        () =>
+                          client.request(createCast, {
+                            ...createForm,
+                            ...defaultVariables,
+                          }),
+                        {
+                          populateCache: true,
+                          revalidate: false,
+                        }
+                      )
+                      .then(() => {
+                        setCreateForm(() => {});
+                        setSearchForm(() => {});
+                        searchData
+                          .mutate(
+                            () =>
+                              client.request(searchCast, {
+                                ...defaultVariables,
+                              }),
+                            {
+                              populateCache: true,
+                              revalidate: false,
+                            }
+                          )
+                          .then(() => {
+                            setAddModal(false);
+                          });
+                      });
                   }}
                 >
                   <Button natural>登録</Button>
