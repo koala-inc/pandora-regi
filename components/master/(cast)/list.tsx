@@ -13,6 +13,7 @@ import useSWR, { preload } from "swr";
 import client from "@/connection";
 import { RequestDocument } from "graphql-request";
 import { createCast } from "@/gqls/mutation/cast";
+import { useHotkeys } from "react-hotkeys-hook";
 
 const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
@@ -119,6 +120,21 @@ export default function CastList() {
                     });
                   }
                 }}
+                onKeyUp={(e) => {
+                  if (e.key == "Enter") {
+                    searchData.mutate(
+                      () =>
+                        client.request(searchCast, {
+                          ...searchForm,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  }
+                }}
                 value={searchForm?.cast_code || ""}
               />
             </div>
@@ -134,6 +150,21 @@ export default function CastList() {
                     return { ...searchForm, name: e.target.value };
                   });
                 }}
+                onKeyUp={(e) => {
+                  if (e.key == "Enter") {
+                    searchData.mutate(
+                      () =>
+                        client.request(searchCast, {
+                          ...searchForm,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  }
+                }}
                 value={searchForm?.name || ""}
               />
             </div>
@@ -146,6 +177,21 @@ export default function CastList() {
                   setSearchForm((searchForm: any) => {
                     return { ...searchForm, real_name: e.target.value };
                   });
+                }}
+                onKeyUp={(e) => {
+                  if (e.key == "Enter") {
+                    searchData.mutate(
+                      () =>
+                        client.request(searchCast, {
+                          ...searchForm,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  }
                 }}
                 value={searchForm?.real_name || ""}
               />
@@ -165,6 +211,21 @@ export default function CastList() {
                     };
                   });
                 }}
+                onKeyUp={(e) => {
+                  if (e.key == "Enter") {
+                    searchData.mutate(
+                      () =>
+                        client.request(searchCast, {
+                          ...searchForm,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  }
+                }}
                 value={searchForm?.real_name_ruby || ""}
               />
             </div>
@@ -183,6 +244,21 @@ export default function CastList() {
                       phone_number: e.target.value,
                     };
                   });
+                }}
+                onKeyUp={(e) => {
+                  if (e.key == "Enter") {
+                    searchData.mutate(
+                      () =>
+                        client.request(searchCast, {
+                          ...searchForm,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  }
                 }}
                 value={searchForm?.phone_number || ""}
               />
