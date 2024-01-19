@@ -34,7 +34,7 @@ export default function CastList() {
 
   preload(searchCast, fetcher);
 
-  const [name, setName] = useState("");
+  const [searchForm, setSearchForm] = useState<any>({});
 
   const { data, error, isLoading, mutate } = useSWR<any>(searchCast, fetcher);
 
@@ -94,18 +94,31 @@ export default function CastList() {
           black
         >
           <p className="w-full text-left">キャストを検索</p>
-          <form
-            className="flex w-full flex-wrap"
-            onSubmit={handleSubmit(onSubmit)}
-            autoComplete="off"
-          >
+          <div className="flex w-full flex-wrap">
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">ID</label>
               <input
                 type="number"
-                {...register("age")}
                 className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                 placeholder="IDを入力"
+                onChange={(e) => {
+                  if (e.target.value == "") {
+                    delete searchForm.cast_code;
+                    setSearchForm((searchForm: any) => {
+                      return {
+                        ...searchForm,
+                      };
+                    });
+                  } else {
+                    setSearchForm((searchForm: any) => {
+                      return {
+                        ...searchForm,
+                        cast_code: Number(e.target.value),
+                      };
+                    });
+                  }
+                }}
+                value={searchForm?.cast_code || ""}
               />
             </div>
             <div className="flex flex-col">
@@ -113,33 +126,46 @@ export default function CastList() {
                 キャスト名
               </label>
               <input
-                // {...register("firstName")}
                 className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                 placeholder="源氏名を入力"
                 onChange={(e) => {
-                  setName(e.target.value);
+                  setSearchForm((searchForm: any) => {
+                    return { ...searchForm, name: e.target.value };
+                  });
                 }}
+                value={searchForm?.name || ""}
               />
             </div>
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">本名</label>
               <input
-                {...register("firstName")}
                 className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                 placeholder="本名を入力"
+                onChange={(e) => {
+                  setSearchForm((searchForm: any) => {
+                    return { ...searchForm, real_name: e.target.value };
+                  });
+                }}
+                value={searchForm?.real_name || ""}
               />
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
             </div>
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">
                 フリガナ
               </label>
               <input
-                {...register("firstName")}
                 className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                 placeholder="フリガナを入力"
+                onChange={(e) => {
+                  setSearchForm((searchForm: any) => {
+                    return {
+                      ...searchForm,
+                      real_name_ruby: e.target.value,
+                    };
+                  });
+                }}
+                value={searchForm?.real_name_ruby || ""}
               />
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
             </div>
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">
@@ -147,20 +173,24 @@ export default function CastList() {
               </label>
               <input
                 type="tel"
-                {...register("tel")}
                 className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
                 placeholder="電話番号を入力"
+                onChange={(e) => {
+                  setSearchForm((searchForm: any) => {
+                    return {
+                      ...searchForm,
+                      phone_number: e.target.value,
+                    };
+                  });
+                }}
+                value={searchForm?.phone_number || ""}
               />
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
             </div>
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">
                 期間カテゴリ
               </label>
-              <select
-                {...register("kikan")}
-                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-              >
+              <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
                 {kikan.map((pref) => {
                   return (
                     <option key={pref.prefCode} value={pref.prefCode}>
@@ -169,13 +199,11 @@ export default function CastList() {
                   );
                 })}
               </select>
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
             </div>
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">期間</label>
               <input
                 type="date"
-                {...register("birthday")}
                 className="mr-2 h-[30px] rounded-md px-2 text-sm"
               />
             </div>
@@ -188,7 +216,6 @@ export default function CastList() {
               <label className="mt-3 text-xs font-bold text-accent"></label>
               <input
                 type="date"
-                {...register("birthday")}
                 className="mr-2 h-[30px] rounded-md px-2 text-sm"
               />
             </div>
@@ -198,7 +225,7 @@ export default function CastList() {
                 mutate(
                   () =>
                     client.request(searchCast, {
-                      name: name,
+                      ...searchForm,
                       ...defaultVariables,
                     }),
                   {
@@ -213,12 +240,25 @@ export default function CastList() {
                 {/* <input type="button" value="検索" /> */}
               </Button>
             </div>
-            <div className="mr-4 flex flex-col justify-end">
-              <Button natural>
-                <input type="submit" value="クリア" />
-              </Button>
+            <div
+              className="mr-4 flex flex-col justify-end"
+              onClick={() => {
+                setSearchForm(() => {});
+                mutate(
+                  () =>
+                    client.request(searchCast, {
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
+            >
+              <Button natural>クリア</Button>
             </div>
-          </form>
+          </div>
           <table className="table table-xs mt-2">
             {/* head */}
             <thead>
