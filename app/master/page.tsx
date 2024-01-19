@@ -19,7 +19,144 @@ import useMasterActivePageGlobal from "@/globalstates/masterActivePage";
 import ShopInfo from "@/components/master/(system)/shopInfo";
 import Another from "@/components/master/(system)/another";
 
+import "react-cmdk/dist/cmdk.css";
+import CommandPalette, {
+  filterItems,
+  getItemIndex,
+  useHandleOpenCommandPalette,
+} from "react-cmdk";
+import { useState } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
+import useSettingsGlobal from "@/globalstates/settings";
+
 export default function Mater() {
+  const [settings, setSettings] = useSettingsGlobal();
+
+  const [page, setPage] = useState<"root" | "projects">("root");
+  const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
+
+  const filteredItems = filterItems(
+    [
+      {
+        heading: "キャスト",
+        id: "page-cast",
+        items: [
+          {
+            id: "cast",
+            children: "在籍キャスト",
+            icon: "HomeIcon",
+            closeOnSelect: true,
+            keywords: ["cast"],
+            onClick: () => {
+              setMasterActivePage("在籍キャスト");
+            },
+          },
+          {
+            id: "help-cast",
+            children: "ヘルプ/体入キャスト",
+            icon: "HomeIcon",
+            closeOnSelect: true,
+            keywords: ["cast", "help"],
+            onClick: () => {
+              setMasterActivePage("ヘルプ・体入キャスト");
+            },
+          },
+        ],
+      },
+      {
+        heading: "スタッフ",
+        id: "page-staff",
+        items: [
+          {
+            id: "staff",
+            children: "在籍スタッフ",
+            icon: "HomeIcon",
+            closeOnSelect: true,
+            keywords: ["staff"],
+            onClick: () => {
+              setMasterActivePage("在籍スタッフ");
+            },
+          },
+          {
+            id: "arbeit-staff",
+            children: "アルバイトスタッフ",
+            icon: "HomeIcon",
+            closeOnSelect: true,
+            keywords: ["staff", "arbeit"],
+            onClick: () => {
+              setMasterActivePage("アルバイトスタッフ");
+            },
+          },
+        ],
+      },
+      {
+        heading: "商品",
+        id: "page-product",
+        items: [
+          {
+            id: "product-category",
+            children: "商品カテゴリー",
+            icon: "HomeIcon",
+            closeOnSelect: true,
+            keywords: ["product", "category"],
+            onClick: () => {
+              setMasterActivePage("商品カテゴリー");
+            },
+          },
+          {
+            id: "order-set",
+            children: "オーダー配置",
+            icon: "HomeIcon",
+            closeOnSelect: true,
+            keywords: ["order", "set"],
+            onClick: () => {
+              setMasterActivePage("オーダー配置");
+            },
+          },
+          {
+            id: "order-add",
+            children: "オーダー登録",
+            icon: "HomeIcon",
+            closeOnSelect: true,
+            keywords: ["order", "add"],
+            onClick: () => {
+              setMasterActivePage("オーダー登録");
+            },
+          },
+          {
+            id: "bottle-add",
+            children: "ボトル登録",
+            icon: "HomeIcon",
+            closeOnSelect: true,
+            keywords: ["bottle", "add"],
+            onClick: () => {
+              setMasterActivePage("ボトル登録");
+            },
+          },
+        ],
+      },
+      {
+        heading: "デバッグ",
+        id: "debug",
+        items: [
+          {
+            id: "developer-settings",
+            children: "デバッグモード起動",
+            icon: "CodeBracketIcon",
+            keywords: ["debug"],
+            onClick: () => {
+              setSettings({ ...settings, isDebug: !settings.isDebug });
+            },
+          },
+        ],
+      },
+    ],
+    search
+  );
+
+  useHotkeys("ctrl+p", () => setOpen((open) => true));
+
   const [masterActivePage, setMasterActivePage] = useMasterActivePageGlobal();
 
   const nav = [
@@ -180,6 +317,35 @@ export default function Mater() {
           }
         })}
       </AnimatePresence>
+      <CommandPalette
+        onChangeSearch={setSearch}
+        onChangeOpen={setOpen}
+        search={search}
+        isOpen={open}
+        page={page}
+      >
+        <CommandPalette.Page id="root">
+          {filteredItems.length ? (
+            filteredItems.map((list) => (
+              <CommandPalette.List key={list.id} heading={list.heading}>
+                {list.items.map(({ id, ...rest }) => (
+                  <CommandPalette.ListItem
+                    key={id}
+                    index={getItemIndex(filteredItems, id)}
+                    {...rest}
+                  />
+                ))}
+              </CommandPalette.List>
+            ))
+          ) : (
+            <CommandPalette.FreeSearchAction />
+          )}
+        </CommandPalette.Page>
+
+        <CommandPalette.Page id="projects">
+          {/* Projects page */}
+        </CommandPalette.Page>
+      </CommandPalette>
       <HomeButton />
     </main>
   );
