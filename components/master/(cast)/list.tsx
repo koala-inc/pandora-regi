@@ -97,6 +97,7 @@ export default function CastList() {
           <form
             className="flex w-full flex-wrap"
             onSubmit={handleSubmit(onSubmit)}
+            autoComplete="off"
           >
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">ID</label>
@@ -476,6 +477,7 @@ export default function CastList() {
             <form
               className="flex w-full flex-wrap"
               onSubmit={handleSubmit(onSubmit)}
+              autoComplete="off"
             >
               <div className="flex flex-col">
                 <label className="mt-3 text-center text-xs font-bold text-accent">
