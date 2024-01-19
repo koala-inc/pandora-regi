@@ -262,11 +262,10 @@ export default function CastList() {
           <table className="table table-xs mt-2">
             {/* head */}
             <thead>
-              <tr>
+              <tr className="text-accent">
                 <th>ID</th>
-                <th>キャスト名/本名</th>
-                <th>住所</th>
-                <th>電話番号</th>
+                <th>キャスト名</th>
+                <th>本名</th>
                 <th>時給</th>
                 <th>日給</th>
                 <th>入店日</th>
@@ -281,28 +280,37 @@ export default function CastList() {
               {data?.cast[0]?.store_cast[0]?.cast?.map((cast: any) => (
                 <>
                   {cast.cast_code != 0 && (
-                    <tr key={cast.cast_code}>
-                      <td>{cast.cast_code}</td>
-                      <td>
-                        <div className="flex items-center space-x-3">
-                          <div>
-                            <div className="font-bold">{cast.name}</div>
-                            <div className="text-sm opacity-50">
-                              {cast.real_name}（{cast.real_name_ruby}）
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td>{cast.address}</td>
-                      <td>{cast.phone_number}</td>
-                      <td>1,000円</td>
-                      <td>30,000円</td>
-                      <td>{cast.birthday}</td>
-                      <td>-</td>
-                      <th>
-                        <button className="btn btn-ghost btn-xs">編集</button>
-                      </th>
-                    </tr>
+                    <>
+                      <tr key={cast.cast_code}>
+                        <td>{cast.cast_code}</td>
+                        <td>{cast.name}</td>
+                        <td>{cast.real_name}</td>
+                        <td>1,000円</td>
+                        <td>30,000円</td>
+                        <td>{cast.birthday}</td>
+                        <td>-</td>
+                        <th>
+                          <button className="btn btn-ghost btn-xs">編集</button>
+                        </th>
+                      </tr>
+                      <tr className="mt-3 border-b-0 border-t border-gray-300 opacity-50">
+                        <th>生年月日</th>
+                        <th>住所</th>
+                        <th>電話番号</th>
+                        <th>媒体</th>
+                        <th>紹介者</th>
+                      </tr>
+                      <tr
+                        key={cast.cast_code}
+                        className="border-b border-gray-500 opacity-50"
+                      >
+                        <td>{cast.birthday}</td>
+                        <td>東京都港区.....</td>
+                        <td>000-0000-0000</td>
+                        <td>紹介</td>
+                        <td>Aさん</td>
+                      </tr>
+                    </>
                   )}
                 </>
               ))}
