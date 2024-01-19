@@ -26,7 +26,7 @@ export default function Mater() {
     {
       name: "キャスト",
       disabled: false,
-      open: true,
+      open: false,
       submenu: [
         {
           name: "在籍キャスト",

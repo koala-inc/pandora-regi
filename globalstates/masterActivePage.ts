@@ -9,5 +9,5 @@ import useGlobal from "@/globalstates/useGlobal";
  */
 
 export default function useMasterActivePageGlobal() {
-  return useGlobal("masterActivePage", "在籍キャスト");
+  return useGlobal("masterActivePage", "");
 }

@@ -44,14 +44,21 @@ export default function SideMenu({
                   : "absolute right-[5px] top-[14px] z-10 cursor-pointer transition-transform"
               }
               onClick={() => {
-                let temp = nav.map((item) => {
-                  item.open = false;
-                  return item;
-                });
                 if (!open[index].open) {
+                  let temp = nav.map((item) => {
+                    item.open = false;
+                    return item;
+                  });
                   temp[index].open = true;
+                  setOpen(temp);
+                } else {
+                  setOpen(
+                    nav.map((item) => {
+                      item.open = false;
+                      return item;
+                    })
+                  );
                 }
-                setOpen(temp);
                 setUpdate((update) => !update);
               }}
             >
