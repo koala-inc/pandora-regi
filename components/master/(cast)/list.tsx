@@ -92,7 +92,7 @@ export default function CastList() {
       <Control>
         <Border
           className="my-2 w-full"
-          size="p-4 flex flex-col min-h-[calc(98dvh-40px)] overflow-scroll"
+          size="p-4 flex flex-col min-h-[100px] overflow-scroll"
           black
         >
           <p className="w-full text-left">キャストを検索</p>
@@ -282,6 +282,30 @@ export default function CastList() {
               <input
                 type="date"
                 className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                onChange={(e) => {
+                  setSearchForm((searchForm: any) => {
+                    return {
+                      ...searchForm,
+                      entry_date_to: e.target.value,
+                    };
+                  });
+                }}
+                onKeyUp={(e) => {
+                  if (e.key == "Enter") {
+                    searchData.mutate(
+                      () =>
+                        client.request(searchCast, {
+                          ...searchForm,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  }
+                }}
+                value={searchForm?.entry_date_to || ""}
               />
             </div>
             <div className="flex flex-col justify-end">
@@ -294,6 +318,30 @@ export default function CastList() {
               <input
                 type="date"
                 className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                onChange={(e) => {
+                  setSearchForm((searchForm: any) => {
+                    return {
+                      ...searchForm,
+                      entry_date_from: e.target.value,
+                    };
+                  });
+                }}
+                onKeyUp={(e) => {
+                  if (e.key == "Enter") {
+                    searchData.mutate(
+                      () =>
+                        client.request(searchCast, {
+                          ...searchForm,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  }
+                }}
+                value={searchForm?.entry_date_from || ""}
               />
             </div>
             <div
@@ -336,19 +384,43 @@ export default function CastList() {
               <Button natural>クリア</Button>
             </div>
           </div>
-          <table className="table table-xs mt-2">
+        </Border>
+        <Border
+          className="my-2 w-full"
+          rounded="max-h-[calc(98dvh-240px)] rounded-md"
+          size="p-4 flex flex-col min-h-[calc(98dvh-40px)] overflow-scroll"
+          black
+        >
+          <table className="table table-xs fixed z-10 -mt-[17px] h-[30px] w-[94%] bg-neutral-900">
             {/* head */}
             <thead>
               <tr className="text-accent">
-                <th>ID</th>
-                <th>キャスト名</th>
-                <th>本名</th>
-                <th>時給</th>
-                <th>日給</th>
-                <th>入店日</th>
-                <th>退店日</th>
-                <th>
+                <th className="w-[6em]">ID</th>
+                <th className="w-[15em]">キャスト名</th>
+                <th className="w-[15em]">本名</th>
+                <th className="w-[10em]">時給</th>
+                <th className="w-[10em]">日給</th>
+                <th className="w-[10em]">入店日</th>
+                <th className="w-[10em]">退店日</th>
+                <th className="w-[5em]">
                   <label>編集</label>
+                </th>
+              </tr>
+            </thead>
+          </table>
+          <table className="table table-xs mt-5">
+            {/* head */}
+            <thead>
+              <tr className="text-accent">
+                <th className="w-[6em]"></th>
+                <th className="w-[15em]"></th>
+                <th className="w-[15em]"></th>
+                <th className="w-[10em]"></th>
+                <th className="w-[10em]"></th>
+                <th className="w-[10em]"></th>
+                <th className="w-[10em]"></th>
+                <th className="w-[5em]">
+                  <label></label>
                 </th>
               </tr>
             </thead>
@@ -363,9 +435,9 @@ export default function CastList() {
                           <td>{cast.cast_code}</td>
                           <td>{cast.name}</td>
                           <td>{cast.real_name}</td>
-                          <td>1,000円</td>
-                          <td>30,000円</td>
-                          <td>{cast.birthday}</td>
+                          <td>{0}円</td>
+                          <td>{0}円</td>
+                          <td>{cast.entry_date}</td>
                           <td>-</td>
                           <th>
                             <button className="btn btn-ghost btn-xs">
@@ -373,7 +445,10 @@ export default function CastList() {
                             </button>
                           </th>
                         </tr>
-                        {/* <tr className="mt-3 border-b-0 border-t border-gray-300 opacity-50">
+                        <tr
+                          key={cast.cast_code + "1"}
+                          className="mt-3 border-b-0 border-t border-gray-300 opacity-50"
+                        >
                           <th>生年月日</th>
                           <th>住所</th>
                           <th>電話番号</th>
@@ -381,15 +456,15 @@ export default function CastList() {
                           <th>紹介者</th>
                         </tr>
                         <tr
-                          key={cast.cast_code}
+                          key={cast.cast_code + "2"}
                           className="border-b border-gray-500 opacity-50"
                         >
                           <td>{cast.birthday}</td>
-                          <td>東京都港区.....</td>
-                          <td>000-0000-0000</td>
-                          <td>紹介</td>
-                          <td>Aさん</td>
-                        </tr> */}
+                          <td>{cast.address}</td>
+                          <td>{cast.phone_number}</td>
+                          <td>-</td>
+                          <td>-</td>
+                        </tr>
                       </>
                     )}
                   </>
@@ -675,13 +750,18 @@ export default function CastList() {
                     フリガナ
                   </label>
                   <input
-                    {...register("firstName")}
                     className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                     placeholder="フリガナを入力"
+                    onChange={(e) => {
+                      setCreateForm((createForm: any) => {
+                        return {
+                          ...createForm,
+                          real_name_ruby: e.target.value,
+                        };
+                      });
+                    }}
+                    value={createForm?.real_name_ruby || ""}
                   />
-                  {errors.firstName?.message && (
-                    <p>{errors.firstName?.message}</p>
-                  )}
                 </div>
                 <div className="flex flex-col">
                   <label className="mt-3 text-xs font-bold text-accent">
@@ -689,7 +769,6 @@ export default function CastList() {
                   </label>
                   <input
                     type="number"
-                    {...register("age2")}
                     className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
                     placeholder="時給を入力"
                   />
@@ -699,7 +778,6 @@ export default function CastList() {
                     日給
                   </label>
                   <input
-                    {...register("age3")}
                     className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
                     placeholder="日給を入力"
                   />
@@ -710,8 +788,16 @@ export default function CastList() {
                   </label>
                   <input
                     type="date"
-                    {...register("date")}
                     className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                    onChange={(e) => {
+                      setCreateForm((createForm: any) => {
+                        return {
+                          ...createForm,
+                          entry_date: e.target.value,
+                        };
+                      });
+                    }}
+                    value={createForm?.entry_date || ""}
                   />
                 </div>
               </div>
@@ -722,8 +808,16 @@ export default function CastList() {
                   </label>
                   <input
                     type="date"
-                    {...register("birthday")}
                     className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                    onChange={(e) => {
+                      setCreateForm((createForm: any) => {
+                        return {
+                          ...createForm,
+                          birthday: e.target.value,
+                        };
+                      });
+                    }}
+                    value={createForm?.birthday || ""}
                   />
                 </div>
                 <div className="flex flex-col">
@@ -731,13 +825,18 @@ export default function CastList() {
                     住所
                   </label>
                   <input
-                    {...register("address")}
                     className="mr-2 h-[30px] w-[17rem] rounded-md px-2 text-sm"
                     placeholder="住所を入力"
+                    onChange={(e) => {
+                      setCreateForm((createForm: any) => {
+                        return {
+                          ...createForm,
+                          address: e.target.value,
+                        };
+                      });
+                    }}
+                    value={createForm?.address || ""}
                   />
-                  {errors.firstName?.message && (
-                    <p>{errors.firstName?.message}</p>
-                  )}
                 </div>
                 <div className="flex flex-col">
                   <label className="mt-3 text-xs font-bold text-accent">
@@ -745,35 +844,42 @@ export default function CastList() {
                   </label>
                   <input
                     type="tel"
-                    {...register("tel")}
                     className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
                     placeholder="電話番号を入力"
+                    onChange={(e) => {
+                      setCreateForm((createForm: any) => {
+                        return {
+                          ...createForm,
+                          phone_number: e.target.value,
+                        };
+                      });
+                    }}
+                    value={createForm?.phone_number || ""}
                   />
-                  {errors.firstName?.message && (
-                    <p>{errors.firstName?.message}</p>
-                  )}
                 </div>
                 <div className="flex flex-col">
                   <label className="mt-3 text-xs font-bold text-accent">
                     その他
                   </label>
                   <input
-                    {...register("address")}
                     className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
                     placeholder="備考を入力"
+                    onChange={(e) => {
+                      setCreateForm((createForm: any) => {
+                        return {
+                          ...createForm,
+                          remarks: e.target.value,
+                        };
+                      });
+                    }}
+                    value={createForm?.remarks || ""}
                   />
-                  {errors.firstName?.message && (
-                    <p>{errors.firstName?.message}</p>
-                  )}
                 </div>
                 <div className="flex flex-col">
                   <label className="mt-3 text-xs font-bold text-accent">
                     媒体
                   </label>
-                  <select
-                    {...register("baitai")}
-                    className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
-                  >
+                  <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
                     <option value="" selected disabled>
                       媒体を選択
                     </option>
@@ -793,10 +899,7 @@ export default function CastList() {
                   <label className="mt-3 text-xs font-bold text-accent">
                     紹介者
                   </label>
-                  <select
-                    {...register("syokai")}
-                    className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
-                  >
+                  <select className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm">
                     <option value="" selected disabled>
                       紹介者を選択
                     </option>
@@ -808,9 +911,6 @@ export default function CastList() {
                       );
                     })}
                   </select>
-                  {errors.firstName?.message && (
-                    <p>{errors.firstName?.message}</p>
-                  )}
                 </div>
 
                 <div
