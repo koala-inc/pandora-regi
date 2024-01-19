@@ -26,6 +26,7 @@ export default function Mater() {
     {
       name: "キャスト",
       disabled: false,
+      open: true,
       submenu: [
         {
           name: "在籍キャスト",
@@ -42,6 +43,7 @@ export default function Mater() {
     {
       name: "スタッフ",
       disabled: false,
+      open: false,
       submenu: [
         {
           name: "在籍スタッフ",
@@ -58,11 +60,13 @@ export default function Mater() {
     {
       name: "荷物",
       disabled: true,
+      open: false,
       component: <></>,
     },
     {
       name: "商品",
       disabled: false,
+      open: false,
       submenu: [
         {
           name: "商品カテゴリー",
@@ -89,16 +93,19 @@ export default function Mater() {
     {
       name: "他店舗登録",
       disabled: true,
+      open: false,
       component: <></>,
     },
     {
       name: "案内所/外販/媒体",
       disabled: true,
+      open: false,
       component: <></>,
     },
     {
       name: "料金システム",
       disabled: false,
+      open: false,
       submenu: [
         {
           name: "席カテゴリー",
@@ -120,16 +127,19 @@ export default function Mater() {
     {
       name: "客層タイプ登録",
       disabled: true,
+      open: false,
       component: <></>,
     },
     {
       name: "キャスト系統登録",
       disabled: true,
+      open: false,
       component: <></>,
     },
     {
       name: "システム",
       disabled: false,
+      open: false,
       submenu: [
         {
           name: "店舗情報",
@@ -151,6 +161,7 @@ export default function Mater() {
     {
       name: "ヘルプ",
       disabled: true,
+      open: false,
       component: <></>,
     },
   ];
