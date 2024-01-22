@@ -3,36 +3,147 @@
 import Control from "@/components/master/(component)/control";
 import Border from "@/components/master/border";
 import Toggle from "@/components/templates/toggle4";
+import client from "@/connection";
+import { createCategory, deleteCategory } from "@/gqls/mutation/category";
+import { searchCategory } from "@/gqls/query/category";
+import { RequestDocument } from "graphql-request";
 import Image from "next/image";
+import { useState } from "react";
+import useSWR, { preload } from "swr";
+
+const defaultVariables = {
+  store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
+};
 
 export default function ItemCategoryLists() {
+  const fetcher = (q: RequestDocument) =>
+    client.request(q, { ...defaultVariables });
+
+  preload(searchCategory, fetcher);
+
+  const [searchForm, setSearchForm] = useState<any>({});
+  const [createForm, setCreateForm] = useState<any>({});
+  const [addForm, setAddForm] = useState<any>({});
+
+  const searchData = useSWR<any>(searchCategory, fetcher);
+  const createData = useSWR<any>(createCategory, fetcher);
+
   return (
     <>
       <Control>
-        <div className="flex">
-          <Border
-            className="my-2 w-[300px]"
-            size="p-4 flex flex-col overflow-scroll"
-            black
-          >
-            <p className="text-accent">大カテゴリー</p>
-            <input
-              type="text"
-              className="mb-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-            />
-            <input
-              type="text"
-              className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-            />
-            <p className="text-accent">小カテゴリー</p>
-            <input
-              type="text"
-              className="mb-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-            />
-            <input
-              type="text"
-              className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-            />
+        <div className="flex max-w-full overflow-scroll">
+          {searchData?.data?.category[0]?.store_category[0]?.category?.map(
+            (category: any, index: any) => {
+              if (category.category_revision.parent_id == 0) {
+                addForm[category.id] == "";
+                return (
+                  <div className="relative mr-4 w-[300px]" key={index}>
+                    <Border
+                      className="absolute right-[-5px] top-[0px]"
+                      rounded="rounded-full"
+                      size="h-[20px] w-[20px] p-[2px] text-red-600"
+                    >
+                      <div className="w-full text-center ">×</div>
+                    </Border>
+                    <Border
+                      className="my-2 w-full"
+                      size="p-4 flex flex-col overflow-scroll"
+                      black
+                    >
+                      <p className="text-accent">大カテゴリー</p>
+                      <input
+                        type="text"
+                        className="mb-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                        defaultValue={category.category_revision.name}
+                      />
+                      <p className="text-accent">小カテゴリー</p>
+                      {searchData?.data?.category[0]?.store_category[0]?.category?.map(
+                        (subcategory: any, index: any) => {
+                          if (
+                            subcategory.category_revision.parent_id ==
+                            category.id
+                          ) {
+                            return (
+                              <div className="flex" key={index}>
+                                <input
+                                  type="text"
+                                  className="mb-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                                  defaultValue={
+                                    subcategory.category_revision.name
+                                  }
+                                />
+                                <Border
+                                  rounded="rounded-full"
+                                  size="h-[20px] w-[20px] p-[2px] text-red-600"
+                                >
+                                  <div className="w-full text-center ">-</div>
+                                </Border>
+                              </div>
+                            );
+                          }
+                        }
+                      )}
+                      <input
+                        type="text"
+                        className="mb-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                        key={index}
+                        placeholder={"追加する小カテゴリを追加"}
+                        onChange={(e) => {
+                          setAddForm((addForm: any) => {
+                            const result = addForm;
+                            result[category.id] = e.target.value;
+                            return result;
+                          });
+                        }}
+                        value={addForm[category.id]}
+                      />
+                      <Border
+                        rounded="rounded-full"
+                        size="h-[20px] w-[20px] p-[2px]"
+                      >
+                        <Image
+                          src={"/assets/add.svg"}
+                          width={16}
+                          height={16}
+                          className="!h-full !w-full"
+                          alt=""
+                          onClick={() => {
+                            createData
+                              .mutate(
+                                () =>
+                                  client.request(createCategory, {
+                                    name: addForm[category.id],
+                                    parent_id: category.id,
+                                    ...defaultVariables,
+                                  }),
+                                {
+                                  populateCache: true,
+                                  revalidate: false,
+                                }
+                              )
+                              .then(() => {
+                                addForm[category.id] = "";
+                                searchData.mutate(
+                                  () =>
+                                    client.request(searchCategory, {
+                                      ...defaultVariables,
+                                    }),
+                                  {
+                                    populateCache: true,
+                                    revalidate: false,
+                                  }
+                                );
+                              });
+                          }}
+                        />
+                      </Border>
+                    </Border>
+                  </div>
+                );
+              }
+            }
+          )}
+          <div className="ml-2 mt-11 h-[45px] w-[45px]">
             <Border rounded="rounded-full" size="h-[40px] w-[40px] p-[12px]">
               <Image
                 src={"/assets/add.svg"}
@@ -40,83 +151,33 @@ export default function ItemCategoryLists() {
                 height={26}
                 className="!h-full !w-full"
                 alt=""
-              />
-            </Border>
-          </Border>
-          <Border
-            className="my-2 w-[300px]"
-            size="p-4 flex flex-col overflow-scroll"
-            black
-          >
-            <p className="text-accent">大カテゴリー</p>
-            <input
-              type="text"
-              className="mb-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-            />
-            <input
-              type="text"
-              className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-            />
-            <p className="text-accent">小カテゴリー</p>
-            <input
-              type="text"
-              className="mb-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-            />
-            <input
-              type="text"
-              className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-            />
-            <Border rounded="rounded-full" size="h-[40px] w-[40px] p-[12px]">
-              <Image
-                src={"/assets/add.svg"}
-                width={26}
-                height={26}
-                className="!h-full !w-full"
-                alt=""
-              />
-            </Border>
-          </Border>
-          <Border
-            className="my-2 w-[300px]"
-            size="p-4 flex flex-col overflow-scroll"
-            black
-          >
-            <p className="text-accent">大カテゴリー</p>
-            <input
-              type="text"
-              className="mb-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-            />
-            <input
-              type="text"
-              className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-            />
-            <p className="text-accent">小カテゴリー</p>
-            <input
-              type="text"
-              className="mb-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-            />
-            <input
-              type="text"
-              className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-            />
-            <Border rounded="rounded-full" size="h-[40px] w-[40px] p-[12px]">
-              <Image
-                src={"/assets/add.svg"}
-                width={26}
-                height={26}
-                className="!h-full !w-full"
-                alt=""
-              />
-            </Border>
-          </Border>
-          <div className="ml-6 h-[45px] w-[45px]">
-            <Border rounded="rounded-full" size="h-[40px] w-[40px] p-[12px]">
-              <Image
-                src={"/assets/add.svg"}
-                width={26}
-                height={26}
-                className="!h-full !w-full"
-                alt=""
+                onClick={() => {
+                  createData
+                    .mutate(
+                      () =>
+                        client.request(createCategory, {
+                          name: "新しい大カテゴリ",
+                          parent_id: 0,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    )
+                    .then(() => {
+                      searchData.mutate(
+                        () =>
+                          client.request(searchCategory, {
+                            ...defaultVariables,
+                          }),
+                        {
+                          populateCache: true,
+                          revalidate: false,
+                        }
+                      );
+                    });
+                }}
               />
             </Border>
           </div>
