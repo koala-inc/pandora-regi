@@ -3,9 +3,26 @@
 import Control from "@/components/master/(component)/control";
 import { useState } from "react";
 import Border from "../border";
+import Toggle from "@/components/templates/toggle4";
+import client from "@/connection";
+import { searchCategory } from "@/gqls/query/category";
+import { RequestDocument } from "graphql-request";
+import useSWR, { preload } from "swr";
+
+const defaultVariables = {
+  store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
+};
 
 export default function OrderSet() {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(12);
+  const [activeCategory, setActiveCategory] = useState(1);
+
+  const fetcher = (q: RequestDocument) =>
+    client.request(q, { ...defaultVariables });
+
+  preload(searchCategory, fetcher);
+
+  const searchData = useSWR<any>(searchCategory, fetcher);
   return (
     <>
       <Control>
@@ -14,66 +31,48 @@ export default function OrderSet() {
           size="p-4 flex flex-col overflow-scroll"
           black
         >
-          <div className="mb-4 flex">
-            <span
-              className={
-                "m-4 flex max-w-[160px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-6 text-xl leading-4 tracking-wider"
+          <div className="mb-4 flex flex-wrap overflow-scroll">
+            {searchData?.data?.category[0]?.store_category[0]?.category?.map(
+              (category: any, index: any) => {
+                if (category.category_revision.parent_id == 0) {
+                  return (
+                    <div
+                      key={index}
+                      className={
+                        "m-4 flex max-w-[160px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-6 text-xl leading-4 tracking-wider"
+                      }
+                      onClick={() => {
+                        setActiveCategory((activeCategory) => category.id);
+                      }}
+                    >
+                      {category.category_revision.name}
+                    </div>
+                  );
+                }
               }
-            >
-              フード
-            </span>
-            <span
-              className={
-                "m-4 flex max-w-[160px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-6 text-xl leading-4 tracking-wider"
-              }
-            >
-              ボトル
-            </span>
-            <span
-              className={
-                "m-4 flex max-w-[160px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-6 text-xl leading-4 tracking-wider"
-              }
-            >
-              サービス
-            </span>
+            )}
           </div>
           <div className="tabs">
-            <a
-              className={`tab-lg tab -ml-[4px] mr-1 w-[8em] rounded-t-xl ${
-                activeTab == 0
-                  ? "tab-active bg-primary text-white"
-                  : "tab-lifted bg-secondary text-black"
-              }`}
-              onClick={() => setActiveTab(0)}
-            >
-              焼酎
-            </a>
-            <a
-              className={`tab-lg tab mr-1 w-[8em] rounded-t-xl ${
-                activeTab == 1
-                  ? "tab-active bg-primary text-white"
-                  : "tab-lifted bg-secondary text-black"
-              }`}
-              onClick={() => setActiveTab(1)}
-            >
-              果実酒
-            </a>
-            <a
-              className={`tab-lg tab mr-1 w-[8em] rounded-t-xl ${
-                activeTab == 2
-                  ? "tab-active bg-primary text-white"
-                  : "tab-lifted bg-secondary text-black"
-              }`}
-              onClick={() => setActiveTab(2)}
-            >
-              日本酒
-            </a>
-            <a className="tab-lifted tab-lg tab w-[8em] rounded-t-xl bg-neutral-400 text-black">
-              +
-            </a>
-            <a className="tab-lifted tab-lg tab w-[8em] rounded-t-xl text-black"></a>
-            <a className="tab-lifted tab-lg tab w-[8em] rounded-t-xl text-black"></a>
-            <a className="tab-lifted tab-lg tab w-[8em] rounded-t-xl text-black"></a>
+            {searchData?.data?.category[0]?.store_category[0]?.category?.map(
+              (subcategory: any, index: any) => {
+                if (subcategory.category_revision.parent_id == activeCategory)
+                  return (
+                    <a
+                      key={index}
+                      className={`tab-lg tab ml-[-4px] mr-1 w-[8em] rounded-t-xl ${
+                        activeTab == subcategory.id
+                          ? "tab-active bg-primary text-white"
+                          : "tab-lifted bg-secondary text-black"
+                      }`}
+                      onClick={() => {
+                        setActiveTab((activeTab) => subcategory.id);
+                      }}
+                    >
+                      {subcategory.category_revision.name}
+                    </a>
+                  );
+              }
+            )}
           </div>
           <div className="mt-[-1px] h-[460px] w-[800px] rounded-b-xl rounded-r-xl bg-primary p-4 text-white">
             {/* <p>
