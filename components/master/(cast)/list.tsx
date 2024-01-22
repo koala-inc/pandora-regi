@@ -395,14 +395,14 @@ export default function CastList() {
             {/* head */}
             <thead>
               <tr className="text-accent">
-                <th className="w-[6em]">ID</th>
-                <th className="w-[15em]">キャスト名</th>
-                <th className="w-[15em]">本名</th>
-                <th className="w-[10em]">時給</th>
-                <th className="w-[10em]">日給</th>
-                <th className="w-[10em]">入店日</th>
-                <th className="w-[10em]">退店日</th>
-                <th className="w-[5em]">
+                <th className="w-[6em] align-bottom">ID</th>
+                <th className="w-[15em] align-bottom">キャスト名</th>
+                <th className="w-[15em] align-bottom">本名</th>
+                <th className="w-[10em] align-bottom">時給</th>
+                <th className="w-[10em] align-bottom">日給</th>
+                <th className="w-[10em] align-bottom">入店日</th>
+                <th className="w-[10em] align-bottom">退店日</th>
+                <th className="w-[5em] align-bottom">
                   <label>編集</label>
                 </th>
               </tr>
