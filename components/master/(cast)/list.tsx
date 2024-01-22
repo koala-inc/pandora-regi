@@ -41,6 +41,7 @@ export default function CastList() {
   const createData = useSWR<any>(createCast, fetcher);
 
   const [detail, setDetail] = useState(false);
+  const [leave, setLeave] = useState(false);
 
   const [addModal, setAddModal] = useState(false);
 
@@ -392,6 +393,16 @@ export default function CastList() {
               }}
             >
               <Button natural>{detail ? "詳細を非表示" : "詳細を表示"}</Button>
+            </div>
+            <div
+              className="mr-4 flex flex-col justify-end"
+              onClick={() => {
+                setLeave((leave) => !leave);
+              }}
+            >
+              <Button natural>
+                {leave ? "退店者を表示" : "退店者を非表示"}
+              </Button>
             </div>
           </div>
         </Border>
