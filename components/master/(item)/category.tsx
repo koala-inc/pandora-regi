@@ -4,7 +4,11 @@ import Control from "@/components/master/(component)/control";
 import Border from "@/components/master/border";
 import Toggle from "@/components/templates/toggle4";
 import client from "@/connection";
-import { createCategory, deleteCategory } from "@/gqls/mutation/category";
+import {
+  createCategory,
+  deleteCategory,
+  updateCategory,
+} from "@/gqls/mutation/category";
 import { searchCategory } from "@/gqls/query/category";
 import { RequestDocument } from "graphql-request";
 import Image from "next/image";
@@ -23,10 +27,12 @@ export default function ItemCategoryLists() {
 
   const [searchForm, setSearchForm] = useState<any>({});
   const [createForm, setCreateForm] = useState<any>({});
+  const [updateForm, setUpdateForm] = useState<any>({});
   const [addForm, setAddForm] = useState<any>({});
 
   const searchData = useSWR<any>(searchCategory, fetcher);
   const createData = useSWR<any>(createCategory, fetcher);
+  const updateData = useSWR<any>(updateCategory, fetcher);
 
   return (
     <>
@@ -43,7 +49,9 @@ export default function ItemCategoryLists() {
                       rounded="rounded-full"
                       size="h-[20px] w-[20px] p-[2px] text-red-600"
                     >
-                      <div className="w-full text-center ">×</div>
+                      <div className="ml-[1px] mt-[-3px] flex h-full w-full items-center justify-center">
+                        ×
+                      </div>
                     </Border>
                     <Border
                       className="my-2 w-full"
@@ -53,8 +61,22 @@ export default function ItemCategoryLists() {
                       <p className="text-accent">大カテゴリー</p>
                       <input
                         type="text"
-                        className="mb-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                        className="mb-2 h-[30px] w-[7.5rem] rounded-md px-2 text-sm"
                         defaultValue={category.category_revision.name}
+                        onBlur={(e) => {
+                          updateData.mutate(
+                            () =>
+                              client.request(updateCategory, {
+                                id: category.id,
+                                name: e.target.value,
+                                ...defaultVariables,
+                              }),
+                            {
+                              populateCache: true,
+                              revalidate: false,
+                            }
+                          );
+                        }}
                       />
                       <p className="text-accent">小カテゴリー</p>
                       {searchData?.data?.category[0]?.store_category[0]?.category?.map(
@@ -64,39 +86,42 @@ export default function ItemCategoryLists() {
                             category.id
                           ) {
                             return (
-                              <div className="flex" key={index}>
+                              <div className="relative flex" key={index}>
                                 <input
                                   type="text"
                                   className="mb-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                                   defaultValue={
                                     subcategory.category_revision.name
                                   }
+                                  onBlur={(e) => {
+                                    updateData.mutate(
+                                      () =>
+                                        client.request(updateCategory, {
+                                          id: subcategory.id,
+                                          name: e.target.value,
+                                          ...defaultVariables,
+                                        }),
+                                      {
+                                        populateCache: true,
+                                        revalidate: false,
+                                      }
+                                    );
+                                  }}
                                 />
                                 <Border
+                                  className="ml-[1px] mt-[3px] h-[23px] w-[24px]"
                                   rounded="rounded-full"
                                   size="h-[20px] w-[20px] p-[2px] text-red-600"
                                 >
-                                  <div className="w-full text-center ">-</div>
+                                  <div className="ml-[1px] mt-[-3px] flex h-full w-full items-center justify-center">
+                                    -
+                                  </div>
                                 </Border>
                               </div>
                             );
                           }
                         }
                       )}
-                      <input
-                        type="text"
-                        className="mb-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                        key={index}
-                        placeholder={"追加する小カテゴリを追加"}
-                        onChange={(e) => {
-                          setAddForm((addForm: any) => {
-                            const result = addForm;
-                            result[category.id] = e.target.value;
-                            return result;
-                          });
-                        }}
-                        value={addForm[category.id]}
-                      />
                       <Border
                         rounded="rounded-full"
                         size="h-[20px] w-[20px] p-[2px]"
@@ -112,7 +137,7 @@ export default function ItemCategoryLists() {
                               .mutate(
                                 () =>
                                   client.request(createCategory, {
-                                    name: addForm[category.id],
+                                    name: "",
                                     parent_id: category.id,
                                     ...defaultVariables,
                                   }),
@@ -156,7 +181,7 @@ export default function ItemCategoryLists() {
                     .mutate(
                       () =>
                         client.request(createCategory, {
-                          name: "新しい大カテゴリ",
+                          name: "",
                           parent_id: 0,
                           ...defaultVariables,
                         }),

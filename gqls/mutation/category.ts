@@ -1,12 +1,27 @@
 import { gql } from "graphql-request";
 
-export { createCategory, deleteCategory };
+export { createCategory, deleteCategory, updateCategory };
 
 const createCategory = gql`
   mutation ($name: String!, $parent_id: Int, $store_code: Int!) {
     createCategory(
       input: { name: $name, parent_id: $parent_id, store_code: $store_code }
     ) {
+      category {
+        category_revision {
+          id
+          item_category_id
+          name
+          parent_id
+        }
+      }
+    }
+  }
+`;
+
+const updateCategory = gql`
+  mutation ($name: String!, $id: Int!, $store_code: Int!) {
+    updateCategory(input: { name: $name, id: $id, store_code: $store_code }) {
       category {
         category_revision {
           id
