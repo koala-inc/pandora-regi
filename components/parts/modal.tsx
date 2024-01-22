@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Modal({ children, setModal }: any) {
   return (
     <div
-      className="absolute left-0 top-0 z-40 flex h-[100dvh] w-[100dvw] items-center justify-center bg-black/70 p-10 text-white"
+      className="absolute left-0 top-0 z-40 flex h-[100dvh] w-[100dvw] items-start justify-center bg-black/70 p-10 text-white"
       onClick={() => setModal(false)}
     >
       <div

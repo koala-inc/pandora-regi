@@ -391,7 +391,7 @@ export default function CastList() {
           size="p-4 flex flex-col min-h-[calc(98dvh-40px)] overflow-scroll"
           black
         >
-          <table className="table table-xs fixed z-10 -mt-[17px] h-[30px] w-[94%] bg-neutral-900">
+          <table className="table table-xs fixed z-10 -mt-[17px] h-[45px] w-[94%] rounded-none bg-neutral-900">
             {/* head */}
             <thead>
               <tr className="text-accent">
@@ -680,7 +680,7 @@ export default function CastList() {
             </p>
             <div className="flex w-full flex-wrap">
               <div className="flex w-full flex-wrap">
-                <div className="flex flex-col">
+                {/* <div className="flex flex-col">
                   <label className="mt-3 text-center text-xs font-bold text-accent">
                     在籍
                   </label>
@@ -689,7 +689,7 @@ export default function CastList() {
                     {...register("check")}
                     className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
                   />
-                </div>
+                </div> */}
                 <div className="flex flex-col">
                   <label className="mt-3 text-xs font-bold text-accent">
                     ID <small className="text-red-600">＊</small>
