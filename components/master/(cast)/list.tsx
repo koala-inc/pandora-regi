@@ -40,6 +40,8 @@ export default function CastList() {
   const searchData = useSWR<any>(searchCast, fetcher);
   const createData = useSWR<any>(createCast, fetcher);
 
+  const [detail, setDetail] = useState(false);
+
   const [addModal, setAddModal] = useState(false);
 
   const baitais = [
@@ -383,6 +385,14 @@ export default function CastList() {
             >
               <Button natural>クリア</Button>
             </div>
+            <div
+              className="mr-4 flex flex-col justify-end"
+              onClick={() => {
+                setDetail((detail) => !detail);
+              }}
+            >
+              <Button natural>{detail ? "詳細を非表示" : "詳細を表示"}</Button>
+            </div>
           </div>
         </Border>
         <Border
@@ -445,26 +455,30 @@ export default function CastList() {
                             </button>
                           </th>
                         </tr>
-                        <tr
-                          key={cast.cast_code + "1"}
-                          className="mt-3 border-b-0 border-t border-gray-300 opacity-50"
-                        >
-                          <th>生年月日</th>
-                          <th>住所</th>
-                          <th>電話番号</th>
-                          <th>媒体</th>
-                          <th>紹介者</th>
-                        </tr>
-                        <tr
-                          key={cast.cast_code + "2"}
-                          className="border-b border-gray-500 opacity-50"
-                        >
-                          <td>{cast.birthday}</td>
-                          <td>{cast.address}</td>
-                          <td>{cast.phone_number}</td>
-                          <td>-</td>
-                          <td>-</td>
-                        </tr>
+                        {detail && (
+                          <>
+                            <tr
+                              key={cast.cast_code + "1"}
+                              className="mt-3 border-b-0 border-t border-gray-300 opacity-50"
+                            >
+                              <th>生年月日</th>
+                              <th>住所</th>
+                              <th>電話番号</th>
+                              <th>媒体</th>
+                              <th>紹介者</th>
+                            </tr>
+                            <tr
+                              key={cast.cast_code + "2"}
+                              className="border-b border-gray-500 opacity-50"
+                            >
+                              <td>{cast.birthday}</td>
+                              <td>{cast.address}</td>
+                              <td>{cast.phone_number}</td>
+                              <td>-</td>
+                              <td>-</td>
+                            </tr>
+                          </>
+                        )}
                       </>
                     )}
                   </>
