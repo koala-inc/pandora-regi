@@ -20,6 +20,8 @@ const defaultVariables = {
 };
 
 export default function ItemCategoryLists() {
+  const [update, setUpdate] = useState(false);
+
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
 
@@ -49,7 +51,29 @@ export default function ItemCategoryLists() {
                       rounded="rounded-full"
                       size="h-[20px] w-[20px] p-[2px] text-red-600"
                     >
-                      <div className="ml-[1px] mt-[-3px] flex h-full w-full items-center justify-center">
+                      <div
+                        className="ml-[1px] mt-[-3px] flex h-full w-full items-center justify-center"
+                        onClick={() => {
+                          client
+                            .request(deleteCategory, {
+                              id: category.id,
+                              is_parent: 1,
+                              ...defaultVariables,
+                            })
+                            .then(() => {
+                              searchData.mutate(
+                                () =>
+                                  client.request(searchCategory, {
+                                    ...defaultVariables,
+                                  }),
+                                {
+                                  populateCache: true,
+                                  revalidate: false,
+                                }
+                              );
+                            });
+                        }}
+                      >
                         ×
                       </div>
                     </Border>
