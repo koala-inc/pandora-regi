@@ -28,7 +28,7 @@ export default function OrderSet() {
       <Control>
         <Border
           className="my-2 w-full"
-          size="p-4 flex flex-col overflow-scroll"
+          size="p-4 flex flex-col overflow-scroll items-start"
           black
         >
           <div className="mb-4 flex flex-wrap overflow-scroll">
@@ -52,14 +52,17 @@ export default function OrderSet() {
               }
             )}
           </div>
-          <div className="tabs">
+          <div className="w-[792px]">
             {searchData?.data?.category[0]?.store_category[0]?.category?.map(
               (subcategory: any, index: any) => {
-                if (subcategory.category_revision.parent_id == activeCategory)
+                if (
+                  subcategory.category_revision.parent_id == activeCategory &&
+                  subcategory.category_revision.name != ""
+                )
                   return (
                     <a
                       key={index}
-                      className={`tab-lg tab ml-[-4px] mr-2 w-[8em] rounded-t-xl ${
+                      className={`tab-lg m-w-[10em] m-w-[8em] tab ml-[-4px] mr-2 rounded-t-xl ${
                         activeTab == subcategory.id
                           ? "tab-active bg-primary text-white"
                           : "tab-lifted bg-secondary text-black"
