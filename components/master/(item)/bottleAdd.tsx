@@ -10,16 +10,6 @@ import Modal from "@/components/parts/modal";
 import Toggle from "@/components/templates/toggle4";
 
 export default function BottleAdd() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Schema>({
-    resolver: zodResolver(schema),
-  });
-  const onSubmit: SubmitHandler<Schema> = (data) => alert(JSON.stringify(data));
-
   const [addModal, setAddModal] = useState(false);
 
   const baitais = [
@@ -88,19 +78,15 @@ export default function BottleAdd() {
       <Control>
         <Border
           className="my-2 w-full"
-          size="p-4 flex flex-col min-h-[calc(98dvh-40px)] overflow-scroll"
+          size="p-4 flex flex-col min-h-[100px] overflow-scroll"
           black
         >
           <p className="w-full text-left">ボトルを検索</p>
-          <form
-            className="flex w-full flex-wrap"
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <div className="flex w-full flex-wrap">
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">ID</label>
               <input
                 type="number"
-                {...register("age")}
                 className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                 placeholder="IDを入力"
               />
@@ -110,7 +96,6 @@ export default function BottleAdd() {
                 ボトル名
               </label>
               <input
-                {...register("firstName")}
                 className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                 placeholder="ボトル名を入力"
               />
@@ -119,10 +104,7 @@ export default function BottleAdd() {
               <label className="mt-3 text-xs font-bold text-accent">
                 小カテゴリ
               </label>
-              <select
-                {...register("kikan")}
-                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-              >
+              <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
                 {kikan.map((pref) => {
                   return (
                     <option key={pref.prefCode} value={pref.prefCode}>
@@ -131,16 +113,12 @@ export default function BottleAdd() {
                   );
                 })}
               </select>
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
             </div>
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">
                 ボトル種別
               </label>
-              <select
-                {...register("kikan")}
-                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-              >
+              <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
                 {kikan.map((pref) => {
                   return (
                     <option key={pref.prefCode} value={pref.prefCode}>
@@ -149,7 +127,6 @@ export default function BottleAdd() {
                   );
                 })}
               </select>
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
             </div>
             <div className="ml-auto mr-4 flex flex-col justify-end">
               <Button natural>
@@ -161,21 +138,46 @@ export default function BottleAdd() {
                 <input type="submit" value="クリア" />
               </Button>
             </div>
-          </form>
-          <table className="table table-xs mt-2 min-h-[500px]">
+          </div>
+        </Border>
+        <Border
+          className="my-2 w-full"
+          rounded="max-h-[calc(98dvh-240px)] rounded-md"
+          size="p-4 flex flex-col min-h-[calc(98dvh-40px)] overflow-scroll"
+          black
+        >
+          <table className="table table-xs fixed z-10 -mt-[17px] h-[45px] w-[94%] rounded-none bg-neutral-900">
             {/* head */}
             <thead>
-              <tr>
-                <th>ID</th>
-                <th>ボトル名</th>
-                <th>小カテゴリ</th>
-                <th>ボトル種別</th>
-                <th>キッチン送信</th>
-                <th>原価</th>
-                <th>料金</th>
-                <th>ボトル期限</th>
-                <th>
+              <tr className="text-accent">
+                <th className="w-[6em] align-bottom">ID</th>
+                <th className="w-[15em] align-bottom">ボトル名</th>
+                <th className="w-[15em] align-bottom">小カテゴリ</th>
+                <th className="w-[10em] align-bottom">ボトル種別</th>
+                <th className="w-[10em] align-bottom">キッチン送信</th>
+                <th className="w-[10em] align-bottom">原価</th>
+                <th className="w-[10em] align-bottom">料金</th>
+                <th className="w-[10em] align-bottom">ボトル期限</th>
+                <th className="w-[5em] align-bottom">
                   <label>編集</label>
+                </th>
+              </tr>
+            </thead>
+          </table>
+          <table className="table table-xs mt-5">
+            {/* head */}
+            <thead>
+              <tr className="text-accent">
+                <th className="w-[6em] align-bottom"></th>
+                <th className="w-[15em] align-bottom"></th>
+                <th className="w-[15em] align-bottom"></th>
+                <th className="w-[10em] align-bottom"></th>
+                <th className="w-[10em] align-bottom"></th>
+                <th className="w-[10em] align-bottom"></th>
+                <th className="w-[10em] align-bottom"></th>
+                <th className="w-[10em] align-bottom"></th>
+                <th className="w-[5em] align-bottom">
+                  <label></label>
                 </th>
               </tr>
             </thead>
@@ -201,15 +203,11 @@ export default function BottleAdd() {
         <Modal setModal={setAddModal}>
           <Border className="w-full" size="p-4 flex flex-col" black>
             <p className="w-full text-left">新規ボトル登録</p>
-            <form
-              className="flex w-full flex-wrap"
-              onSubmit={handleSubmit(onSubmit)}
-            >
+            <div className="flex w-full flex-wrap">
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">ID</label>
                 <input
                   type="number"
-                  {...register("age")}
                   className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                   placeholder="IDを入力"
                 />
@@ -219,7 +217,6 @@ export default function BottleAdd() {
                   ボトル名
                 </label>
                 <input
-                  {...register("firstName")}
                   className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                   placeholder="ボトル名を入力"
                 />
@@ -228,10 +225,7 @@ export default function BottleAdd() {
                 <label className="mt-3 text-xs font-bold text-accent">
                   小カテゴリ
                 </label>
-                <select
-                  {...register("kikan")}
-                  className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                >
+                <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
                   {kikan.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefCode}>
@@ -240,18 +234,12 @@ export default function BottleAdd() {
                     );
                   })}
                 </select>
-                {errors.firstName?.message && (
-                  <p>{errors.firstName?.message}</p>
-                )}
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
                   ボトル種別
                 </label>
-                <select
-                  {...register("kikan")}
-                  className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                >
+                <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
                   {kikan.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefCode}>
@@ -260,9 +248,6 @@ export default function BottleAdd() {
                     );
                   })}
                 </select>
-                {errors.firstName?.message && (
-                  <p>{errors.firstName?.message}</p>
-                )}
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
@@ -276,7 +261,6 @@ export default function BottleAdd() {
                 </label>
                 <input
                   type="number"
-                  {...register("age")}
                   className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                   placeholder="原価を入力"
                 />
@@ -287,7 +271,6 @@ export default function BottleAdd() {
                 </label>
                 <input
                   type="number"
-                  {...register("age")}
                   className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                   placeholder="料金を入力"
                 />
@@ -299,7 +282,6 @@ export default function BottleAdd() {
                 <div>
                   <input
                     type="number"
-                    {...register("age")}
                     className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                     placeholder="ボトル期限を入力"
                   />
@@ -311,7 +293,6 @@ export default function BottleAdd() {
                   検索ワード①
                 </label>
                 <input
-                  {...register("firstName")}
                   className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                   placeholder="検索ワード①を入力"
                 />
@@ -321,7 +302,6 @@ export default function BottleAdd() {
                   検索ワード②
                 </label>
                 <input
-                  {...register("firstName")}
                   className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                   placeholder="検索ワード②を入力"
                 />
@@ -331,7 +311,6 @@ export default function BottleAdd() {
                   検索ワード③
                 </label>
                 <input
-                  {...register("firstName")}
                   className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                   placeholder="検索ワード③を入力"
                 />
@@ -342,7 +321,7 @@ export default function BottleAdd() {
                   <input type="submit" value="登録" />
                 </Button>
               </div>
-            </form>
+            </div>
           </Border>
         </Modal>
       )}

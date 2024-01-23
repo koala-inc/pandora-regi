@@ -72,7 +72,7 @@ export default function OrderAdd() {
       <Control>
         <Border
           className="my-2 w-full"
-          size="p-4 flex flex-col min-h-[calc(98dvh-40px)] overflow-scroll"
+          size="p-4 flex flex-col min-h-[100px] overflow-scroll"
           black
         >
           <p className="w-full text-left">オーダーを検索</p>
@@ -146,17 +146,40 @@ export default function OrderAdd() {
               </Button>
             </div>
           </form>
+        </Border>
+        <Border
+          className="my-2 w-full"
+          rounded="max-h-[calc(98dvh-240px)] rounded-md"
+          size="p-4 flex flex-col min-h-[calc(98dvh-40px)] overflow-scroll"
+          black
+        >
+          <table className="table table-xs fixed z-10 -mt-[17px] h-[45px] w-[94%] rounded-none bg-neutral-900">
+            {/* head */}
+            <thead>
+              <tr className="text-accent">
+                <th className="w-[6em] align-bottom">ID</th>
+                <th className="w-[15em] align-bottom">オーダー名</th>
+                <th className="w-[15em] align-bottom">小カテゴリ</th>
+                <th className="w-[10em] align-bottom">オーダー種別</th>
+                <th className="w-[10em] align-bottom">キッチン送信</th>
+                <th className="w-[10em] align-bottom">料金</th>
+                <th className="w-[5em] align-bottom">
+                  <label>編集</label>
+                </th>
+              </tr>
+            </thead>
+          </table>
           <table className="table table-xs mt-2 min-h-[500px]">
             {/* head */}
             <thead>
-              <tr>
-                <th>ID</th>
-                <th>オーダー名</th>
-                <th>小カテゴリ</th>
-                <th>オーダー種別</th>
-                <th>キッチン送信</th>
-                <th>料金</th>
-                <th>
+              <tr className="text-accent">
+                <th className="w-[6em] align-bottom"></th>
+                <th className="w-[15em] align-bottom"></th>
+                <th className="w-[15em] align-bottom"></th>
+                <th className="w-[10em] align-bottom"></th>
+                <th className="w-[10em] align-bottom"></th>
+                <th className="w-[10em] align-bottom"></th>
+                <th className="w-[5em] align-bottom">
                   <label>編集</label>
                 </th>
               </tr>
