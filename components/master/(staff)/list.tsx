@@ -251,7 +251,7 @@ export default function StaffList() {
           <table className="table table-xs fixed z-10 -mt-[17px] h-[45px] w-[94%] rounded-none bg-neutral-900">
             {/* head */}
             <thead>
-              <tr>
+              <tr className="text-accent">
                 <th className="w-[6em] align-bottom">ID</th>
                 <th className="w-[15em] align-bottom">氏名</th>
                 <th className="w-[15em] align-bottom">住所</th>
@@ -266,7 +266,7 @@ export default function StaffList() {
           </table>
           <table className="table table-xs mt-5">
             <thead>
-              <tr className="text-accent">
+              <tr>
                 <th className="w-[6em]"></th>
                 <th className="w-[15em]"></th>
                 <th className="w-[15em]"></th>
