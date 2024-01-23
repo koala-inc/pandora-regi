@@ -8,6 +8,14 @@ import { useState } from "react";
 import Image from "next/image";
 import Modal from "@/components/parts/modal";
 import Toggle from "@/components/templates/toggle4";
+import { RequestDocument } from "graphql-request";
+import client from "@/connection";
+import { searchCategory } from "@/gqls/query/category";
+import useSWR, { preload } from "swr";
+
+const defaultVariables = {
+  store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
+};
 
 export default function BottleAdd() {
   const [addModal, setAddModal] = useState(false);
@@ -48,30 +56,37 @@ export default function BottleAdd() {
       prefName: "焼酎",
     },
     {
-      prefCode: 1,
+      prefCode: 2,
       prefName: "シャンパン",
     },
     {
-      prefCode: 1,
+      prefCode: 3,
       prefName: "ワイン",
     },
     {
-      prefCode: 1,
+      prefCode: 4,
       prefName: "日本酒",
     },
     {
-      prefCode: 1,
+      prefCode: 5,
       prefName: "ウイスキー",
     },
     {
-      prefCode: 1,
+      prefCode: 6,
       prefName: "ブランデー",
     },
     {
-      prefCode: 1,
+      prefCode: 7,
       prefName: "その他",
     },
   ];
+
+  const fetcher = (q: RequestDocument) =>
+    client.request(q, { ...defaultVariables });
+
+  preload(searchCategory, fetcher);
+
+  const searchData = useSWR<any>(searchCategory, fetcher);
 
   return (
     <>
@@ -105,13 +120,23 @@ export default function BottleAdd() {
                 小カテゴリ
               </label>
               <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
-                {kikan.map((pref) => {
-                  return (
-                    <option key={pref.prefCode} value={pref.prefCode}>
-                      {pref.prefName}
-                    </option>
-                  );
-                })}
+                {searchData?.data?.category[0]?.store_category[0]?.category?.map(
+                  (category: any, index: any) => {
+                    if (
+                      category.category_revision.parent_id != 0 &&
+                      category.category_revision.name != ""
+                    ) {
+                      return (
+                        <option
+                          key={index}
+                          value={category.category_revision.name}
+                        >
+                          {category.category_revision.name}
+                        </option>
+                      );
+                    }
+                  }
+                )}
               </select>
             </div>
             <div className="flex flex-col">
@@ -226,13 +251,23 @@ export default function BottleAdd() {
                   小カテゴリ
                 </label>
                 <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
-                  {kikan.map((pref) => {
-                    return (
-                      <option key={pref.prefCode} value={pref.prefCode}>
-                        {pref.prefName}
-                      </option>
-                    );
-                  })}
+                  {searchData?.data?.category[0]?.store_category[0]?.category?.map(
+                    (category: any, index: any) => {
+                      if (
+                        category.category_revision.parent_id != 0 &&
+                        category.category_revision.name != ""
+                      ) {
+                        return (
+                          <option
+                            key={index}
+                            value={category.category_revision.name}
+                          >
+                            {category.category_revision.name}
+                          </option>
+                        );
+                      }
+                    }
+                  )}
                 </select>
               </div>
               <div className="flex flex-col">

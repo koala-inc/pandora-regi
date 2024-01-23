@@ -8,18 +8,16 @@ import { useState } from "react";
 import Image from "next/image";
 import Modal from "@/components/parts/modal";
 import Toggle from "@/components/templates/toggle4";
+import { RequestDocument } from "graphql-request";
+import client from "@/connection";
+import { searchCategory } from "@/gqls/query/category";
+import useSWR, { preload } from "swr";
+
+const defaultVariables = {
+  store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
+};
 
 export default function OrderAdd() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Schema>({
-    resolver: zodResolver(schema),
-  });
-  const onSubmit: SubmitHandler<Schema> = (data) => alert(JSON.stringify(data));
-
   const [addModal, setAddModal] = useState(false);
 
   const baitais = [
@@ -43,19 +41,19 @@ export default function OrderAdd() {
       prefName: "ドリンク",
     },
     {
-      prefCode: 1,
+      prefCode: 2,
       prefName: "ピッチャー",
     },
     {
-      prefCode: 1,
+      prefCode: 3,
       prefName: "割り物",
     },
     {
-      prefCode: 1,
+      prefCode: 4,
       prefName: "フード",
     },
     {
-      prefCode: 1,
+      prefCode: 5,
       prefName: "サービス",
     },
   ];
@@ -67,6 +65,13 @@ export default function OrderAdd() {
     },
   ];
 
+  const fetcher = (q: RequestDocument) =>
+    client.request(q, { ...defaultVariables });
+
+  preload(searchCategory, fetcher);
+
+  const searchData = useSWR<any>(searchCategory, fetcher);
+
   return (
     <>
       <Control>
@@ -76,15 +81,11 @@ export default function OrderAdd() {
           black
         >
           <p className="w-full text-left">オーダーを検索</p>
-          <form
-            className="flex w-full flex-wrap"
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <div className="flex w-full flex-wrap">
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">ID</label>
               <input
                 type="number"
-                {...register("age")}
                 className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                 placeholder="IDを入力"
               />
@@ -94,7 +95,6 @@ export default function OrderAdd() {
                 オーダー名
               </label>
               <input
-                {...register("firstName")}
                 className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                 placeholder="オーダー名を入力"
               />
@@ -103,28 +103,31 @@ export default function OrderAdd() {
               <label className="mt-3 text-xs font-bold text-accent">
                 小カテゴリ
               </label>
-              <select
-                {...register("kikan")}
-                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-              >
-                {kikan.map((pref) => {
-                  return (
-                    <option key={pref.prefCode} value={pref.prefCode}>
-                      {pref.prefName}
-                    </option>
-                  );
-                })}
+              <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
+                {searchData?.data?.category[0]?.store_category[0]?.category?.map(
+                  (category: any, index: any) => {
+                    if (
+                      category.category_revision.parent_id != 0 &&
+                      category.category_revision.name != ""
+                    ) {
+                      return (
+                        <option
+                          key={index}
+                          value={category.category_revision.name}
+                        >
+                          {category.category_revision.name}
+                        </option>
+                      );
+                    }
+                  }
+                )}
               </select>
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
             </div>
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">
                 オーダー種別
               </label>
-              <select
-                {...register("kikan")}
-                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-              >
+              <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
                 {syokai.map((pref) => {
                   return (
                     <option key={pref.prefCode} value={pref.prefCode}>
@@ -133,7 +136,6 @@ export default function OrderAdd() {
                   );
                 })}
               </select>
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
             </div>
             <div className="ml-auto mr-4 flex flex-col justify-end">
               <Button natural>
@@ -145,7 +147,7 @@ export default function OrderAdd() {
                 <input type="submit" value="クリア" />
               </Button>
             </div>
-          </form>
+          </div>
         </Border>
         <Border
           className="my-2 w-full"
@@ -206,15 +208,11 @@ export default function OrderAdd() {
         <Modal setModal={setAddModal}>
           <Border className="w-full" size="p-4 flex flex-col" black>
             <p className="w-full text-left">新規オーダー登録</p>
-            <form
-              className="flex w-full flex-wrap"
-              onSubmit={handleSubmit(onSubmit)}
-            >
+            <div className="flex w-full flex-wrap">
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">ID</label>
                 <input
                   type="number"
-                  {...register("age")}
                   className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                   placeholder="IDを入力"
                 />
@@ -224,7 +222,6 @@ export default function OrderAdd() {
                   オーダー名
                 </label>
                 <input
-                  {...register("firstName")}
                   className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                   placeholder="オーダー名を入力"
                 />
@@ -233,30 +230,31 @@ export default function OrderAdd() {
                 <label className="mt-3 text-xs font-bold text-accent">
                   小カテゴリ
                 </label>
-                <select
-                  {...register("kikan")}
-                  className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                >
-                  {kikan.map((pref) => {
-                    return (
-                      <option key={pref.prefCode} value={pref.prefCode}>
-                        {pref.prefName}
-                      </option>
-                    );
-                  })}
+                <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
+                  {searchData?.data?.category[0]?.store_category[0]?.category?.map(
+                    (category: any, index: any) => {
+                      if (
+                        category.category_revision.parent_id != 0 &&
+                        category.category_revision.name != ""
+                      ) {
+                        return (
+                          <option
+                            key={index}
+                            value={category.category_revision.name}
+                          >
+                            {category.category_revision.name}
+                          </option>
+                        );
+                      }
+                    }
+                  )}
                 </select>
-                {errors.firstName?.message && (
-                  <p>{errors.firstName?.message}</p>
-                )}
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
                   オーダー種別
                 </label>
-                <select
-                  {...register("kikan")}
-                  className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                >
+                <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
                   {syokai.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefCode}>
@@ -265,9 +263,6 @@ export default function OrderAdd() {
                     );
                   })}
                 </select>
-                {errors.firstName?.message && (
-                  <p>{errors.firstName?.message}</p>
-                )}
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
@@ -281,7 +276,6 @@ export default function OrderAdd() {
                 </label>
                 <input
                   type="number"
-                  {...register("age")}
                   className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                   placeholder="料金を入力"
                 />
@@ -291,7 +285,6 @@ export default function OrderAdd() {
                   検索ワード①
                 </label>
                 <input
-                  {...register("firstName")}
                   className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                   placeholder="検索ワード①を入力"
                 />
@@ -301,7 +294,6 @@ export default function OrderAdd() {
                   検索ワード②
                 </label>
                 <input
-                  {...register("firstName")}
                   className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                   placeholder="検索ワード②を入力"
                 />
@@ -311,7 +303,6 @@ export default function OrderAdd() {
                   検索ワード③
                 </label>
                 <input
-                  {...register("firstName")}
                   className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                   placeholder="検索ワード③を入力"
                 />
@@ -322,7 +313,7 @@ export default function OrderAdd() {
                   <input type="submit" value="登録" />
                 </Button>
               </div>
-            </form>
+            </div>
           </Border>
         </Modal>
       )}
