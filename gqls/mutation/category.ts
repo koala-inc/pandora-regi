@@ -37,14 +37,7 @@ const updateCategory = gql`
 const deleteCategory = gql`
   mutation ($store_code: Int!, $id: Int!) {
     deleteCategory(input: { store_code: $store_code, id: $id }) {
-      category {
-        category_revision {
-          id
-          item_category_id
-          name
-          parent_id
-        }
-      }
+      __typename
     }
   }
 `;
