@@ -34,7 +34,10 @@ export default function OrderSet() {
           <div className="mb-4 flex flex-wrap overflow-scroll">
             {searchData?.data?.category[0]?.store_category[0]?.category?.map(
               (category: any, index: any) => {
-                if (category.category_revision.parent_id == 0) {
+                if (
+                  category.category_revision.parent_id == 0 &&
+                  category.category_revision.name != ""
+                ) {
                   return (
                     <div
                       key={index}
