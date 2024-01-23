@@ -319,7 +319,9 @@ export default function BottleAdd() {
                   ヶ月
                 </div>
               </div>
-              <div className="ml-auto mr-4 flex flex-col justify-end">登録</div>
+              <div className="ml-auto mr-4 flex flex-col justify-end">
+                <Button natural>登録</Button>
+              </div>
             </div>
           </Border>
         </Modal>
