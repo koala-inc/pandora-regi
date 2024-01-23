@@ -42,6 +42,22 @@ export default function OrderAdd() {
       prefCode: 1,
       prefName: "ドリンク",
     },
+    {
+      prefCode: 1,
+      prefName: "ピッチャー",
+    },
+    {
+      prefCode: 1,
+      prefName: "割り物",
+    },
+    {
+      prefCode: 1,
+      prefName: "フード",
+    },
+    {
+      prefCode: 1,
+      prefName: "サービス",
+    },
   ];
 
   const kikan = [

@@ -55,7 +55,31 @@ export default function BottleAdd() {
   const kikan = [
     {
       prefCode: 1,
+      prefName: "焼酎",
+    },
+    {
+      prefCode: 1,
       prefName: "シャンパン",
+    },
+    {
+      prefCode: 1,
+      prefName: "ワイン",
+    },
+    {
+      prefCode: 1,
+      prefName: "日本酒",
+    },
+    {
+      prefCode: 1,
+      prefName: "ウイスキー",
+    },
+    {
+      prefCode: 1,
+      prefName: "ブランデー",
+    },
+    {
+      prefCode: 1,
+      prefName: "その他",
     },
   ];
 

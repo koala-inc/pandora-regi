@@ -1,23 +1,38 @@
 import Control from "@/components/master/(component)/control";
 import Border from "@/components/master/border";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Schema, schema } from "@/validations/test";
 import Button from "@/components/templates/button";
 import { useState } from "react";
 import Image from "next/image";
 import Modal from "@/components/parts/modal";
+import useRequestGQL from "@/components/fetch/requestGQL";
+import { searchCast } from "@/gqls/query/cast";
+import useSWR, { preload } from "swr";
+import client from "@/connection";
+import { RequestDocument } from "graphql-request";
+import { createCast } from "@/gqls/mutation/cast";
+import { useHotkeys } from "react-hotkeys-hook";
+import { searchStaff } from "@/gqls/query/staff";
+import { createStaff } from "@/gqls/mutation/staff";
+
+const defaultVariables = {
+  store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
+};
 
 export default function StaffList() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Schema>({
-    resolver: zodResolver(schema),
-  });
-  const onSubmit: SubmitHandler<Schema> = (data) => alert(JSON.stringify(data));
+  const fetcher = (q: RequestDocument) =>
+    client.request(q, { ...defaultVariables });
+
+  preload(searchStaff, fetcher);
+
+  const [searchForm, setSearchForm] = useState<any>({});
+  const [createForm, setCreateForm] = useState<any>({});
+
+  const searchData = useSWR<any>(searchStaff, fetcher);
+  const createData = useSWR<any>(createStaff, fetcher);
+
+  const [detail, setDetail] = useState(false);
+  const [leave, setLeave] = useState(false);
 
   const [addModal, setAddModal] = useState(false);
 
@@ -82,31 +97,57 @@ export default function StaffList() {
       <Control>
         <Border
           className="my-2 w-full"
-          size="p-4 flex flex-col min-h-[calc(98dvh-40px)] overflow-scroll"
+          size="p-4 flex flex-col min-h-[100px] overflow-scroll"
           black
         >
           <p className="w-full text-left">スタッフを検索</p>
-          <form
-            className="flex w-full flex-wrap"
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <div className="flex w-full flex-wrap">
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">ID</label>
               <input
                 type="number"
-                {...register("age")}
                 className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                 placeholder="IDを入力"
+                onChange={(e) => {
+                  if (e.target.value == "") {
+                    delete searchForm.staff_code;
+                    setSearchForm((searchForm: any) => {
+                      return {
+                        ...searchForm,
+                      };
+                    });
+                  } else {
+                    setSearchForm((searchForm: any) => {
+                      return {
+                        ...searchForm,
+                        staff_code: Number(e.target.value),
+                      };
+                    });
+                  }
+                }}
+                onKeyUp={(e) => {
+                  if (e.key == "Enter") {
+                    searchData.mutate(
+                      () =>
+                        client.request(searchStaff, {
+                          ...searchForm,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  }
+                }}
+                value={searchForm?.staff_code || ""}
               />
             </div>
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">
                 スタッフ/販売促進
               </label>
-              <select
-                {...register("baitai")}
-                className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
-              >
+              <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
                 {hanbai.map((pref) => {
                   return (
                     <option key={pref.prefCode} value={pref.prefCode}>
@@ -115,28 +156,43 @@ export default function StaffList() {
                   );
                 })}
               </select>
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
             </div>
-
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">氏名</label>
               <input
-                {...register("firstName")}
                 className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                 placeholder="氏名を入力"
+                onChange={(e) => {
+                  setSearchForm((searchForm: any) => {
+                    return { ...searchForm, name: e.target.value };
+                  });
+                }}
+                onKeyUp={(e) => {
+                  if (e.key == "Enter") {
+                    searchData.mutate(
+                      () =>
+                        client.request(searchStaff, {
+                          ...searchForm,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  }
+                }}
+                value={searchForm?.name || ""}
               />
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
             </div>
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">
                 フリガナ
               </label>
               <input
-                {...register("firstName")}
                 className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                 placeholder="フリガナを入力"
               />
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
             </div>
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">
@@ -144,40 +200,108 @@ export default function StaffList() {
               </label>
               <input
                 type="tel"
-                {...register("tel")}
                 className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
                 placeholder="電話番号を入力"
               />
-              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
             </div>
-
-            <div className="ml-auto mr-4 flex flex-col justify-end">
-              <Button natural>
-                <input type="submit" value="検索" />
-              </Button>
+            <div
+              className="ml-auto mr-4 flex flex-col justify-end"
+              onClick={() => {
+                searchData.mutate(
+                  () =>
+                    client.request(searchStaff, {
+                      ...searchForm,
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
+            >
+              <Button natural>検索</Button>
             </div>
-            <div className="mr-4 flex flex-col justify-end">
-              <Button natural>
-                <input type="submit" value="クリア" />
-              </Button>
+            <div
+              className="mr-4 flex flex-col justify-end"
+              onClick={() => {
+                setSearchForm(() => {});
+                searchData.mutate(
+                  () =>
+                    client.request(searchStaff, {
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
+            >
+              <Button natural>クリア</Button>
             </div>
-          </form>
-          <table className="table table-xs mt-2 min-h-[500px]">
+          </div>
+        </Border>
+        <Border
+          className="my-2 w-full"
+          rounded="max-h-[calc(98dvh-240px)] rounded-md"
+          size="p-4 flex flex-col min-h-[calc(98dvh-40px)] overflow-scroll"
+          black
+        >
+          <table className="table table-xs fixed z-10 -mt-[17px] h-[45px] w-[94%] rounded-none bg-neutral-900">
             {/* head */}
             <thead>
               <tr>
-                <th>ID</th>
-                <th>氏名</th>
-                <th>住所</th>
-                <th>電話番号</th>
-                <th>入店日</th>
-                <th>退店日</th>
-                <th>
+                <th className="w-[6em] align-bottom">ID</th>
+                <th className="w-[15em] align-bottom">氏名</th>
+                <th className="w-[15em] align-bottom">住所</th>
+                <th className="w-[15em] align-bottom">電話番号</th>
+                <th className="w-[10em] align-bottom">入店日</th>
+                <th className="w-[10em] align-bottom">退店日</th>
+                <th className="w-[5em] align-bottom">
                   <label>編集</label>
                 </th>
               </tr>
             </thead>
+          </table>
+          <table className="table table-xs mt-5">
+            <thead>
+              <tr className="text-accent">
+                <th className="w-[6em]"></th>
+                <th className="w-[15em]"></th>
+                <th className="w-[15em]"></th>
+                <th className="w-[15em]"></th>
+                <th className="w-[10em]"></th>
+                <th className="w-[10em]"></th>
+                <th className="w-[5em]">
+                  <label></label>
+                </th>
+              </tr>
+            </thead>
             <tbody>
+              {searchData?.data?.staff[0]?.store_staff[0]?.staff?.map(
+                (staff: any) => (
+                  <>
+                    {staff.staff_code != 0 && (
+                      <>
+                        <tr key={staff.staff_code}>
+                          <td>{staff.staff_code}</td>
+                          <td>{staff.name}</td>
+                          <td>{staff.address}</td>
+                          <td>{staff.phone_number}</td>
+                          <td>{staff.entry_date}</td>
+                          <td>{staff.leaving__date}</td>
+                          <th>
+                            <button className="btn btn-ghost btn-xs">
+                              編集
+                            </button>
+                          </th>
+                        </tr>
+                      </>
+                    )}
+                  </>
+                )
+              )}
               {/* <tr>
                 <td>1000</td>
                 <td>
@@ -382,17 +506,22 @@ export default function StaffList() {
         <Modal setModal={setAddModal}>
           <Border className="w-full" size="p-4 flex flex-col" black>
             <p className="w-full text-left">新規スタッフ登録</p>
-            <form
-              className="flex w-full flex-wrap"
-              onSubmit={handleSubmit(onSubmit)}
-            >
+            <div className="flex w-full flex-wrap">
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">ID</label>
                 <input
                   type="number"
-                  {...register("age")}
                   className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                   placeholder="IDを入力"
+                  onChange={(e) => {
+                    setCreateForm((createForm: any) => {
+                      return {
+                        ...createForm,
+                        staff_code: Number(e.target.value),
+                      };
+                    });
+                  }}
+                  value={createForm?.staff_code || ""}
                 />
               </div>
               <div className="flex flex-col">
@@ -400,46 +529,26 @@ export default function StaffList() {
                   氏名
                 </label>
                 <input
-                  {...register("firstName")}
                   className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                   placeholder="氏名を入力"
+                  onChange={(e) => {
+                    setCreateForm((createForm: any) => {
+                      return {
+                        ...createForm,
+                        name: e.target.value,
+                      };
+                    });
+                  }}
+                  value={createForm?.name || ""}
                 />
-                {errors.firstName?.message && (
-                  <p>{errors.firstName?.message}</p>
-                )}
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
                   フリガナ
                 </label>
                 <input
-                  {...register("firstName")}
                   className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                   placeholder="フリガナを入力"
-                />
-                {errors.firstName?.message && (
-                  <p>{errors.firstName?.message}</p>
-                )}
-              </div>
-              <div className="flex flex-col">
-                <label className="mt-3 text-xs font-bold text-accent">
-                  時給
-                </label>
-                <input
-                  type="number"
-                  {...register("age2")}
-                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
-                  placeholder="時給を入力"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="mt-3 text-xs font-bold text-accent">
-                  日給
-                </label>
-                <input
-                  {...register("age3")}
-                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
-                  placeholder="日給を入力"
                 />
               </div>
               <div className="flex flex-col">
@@ -448,8 +557,16 @@ export default function StaffList() {
                 </label>
                 <input
                   type="date"
-                  {...register("birthday")}
                   className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                  onChange={(e) => {
+                    setCreateForm((createForm: any) => {
+                      return {
+                        ...createForm,
+                        birthday: e.target.value,
+                      };
+                    });
+                  }}
+                  value={createForm?.birthday || ""}
                 />
               </div>
               <div className="flex flex-col">
@@ -457,13 +574,18 @@ export default function StaffList() {
                   住所
                 </label>
                 <input
-                  {...register("address")}
                   className="mr-2 h-[30px] w-[17rem] rounded-md px-2 text-sm"
                   placeholder="住所を入力"
+                  onChange={(e) => {
+                    setCreateForm((createForm: any) => {
+                      return {
+                        ...createForm,
+                        address: e.target.value,
+                      };
+                    });
+                  }}
+                  value={createForm?.address || ""}
                 />
-                {errors.firstName?.message && (
-                  <p>{errors.firstName?.message}</p>
-                )}
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
@@ -471,34 +593,67 @@ export default function StaffList() {
                 </label>
                 <input
                   type="tel"
-                  {...register("tel")}
                   className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
                   placeholder="電話番号を入力"
+                  onChange={(e) => {
+                    setCreateForm((createForm: any) => {
+                      return {
+                        ...createForm,
+                        phone_number: e.target.value,
+                      };
+                    });
+                  }}
+                  value={createForm?.phone_number || ""}
                 />
-                {errors.firstName?.message && (
-                  <p>{errors.firstName?.message}</p>
-                )}
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
                   その他
                 </label>
                 <input
-                  {...register("address")}
                   className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
                   placeholder="備考を入力"
                 />
-                {errors.firstName?.message && (
-                  <p>{errors.firstName?.message}</p>
-                )}
               </div>
 
-              <div className="ml-auto mr-4 flex flex-col justify-end">
-                <Button natural>
-                  <input type="submit" value="登録" />
-                </Button>
+              <div
+                className="ml-auto mr-4 flex flex-col justify-end"
+                onClick={() => {
+                  createData
+                    .mutate(
+                      () =>
+                        client.request(createStaff, {
+                          ...createForm,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    )
+                    .then(() => {
+                      setCreateForm(() => {});
+                      setSearchForm(() => {});
+                      searchData
+                        .mutate(
+                          () =>
+                            client.request(searchStaff, {
+                              ...defaultVariables,
+                            }),
+                          {
+                            populateCache: true,
+                            revalidate: false,
+                          }
+                        )
+                        .then(() => {
+                          setAddModal(false);
+                        });
+                    });
+                }}
+              >
+                <Button natural>登録</Button>
               </div>
-            </form>
+            </div>
           </Border>
         </Modal>
       )}
