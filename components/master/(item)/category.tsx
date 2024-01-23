@@ -227,7 +227,36 @@ export default function ItemCategoryLists() {
                 }
               }
             )}
-            <div className="ml-2 mt-11 h-[45px] w-[45px]">
+            <div
+              className="ml-2 mt-11 h-[45px] w-[45px]"
+              onClick={() => {
+                createData
+                  .mutate(
+                    () =>
+                      client.request(createCategory, {
+                        name: "",
+                        parent_id: 0,
+                        ...defaultVariables,
+                      }),
+                    {
+                      populateCache: true,
+                      revalidate: false,
+                    }
+                  )
+                  .then(() => {
+                    searchData.mutate(
+                      () =>
+                        client.request(searchCategory, {
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  });
+              }}
+            >
               <Border rounded="rounded-full" size="h-[40px] w-[40px] p-[12px]">
                 <Image
                   src={"/assets/add.svg"}
@@ -235,33 +264,6 @@ export default function ItemCategoryLists() {
                   height={26}
                   className="!h-full !w-full"
                   alt=""
-                  onClick={() => {
-                    createData
-                      .mutate(
-                        () =>
-                          client.request(createCategory, {
-                            name: "",
-                            parent_id: 0,
-                            ...defaultVariables,
-                          }),
-                        {
-                          populateCache: true,
-                          revalidate: false,
-                        }
-                      )
-                      .then(() => {
-                        searchData.mutate(
-                          () =>
-                            client.request(searchCategory, {
-                              ...defaultVariables,
-                            }),
-                          {
-                            populateCache: true,
-                            revalidate: false,
-                          }
-                        );
-                      });
-                  }}
                 />
               </Border>
             </div>
