@@ -31,9 +31,7 @@ export default function SideMenu({
         <>
           <div
             key={index}
-            className={`relative flex h-[60px] w-full items-center justify-center border-b-8 border-secondary text-white first-letter:relative ${
-              item.disabled ? "disabled" : ""
-            }`}
+            className={`relative flex h-[60px] w-full items-center justify-center border-b-8 border-secondary text-white first-letter:relative`}
             onClick={() => {
               if (!open[index].open) {
                 let temp = nav.map((item) => {
@@ -53,7 +51,13 @@ export default function SideMenu({
               setUpdate((update) => !update);
             }}
           >
-            <p className="w-full pr-[30px] text-center">{item.name}</p>
+            <p
+              className={`w-full text-center ${
+                item.disabled ? "disabled" : ""
+              }`}
+            >
+              {item.name}
+            </p>
 
             <div
               className={

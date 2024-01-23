@@ -8,7 +8,7 @@ export default function Toggle() {
 
   return (
     <>
-      <label className="relative -ml-[6px] inline-flex scale-90 cursor-pointer select-none items-center">
+      <label className="relative -ml-2 inline-flex scale-90 cursor-pointer select-none items-center">
         <input
           type="checkbox"
           className="sr-only"

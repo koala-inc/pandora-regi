@@ -97,7 +97,7 @@ export default function StaffList() {
       <Control>
         <Border
           className="my-2 w-full"
-          size="p-4 flex flex-col min-h-[100px] overflow-scroll"
+          size="p-4 flex flex-col min-h-[170px] overflow-scroll"
           black
         >
           <p className="w-full text-left">スタッフを検索</p>
@@ -244,8 +244,7 @@ export default function StaffList() {
         </Border>
         <Border
           className="my-2 w-full"
-          rounded="max-h-[calc(98dvh-240px)] rounded-md"
-          size="p-4 flex flex-col min-h-[calc(98dvh-40px)] overflow-scroll"
+          size="p-4 flex flex-col min-h-[calc(98dvh-240px)] overflow-scroll"
           black
         >
           <table className="table table-xs fixed z-10 -mt-[17px] h-[45px] w-[94%] rounded-none bg-neutral-900">
