@@ -39,9 +39,9 @@ export default function Designate() {
           />
           <p className="text-accent">指名種判定</p>
           <select className="h-[30px] w-[18rem] rounded-md px-2 text-sm">
-            <option>場内</option>
-            <option>本指名</option>
             <option>同伴</option>
+            <option>本指名</option>
+            <option>場内</option>
           </select>
           <p className="text-accent">記号表記</p>
           <input
