@@ -59,7 +59,7 @@ export default function OrderSet() {
                   return (
                     <a
                       key={index}
-                      className={`tab-lg tab ml-[-4px] mr-1 w-[8em] rounded-t-xl ${
+                      className={`tab-lg tab ml-[-4px] mr-2 w-[8em] rounded-t-xl ${
                         activeTab == subcategory.id
                           ? "tab-active bg-primary text-white"
                           : "tab-lifted bg-secondary text-black"
