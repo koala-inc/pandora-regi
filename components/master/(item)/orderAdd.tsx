@@ -77,7 +77,7 @@ export default function OrderAdd() {
       <Control>
         <Border
           className="my-2 w-full"
-          size="p-4 flex flex-col min-h-[100px] overflow-scroll"
+          size="p-4 flex flex-col min-h-[170px] overflow-scroll"
           black
         >
           <p className="w-full text-left">オーダーを検索</p>

@@ -28,6 +28,9 @@ import CommandPalette, {
 import { useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import useSettingsGlobal from "@/globalstates/settings";
+import SeatCategory from "@/components/master/(payment)/seatCategory";
+import SetPayment from "@/components/master/(payment)/setPayment";
+import Designate from "@/components/master/(payment)/designate";
 
 export default function Mater() {
   const [settings, setSettings] = useSettingsGlobal();
@@ -246,17 +249,17 @@ export default function Mater() {
       submenu: [
         {
           name: "席カテゴリー",
-          component: <ItemCategoryList />,
+          component: <SeatCategory />,
           disabled: false,
         },
         {
           name: "セット料金",
-          component: <OrderSet />,
+          component: <SetPayment />,
           disabled: true,
         },
         {
           name: "指名料",
-          component: <OrderAdd />,
+          component: <Designate />,
           disabled: true,
         },
       ],
