@@ -154,14 +154,10 @@ export default function BottleAdd() {
               </select>
             </div>
             <div className="ml-auto mr-4 flex flex-col justify-end">
-              <Button natural>
-                <input type="submit" value="検索" />
-              </Button>
+              <Button natural>検索</Button>
             </div>
             <div className="mr-4 flex flex-col justify-end">
-              <Button natural>
-                <input type="submit" value="クリア" />
-              </Button>
+              <Button natural>クリア</Button>
             </div>
           </div>
         </Border>
@@ -352,9 +348,7 @@ export default function BottleAdd() {
               </div>
 
               <div className="ml-auto mr-4 flex flex-col justify-end">
-                <Button natural>
-                  <input type="submit" value="登録" />
-                </Button>
+                <Button natural>登録</Button>
               </div>
             </div>
           </Border>
