@@ -266,7 +266,7 @@ export default function ItemCategoryLists() {
               </Border>
             </div>
           </div>
-        </Border>
+        </Border2>
       </motion.div>
     </>
   );
