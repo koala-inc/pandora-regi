@@ -45,7 +45,7 @@ export default function ItemCategoryLists() {
               if (category.category_revision.parent_id == 0) {
                 addForm[category.id] == "";
                 return (
-                  <div className="relative mr-4 w-[300px]" key={index}>
+                  <div className="relative mr-4 w-[148px]" key={index}>
                     <Border
                       className="absolute right-[-5px] top-[0px]"
                       rounded="rounded-full"

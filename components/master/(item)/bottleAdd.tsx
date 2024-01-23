@@ -319,37 +319,7 @@ export default function BottleAdd() {
                   ヶ月
                 </div>
               </div>
-              <div className="flex flex-col">
-                <label className="mt-3 text-xs font-bold text-accent">
-                  検索ワード①
-                </label>
-                <input
-                  className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
-                  placeholder="検索ワード①を入力"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="mt-3 text-xs font-bold text-accent">
-                  検索ワード②
-                </label>
-                <input
-                  className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
-                  placeholder="検索ワード②を入力"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="mt-3 text-xs font-bold text-accent">
-                  検索ワード③
-                </label>
-                <input
-                  className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
-                  placeholder="検索ワード③を入力"
-                />
-              </div>
-
-              <div className="ml-auto mr-4 flex flex-col justify-end">
-                <Button natural>登録</Button>
-              </div>
+              <div className="ml-auto mr-4 flex flex-col justify-end">登録</div>
             </div>
           </Border>
         </Modal>
