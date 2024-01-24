@@ -578,10 +578,15 @@ export default function StaffList() {
             size="p-4 flex flex-col"
             black
           >
-            <p className="w-full text-left">新規スタッフ登録</p>
+            <p className="w-full text-left">
+              新規スタッフ登録
+              <small className="ml-5 text-red-600">＊は必須項目です。</small>
+            </p>
             <div className="flex w-full flex-wrap">
               <div className="flex flex-col">
-                <label className="mt-3 text-xs font-bold text-accent">ID</label>
+                <label className="mt-3 text-xs font-bold text-accent">
+                  ID <small className="text-red-600">＊</small>
+                </label>
                 <input
                   type="number"
                   className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
@@ -626,7 +631,7 @@ export default function StaffList() {
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
-                  氏名
+                  氏名 <small className="text-red-600">＊</small>
                 </label>
                 <input
                   className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
@@ -818,7 +823,10 @@ export default function StaffList() {
             size="p-4 flex flex-col"
             black
           >
-            <p className="w-full text-left">スタッフ編集</p>
+            <p className="w-full text-left">
+              スタッフ編集
+              <small className="ml-5 text-red-600">＊は必須項目です。</small>
+            </p>
             <div className="flex w-full flex-wrap">
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">ID</label>
@@ -862,7 +870,7 @@ export default function StaffList() {
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
-                  氏名
+                  氏名 <small className="text-red-600">＊</small>
                 </label>
                 <input
                   className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
