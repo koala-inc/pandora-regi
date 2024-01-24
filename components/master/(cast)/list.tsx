@@ -37,6 +37,7 @@ export default function CastList() {
   const [searchForm, setSearchForm] = useState<any>({});
   const [createForm, setCreateForm] = useState<any>({});
   const [updateForm, setUpdateForm] = useState<any>({});
+  const [searchCategory, setSearchCategory] = useState("入店日");
 
   const searchData = useSWR<any>(searchCast, fetcher);
   const createData = useSWR<any>(createCast, fetcher);
@@ -203,7 +204,7 @@ export default function CastList() {
                 value={searchForm?.real_name || ""}
               />
             </div>
-            <div className="flex flex-col">
+            {/* <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">
                 フリガナ
               </label>
@@ -235,7 +236,7 @@ export default function CastList() {
                 }}
                 value={searchForm?.real_name_ruby || ""}
               />
-            </div>
+            </div> */}
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">
                 電話番号
@@ -274,10 +275,15 @@ export default function CastList() {
               <label className="mt-3 text-xs font-bold text-accent">
                 期間カテゴリ
               </label>
-              <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
+              <select
+                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                onChange={(e) => {
+                  setSearchCategory(e.target.value);
+                }}
+              >
                 {kikan.map((pref) => {
                   return (
-                    <option key={pref.prefCode} value={pref.prefCode}>
+                    <option key={pref.prefCode} value={pref.prefName}>
                       {pref.prefName}
                     </option>
                   );
@@ -294,6 +300,8 @@ export default function CastList() {
                     return {
                       ...searchForm,
                       entry_date_from: e.target.value,
+                      leaving_date_from: e.target.value,
+                      birthday_from: e.target.value,
                     };
                   });
                 }}
@@ -312,7 +320,15 @@ export default function CastList() {
                     );
                   }
                 }}
-                value={searchForm?.entry_date_from || ""}
+                value={
+                  searchCategory == "入店日"
+                    ? searchForm?.entry_date_from || ""
+                    : searchCategory == "退店日"
+                    ? searchForm?.leaving_date_from || ""
+                    : searchCategory == "生年月日"
+                    ? searchForm?.birthday_from || ""
+                    : ""
+                }
               />
             </div>
             <div className="flex flex-col justify-end">
@@ -330,6 +346,8 @@ export default function CastList() {
                     return {
                       ...searchForm,
                       entry_date_to: e.target.value,
+                      leaving_date_to: e.target.value,
+                      birthday_to: e.target.value,
                     };
                   });
                 }}
@@ -348,12 +366,40 @@ export default function CastList() {
                     );
                   }
                 }}
-                value={searchForm?.entry_date_to || ""}
+                value={
+                  searchCategory == "入店日"
+                    ? searchForm?.entry_date_to || ""
+                    : searchCategory == "退店日"
+                    ? searchForm?.leaving_date_to || ""
+                    : searchCategory == "生年月日"
+                    ? searchForm?.birthday_to || ""
+                    : ""
+                }
               />
             </div>
             <div
               className="ml-auto mr-4 flex flex-col justify-end"
               onClick={() => {
+                switch (searchCategory) {
+                  case "入店日":
+                    delete searchForm.leaving_date_from;
+                    delete searchForm.leaving_date_to;
+                    delete searchForm.birthday_from;
+                    delete searchForm.birthday_to;
+                    break;
+                  case "退店日":
+                    delete searchForm.entry_date_from;
+                    delete searchForm.entry_date_to;
+                    delete searchForm.birthday_from;
+                    delete searchForm.birthday_to;
+                    break;
+                  case "生年月日":
+                    delete searchForm.entry_date_from;
+                    delete searchForm.entry_date_to;
+                    delete searchForm.leaving_date_from;
+                    delete searchForm.leaving_date_to;
+                    break;
+                }
                 searchData.mutate(
                   () =>
                     client.request(searchCast, {
@@ -451,58 +497,117 @@ export default function CastList() {
             <tbody>
               {/* <pre>{JSON.stringify(data.cast[0].store_cast[0].cast[0])}</pre> */}
               {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
-                (cast: any) => (
-                  <>
-                    {cast.cast_code != 0 && (
+                (cast: any) => {
+                  if (leave) {
+                    if (cast.leaving_date == null) {
+                      return (
+                        <>
+                          {cast.cast_code != 0 && (
+                            <>
+                              <tr key={cast.cast_code}>
+                                <td>{cast.cast_code}</td>
+                                <td>{cast.name}</td>
+                                <td>{cast.real_name}</td>
+                                <td>{0}円</td>
+                                <td>{0}円</td>
+                                <td>{cast.entry_date}</td>
+                                <td>{cast.leaving_date}</td>
+                                <th>
+                                  <button
+                                    className="btn btn-ghost btn-xs"
+                                    onClick={() => {
+                                      setUpdateForm(() => cast);
+                                      setUpdateModal(true);
+                                    }}
+                                  >
+                                    編集
+                                  </button>
+                                </th>
+                              </tr>
+                              {detail && (
+                                <>
+                                  <tr
+                                    key={cast.cast_code + "1"}
+                                    className="mt-3 border-b-0 border-t border-gray-300 opacity-50"
+                                  >
+                                    <th>生年月日</th>
+                                    <th>住所</th>
+                                    <th>電話番号</th>
+                                    <th>媒体</th>
+                                    <th>紹介者</th>
+                                  </tr>
+                                  <tr
+                                    key={cast.cast_code + "2"}
+                                    className="border-b border-gray-500 opacity-50"
+                                  >
+                                    <td>{cast.birthday}</td>
+                                    <td>{cast.address}</td>
+                                    <td>{cast.phone_number}</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                </>
+                              )}
+                            </>
+                          )}
+                        </>
+                      );
+                    }
+                  } else {
+                    return (
                       <>
-                        <tr key={cast.cast_code}>
-                          <td>{cast.cast_code}</td>
-                          <td>{cast.name}</td>
-                          <td>{cast.real_name}</td>
-                          <td>{0}円</td>
-                          <td>{0}円</td>
-                          <td>{cast.entry_date}</td>
-                          <td>{cast.leaving_date}</td>
-                          <th>
-                            <button
-                              className="btn btn-ghost btn-xs"
-                              onClick={() => {
-                                setUpdateForm(() => cast);
-                                setUpdateModal(true);
-                              }}
-                            >
-                              編集
-                            </button>
-                          </th>
-                        </tr>
-                        {detail && (
+                        {cast.cast_code != 0 && (
                           <>
-                            <tr
-                              key={cast.cast_code + "1"}
-                              className="mt-3 border-b-0 border-t border-gray-300 opacity-50"
-                            >
-                              <th>生年月日</th>
-                              <th>住所</th>
-                              <th>電話番号</th>
-                              <th>媒体</th>
-                              <th>紹介者</th>
+                            <tr key={cast.cast_code}>
+                              <td>{cast.cast_code}</td>
+                              <td>{cast.name}</td>
+                              <td>{cast.real_name}</td>
+                              <td>{0}円</td>
+                              <td>{0}円</td>
+                              <td>{cast.entry_date}</td>
+                              <td>{cast.leaving_date}</td>
+                              <th>
+                                <button
+                                  className="btn btn-ghost btn-xs"
+                                  onClick={() => {
+                                    setUpdateForm(() => cast);
+                                    setUpdateModal(true);
+                                  }}
+                                >
+                                  編集
+                                </button>
+                              </th>
                             </tr>
-                            <tr
-                              key={cast.cast_code + "2"}
-                              className="border-b border-gray-500 opacity-50"
-                            >
-                              <td>{cast.birthday}</td>
-                              <td>{cast.address}</td>
-                              <td>{cast.phone_number}</td>
-                              <td>-</td>
-                              <td>-</td>
-                            </tr>
+                            {detail && (
+                              <>
+                                <tr
+                                  key={cast.cast_code + "1"}
+                                  className="mt-3 border-b-0 border-t border-gray-300 opacity-50"
+                                >
+                                  <th>生年月日</th>
+                                  <th>住所</th>
+                                  <th>電話番号</th>
+                                  <th>媒体</th>
+                                  <th>紹介者</th>
+                                </tr>
+                                <tr
+                                  key={cast.cast_code + "2"}
+                                  className="border-b border-gray-500 opacity-50"
+                                >
+                                  <td>{cast.birthday}</td>
+                                  <td>{cast.address}</td>
+                                  <td>{cast.phone_number}</td>
+                                  <td>-</td>
+                                  <td>-</td>
+                                </tr>
+                              </>
+                            )}
                           </>
                         )}
                       </>
-                    )}
-                  </>
-                )
+                    );
+                  }
+                }
               )}
 
               {/* <tr>
@@ -763,6 +868,24 @@ export default function CastList() {
                 </div>
                 <div className="flex flex-col">
                   <label className="mt-3 text-xs font-bold text-accent">
+                    フリガナ(キャスト名)
+                  </label>
+                  <input
+                    className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                    placeholder="フリガナを入力"
+                    // onChange={(e) => {
+                    //   setCreateForm((createForm: any) => {
+                    //     return {
+                    //       ...createForm,
+                    //       real_name_ruby: e.target.value,
+                    //     };
+                    //   });
+                    // }}
+                    // value={createForm?.real_name_ruby || ""}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="mt-3 text-xs font-bold text-accent">
                     本名 <small className="text-red-600">＊</small>
                   </label>
                   <input
@@ -781,7 +904,7 @@ export default function CastList() {
                 </div>
                 <div className="flex flex-col">
                   <label className="mt-3 text-xs font-bold text-accent">
-                    フリガナ
+                    フリガナ(本名)
                   </label>
                   <input
                     className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
