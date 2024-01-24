@@ -734,6 +734,40 @@ export default function StaffList() {
                   placeholder="備考を入力"
                 />
               </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  媒体
+                </label>
+                <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
+                  <option value="" selected disabled>
+                    媒体を選択
+                  </option>
+                  {baitais.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefCode}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  紹介者
+                </label>
+                <select className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm">
+                  <option value="" selected disabled>
+                    紹介者を選択
+                  </option>
+                  {syokai.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefCode}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
 
               <div
                 className="ml-auto mr-4 flex flex-col justify-end"
@@ -953,6 +987,40 @@ export default function StaffList() {
                   className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
                   placeholder="備考を入力"
                 />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  媒体
+                </label>
+                <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
+                  <option value="" selected disabled>
+                    媒体を選択
+                  </option>
+                  {baitais.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefCode}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  紹介者
+                </label>
+                <select className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm">
+                  <option value="" selected disabled>
+                    紹介者を選択
+                  </option>
+                  {syokai.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefCode}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
 
               <div
