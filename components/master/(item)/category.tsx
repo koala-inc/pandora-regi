@@ -93,6 +93,7 @@ export default function ItemCategoryLists() {
                       </Border>
                       <Border
                         className="my-2 w-full"
+                        rounded="rounded-md border-white"
                         size="p-4 flex flex-col overflow-scroll"
                         black
                       >

@@ -5,15 +5,11 @@ import Button from "@/components/templates/button";
 import { useState } from "react";
 import Image from "next/image";
 import Modal from "@/components/parts/modal";
-import useRequestGQL from "@/components/fetch/requestGQL";
-import { searchCast } from "@/gqls/query/cast";
 import useSWR, { preload } from "swr";
 import client from "@/connection";
 import { RequestDocument } from "graphql-request";
-import { createCast } from "@/gqls/mutation/cast";
-import { useHotkeys } from "react-hotkeys-hook";
 import { searchStaff } from "@/gqls/query/staff";
-import { createStaff } from "@/gqls/mutation/staff";
+import { createStaff, updateStaff } from "@/gqls/mutation/staff";
 
 const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
@@ -27,14 +23,18 @@ export default function StaffList() {
 
   const [searchForm, setSearchForm] = useState<any>({});
   const [createForm, setCreateForm] = useState<any>({});
+  const [updateForm, setUpdateForm] = useState<any>({});
+  const [searchCategory, setSearchCategory] = useState("入店日");
 
   const searchData = useSWR<any>(searchStaff, fetcher);
   const createData = useSWR<any>(createStaff, fetcher);
+  const updateData = useSWR<any>(updateStaff, fetcher);
 
   const [detail, setDetail] = useState(false);
   const [leave, setLeave] = useState(false);
 
   const [addModal, setAddModal] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false);
 
   const baitais = [
     {
@@ -97,6 +97,7 @@ export default function StaffList() {
       <Control>
         <Border
           className="my-2 w-full"
+          rounded="rounded-md border-white"
           size="p-4 flex flex-col min-h-[170px] overflow-scroll"
           black
         >
@@ -240,23 +241,40 @@ export default function StaffList() {
             >
               <Button natural>クリア</Button>
             </div>
+            <div
+              className="mr-4 flex flex-col justify-end"
+              onClick={() => {
+                setDetail((detail) => !detail);
+              }}
+            >
+              <Button natural>{detail ? "詳細を非表示" : "詳細を表示"}</Button>
+            </div>
+            <div
+              className="mr-4 flex flex-col justify-end"
+              onClick={() => {
+                setLeave((leave) => !leave);
+              }}
+            >
+              <Button natural>
+                {leave ? "退店者を表示" : "退店者を非表示"}
+              </Button>
+            </div>
           </div>
         </Border>
         <Border
           className="my-2 w-full"
-          size="p-4 flex flex-col min-h-[calc(98dvh-240px)] overflow-scroll"
+          rounded="rounded-md border-white"
+          size="p-4 flex flex-col min-h-[calc(98dvh-240px)] max-h-[calc(98dvh-240px)] overflow-scroll"
           black
         >
           <table className="table table-xs fixed z-10 -mt-[17px] h-[45px] w-[94%] rounded-none bg-neutral-900">
             {/* head */}
             <thead>
               <tr className="text-accent">
-                <th className="w-[6em] align-bottom">ID</th>
+                <th className="w-[10em] align-bottom">ID</th>
                 <th className="w-[15em] align-bottom">氏名</th>
-                <th className="w-[15em] align-bottom">住所</th>
-                <th className="w-[15em] align-bottom">電話番号</th>
-                <th className="w-[10em] align-bottom">入店日</th>
-                <th className="w-[10em] align-bottom">退店日</th>
+                <th className="w-[15em] align-bottom">入店日</th>
+                <th className="w-[15em] align-bottom">退店日</th>
                 <th className="w-[5em] align-bottom">
                   <label>編集</label>
                 </th>
@@ -266,12 +284,10 @@ export default function StaffList() {
           <table className="table table-xs mt-5">
             <thead>
               <tr>
-                <th className="w-[6em]"></th>
-                <th className="w-[15em]"></th>
-                <th className="w-[15em]"></th>
-                <th className="w-[15em]"></th>
                 <th className="w-[10em]"></th>
-                <th className="w-[10em]"></th>
+                <th className="w-[15em]"></th>
+                <th className="w-[15em]"></th>
+                <th className="w-[15em]"></th>
                 <th className="w-[5em]">
                   <label></label>
                 </th>
@@ -279,27 +295,115 @@ export default function StaffList() {
             </thead>
             <tbody>
               {searchData?.data?.staff[0]?.store_staff[0]?.staff?.map(
-                (staff: any) => (
-                  <>
-                    {staff.staff_code != 0 && (
+                (staff: any) => {
+                  if (leave) {
+                    if (staff.leaving_date == null) {
+                      return (
+                        <>
+                          {staff.staff_code != 0 && (
+                            <>
+                              <tr key={staff.staff_code}>
+                                <td>{staff.staff_code}</td>
+                                <td>{staff.name}</td>
+                                <td>{staff.entry_date}</td>
+                                <td>{staff.leaving__date}</td>
+                                <th>
+                                  <button
+                                    className="btn btn-ghost btn-xs"
+                                    onClick={() => {
+                                      setUpdateForm(() => staff);
+                                      setUpdateModal(true);
+                                    }}
+                                  >
+                                    編集
+                                  </button>
+                                </th>
+                              </tr>
+                              {detail && (
+                                <>
+                                  <tr
+                                    key={staff.staff_code + "1"}
+                                    className="mt-3 border-b-0 border-t border-gray-300 opacity-50"
+                                  >
+                                    <th>生年月日</th>
+                                    <th>住所</th>
+                                    <th>電話番号</th>
+                                    <th>その他</th>
+                                    <th>媒体</th>
+                                    <th>紹介者</th>
+                                  </tr>
+                                  <tr
+                                    key={staff.staff_code + "2"}
+                                    className="border-b border-gray-500 opacity-50"
+                                  >
+                                    <td>{staff.birthday}</td>
+                                    <td>{staff.address}</td>
+                                    <td>{staff.phone_number}</td>
+                                    <td>{staff.remarks}</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                </>
+                              )}
+                            </>
+                          )}
+                        </>
+                      );
+                    }
+                  } else {
+                    return (
                       <>
-                        <tr key={staff.staff_code}>
-                          <td>{staff.staff_code}</td>
-                          <td>{staff.name}</td>
-                          <td>{staff.address}</td>
-                          <td>{staff.phone_number}</td>
-                          <td>{staff.entry_date}</td>
-                          <td>{staff.leaving__date}</td>
-                          <th>
-                            <button className="btn btn-ghost btn-xs">
-                              編集
-                            </button>
-                          </th>
-                        </tr>
+                        {staff.staff_code != 0 && (
+                          <>
+                            <tr key={staff.staff_code}>
+                              <td>{staff.staff_code}</td>
+                              <td>{staff.name}</td>
+                              <td>{staff.entry_date}</td>
+                              <td>{staff.leaving__date}</td>
+                              <th>
+                                <button
+                                  className="btn btn-ghost btn-xs"
+                                  onClick={() => {
+                                    setUpdateForm(() => staff);
+                                    setUpdateModal(true);
+                                  }}
+                                >
+                                  編集
+                                </button>
+                              </th>
+                            </tr>
+                            {detail && (
+                              <>
+                                <tr
+                                  key={staff.cast_code + "1"}
+                                  className="mt-3 border-b-0 border-t border-gray-300 opacity-50"
+                                >
+                                  <th>生年月日</th>
+                                  <th>住所</th>
+                                  <th>電話番号</th>
+                                  <th>その他</th>
+                                  <th>媒体</th>
+                                  <th>紹介者</th>
+                                </tr>
+                                <tr
+                                  key={staff.cast_code + "2"}
+                                  className="border-b border-gray-500 opacity-50"
+                                >
+                                  <td>{staff.birthday}</td>
+                                  <td>{staff.address}</td>
+                                  <td>{staff.phone_number}</td>
+                                  <td>{staff.remarks}</td>
+                                  <td>-</td>
+                                  <td>-</td>
+                                </tr>
+                              </>
+                            )}
+                          </>
+                        )}
                       </>
-                    )}
-                  </>
-                )
+                    );
+                  }
+                }
               )}
               {/* <tr>
                 <td>1000</td>
@@ -669,6 +773,178 @@ export default function StaffList() {
                 }}
               >
                 <Button natural>登録</Button>
+              </div>
+            </div>
+          </Border>
+        </Modal>
+      )}
+      {updateModal && (
+        <Modal setModal={setUpdateModal}>
+          <Border className="w-full" size="p-4 flex flex-col" black>
+            <p className="w-full text-left">新規スタッフ登録</p>
+            <div className="flex w-full flex-wrap">
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">ID</label>
+                <input
+                  type="number"
+                  className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                  placeholder="IDを入力"
+                  onChange={(e) => {
+                    setUpdateForm((updateForm: any) => {
+                      return {
+                        ...updateForm,
+                        staff_code: Number(e.target.value),
+                      };
+                    });
+                  }}
+                  value={updateForm?.staff_code || ""}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  氏名
+                </label>
+                <input
+                  className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                  placeholder="氏名を入力"
+                  onChange={(e) => {
+                    setUpdateForm((updateForm: any) => {
+                      return {
+                        ...updateForm,
+                        name: e.target.value,
+                      };
+                    });
+                  }}
+                  value={updateForm?.name || ""}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  フリガナ
+                </label>
+                <input
+                  className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                  placeholder="フリガナを入力"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  生年月日
+                </label>
+                <input
+                  type="date"
+                  className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                  onChange={(e) => {
+                    setUpdateForm((updateForm: any) => {
+                      return {
+                        ...updateForm,
+                        birthday: e.target.value,
+                      };
+                    });
+                  }}
+                  value={updateForm?.birthday || ""}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  入店日
+                </label>
+                <input
+                  type="date"
+                  className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                  onChange={(e) => {
+                    setUpdateForm((updateForm: any) => {
+                      return {
+                        ...updateForm,
+                        entry_date: e.target.value,
+                      };
+                    });
+                  }}
+                  value={updateForm?.entry_date || ""}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  住所
+                </label>
+                <input
+                  className="mr-2 h-[30px] w-[17rem] rounded-md px-2 text-sm"
+                  placeholder="住所を入力"
+                  onChange={(e) => {
+                    setUpdateForm((updateForm: any) => {
+                      return {
+                        ...updateForm,
+                        address: e.target.value,
+                      };
+                    });
+                  }}
+                  value={updateForm?.address || ""}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  電話番号
+                </label>
+                <input
+                  type="tel"
+                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                  placeholder="電話番号を入力"
+                  onChange={(e) => {
+                    setUpdateForm((updateForm: any) => {
+                      return {
+                        ...updateForm,
+                        phone_number: e.target.value,
+                      };
+                    });
+                  }}
+                  value={updateForm?.phone_number || ""}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  その他
+                </label>
+                <input
+                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                  placeholder="備考を入力"
+                />
+              </div>
+
+              <div
+                className="ml-auto mr-4 flex flex-col justify-end"
+                onClick={() => {
+                  Object.keys(updateForm).map((key: any) => {
+                    if (updateForm[key] == null) {
+                      delete updateForm[key];
+                    }
+                  });
+
+                  client
+                    .request(updateStaff, {
+                      ...updateForm,
+                      ...defaultVariables,
+                    })
+                    .then(() => {
+                      setUpdateForm(() => {});
+                      setSearchForm(() => {});
+                      searchData
+                        .mutate(
+                          () =>
+                            client.request(searchStaff, {
+                              ...defaultVariables,
+                            }),
+                          {
+                            populateCache: true,
+                            revalidate: false,
+                          }
+                        )
+                        .then(() => {
+                          setAddModal(false);
+                        });
+                    });
+                }}
+              >
+                <Button natural>更新</Button>
               </div>
             </div>
           </Border>
