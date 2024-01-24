@@ -570,6 +570,24 @@ export default function StaffList() {
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
+                  入店日
+                </label>
+                <input
+                  type="date"
+                  className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                  onChange={(e) => {
+                    setCreateForm((createForm: any) => {
+                      return {
+                        ...createForm,
+                        entry_date: e.target.value,
+                      };
+                    });
+                  }}
+                  value={createForm?.entry_date || ""}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
                   住所
                 </label>
                 <input
