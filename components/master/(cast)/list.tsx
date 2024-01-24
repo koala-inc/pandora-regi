@@ -85,11 +85,11 @@ export default function CastList() {
     },
     {
       prefCode: 2,
-      prefName: "誕生日",
+      prefName: "退店日",
     },
     {
       prefCode: 3,
-      prefName: "退店日",
+      prefName: "生年月日",
     },
   ];
 
@@ -98,6 +98,7 @@ export default function CastList() {
       <Control>
         <Border
           className="my-2 w-full"
+          rounded="border-white"
           size="p-4 flex flex-col min-h-[100px] overflow-scroll"
           black
         >
@@ -292,42 +293,6 @@ export default function CastList() {
                   setSearchForm((searchForm: any) => {
                     return {
                       ...searchForm,
-                      entry_date_to: e.target.value,
-                    };
-                  });
-                }}
-                onKeyUp={(e) => {
-                  if (e.key == "Enter") {
-                    searchData.mutate(
-                      () =>
-                        client.request(searchCast, {
-                          ...searchForm,
-                          ...defaultVariables,
-                        }),
-                      {
-                        populateCache: true,
-                        revalidate: false,
-                      }
-                    );
-                  }
-                }}
-                value={searchForm?.entry_date_to || ""}
-              />
-            </div>
-            <div className="flex flex-col justify-end">
-              <label className="mr-2 mt-3 flex h-[30px] items-center justify-center text-xs font-bold text-white">
-                〜
-              </label>
-            </div>
-            <div className="flex flex-col justify-end">
-              <label className="mt-3 text-xs font-bold text-accent"></label>
-              <input
-                type="date"
-                className="mr-2 h-[30px] rounded-md px-2 text-sm"
-                onChange={(e) => {
-                  setSearchForm((searchForm: any) => {
-                    return {
-                      ...searchForm,
                       entry_date_from: e.target.value,
                     };
                   });
@@ -348,6 +313,42 @@ export default function CastList() {
                   }
                 }}
                 value={searchForm?.entry_date_from || ""}
+              />
+            </div>
+            <div className="flex flex-col justify-end">
+              <label className="mr-2 mt-3 flex h-[30px] items-center justify-center text-xs font-bold text-white">
+                〜
+              </label>
+            </div>
+            <div className="flex flex-col justify-end">
+              <label className="mt-3 text-xs font-bold text-accent"></label>
+              <input
+                type="date"
+                className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                onChange={(e) => {
+                  setSearchForm((searchForm: any) => {
+                    return {
+                      ...searchForm,
+                      entry_date_to: e.target.value,
+                    };
+                  });
+                }}
+                onKeyUp={(e) => {
+                  if (e.key == "Enter") {
+                    searchData.mutate(
+                      () =>
+                        client.request(searchCast, {
+                          ...searchForm,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  }
+                }}
+                value={searchForm?.entry_date_to || ""}
               />
             </div>
             <div
