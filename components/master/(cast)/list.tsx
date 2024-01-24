@@ -534,6 +534,7 @@ export default function CastList() {
                                     <th>生年月日</th>
                                     <th>住所</th>
                                     <th>電話番号</th>
+                                    <th>その他</th>
                                     <th>媒体</th>
                                     <th>紹介者</th>
                                   </tr>
@@ -543,6 +544,7 @@ export default function CastList() {
                                   >
                                     <td>{cast.birthday}</td>
                                     <td>{cast.address}</td>
+                                    <td>{cast.remarks}</td>
                                     <td>{cast.phone_number}</td>
                                     <td>-</td>
                                     <td>-</td>
@@ -1152,6 +1154,24 @@ export default function CastList() {
                 </div>
                 <div className="flex flex-col">
                   <label className="mt-3 text-xs font-bold text-accent">
+                    フリガナ(キャスト名)
+                  </label>
+                  <input
+                    className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                    placeholder="フリガナを入力"
+                    // onChange={(e) => {
+                    //   setCreateForm((createForm: any) => {
+                    //     return {
+                    //       ...createForm,
+                    //       real_name_ruby: e.target.value,
+                    //     };
+                    //   });
+                    // }}
+                    // value={createForm?.real_name_ruby || ""}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="mt-3 text-xs font-bold text-accent">
                     本名 <small className="text-red-600">＊</small>
                   </label>
                   <input
@@ -1170,7 +1190,7 @@ export default function CastList() {
                 </div>
                 <div className="flex flex-col">
                   <label className="mt-3 text-xs font-bold text-accent">
-                    フリガナ
+                    フリガナ(本名)
                   </label>
                   <input
                     className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
