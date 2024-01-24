@@ -83,11 +83,11 @@ export default function StaffList() {
 
   const hanbai = [
     {
-      prefCode: 1,
+      prefCode: 0,
       prefName: "スタッフ",
     },
     {
-      prefCode: 2,
+      prefCode: 1,
       prefName: "販売促進",
     },
   ];
@@ -148,10 +148,23 @@ export default function StaffList() {
               <label className="mt-3 text-xs font-bold text-accent">
                 スタッフ/販売促進
               </label>
-              <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
+              <select
+                className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                onChange={(e) => {
+                  const tmp =
+                    e.target.value == "スタッフ"
+                      ? 0
+                      : e.target.value == "販売促進"
+                      ? 1
+                      : 0;
+                  setSearchForm((searchForm: any) => {
+                    return { ...searchForm, section: tmp };
+                  });
+                }}
+              >
                 {hanbai.map((pref) => {
                   return (
-                    <option key={pref.prefCode} value={pref.prefCode}>
+                    <option key={pref.prefCode} value={pref.prefName}>
                       {pref.prefName}
                     </option>
                   );
@@ -267,11 +280,12 @@ export default function StaffList() {
           size="p-4 flex flex-col min-h-[calc(98dvh-240px)] max-h-[calc(98dvh-240px)] overflow-scroll"
           black
         >
-          <table className="table table-xs fixed z-10 -mt-[17px] h-[45px] w-[94%] rounded-none bg-neutral-900">
+          <table className="table table-xs fixed z-10 -mt-[16px] h-[45px] w-[94%] rounded-none bg-neutral-900">
             {/* head */}
             <thead>
               <tr className="text-accent">
                 <th className="w-[10em] align-bottom">ID</th>
+                <th className="w-[15em] align-bottom">スタッフ/販売促進</th>
                 <th className="w-[15em] align-bottom">氏名</th>
                 <th className="w-[15em] align-bottom">入店日</th>
                 <th className="w-[15em] align-bottom">退店日</th>
@@ -285,6 +299,7 @@ export default function StaffList() {
             <thead>
               <tr>
                 <th className="w-[10em]"></th>
+                <th className="w-[15em]"></th>
                 <th className="w-[15em]"></th>
                 <th className="w-[15em]"></th>
                 <th className="w-[15em]"></th>
@@ -304,9 +319,12 @@ export default function StaffList() {
                             <>
                               <tr key={staff.staff_code}>
                                 <td>{staff.staff_code}</td>
+                                <td>
+                                  {staff.section == 0 ? "スタッフ" : "販売促進"}
+                                </td>
                                 <td>{staff.name}</td>
                                 <td>{staff.entry_date}</td>
-                                <td>{staff.leaving__date}</td>
+                                <td>{staff.leaving_date}</td>
                                 <th>
                                   <button
                                     className="btn btn-ghost btn-xs"
@@ -357,9 +375,12 @@ export default function StaffList() {
                           <>
                             <tr key={staff.staff_code}>
                               <td>{staff.staff_code}</td>
+                              <td>
+                                {staff.section == 0 ? "スタッフ" : "販売促進"}
+                              </td>
                               <td>{staff.name}</td>
                               <td>{staff.entry_date}</td>
-                              <td>{staff.leaving__date}</td>
+                              <td>{staff.leaving_date}</td>
                               <th>
                                 <button
                                   className="btn btn-ghost btn-xs"
@@ -405,188 +426,6 @@ export default function StaffList() {
                   }
                 }
               )}
-              {/* <tr>
-                <td>1000</td>
-                <td>
-                  <div className="flex items-center space-x-3">
-                    <div>
-                      <div className="font-bold">あや</div>
-                      <div className="text-sm opacity-50">
-                        田中店子（タナカタナコ）
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  東京都中央区丸の内1-1-1
-                  <br />
-                  丸の内センタービル1F
-                </td>
-                <td>000-0000-0000</td>
-                <td>1,000円</td>
-                <td>30,000円</td>
-                <td>2000/01/01</td>
-                <td>-</td>
-                <th>
-                  <button className="btn btn-ghost btn-xs">編集</button>
-                </th>
-              </tr>
-              <tr>
-                <td>1000</td>
-                <td>
-                  <div className="flex items-center space-x-3">
-                    <div>
-                      <div className="font-bold">あや</div>
-                      <div className="text-sm opacity-50">
-                        田中店子（タナカタナコ）
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  東京都中央区丸の内1-1-1
-                  <br />
-                  丸の内センタービル1F
-                </td>
-                <td>000-0000-0000</td>
-                <td>1,000円</td>
-                <td>30,000円</td>
-                <td>2000/01/01</td>
-                <td>-</td>
-                <th>
-                  <button className="btn btn-ghost btn-xs">編集</button>
-                </th>
-              </tr>
-              <tr>
-                <td>1000</td>
-                <td>
-                  <div className="flex items-center space-x-3">
-                    <div>
-                      <div className="font-bold">あや</div>
-                      <div className="text-sm opacity-50">
-                        田中店子（タナカタナコ）
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  東京都中央区丸の内1-1-1
-                  <br />
-                  丸の内センタービル1F
-                </td>
-                <td>000-0000-0000</td>
-                <td>1,000円</td>
-                <td>30,000円</td>
-                <td>2000/01/01</td>
-                <td>-</td>
-                <th>
-                  <button className="btn btn-ghost btn-xs">編集</button>
-                </th>
-              </tr>
-              <tr>
-                <td>1000</td>
-                <td>
-                  <div className="flex items-center space-x-3">
-                    <div>
-                      <div className="font-bold">あや</div>
-                      <div className="text-sm opacity-50">
-                        田中店子（タナカタナコ）
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  東京都中央区丸の内1-1-1
-                  <br />
-                  丸の内センタービル1F
-                </td>
-                <td>000-0000-0000</td>
-                <td>1,000円</td>
-                <td>30,000円</td>
-                <td>2000/01/01</td>
-                <td>-</td>
-                <th>
-                  <button className="btn btn-ghost btn-xs">編集</button>
-                </th>
-              </tr>
-              <tr>
-                <td>1000</td>
-                <td>
-                  <div className="flex items-center space-x-3">
-                    <div>
-                      <div className="font-bold">あや</div>
-                      <div className="text-sm opacity-50">
-                        田中店子（タナカタナコ）
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  東京都中央区丸の内1-1-1
-                  <br />
-                  丸の内センタービル1F
-                </td>
-                <td>000-0000-0000</td>
-                <td>1,000円</td>
-                <td>30,000円</td>
-                <td>2000/01/01</td>
-                <td>-</td>
-                <th>
-                  <button className="btn btn-ghost btn-xs">編集</button>
-                </th>
-              </tr>
-              <tr>
-                <td>1000</td>
-                <td>
-                  <div className="flex items-center space-x-3">
-                    <div>
-                      <div className="font-bold">あや</div>
-                      <div className="text-sm opacity-50">
-                        田中店子（タナカタナコ）
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  東京都中央区丸の内1-1-1
-                  <br />
-                  丸の内センタービル1F
-                </td>
-                <td>000-0000-0000</td>
-                <td>1,000円</td>
-                <td>30,000円</td>
-                <td>2000/01/01</td>
-                <td>-</td>
-                <th>
-                  <button className="btn btn-ghost btn-xs">編集</button>
-                </th>
-              </tr>
-              <tr>
-                <td>1000</td>
-                <td>
-                  <div className="flex items-center space-x-3">
-                    <div>
-                      <div className="font-bold">あや</div>
-                      <div className="text-sm opacity-50">
-                        田中店子（タナカタナコ）
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  東京都中央区丸の内1-1-1
-                  <br />
-                  丸の内センタービル1F
-                </td>
-                <td>000-0000-0000</td>
-                <td>1,000円</td>
-                <td>30,000円</td>
-                <td>2000/01/01</td>
-                <td>-</td>
-                <th>
-                  <button className="btn btn-ghost btn-xs">編集</button>
-                </th>
-              </tr> */}
             </tbody>
           </table>
         </Border>
@@ -607,7 +446,12 @@ export default function StaffList() {
       </nav>
       {addModal && (
         <Modal setModal={setAddModal}>
-          <Border className="w-full" size="p-4 flex flex-col" black>
+          <Border
+            className="w-full"
+            rounded="rounded-md border-white"
+            size="p-4 flex flex-col"
+            black
+          >
             <p className="w-full text-left">新規スタッフ登録</p>
             <div className="flex w-full flex-wrap">
               <div className="flex flex-col">
@@ -626,6 +470,33 @@ export default function StaffList() {
                   }}
                   value={createForm?.staff_code || ""}
                 />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  スタッフ/販売促進
+                </label>
+                <select
+                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                  onChange={(e) => {
+                    const tmp =
+                      e.target.value == "スタッフ"
+                        ? 0
+                        : e.target.value == "販売促進"
+                        ? 1
+                        : 0;
+                    setCreateForm((createForm: any) => {
+                      return { ...createForm, section: tmp };
+                    });
+                  }}
+                >
+                  {hanbai.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefName}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
@@ -780,25 +651,53 @@ export default function StaffList() {
       )}
       {updateModal && (
         <Modal setModal={setUpdateModal}>
-          <Border className="w-full" size="p-4 flex flex-col" black>
-            <p className="w-full text-left">新規スタッフ登録</p>
+          <Border
+            className="w-full"
+            rounded="rounded-md border-white"
+            size="p-4 flex flex-col"
+            black
+          >
+            <p className="w-full text-left">スタッフ編集</p>
             <div className="flex w-full flex-wrap">
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">ID</label>
                 <input
                   type="number"
                   className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                  placeholder="IDを入力"
+                  value={updateForm?.staff_code || ""}
+                  disabled
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  スタッフ/販売促進
+                </label>
+                <select
+                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
                   onChange={(e) => {
+                    const tmp =
+                      e.target.value == "スタッフ"
+                        ? 0
+                        : e.target.value == "販売促進"
+                        ? 1
+                        : 0;
                     setUpdateForm((updateForm: any) => {
-                      return {
-                        ...updateForm,
-                        staff_code: Number(e.target.value),
-                      };
+                      return { ...updateForm, section: tmp };
                     });
                   }}
-                  value={updateForm?.staff_code || ""}
-                />
+                >
+                  {hanbai.map((pref) => {
+                    return (
+                      <option
+                        key={pref.prefCode}
+                        value={pref.prefName}
+                        selected={updateForm?.section == pref.prefCode}
+                      >
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
@@ -861,6 +760,24 @@ export default function StaffList() {
                     });
                   }}
                   value={updateForm?.entry_date || ""}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  退店日
+                </label>
+                <input
+                  type="date"
+                  className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                  onChange={(e) => {
+                    setUpdateForm((updateForm: any) => {
+                      return {
+                        ...updateForm,
+                        leaving_date: e.target.value,
+                      };
+                    });
+                  }}
+                  value={updateForm?.leaving_date || ""}
                 />
               </div>
               <div className="flex flex-col">
@@ -939,7 +856,7 @@ export default function StaffList() {
                           }
                         )
                         .then(() => {
-                          setAddModal(false);
+                          setUpdateModal(false);
                         });
                     });
                 }}

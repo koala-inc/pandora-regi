@@ -817,7 +817,12 @@ export default function CastList() {
       </nav>
       {addModal && (
         <Modal setModal={setAddModal}>
-          <Border className="w-full" size="p-4 flex flex-col" black>
+          <Border
+            className="w-full"
+            rounded="rounded-md border-white"
+            size="p-4 flex flex-col"
+            black
+          >
             <p className="w-full text-left">
               新規キャスト登録
               <small className="ml-5 text-red-600">＊は必須項目です。</small>
@@ -1119,7 +1124,12 @@ export default function CastList() {
       )}
       {updateModal && (
         <Modal setModal={setUpdateModal}>
-          <Border className="w-full" size="p-4 flex flex-col" black>
+          <Border
+            className="w-full"
+            rounded="rounded-md border-white"
+            size="p-4 flex flex-col"
+            black
+          >
             <p className="w-full text-left">
               キャスト編集
               <small className="ml-5 text-red-600">＊は必須項目です。</small>
