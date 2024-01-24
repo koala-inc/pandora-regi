@@ -516,7 +516,7 @@ export default function StaffList() {
                   value={createForm?.name || ""}
                 />
               </div>
-              <div className="flex flex-col">
+              {/* <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
                   フリガナ
                 </label>
@@ -524,7 +524,7 @@ export default function StaffList() {
                   className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                   placeholder="フリガナを入力"
                 />
-              </div>
+              </div> */}
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
                   生年月日
