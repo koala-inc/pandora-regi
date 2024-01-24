@@ -590,6 +590,7 @@ export default function CastList() {
                                   <th>生年月日</th>
                                   <th>住所</th>
                                   <th>電話番号</th>
+                                  <th>その他</th>
                                   <th>媒体</th>
                                   <th>紹介者</th>
                                 </tr>
@@ -600,6 +601,7 @@ export default function CastList() {
                                   <td>{cast.birthday}</td>
                                   <td>{cast.address}</td>
                                   <td>{cast.phone_number}</td>
+                                  <td>{cast.remarks}</td>
                                   <td>-</td>
                                   <td>-</td>
                                 </tr>
