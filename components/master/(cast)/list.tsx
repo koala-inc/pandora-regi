@@ -99,7 +99,7 @@ export default function CastList() {
       <Control>
         <Border
           className="my-2 w-full"
-          rounded="border-white"
+          rounded="border-white rounded-md"
           size="p-4 flex flex-col min-h-[100px] overflow-scroll"
           black
         >
@@ -458,10 +458,11 @@ export default function CastList() {
         </Border>
         <Border
           className="my-2 w-full"
-          size="p-4 flex flex-col min-h-[calc(98dvh-240px)] overflow-scroll"
+          rounded="border-white rounded-md"
+          size="p-4 flex flex-col min-h-[calc(98dvh-240px)] max-h-[calc(98dvh-240px)] overflow-scroll"
           black
         >
-          <table className="table table-xs fixed z-10 -mt-[17px] h-[45px] w-[94%] rounded-none bg-neutral-900">
+          <table className="table table-xs fixed z-10 -mt-[16px] h-[45px] w-[94%] rounded-none bg-neutral-900">
             {/* head */}
             <thead>
               <tr className="text-accent">
