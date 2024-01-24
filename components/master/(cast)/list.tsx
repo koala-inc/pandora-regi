@@ -12,7 +12,7 @@ import { searchCast } from "@/gqls/query/cast";
 import useSWR, { preload } from "swr";
 import client from "@/connection";
 import { RequestDocument } from "graphql-request";
-import { createCast } from "@/gqls/mutation/cast";
+import { createCast, updateCast } from "@/gqls/mutation/cast";
 import { useHotkeys } from "react-hotkeys-hook";
 
 const defaultVariables = {
@@ -36,14 +36,17 @@ export default function CastList() {
 
   const [searchForm, setSearchForm] = useState<any>({});
   const [createForm, setCreateForm] = useState<any>({});
+  const [updateForm, setUpdateForm] = useState<any>({});
 
   const searchData = useSWR<any>(searchCast, fetcher);
   const createData = useSWR<any>(createCast, fetcher);
+  const updateData = useSWR<any>(updateCast, fetcher);
 
   const [detail, setDetail] = useState(false);
   const [leave, setLeave] = useState(false);
 
   const [addModal, setAddModal] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false);
 
   const baitais = [
     {
@@ -460,7 +463,13 @@ export default function CastList() {
                           <td>{cast.entry_date}</td>
                           <td>-</td>
                           <th>
-                            <button className="btn btn-ghost btn-xs">
+                            <button
+                              className="btn btn-ghost btn-xs"
+                              onClick={() => {
+                                setUpdateForm(() => cast);
+                                setUpdateModal(true);
+                              }}
+                            >
                               編集
                             </button>
                           </th>
@@ -973,6 +982,268 @@ export default function CastList() {
                   }}
                 >
                   <Button natural>登録</Button>
+                </div>
+              </div>
+            </div>
+          </Border>
+        </Modal>
+      )}
+      {updateModal && (
+        <Modal setModal={setUpdateModal}>
+          <Border className="w-full" size="p-4 flex flex-col" black>
+            <p className="w-full text-left">
+              キャスト編集
+              <small className="ml-5 text-red-600">＊は必須項目です。</small>
+            </p>
+            <div className="flex w-full flex-wrap">
+              <div className="flex w-full flex-wrap">
+                <div className="flex flex-col">
+                  <label className="mt-3 text-xs font-bold text-accent">
+                    ID
+                  </label>
+                  <input
+                    className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                    value={updateForm?.cast_code || ""}
+                    disabled
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="mt-3 text-xs font-bold text-accent">
+                    キャスト名
+                  </label>
+                  <input
+                    className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                    placeholder="源氏名を入力"
+                    onChange={(e) => {
+                      setUpdateForm((upadteForm: any) => {
+                        return {
+                          ...updateForm,
+                          name: e.target.value,
+                        };
+                      });
+                    }}
+                    value={updateForm?.name || ""}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="mt-3 text-xs font-bold text-accent">
+                    本名 <small className="text-red-600">＊</small>
+                  </label>
+                  <input
+                    className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                    placeholder="本名を入力"
+                    onChange={(e) => {
+                      setUpdateForm((updateForm: any) => {
+                        return {
+                          ...updateForm,
+                          real_name: e.target.value,
+                        };
+                      });
+                    }}
+                    value={updateForm?.real_name || ""}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="mt-3 text-xs font-bold text-accent">
+                    フリガナ
+                  </label>
+                  <input
+                    className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                    placeholder="フリガナを入力"
+                    onChange={(e) => {
+                      setUpdateForm((updateForm: any) => {
+                        return {
+                          ...updateForm,
+                          real_name_ruby: e.target.value,
+                        };
+                      });
+                    }}
+                    value={updateForm?.real_name_ruby || ""}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="mt-3 text-xs font-bold text-accent">
+                    入店日
+                  </label>
+                  <input
+                    type="date"
+                    className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                    onChange={(e) => {
+                      setUpdateForm((updateForm: any) => {
+                        return {
+                          ...updateForm,
+                          entry_date: e.target.value,
+                        };
+                      });
+                    }}
+                    value={updateForm?.entry_date || ""}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="mt-3 text-xs font-bold text-accent">
+                    退店日
+                  </label>
+                  <input
+                    type="date"
+                    className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                    onChange={(e) => {
+                      setUpdateForm((updateForm: any) => {
+                        return {
+                          ...updateForm,
+                          leaving_date: e.target.value,
+                        };
+                      });
+                    }}
+                    value={updateForm?.leaving_date || ""}
+                  />
+                </div>
+              </div>
+              <div className="flex w-full flex-wrap">
+                <div className="flex flex-col">
+                  <label className="mt-3 text-xs font-bold text-accent">
+                    生年月日
+                  </label>
+                  <input
+                    type="date"
+                    className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                    onChange={(e) => {
+                      setUpdateForm((updateForm: any) => {
+                        return {
+                          ...updateForm,
+                          birthday: e.target.value,
+                        };
+                      });
+                    }}
+                    value={updateForm?.birthday || ""}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="mt-3 text-xs font-bold text-accent">
+                    住所
+                  </label>
+                  <input
+                    className="mr-2 h-[30px] w-[17rem] rounded-md px-2 text-sm"
+                    placeholder="住所を入力"
+                    onChange={(e) => {
+                      setUpdateForm((updateForm: any) => {
+                        return {
+                          ...updateForm,
+                          address: e.target.value,
+                        };
+                      });
+                    }}
+                    value={updateForm?.address || ""}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="mt-3 text-xs font-bold text-accent">
+                    電話番号
+                  </label>
+                  <input
+                    type="tel"
+                    className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                    placeholder="電話番号を入力"
+                    onChange={(e) => {
+                      setUpdateForm((updateForm: any) => {
+                        return {
+                          ...updateForm,
+                          phone_number: e.target.value,
+                        };
+                      });
+                    }}
+                    value={updateForm?.phone_number || ""}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="mt-3 text-xs font-bold text-accent">
+                    その他
+                  </label>
+                  <input
+                    className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                    placeholder="備考を入力"
+                    onChange={(e) => {
+                      setUpdateForm((updateForm: any) => {
+                        return {
+                          ...updateForm,
+                          remarks: e.target.value,
+                        };
+                      });
+                    }}
+                    value={updateForm?.remarks || ""}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="mt-3 text-xs font-bold text-accent">
+                    媒体
+                  </label>
+                  <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
+                    <option value="" selected disabled>
+                      媒体を選択
+                    </option>
+                    {baitais.map((pref) => {
+                      return (
+                        <option key={pref.prefCode} value={pref.prefCode}>
+                          {pref.prefName}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  {errors.firstName?.message && (
+                    <p>{errors.firstName?.message}</p>
+                  )}
+                </div>
+                <div className="flex flex-col">
+                  <label className="mt-3 text-xs font-bold text-accent">
+                    紹介者
+                  </label>
+                  <select className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm">
+                    <option value="" selected disabled>
+                      紹介者を選択
+                    </option>
+                    {syokai.map((pref) => {
+                      return (
+                        <option key={pref.prefCode} value={pref.prefCode}>
+                          {pref.prefName}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+
+                <div
+                  className="ml-auto mr-4 flex flex-col justify-end"
+                  onClick={() => {
+                    Object.keys(updateForm).map((key: any) => {
+                      if (updateForm[key] == null) {
+                        delete updateForm[key];
+                      }
+                    });
+                    client
+                      .request(updateCast, {
+                        ...updateForm,
+                        ...defaultVariables,
+                      })
+                      .then(() => {
+                        setUpdateForm(() => {});
+                        setSearchForm(() => {});
+                        searchData
+                          .mutate(
+                            () =>
+                              client.request(searchCast, {
+                                ...defaultVariables,
+                              }),
+                            {
+                              populateCache: true,
+                              revalidate: false,
+                            }
+                          )
+                          .then(() => {
+                            setUpdateModal(false);
+                          });
+                      });
+                  }}
+                >
+                  <Button natural>更新</Button>
                 </div>
               </div>
             </div>
