@@ -462,7 +462,7 @@ export default function CastList() {
                           <td>{0}円</td>
                           <td>{0}円</td>
                           <td>{cast.entry_date}</td>
-                          <td>-</td>
+                          <td>{cast.leaving_date}</td>
                           <th>
                             <button
                               className="btn btn-ghost btn-xs"
