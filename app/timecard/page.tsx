@@ -12,10 +12,12 @@ import HomeButton from "@/components/templates/homeButton";
 import SubBorder from "@/components/templates/subBorder";
 import client from "@/connection";
 import { searchCast } from "@/gqls/query/cast";
+import { format } from "date-fns";
 import { RequestDocument } from "graphql-request";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSWR, { preload } from "swr";
+import { ja } from "date-fns/locale/ja";
 
 function Line({ ml }: { ml?: string }) {
   return (
@@ -55,16 +57,45 @@ export default function TimeCard() {
 
   const searchData = useSWR<any>(searchCast, fetcher);
 
+  const [datetimeH, setDatetimeH] = useState(
+    format(new Date(), "HH", { locale: ja })
+  );
+  const [datetimeM, setDatetimeM] = useState(
+    format(new Date(), "mm", { locale: ja })
+  );
+
   return (
     <main className="relative h-full w-full">
       <Background />
       <Card>
         <div className="flex h-full w-[340px] flex-col font-bold">
           <p>キャスト　スタッフ</p>
-          <div className="my-3 flex">
-            <input type="number" className="w-[60px]" />:
-            <input type="number" className="w-[60px]" />
-            <Button className="min-w-[8rem]" natural>
+          <div className="my-3 flex rounded-md border-2 border-white bg-black p-3">
+            <input
+              type="text"
+              className="flex w-[50px] items-center justify-center text-center"
+              value={datetimeH}
+              disabled
+            />
+            <div className="flex w-[10px] items-center justify-center text-center">
+              :
+            </div>
+            <input
+              type="text"
+              className="flex w-[50px] items-center justify-center text-center"
+              value={datetimeM}
+              disabled
+            />
+            <Button
+              className="ml-2 min-w-[8rem]"
+              natural
+              onClick={() => {
+                alert();
+                setDatetimeH(format(new Date(), "HH", { locale: ja }));
+                setDatetimeM(format(new Date(), "mm", { locale: ja }));
+                console.log(datetimeH + datetimeM);
+              }}
+            >
               現在時刻
             </Button>
           </div>
@@ -79,47 +110,47 @@ export default function TimeCard() {
               他店舗ヘルプ
             </Button>
           </div>
-          <div className="flex w-full">
+          <div className="my-2 flex w-full">
             <Line />
           </div>
-          <div className="flex">
+          <div className="flex justify-around">
             <Button natural>
-              <input type="button" value="あ" />
+              <input type="button" value="あ" className="p-1" />
             </Button>
             <Button natural>
-              <input type="button" value="か" />
+              <input type="button" value="か" className="p-1" />
             </Button>
             <Button natural>
-              <input type="button" value="さ" />
+              <input type="button" value="さ" className="p-1" />
             </Button>
             <Button natural>
-              <input type="button" value="た" />
+              <input type="button" value="た" className="p-1" />
             </Button>
             <Button natural>
-              <input type="button" value="な" />
-            </Button>
-          </div>
-          <div className="flex">
-            <Button natural>
-              <input type="button" value="は" />
-            </Button>
-            <Button natural>
-              <input type="button" value="ま" />
-            </Button>
-            <Button natural>
-              <input type="button" value="や" />
-            </Button>
-            <Button natural>
-              <input type="button" value="ら" />
-            </Button>
-            <Button natural>
-              <input type="button" value="わ" />
+              <input type="button" value="な" className="p-1" />
             </Button>
           </div>
-          <div className="flex w-full">
+          <div className="flex justify-around">
+            <Button natural>
+              <input type="button" value="は" className="p-1" />
+            </Button>
+            <Button natural>
+              <input type="button" value="ま" className="p-1" />
+            </Button>
+            <Button natural>
+              <input type="button" value="や" className="p-1" />
+            </Button>
+            <Button natural>
+              <input type="button" value="ら" className="p-1" />
+            </Button>
+            <Button natural>
+              <input type="button" value="わ" className="p-1" />
+            </Button>
+          </div>
+          <div className="my-2 flex w-full">
             <Line />
           </div>
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap justify-center">
             {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
               (cast: any) => {
                 if (cast.leaving_date == null) {
