@@ -396,7 +396,7 @@ export default function TimeCard() {
               size="p-4 flex flex-col justify-start min-h-[calc(98dvh-400px)] max-h-[calc(98dvh-400px)] overflow-scroll"
               black
             >
-              <table className="table-xs mt-2 flex min-h-[500px] flex-col justify-start">
+              <table className="table table-xs mt-2 min-h-[500px] flex-col justify-start">
                 {/* head */}
                 <thead>
                   <tr>
