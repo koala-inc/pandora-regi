@@ -463,7 +463,7 @@ export default function TimeCard() {
                     <th className="min-w-[4em] text-center text-lg"> - </th>
                     <th className="flex min-w-[4em] items-center justify-center text-center text-lg">
                       退勤
-                      <Button natural className={"ml-4"}>
+                      <Button natural className={"ml-6"}>
                         退勤取消
                       </Button>
                     </th>
