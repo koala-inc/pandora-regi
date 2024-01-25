@@ -64,12 +64,39 @@ export default function TimeCard() {
     format(new Date(), "mm", { locale: ja })
   );
 
+  const [activeTab, setActiveTab] = useState(0);
+
   return (
     <main className="relative h-full w-full">
       <Background />
       <Card>
         <div className="flex h-full w-[340px] flex-col font-bold">
-          <p>キャスト　スタッフ</p>
+          <div className="">
+            <a
+              className={`tab-lg tab ml-[-4px] mr-2 w-[8em] rounded-t-xl p-0 ${
+                activeTab == 0
+                  ? "tab-active bg-primary text-white"
+                  : "tab-lifted bg-secondary text-black"
+              }`}
+              onClick={() => {
+                setActiveTab((activeTab) => 0);
+              }}
+            >
+              キャスト
+            </a>
+            <a
+              className={`tab-lg tab ml-[-4px] mr-2 w-[8em] rounded-t-xl p-0 ${
+                activeTab == 1
+                  ? "tab-active bg-primary text-white"
+                  : "tab-lifted bg-secondary text-black"
+              }`}
+              onClick={() => {
+                setActiveTab((activeTab) => 1);
+              }}
+            >
+              スタッフ
+            </a>
+          </div>
           <div className="my-3 flex rounded-md border-2 border-white bg-black p-3">
             <input
               type="text"
@@ -99,7 +126,7 @@ export default function TimeCard() {
               現在時刻
             </Button>
           </div>
-          <div className="mb-3 flex">
+          <div className="mb-3 flex justify-around">
             <Button className="min-w-[6rem]" natural>
               在籍
             </Button>
