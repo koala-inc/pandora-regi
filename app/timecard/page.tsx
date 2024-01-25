@@ -128,7 +128,7 @@ export default function TimeCard() {
                       {cast.cast_code != 0 && (
                         <span
                           className={
-                            "m-2 flex max-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-xs leading-4 tracking-wider"
+                            "mx-1 my-2 flex w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 text-xs leading-4 tracking-wider"
                           }
                         >
                           {cast.name}
