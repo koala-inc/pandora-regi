@@ -43,14 +43,32 @@ function ContentHeader({
   activeMenu: number;
 }) {
   if (activeMenu != 0) {
-    return <SubBorder size="h-[220px] w-[90%] px-4 py-2">{children}</SubBorder>;
+    return (
+      <SubBorder size="mt-[1.5px] h-[215px] w-[90%] px-4 py-2">
+        {children}
+      </SubBorder>
+    );
   } else {
-    return <SubBorder size="h-[180px] w-[90%] px-4 py-2">{children}</SubBorder>;
+    return (
+      <SubBorder size="mt-[1.5px] h-[175px] w-[90%] px-4 py-2">
+        {children}
+      </SubBorder>
+    );
   }
 }
 
-function Content({ children }: { children: any }) {
-  return <Border size="h-[582.5px] w-full px-4 py-2">{children}</Border>;
+function Content({
+  children,
+  activeMenu,
+}: {
+  children: any;
+  activeMenu: number;
+}) {
+  if (activeMenu != 0) {
+    return <Border size="h-[592px] w-full px-4 py-2">{children}</Border>;
+  } else {
+    return <Border size="h-[632px] w-full px-4 py-2">{children}</Border>;
+  }
 }
 
 const defaultVariables = {
@@ -389,7 +407,7 @@ export default function TimeCard() {
           </ContentHeader>
         </div>
         <div className="">
-          <Content>
+          <Content activeMenu={activeMenu}>
             <Border
               className="my-2 w-full"
               rounded="border-white rounded-md !border-[1px]"
