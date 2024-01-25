@@ -10,7 +10,12 @@ import Button from "@/components/templates/button";
 import Card from "@/components/templates/card";
 import HomeButton from "@/components/templates/homeButton";
 import SubBorder from "@/components/templates/subBorder";
+import client from "@/connection";
+import { searchCast } from "@/gqls/query/cast";
+import { RequestDocument } from "graphql-request";
 import Image from "next/image";
+import { useState } from "react";
+import useSWR, { preload } from "swr";
 
 function Line({ ml }: { ml?: string }) {
   return (
@@ -36,7 +41,20 @@ function Content({ children }: { children: any }) {
   return <Border size="h-[582.5px] w-full px-4 py-2">{children}</Border>;
 }
 
+const defaultVariables = {
+  store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
+};
+
 export default function TimeCard() {
+  const fetcher = (q: RequestDocument) =>
+    client.request(q, { ...defaultVariables });
+
+  preload(searchCast, fetcher);
+
+  const [searchForm, setSearchForm] = useState<any>({});
+
+  const searchData = useSWR<any>(searchCast, fetcher);
+
   return (
     <main className="relative h-full w-full">
       <Background />
@@ -101,28 +119,26 @@ export default function TimeCard() {
           <div className="flex w-full">
             <Line />
           </div>
-          <div className="flex">
-            <span
-              className={
-                "m-4 flex max-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-xs leading-4 tracking-wider"
+          <div className="flex flex-wrap">
+            {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
+              (cast: any) => {
+                if (cast.leaving_date == null) {
+                  return (
+                    <>
+                      {cast.cast_code != 0 && (
+                        <span
+                          className={
+                            "m-2 flex max-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-xs leading-4 tracking-wider"
+                          }
+                        >
+                          {cast.name}
+                        </span>
+                      )}
+                    </>
+                  );
+                }
               }
-            >
-              キャストA
-            </span>
-            <span
-              className={
-                "m-4 flex max-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-xs leading-4 tracking-wider"
-              }
-            >
-              キャストB
-            </span>
-            <span
-              className={
-                "m-4 flex max-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-xs leading-4 tracking-wider"
-              }
-            >
-              キャストC
-            </span>
+            )}
           </div>
         </div>
       </Card>

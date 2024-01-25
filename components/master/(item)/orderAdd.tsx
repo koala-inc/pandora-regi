@@ -77,6 +77,7 @@ export default function OrderAdd() {
       <Control>
         <Border
           className="my-2 w-full"
+          rounded="rounded-md border-white"
           size="p-4 flex flex-col min-h-[170px] overflow-scroll"
           black
         >
@@ -147,6 +148,7 @@ export default function OrderAdd() {
         </Border>
         <Border
           className="my-2 w-full"
+          rounded="rounded-md border-white"
           size="p-4 flex flex-col min-h-[calc(98dvh-240px)] overflow-scroll"
           black
         >
