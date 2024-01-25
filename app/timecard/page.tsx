@@ -328,7 +328,7 @@ export default function TimeCard() {
                 >
                   <Border
                     rounded="rounded-full"
-                    size="h-[32px] w-[32px] p-[4px] bg-[#cc8888]"
+                    size="h-[32px] w-[32px] p-[4px] bg-reset"
                   >
                     <Image
                       src={"/assets/reset.svg"}
