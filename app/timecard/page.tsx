@@ -279,18 +279,32 @@ export default function TimeCard() {
                 <Button natural className={"mx-2 h-full w-[6em]"}>
                   貸出
                 </Button>
-                <input
-                  type="text"
-                  className="ml-4 mr-3 h-[40px] rounded-md border border-white"
-                />
-                <Button natural className={"h-full"}>
-                  検索
-                </Button>
+                <div className="flex flex-col">
+                  <p className="mb-1 ml-[14px] text-xs font-bold text-accent">
+                    ワード検索
+                  </p>
+                  <input
+                    type="text"
+                    className="ml-4 mr-3 h-[40px] rounded-md border border-white"
+                  />
+                </div>
+                <Border
+                  rounded="rounded-full"
+                  size="h-[45px] w-[45px] p-[8px] bg-[#00698a]"
+                >
+                  <Image
+                    src={"/assets/search.svg"}
+                    width={26}
+                    height={26}
+                    className="!h-full !w-full"
+                    alt=""
+                  />
+                </Border>
               </div>
               <div className="flex">
                 <Button
                   natural
-                  className={"mx-2 h-full"}
+                  className={"mx-2 h-full w-[6em]"}
                   onClick={() => {
                     setActiveMenu((activeMenu) => (activeMenu != 1 ? 1 : 0));
                   }}
@@ -299,7 +313,7 @@ export default function TimeCard() {
                 </Button>
                 <Button
                   natural
-                  className={"mx-2 h-full"}
+                  className={"mx-2 h-full w-[6em]"}
                   onClick={() => {
                     setActiveMenu((activeMenu) => (activeMenu != 2 ? 2 : 0));
                   }}
@@ -308,7 +322,7 @@ export default function TimeCard() {
                 </Button>
                 <Button
                   natural
-                  className={"mx-2 h-full"}
+                  className={"mx-2 h-full w-[6em]"}
                   onClick={() => {
                     setActiveMenu(0);
                   }}
