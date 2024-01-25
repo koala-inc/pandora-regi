@@ -11,13 +11,17 @@ import Card from "@/components/templates/card";
 import HomeButton from "@/components/templates/homeButton";
 import SubBorder from "@/components/templates/subBorder";
 import client from "@/connection";
-import { searchCast } from "@/gqls/query/cast";
+import { searchAttendanceManagementCast, searchCast } from "@/gqls/query/cast";
 import { format } from "date-fns";
 import { RequestDocument } from "graphql-request";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import useSWR, { preload } from "swr";
 import { ja } from "date-fns/locale/ja";
+import {
+  createAttendanceManagementCast,
+  updateAttendanceManagementCast,
+} from "@/gqls/mutation/cast";
 
 function Line({ ml }: { ml?: string }) {
   return (
@@ -84,6 +88,7 @@ export default function TimeCard() {
   const [searchForm, setSearchForm] = useState<any>({});
 
   const searchData = useSWR<any>(searchCast, fetcher);
+  const searchAData = useSWR<any>(searchAttendanceManagementCast, fetcher);
 
   const [datetimeH, setDatetimeH] = useState(
     format(new Date(), "HH", { locale: ja })
@@ -94,6 +99,12 @@ export default function TimeCard() {
 
   const [activeTab, setActiveTab] = useState(0);
   const [activeMenu, setActiveMenu] = useState(0);
+
+  const [createForm, setCreateForm] = useState<any>({});
+  const [updateForm, setUpdateForm] = useState<any>({});
+
+  const createData = useSWR<any>(createAttendanceManagementCast, fetcher);
+  const updateData = useSWR<any>(updateAttendanceManagementCast, fetcher);
 
   return (
     <main className="relative h-full w-full">
@@ -249,13 +260,37 @@ export default function TimeCard() {
                   return (
                     <>
                       {cast.cast_code != 0 && (
-                        <span
+                        <div
                           className={
                             "mx-1 my-2 flex w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 text-xs leading-4 tracking-wider"
                           }
+                          onClick={() => {
+                            client
+                              .request(createAttendanceManagementCast, {
+                                cast_id: cast.id,
+                                working_date: new Date().toDateString(),
+                                attendance_status: 0,
+                                ...defaultVariables,
+                              })
+                              .then(() => {
+                                searchAData.mutate(
+                                  () =>
+                                    client.request(
+                                      searchAttendanceManagementCast,
+                                      {
+                                        ...defaultVariables,
+                                      }
+                                    ),
+                                  {
+                                    populateCache: true,
+                                    revalidate: false,
+                                  }
+                                );
+                              });
+                          }}
                         >
                           {cast.name}
-                        </span>
+                        </div>
                       )}
                     </>
                   );
@@ -463,35 +498,93 @@ export default function TimeCard() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th className="min-w-[2em] text-center text-lg">000</th>
-                    <th className="min-w-[2em] text-center text-lg"> - </th>
-                    <th className="min-w-[4em] text-center text-lg">名前</th>
-                    <th className="min-w-[4em] text-center text-lg">在籍</th>
-                    <th className="min-w-[3.5em] text-center text-lg opacity-60">
-                      20:00
-                    </th>
-                    <th className="min-w-[3.5em] text-center text-lg opacity-60">
-                      20:00
-                    </th>
-                    <th className="min-w-[3.5em] text-center text-lg">20:00</th>
-                    <th className="min-w-[3.5em] text-center text-lg">21:00</th>
-                    <th className="min-w-[2em] text-center text-lg">×</th>
-                    <th className="min-w-[3.5em] text-center text-lg">15分</th>
-                    <th className="min-w-[4em] text-center text-lg"> - </th>
-                    <th className="flex min-w-[4em] items-center justify-center text-center text-lg">
-                      退勤
-                      <Button natural className={"ml-8"}>
-                        退勤取消
-                      </Button>
-                    </th>
-                    <th className="min-w-[4em] text-center text-lg">
-                      <input
-                        type="checkbox"
-                        className="mt-[8px] h-[20px] w-[20px]"
-                      />
-                    </th>
-                  </tr>
+                  {searchAData?.data?.attendanceManagementCast[0]?.store_attendance_management_cast[0]?.attendance_management_cast?.map(
+                    (amc: any, index: any) => {
+                      {
+                        return (
+                          <tr key={index}>
+                            <th className="min-w-[2em] text-center text-lg">
+                              {
+                                searchData?.data?.cast[0]?.store_cast[0]?.cast[
+                                  amc.cast_id
+                                ].cast_code
+                              }
+                            </th>
+                            <th className="min-w-[2em] text-center text-lg">
+                              -
+                            </th>
+                            <th className="min-w-[4em] text-center text-lg">
+                              {
+                                searchData?.data?.cast[0]?.store_cast[0]?.cast[
+                                  amc.cast_id
+                                ].name
+                              }
+                            </th>
+                            <th className="min-w-[4em] text-center text-lg">
+                              在籍
+                            </th>
+                            <th className="min-w-[3.5em] text-center text-lg opacity-60">
+                              {format(
+                                amc.work_schedule_date_time_start,
+                                "HH:mm"
+                              )}
+                            </th>
+                            <th className="min-w-[3.5em] text-center text-lg opacity-60">
+                              {format(amc.work_schedule_date_time_end, "HH:mm")}
+                            </th>
+                            <th className="min-w-[3.5em] text-center text-lg">
+                              {format(amc.work_date_time_start, "HH:mm")}
+                            </th>
+                            <th className="min-w-[3.5em] text-center text-lg">
+                              {format(amc.work_date_time_end, "HH:mm")}
+                            </th>
+                            <th className="min-w-[2em] text-center text-lg">
+                              ×
+                            </th>
+                            <th className="min-w-[3.5em] text-center text-lg">
+                              <input
+                                type="text"
+                                value="0"
+                                className="w-[2em]"
+                              />
+                              分
+                            </th>
+                            <th className="min-w-[4em] text-center text-lg">
+                              -
+                            </th>
+                            <th className="flex min-w-[4em] items-center justify-center text-center text-lg">
+                              {amc.attendance_status == 0
+                                ? ""
+                                : amc.attendance_status == 1
+                                ? "来店"
+                                : amc.attendance_status == 2
+                                ? "出勤"
+                                : amc.attendance_status == 3
+                                ? "退勤"
+                                : ""}
+                              <Button natural className={"ml-8"}>
+                                {amc.attendance_status == 0
+                                  ? "来店"
+                                  : amc.attendance_status == 1
+                                  ? "出勤"
+                                  : amc.attendance_status == 2
+                                  ? "退勤"
+                                  : amc.attendance_status == 3
+                                  ? "退勤取り消し"
+                                  : ""}
+                              </Button>
+                            </th>
+                            <th className="min-w-[4em] text-center text-lg">
+                              <input
+                                type="checkbox"
+                                className="mt-[8px] h-[20px] w-[20px]"
+                              />
+                            </th>
+                          </tr>
+                        );
+                      }
+                    }
+                  )}
                 </tbody>
               </table>
             </Border>
