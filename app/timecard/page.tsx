@@ -393,10 +393,10 @@ export default function TimeCard() {
             <Border
               className="my-2 w-full"
               rounded="border-white rounded-md"
-              size="p-4 flex flex-col justify-start min-h-[calc(98dvh-400px)] max-h-[calc(98dvh-400px)] overflow-scroll"
+              size="p-4 !items-start min-h-[calc(98dvh-400px)] max-h-[calc(98dvh-400px)] overflow-scroll"
               black
             >
-              <table className="table table-xs mt-2 min-h-[500px] flex-col justify-start">
+              <table className="table table-xs mt-2">
                 {/* head */}
                 <thead>
                   <tr>
