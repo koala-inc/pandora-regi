@@ -97,7 +97,7 @@ export default function TimeCard() {
               スタッフ
             </a>
           </div>
-          <div className="my-3 flex justify-center rounded-md border-2 border-white bg-gray-700 px-2 py-6">
+          <div className="my-6 flex justify-center rounded-md border-2 border-white bg-gray-800 px-2 py-6">
             <input
               type="text"
               className="flex h-[40px] w-[50px] items-center justify-center text-center text-4xl"
@@ -137,7 +137,7 @@ export default function TimeCard() {
               他店舗ヘルプ
             </Button>
           </div>
-          <div className="my-2 flex w-full">
+          <div className="my-4 flex w-full">
             <Line />
           </div>
           <div className="flex justify-around">
@@ -214,7 +214,7 @@ export default function TimeCard() {
               わ
             </div>
           </div>
-          <div className="my-2 flex w-full">
+          <div className="my-4 flex w-full">
             <Line />
           </div>
           <div className="flex flex-wrap justify-center">
