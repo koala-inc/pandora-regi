@@ -247,8 +247,8 @@ export default function TimeCard() {
           </div>
         </div>
       </Card>
-      <div className="absolute left-[410px] top-1/2 z-20 min-h-[745px] min-w-[calc(100dvw-450px)] -translate-y-1/2">
-        <div>
+      <div className="absolute left-[410px] top-1/2 z-20 min-h-[745px] min-w-[calc(100dvw-425px)] -translate-y-1/2">
+        <div className="w-[calc(100%+50px)]">
           <ContentHeader activeMenu={activeMenu}>
             <div className="flex flex-col">
               <div className="mb-3 flex items-end">
@@ -364,7 +364,7 @@ export default function TimeCard() {
             </div>
           </ContentHeader>
         </div>
-        <div>
+        <div className="">
           <Content>
             <Border
               className="my-2 w-full"
