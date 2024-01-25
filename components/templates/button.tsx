@@ -49,10 +49,10 @@ export default function Button({
         naturalText +
         bgText
       }
-      onClick={() => onClick}
+      onClick={() => (onClick ? onClick() : "")}
     >
       <div className="rounded-md border-4 border-secondary bg-secondary">
-        <span
+        <div
           className={
             "flex tracking-wider leading-4 items-center justify-center rounded-md border border-black px-4 py-1 text-xs " +
             disabledCss +
@@ -61,7 +61,7 @@ export default function Button({
           }
         >
           {children}
-        </span>
+        </div>
       </div>
     </div>
   );

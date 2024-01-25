@@ -35,8 +35,18 @@ function Line({ ml }: { ml?: string }) {
   );
 }
 
-function ContentHeader({ children }: { children: any }) {
-  return <SubBorder size="h-[147.5px] w-[90%] px-4 py-2">{children}</SubBorder>;
+function ContentHeader({
+  children,
+  activeMenu,
+}: {
+  children: any;
+  activeMenu: number;
+}) {
+  if (activeMenu != 0) {
+    return <SubBorder size="h-[220px] w-[90%] px-4 py-2">{children}</SubBorder>;
+  } else {
+    return <SubBorder size="h-[180px] w-[90%] px-4 py-2">{children}</SubBorder>;
+  }
 }
 
 function Content({ children }: { children: any }) {
@@ -65,6 +75,7 @@ export default function TimeCard() {
   );
 
   const [activeTab, setActiveTab] = useState(0);
+  const [activeMenu, setActiveMenu] = useState(0);
 
   return (
     <main className="relative h-full w-full">
@@ -102,7 +113,6 @@ export default function TimeCard() {
               type="text"
               className="flex h-[40px] w-[50px] items-center justify-center text-center text-4xl"
               value={datetimeH}
-              disabled
             />
             <div className="flex h-[35px] w-[15px] items-center justify-center text-center text-4xl">
               :
@@ -111,16 +121,13 @@ export default function TimeCard() {
               type="text"
               className="flex h-[40px] w-[50px] items-center justify-center text-center text-4xl"
               value={datetimeM}
-              disabled
             />
             <Button
               className="ml-6 min-w-[6rem]"
               natural
               onClick={() => {
-                alert();
                 setDatetimeH(format(new Date(), "HH", { locale: ja }));
                 setDatetimeM(format(new Date(), "mm", { locale: ja }));
-                console.log(datetimeH + datetimeM);
               }}
             >
               現在時刻
@@ -242,79 +249,118 @@ export default function TimeCard() {
       </Card>
       <div className="absolute left-[410px] top-1/2 z-20 min-h-[745px] min-w-[calc(100dvw-450px)] -translate-y-1/2">
         <div>
-          <ContentHeader>
+          <ContentHeader activeMenu={activeMenu}>
             <div className="flex flex-col">
-              <div className="flex">
-                <div className="mx-2 flex flex-col">
-                  <p className="text-accent">予定</p>
-                  <p className="font-bold text-white">0</p>
+              <div className="mb-3 flex items-end">
+                <div className="flex rounded-md border border-white bg-black p-2">
+                  <div className="mx-2 flex w-[5em] flex-col">
+                    <p className="text-center text-accent">予定</p>
+                    <p className="text-center font-bold text-white">0</p>
+                  </div>
+                  <div className="mx-2 flex w-[5em] flex-col">
+                    <p className="text-center text-accent">実動</p>
+                    <p className="text-center font-bold text-white">0</p>
+                  </div>
+                  <div className="mx-2 flex w-[5em] flex-col">
+                    <p className="text-center text-accent">未出勤</p>
+                    <p className="text-center font-bold text-white">0</p>
+                  </div>
+                  <div className="mx-2 flex w-[5em] flex-col">
+                    <p className="text-center text-accent">未処理</p>
+                    <p className="text-center font-bold text-white">0</p>
+                  </div>
                 </div>
-                <div className="mx-2 flex flex-col">
-                  <p className="text-accent">実動</p>
-                  <p className="font-bold text-white">0</p>
-                </div>
-                <div className="mx-2 flex flex-col">
-                  <p className="text-accent">未出勤</p>
-                  <p className="font-bold text-white">0</p>
-                </div>
-                <div className="mx-2 flex flex-col">
-                  <p className="text-accent">未処理</p>
-                  <p className="font-bold text-white">0</p>
-                </div>
-                <Button natural className={"mx-2 h-full"}>
+                <Button natural className={"mx-2 ml-4 h-full w-[6em]"}>
                   出勤固定
                 </Button>
-                <Button natural className={"mx-2 h-full"}>
+                <Button natural className={"mx-2 h-full w-[6em]"}>
                   中抜け
                 </Button>
-                <Button natural className={"mx-2 h-full"}>
+                <Button natural className={"mx-2 h-full w-[6em]"}>
                   貸出
                 </Button>
-                <input type="text" className="h-[40px]" />
+                <input
+                  type="text"
+                  className="ml-4 mr-3 h-[40px] rounded-md border border-white"
+                />
                 <Button natural className={"h-full"}>
                   検索
                 </Button>
               </div>
               <div className="flex">
-                <div>絞り込み</div>
-                <Button natural className={"mx-2 h-full"}>
-                  就業中
+                <Button
+                  natural
+                  className={"mx-2 h-full"}
+                  onClick={() => {
+                    setActiveMenu((activeMenu) => (activeMenu != 1 ? 1 : 0));
+                  }}
+                >
+                  絞り込み
                 </Button>
-                <Button natural className={"mx-2 h-full"}>
-                  退勤済
+                <Button
+                  natural
+                  className={"mx-2 h-full"}
+                  onClick={() => {
+                    setActiveMenu((activeMenu) => (activeMenu != 2 ? 2 : 0));
+                  }}
+                >
+                  ソート
                 </Button>
-                <Button natural className={"mx-2 h-full"}>
-                  未処理
-                </Button>
-                <Button natural className={"mx-2 h-full"}>
-                  在籍
-                </Button>
-                <Button natural className={"mx-2 h-full"}>
-                  体入/ヘルプ
-                </Button>
-                <div>ソート</div>
-                <Button natural className={"mx-2 h-full"}>
-                  指名
-                </Button>
-                <Button natural className={"mx-2 h-full"}>
-                  50音
-                </Button>
-                <Button natural className={"mx-2 h-full"}>
-                  勤怠
-                </Button>
-                <Button natural className={"mx-2 h-full"}>
-                  遅刻
-                </Button>
-                <Button natural className={"mx-2 h-full"}>
-                  貸出
-                </Button>
-                <Button natural className={"mx-2 h-full"}>
-                  担当
-                </Button>
-                <Button natural className={"h-full"}>
+                <Button
+                  natural
+                  className={"mx-2 h-full"}
+                  onClick={() => {
+                    setActiveMenu(0);
+                  }}
+                >
                   リセット
                 </Button>
               </div>
+              {activeMenu != 0 && (
+                <div className="mt-2 flex w-[73%] justify-center rounded-md border border-white bg-black p-2">
+                  {activeMenu == 1 && (
+                    <>
+                      <Button natural className={"mx-2 h-full w-[8em]"}>
+                        就業中
+                      </Button>
+                      <Button natural className={"mx-2 h-full w-[8em]"}>
+                        退勤済
+                      </Button>
+                      <Button natural className={"mx-2 h-full w-[8em]"}>
+                        未処理
+                      </Button>
+                      <Button natural className={"mx-2 h-full w-[8em]"}>
+                        在籍
+                      </Button>
+                      <Button natural className={"mx-2 h-full w-[8em]"}>
+                        体入/ヘルプ
+                      </Button>
+                    </>
+                  )}
+                  {activeMenu == 2 && (
+                    <>
+                      <Button natural className={"mx-2 h-full w-[8em]"}>
+                        指名
+                      </Button>
+                      <Button natural className={"mx-2 h-full w-[8em]"}>
+                        50音
+                      </Button>
+                      <Button natural className={"mx-2 h-full w-[8em]"}>
+                        勤怠
+                      </Button>
+                      <Button natural className={"mx-2 h-full w-[8em]"}>
+                        遅刻
+                      </Button>
+                      <Button natural className={"mx-2 h-full w-[8em]"}>
+                        貸出
+                      </Button>
+                      <Button natural className={"mx-2 h-full w-[8em]"}>
+                        担当
+                      </Button>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
           </ContentHeader>
         </div>
