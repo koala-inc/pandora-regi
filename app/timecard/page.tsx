@@ -70,12 +70,12 @@ export default function TimeCard() {
     <main className="relative h-full w-full">
       <Background />
       <Card>
-        <div className="flex h-full w-[340px] flex-col font-bold">
-          <div className="">
+        <div className="relative mt-[30px] flex h-full w-[360px] flex-col rounded-md rounded-tl-none border border-white bg-black p-4 py-0 font-bold">
+          <div className="absolute left-[3px] top-[-32px]">
             <a
-              className={`tab-lg tab ml-[-4px] mr-2 w-[8em] rounded-t-xl p-0 ${
+              className={`tab-lg tab ml-[-4px] mr-2 w-[8em] rounded-t-xl border-[1.3px] border-b-0 !border-white p-0 !opacity-100 ${
                 activeTab == 0
-                  ? "tab-active bg-primary text-white"
+                  ? "tab-active bg-black text-white"
                   : "tab-lifted bg-secondary text-black"
               }`}
               onClick={() => {
@@ -85,9 +85,9 @@ export default function TimeCard() {
               キャスト
             </a>
             <a
-              className={`tab-lg tab ml-[-4px] mr-2 w-[8em] rounded-t-xl p-0 ${
+              className={`tab-lg tab ml-[-4px] mr-2 w-[8em] rounded-t-xl border-[1.3px] border-b-0 !border-white p-0 !opacity-100 ${
                 activeTab == 1
-                  ? "tab-active bg-primary text-white"
+                  ? "tab-active bg-black text-white"
                   : "tab-lifted bg-secondary text-black"
               }`}
               onClick={() => {
@@ -97,24 +97,24 @@ export default function TimeCard() {
               スタッフ
             </a>
           </div>
-          <div className="my-3 flex rounded-md border-2 border-white bg-black p-3">
+          <div className="my-3 flex justify-center rounded-md border-2 border-white bg-gray-700 px-2 py-6">
             <input
               type="text"
-              className="flex w-[50px] items-center justify-center text-center"
+              className="flex h-[40px] w-[50px] items-center justify-center text-center text-4xl"
               value={datetimeH}
               disabled
             />
-            <div className="flex w-[10px] items-center justify-center text-center">
+            <div className="flex h-[35px] w-[15px] items-center justify-center text-center text-4xl">
               :
             </div>
             <input
               type="text"
-              className="flex w-[50px] items-center justify-center text-center"
+              className="flex h-[40px] w-[50px] items-center justify-center text-center text-4xl"
               value={datetimeM}
               disabled
             />
             <Button
-              className="ml-2 min-w-[8rem]"
+              className="ml-6 min-w-[6rem]"
               natural
               onClick={() => {
                 alert();
@@ -141,38 +141,78 @@ export default function TimeCard() {
             <Line />
           </div>
           <div className="flex justify-around">
-            <Button natural>
-              <input type="button" value="あ" className="p-1" />
-            </Button>
-            <Button natural>
-              <input type="button" value="か" className="p-1" />
-            </Button>
-            <Button natural>
-              <input type="button" value="さ" className="p-1" />
-            </Button>
-            <Button natural>
-              <input type="button" value="た" className="p-1" />
-            </Button>
-            <Button natural>
-              <input type="button" value="な" className="p-1" />
-            </Button>
+            <div
+              className={
+                "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+              }
+            >
+              あ
+            </div>
+            <div
+              className={
+                "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+              }
+            >
+              か
+            </div>
+            <div
+              className={
+                "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+              }
+            >
+              さ
+            </div>
+            <div
+              className={
+                "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+              }
+            >
+              た
+            </div>
+            <div
+              className={
+                "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+              }
+            >
+              な
+            </div>
           </div>
-          <div className="flex justify-around">
-            <Button natural>
-              <input type="button" value="は" className="p-1" />
-            </Button>
-            <Button natural>
-              <input type="button" value="ま" className="p-1" />
-            </Button>
-            <Button natural>
-              <input type="button" value="や" className="p-1" />
-            </Button>
-            <Button natural>
-              <input type="button" value="ら" className="p-1" />
-            </Button>
-            <Button natural>
-              <input type="button" value="わ" className="p-1" />
-            </Button>
+          <div className="mt-2 flex justify-around">
+            <div
+              className={
+                "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+              }
+            >
+              は
+            </div>
+            <div
+              className={
+                "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+              }
+            >
+              ま
+            </div>
+            <div
+              className={
+                "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+              }
+            >
+              や
+            </div>
+            <div
+              className={
+                "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+              }
+            >
+              ら
+            </div>
+            <div
+              className={
+                "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+              }
+            >
+              わ
+            </div>
           </div>
           <div className="my-2 flex w-full">
             <Line />

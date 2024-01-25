@@ -7,7 +7,7 @@ import useIsFooterGlobal from "@/globalstates/isFooter";
 
 function Content({ children }: { children: any }) {
   return (
-    <Border size="min-h-[745px] h-[95dvh] max-h-[820px] px-4 py-6">
+    <Border size="min-h-[745px] h-[95dvh] max-h-[820px] px-2 py-6">
       {children}
     </Border>
   );
