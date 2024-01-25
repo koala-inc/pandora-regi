@@ -424,7 +424,7 @@ export default function TimeCard() {
                     <th className="min-w-[6em] text-center text-secondary-accent">
                       退勤時間
                     </th>
-                    <th className="min-w-[6.65em] text-center text-accent">
+                    <th className="min-w-[3.65em] text-center text-accent">
                       勤怠
                     </th>
                     <th className="min-w-[6em] text-center text-accent">
@@ -458,65 +458,7 @@ export default function TimeCard() {
                     </th>
                     <th className="min-w-[3.5em] text-center text-lg">20:00</th>
                     <th className="min-w-[3.5em] text-center text-lg">21:00</th>
-                    <th className="min-w-[4em] text-center text-lg">×</th>
-                    <th className="min-w-[3.5em] text-center text-lg">15分</th>
-                    <th className="min-w-[4em] text-center text-lg"> - </th>
-                    <th className="flex min-w-[4em] items-center justify-center text-center text-lg">
-                      退勤
-                      <Button natural className={"ml-4"}>
-                        退勤取消
-                      </Button>
-                    </th>
-                    <th className="min-w-[4em] text-center text-lg">
-                      <input
-                        type="checkbox"
-                        className="mt-[8px] h-[20px] w-[20px]"
-                      />
-                    </th>
-                  </tr>
-                  <tr>
-                    <th className="min-w-[2em] text-center text-lg">000</th>
-                    <th className="min-w-[2em] text-center text-lg"> - </th>
-                    <th className="min-w-[4em] text-center text-lg">名前</th>
-                    <th className="min-w-[4em] text-center text-lg">在籍</th>
-                    <th className="min-w-[3.5em] text-center text-lg opacity-60">
-                      20:00
-                    </th>
-                    <th className="min-w-[3.5em] text-center text-lg opacity-60">
-                      20:00
-                    </th>
-                    <th className="min-w-[3.5em] text-center text-lg">20:00</th>
-                    <th className="min-w-[3.5em] text-center text-lg">21:00</th>
-                    <th className="min-w-[4em] text-center text-lg">×</th>
-                    <th className="min-w-[3.5em] text-center text-lg">15分</th>
-                    <th className="min-w-[4em] text-center text-lg"> - </th>
-                    <th className="flex min-w-[4em] items-center justify-center text-center text-lg">
-                      退勤
-                      <Button natural className={"ml-4"}>
-                        退勤取消
-                      </Button>
-                    </th>
-                    <th className="min-w-[4em] text-center text-lg">
-                      <input
-                        type="checkbox"
-                        className="mt-[8px] h-[20px] w-[20px]"
-                      />
-                    </th>
-                  </tr>
-                  <tr>
-                    <th className="min-w-[2em] text-center text-lg">000</th>
-                    <th className="min-w-[2em] text-center text-lg"> - </th>
-                    <th className="min-w-[4em] text-center text-lg">名前</th>
-                    <th className="min-w-[4em] text-center text-lg">在籍</th>
-                    <th className="min-w-[3.5em] text-center text-lg opacity-60">
-                      20:00
-                    </th>
-                    <th className="min-w-[3.5em] text-center text-lg opacity-60">
-                      20:00
-                    </th>
-                    <th className="min-w-[3.5em] text-center text-lg">20:00</th>
-                    <th className="min-w-[3.5em] text-center text-lg">21:00</th>
-                    <th className="min-w-[4em] text-center text-lg">×</th>
+                    <th className="min-w-[2em] text-center text-lg">×</th>
                     <th className="min-w-[3.5em] text-center text-lg">15分</th>
                     <th className="min-w-[4em] text-center text-lg"> - </th>
                     <th className="flex min-w-[4em] items-center justify-center text-center text-lg">
