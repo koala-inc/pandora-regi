@@ -16,6 +16,7 @@ module.exports = {
         "secondary-accent": "#e97ea8",
         "thirdary-accent": "#7dd5e8",
         natural: "#f3e1bc",
+        search: "#00698a",
       },
       gridTemplateRows: {
         7: "repeat(7, minmax(0, 1fr))",

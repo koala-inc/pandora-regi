@@ -285,12 +285,12 @@ export default function TimeCard() {
                   </p>
                   <input
                     type="text"
-                    className="ml-4 mr-3 h-[40px] rounded-md border border-white"
+                    className="ml-4 mr-2 h-[40px] rounded-md border border-white"
                   />
                 </div>
                 <Border
                   rounded="rounded-full"
-                  size="h-[45px] w-[45px] p-[8px] bg-[#00698a]"
+                  size="h-[32px] w-[32px] p-[4px] bg-search"
                 >
                   <Image
                     src={"/assets/search.svg"}
@@ -313,22 +313,32 @@ export default function TimeCard() {
                 </Button>
                 <Button
                   natural
-                  className={"mx-2 h-full w-[6em]"}
+                  className={"mx-2 mr-4 h-full w-[6em]"}
                   onClick={() => {
                     setActiveMenu((activeMenu) => (activeMenu != 2 ? 2 : 0));
                   }}
                 >
                   ソート
                 </Button>
-                <Button
-                  natural
-                  className={"mx-2 h-full w-[6em]"}
+                <div
+                  className="mt-[-1px] "
                   onClick={() => {
                     setActiveMenu(0);
                   }}
                 >
-                  リセット
-                </Button>
+                  <Border
+                    rounded="rounded-full"
+                    size="h-[32px] w-[32px] p-[4px] bg-[#cc8888]"
+                  >
+                    <Image
+                      src={"/assets/reset.svg"}
+                      width={26}
+                      height={26}
+                      className="!h-full !w-full"
+                      alt=""
+                    />
+                  </Border>
+                </div>
               </div>
               {activeMenu != 0 && (
                 <div className="mt-2 flex w-[73%] justify-center rounded-md border border-white bg-black p-2">
@@ -382,32 +392,138 @@ export default function TimeCard() {
           <Content>
             <Border
               className="my-2 w-full"
-              size="p-4 flex flex-col overflow-scroll"
+              rounded="border-white rounded-md"
+              size="p-4 flex flex-col justify-start min-h-[calc(98dvh-400px)] max-h-[calc(98dvh-400px)] overflow-scroll"
               black
             >
-              <table className="table table-xs mt-2 min-h-[500px]">
+              <table className="table table-xs mt-2 flex min-h-[500px] flex-col justify-start">
                 {/* head */}
                 <thead>
                   <tr>
-                    <th className="text-accent">ID</th>
-                    <th className="text-accent">指名</th>
-                    <th className="text-accent">キャスト名</th>
-                    <th className="text-accent">区分</th>
-                    <th className="text-accent">予定時間</th>
-                    <th className="text-accent">打刻時間</th>
-                    <th className="text-thirdary-accent">出勤時間</th>
-                    <th className="text-secondary-accent">退勤時間</th>
-                    <th className="text-accent">勤怠</th>
-                    <th className="text-accent">遅刻</th>
-                    <th className="text-accent">担当</th>
-                    <th className="text-accent">ステータス</th>
-                    <th className="text-accent">処理済み</th>
+                    <th className="min-w-[6.65em] text-center text-accent">
+                      ID
+                    </th>
+                    <th className="min-w-[6.65em] text-center text-accent">
+                      指名
+                    </th>
+                    <th className="min-w-[6.65em] text-center text-accent">
+                      キャスト名
+                    </th>
+                    <th className="min-w-[6.65em] text-center text-accent">
+                      区分
+                    </th>
+                    <th className="min-w-[6.65em] text-center text-accent">
+                      予定時間
+                    </th>
+                    <th className="min-w-[6.65em] text-center text-accent">
+                      打刻時間
+                    </th>
+                    <th className="min-w-[6.65em] text-center text-thirdary-accent">
+                      出勤時間
+                    </th>
+                    <th className="min-w-[6.65em] text-center text-secondary-accent">
+                      退勤時間
+                    </th>
+                    <th className="min-w-[6.65em] text-center text-accent">
+                      勤怠
+                    </th>
+                    <th className="min-w-[6.65em] text-center text-accent">
+                      遅刻
+                    </th>
+                    <th className="min-w-[6.65em] text-center text-accent">
+                      担当
+                    </th>
+                    <th className="min-w-[13.15em] text-center text-accent">
+                      ステータス
+                    </th>
+                    <th className="min-w-[6.65em] text-center text-accent">
+                      処理済み
+                    </th>
                     <th>
                       <label>削除</label>
                     </th>
                   </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                  <tr>
+                    <th className="min-w-[4em] text-center text-xl">000</th>
+                    <th className="min-w-[4em] text-center text-xl"> - </th>
+                    <th className="min-w-[4em] text-center text-xl">名前</th>
+                    <th className="min-w-[4em] text-center text-xl">在籍</th>
+                    <th className="min-w-[4em] text-center text-xl opacity-60">
+                      20:00
+                    </th>
+                    <th className="min-w-[4em] text-center text-xl opacity-60">
+                      20:00
+                    </th>
+                    <th className="min-w-[4em] text-center text-xl">20:00</th>
+                    <th className="min-w-[4em] text-center text-xl">21:00</th>
+                    <th className="min-w-[4em] text-center text-xl">×</th>
+                    <th className="min-w-[4em] text-center text-xl">15分</th>
+                    <th className="min-w-[4em] text-center text-xl"> - </th>
+                    <th className="flex min-w-[4em] items-center justify-center text-center text-xl">
+                      退勤
+                      <Button natural className={"ml-2"}>
+                        退勤取消
+                      </Button>
+                    </th>
+                    <th className="min-w-[4em] text-center text-xl">
+                      <input type="checkbox" />
+                    </th>
+                  </tr>
+                  <tr>
+                    <th className="min-w-[4em] text-center text-xl">000</th>
+                    <th className="min-w-[4em] text-center text-xl"> - </th>
+                    <th className="min-w-[4em] text-center text-xl">名前</th>
+                    <th className="min-w-[4em] text-center text-xl">在籍</th>
+                    <th className="min-w-[4em] text-center text-xl opacity-60">
+                      20:00
+                    </th>
+                    <th className="min-w-[4em] text-center text-xl opacity-60">
+                      20:00
+                    </th>
+                    <th className="min-w-[4em] text-center text-xl">20:00</th>
+                    <th className="min-w-[4em] text-center text-xl">21:00</th>
+                    <th className="min-w-[4em] text-center text-xl">×</th>
+                    <th className="min-w-[4em] text-center text-xl">15分</th>
+                    <th className="min-w-[4em] text-center text-xl"> - </th>
+                    <th className="flex min-w-[4em] items-center justify-center text-center text-xl">
+                      退勤
+                      <Button natural className={"ml-2"}>
+                        退勤取消
+                      </Button>
+                    </th>
+                    <th className="min-w-[4em] text-center text-xl">
+                      <input type="checkbox" />
+                    </th>
+                  </tr>
+                  <tr>
+                    <th className="min-w-[4em] text-center text-xl">000</th>
+                    <th className="min-w-[4em] text-center text-xl"> - </th>
+                    <th className="min-w-[4em] text-center text-xl">名前</th>
+                    <th className="min-w-[4em] text-center text-xl">在籍</th>
+                    <th className="min-w-[4em] text-center text-xl opacity-60">
+                      20:00
+                    </th>
+                    <th className="min-w-[4em] text-center text-xl opacity-60">
+                      20:00
+                    </th>
+                    <th className="min-w-[4em] text-center text-xl">20:00</th>
+                    <th className="min-w-[4em] text-center text-xl">21:00</th>
+                    <th className="min-w-[4em] text-center text-xl">×</th>
+                    <th className="min-w-[4em] text-center text-xl">15分</th>
+                    <th className="min-w-[4em] text-center text-xl"> - </th>
+                    <th className="flex min-w-[4em] items-center justify-center text-center text-xl">
+                      退勤
+                      <Button natural className={"ml-2"}>
+                        退勤取消
+                      </Button>
+                    </th>
+                    <th className="min-w-[4em] text-center text-xl">
+                      <input type="checkbox" />
+                    </th>
+                  </tr>
+                </tbody>
               </table>
             </Border>
           </Content>
