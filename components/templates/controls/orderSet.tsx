@@ -167,7 +167,7 @@ export default function ControlOrderSet() {
             <div className="flex flex-col justify-end">
               <label className="mt-3 text-xs font-bold text-accent">卓番</label>
               <div className="flex">
-                <select className="mr-2 h-[60px] w-[60px] rounded-md bg-black px-2 text-center text-xl font-bold text-white">
+                <select className="mr-2 h-[60px] w-[60px] rounded-md bg-black px-2 text-center text-4xl font-bold text-white">
                   {seatAlphabet.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefCode}>
@@ -176,7 +176,7 @@ export default function ControlOrderSet() {
                     );
                   })}
                 </select>
-                <select className="mr-2 h-[60px] w-[60px] rounded-md bg-black px-2 text-center text-xl font-bold text-white">
+                <select className="mr-2 h-[60px] w-[60px] rounded-md bg-black px-2 text-center text-4xl font-bold text-white">
                   {seatNumber.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefCode}>
@@ -210,7 +210,7 @@ export default function ControlOrderSet() {
           </a>
         </div>
         <div className="mt-[-1px] flex min-h-[520px] min-w-[920px] max-w-[calc(100dvw-405px)] flex-wrap rounded-b-xl rounded-r-xl bg-primary p-4 text-white">
-          <div className="flex max-h-[150px] min-w-full items-center justify-start overflow-x-scroll rounded-md border border-white bg-black p-4">
+          <div className="flex min-h-[150px] min-w-full items-center justify-start overflow-x-scroll rounded-md border border-white bg-black p-4">
             {/* <div
               className={
                 "mr-2 flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
@@ -411,14 +411,14 @@ export default function ControlOrderSet() {
                 <div className="flex justify-around">
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
                     あ
                   </div>
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
                     は
@@ -427,14 +427,14 @@ export default function ControlOrderSet() {
                 <div className="mt-4 flex justify-around">
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
                     か
                   </div>
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
                     ま
@@ -443,14 +443,14 @@ export default function ControlOrderSet() {
                 <div className="mt-4 flex justify-around">
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
                     さ
                   </div>
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
                     や
@@ -459,14 +459,14 @@ export default function ControlOrderSet() {
                 <div className="mt-4 flex justify-around">
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
                     た
                   </div>
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
                     ら
@@ -475,14 +475,14 @@ export default function ControlOrderSet() {
                 <div className="mt-4 flex justify-around">
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
                     な
                   </div>
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
                     わ
