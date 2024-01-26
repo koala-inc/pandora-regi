@@ -559,7 +559,7 @@ export default function CastList() {
                   } else {
                     return (
                       <>
-                        {cast.cast_code != 0 && (
+                        {cast.cast_code == 0 && (
                           <>
                             <tr key={cast.cast_code}>
                               <td>{cast.cast_code}</td>

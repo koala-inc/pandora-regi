@@ -82,7 +82,6 @@ const searchAttendanceManagementStaff = gql`
     $work_schedule_date_time_start_to: String
     $work_schedule_date_time_end_from: String
     $work_schedule_date_time_end_to: String
-    $attendance_status: Int
     $time_card_date_time_start_from: String
     $time_card_date_time_start_to: String
     $time_card_date_time_end_from: String
@@ -91,7 +90,6 @@ const searchAttendanceManagementStaff = gql`
     $work_date_time_start_to: String
     $work_date_time_end_from: String
     $work_date_time_end_to: String
-    $is_processed: Int
   ) {
     attendanceManagementCast(
       store_code: $store_code
@@ -103,7 +101,6 @@ const searchAttendanceManagementStaff = gql`
       work_schedule_date_time_start_to: $work_schedule_date_time_start_to
       work_schedule_date_time_end_from: $work_schedule_date_time_end_from
       work_schedule_date_time_end_to: $work_schedule_date_time_end_to
-      attendance_status: $attendance_status
       time_card_date_time_start_from: $time_card_date_time_start_from
       time_card_date_time_start_to: $time_card_date_time_start_to
       time_card_date_time_end_from: $time_card_date_time_end_from
@@ -112,14 +109,10 @@ const searchAttendanceManagementStaff = gql`
       work_date_time_start_to: $work_date_time_start_to
       work_date_time_end_from: $work_date_time_end_from
       work_date_time_end_to: $work_date_time_end_to
-      is_processed: $is_processed
     ) {
       store_attendance_management_staff {
         attendance_management_staff {
           staff_id
-          attendance_status
-          is_processed
-          late_time
           time_card_date_time_start
           working_date
           time_card_date_time_end
