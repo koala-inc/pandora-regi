@@ -18,6 +18,7 @@ import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsCardGlobal from "@/globalstates/isCard";
 import useIsControlGlobal from "@/globalstates/isControl";
+import OrderSheetSet from "@/components/templates/orderSheetSet";
 
 function Control(isControl: any) {
   switch (isControl) {
@@ -72,15 +73,17 @@ export default function Home() {
     <main className="relative h-full w-full">
       <AnimatePresence>
         {isHeader && <Header />}
-        {isFooter && <Footer />}
+        {isFooter && !isCard && <Footer />}
         {isCard && (
           <>
-            <OrderSheet />
-            {Control(isControl)}
+            <OrderSheetSet />
+            {/* {Control(isControl)} */}
+            <OrderSet />
           </>
         )}
       </AnimatePresence>
-      {isControl == "" && <SeatMap />}
+      {/* {isControl == "" && <SeatMap />} */}
+      {!isCard && <SeatMap />}
       <OverlayNav />
     </main>
   );

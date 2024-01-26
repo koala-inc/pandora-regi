@@ -9,14 +9,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Schema, schema } from "@/validations/test";
 import { useState } from "react";
 import Toggle from "../toggle";
+import { searchCast } from "@/gqls/query/cast";
+import client from "@/connection";
+import { RequestDocument } from "graphql-request";
+import useSWR, { preload } from "swr";
 
 function ContentHeader({ children }: { children: any }) {
-  return <SubBorder size="h-[147.5px] w-[90%] px-4 py-2">{children}</SubBorder>;
+  return <SubBorder size="h-[147.5px] max-w-[550px]">{children}</SubBorder>;
 }
 
 function Content({ children }: { children: any }) {
   return <Border size="h-[582.5px] w-full px-4 py-2">{children}</Border>;
 }
+
+const defaultVariables = {
+  store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
+};
 
 export default function ControlOrderSet() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
@@ -31,6 +39,15 @@ export default function ControlOrderSet() {
     resolver: zodResolver(schema),
   });
   const onSubmit: SubmitHandler<Schema> = (data) => alert(JSON.stringify(data));
+
+  const fetcher = (q: RequestDocument) =>
+    client.request(q, { ...defaultVariables });
+
+  preload(searchCast, fetcher);
+
+  const [searchForm, setSearchForm] = useState<any>({});
+
+  const searchData = useSWR<any>(searchCast, fetcher);
 
   const seatAlphabet = [
     {
@@ -146,14 +163,11 @@ export default function ControlOrderSet() {
         }}
       >
         <ContentHeader>
-          <div className="flex">
-            <div className="flex flex-col">
+          <div className="flex items-end rounded-md border border-white bg-black px-8 py-4">
+            <div className="flex flex-col justify-end">
               <label className="mt-3 text-xs font-bold text-accent">卓番</label>
               <div className="flex">
-                <select
-                  {...register("baitai")}
-                  className="mr-2 h-[30px] w-[3rem] rounded-md px-2 text-sm"
-                >
+                <select className="mr-2 h-[60px] w-[60px] rounded-md bg-black px-2 text-center text-xl font-bold text-white">
                   {seatAlphabet.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefCode}>
@@ -162,10 +176,7 @@ export default function ControlOrderSet() {
                     );
                   })}
                 </select>
-                <select
-                  {...register("baitai")}
-                  className="mr-2 h-[30px] w-[3rem] rounded-md px-2 text-sm"
-                >
+                <select className="mr-2 h-[60px] w-[60px] rounded-md bg-black px-2 text-center text-xl font-bold text-white">
                   {seatNumber.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefCode}>
@@ -176,108 +187,109 @@ export default function ControlOrderSet() {
                 </select>
               </div>
             </div>
-            <Button>オーダー伝票</Button>
-            <Button>復帰</Button>
+            <div className="flex">
+              <Button natural className={"ml-4 mr-2 w-[8em]"}>
+                オーダー伝票
+              </Button>
+              <Button natural className={"w-[8em]"}>
+                復帰
+              </Button>
+            </div>
           </div>
         </ContentHeader>
         <div className="tabs mt-3">
           <a
-            className={`tab tab-md mr-1 w-[7em] rounded-t-xl ${
+            className={`tab-md tab mr-1 w-[7em] rounded-t-xl ${
               activeTab == 0
                 ? "tab-active bg-primary text-white"
                 : "tab-lifted bg-secondary text-black"
             }`}
             onClick={() => setActiveTab(0)}
           >
-            メイン
-          </a>
-          <a
-            className={`tab tab-md mr-1 w-[7em] rounded-t-xl ${
-              activeTab == 1
-                ? "tab-active bg-primary text-white"
-                : "tab-lifted bg-secondary text-black"
-            }`}
-            onClick={() => setActiveTab(1)}
-          >
-            VIP
-          </a>
-          <a
-            className={`tab tab-md mr-1 w-[7em] rounded-t-xl ${
-              activeTab == 2
-                ? "tab-active bg-primary text-white"
-                : "tab-lifted bg-secondary text-black"
-            }`}
-            onClick={() => setActiveTab(2)}
-          >
-            SWEET
+            -
           </a>
         </div>
-        <div className="mt-[-1px] flex min-h-[520px] min-w-[1020px] flex-wrap rounded-b-xl rounded-r-xl bg-primary p-4 text-white">
-          <div className="flex max-h-[150px] min-w-full justify-center overflow-x-scroll rounded-md border border-white bg-black p-4">
-            <div
+        <div className="mt-[-1px] flex min-h-[520px] min-w-[920px] max-w-[calc(100dvw-405px)] flex-wrap rounded-b-xl rounded-r-xl bg-primary p-4 text-white">
+          <div className="flex max-h-[150px] min-w-full items-center justify-start overflow-x-scroll rounded-md border border-white bg-black p-4">
+            {/* <div
               className={
-                "mx-auto flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+                "mr-2 flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
               }
             >
               20:00~
             </div>
             <div
               className={
-                "mx-auto flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+                "mr-1 flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
               }
             >
               21:00~
             </div>
             <div
               className={
-                "mx-auto flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+                "mr-1 flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
               }
             >
               22:00~
-            </div>
+            </div> */}
           </div>
-          <div className="flex">
-            <select
-              {...register("baitai")}
-              className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
-            >
-              {type.map((pref) => {
-                return (
-                  <option key={pref.prefCode} value={pref.prefCode}>
-                    {pref.prefName}
-                  </option>
-                );
-              })}
-            </select>
-            <select
-              {...register("baitai")}
-              className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
-            >
-              {staff.map((pref) => {
-                return (
-                  <option key={pref.prefCode} value={pref.prefCode}>
-                    {pref.prefName}
-                  </option>
-                );
-              })}
-            </select>
-            <div className="badge badge-info gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                className="inline-block h-4 w-4 stroke-current"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
-              </svg>
-              スタッフ名
+          <div className="flex flex-wrap">
+            <div className="flex flex-col">
+              <label className="mt-3 text-xs font-bold text-accent">区分</label>
+              <div className="flex">
+                <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
+                  {type.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefCode}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
+                <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
+                  {staff.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefCode}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
             </div>
-            <input type="checkbox" checked className="checkbox checkbox-md" />
+            <div className="flex flex-col">
+              <label className="mt-3 text-xs font-bold text-accent">
+                販売促進スタッフ
+              </label>
+              <div className="relative flex">
+                <div className="flex flex-col">
+                  <input
+                    type="text"
+                    className="mr-2 h-[30px] w-[12rem] rounded-md px-2 text-sm"
+                    placeholder="スタッフ"
+                  />
+                </div>
+                <div className="badge badge-info absolute left-[10px] top-[5px] w-[120px] gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    className="inline-block h-4 w-4 stroke-current"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    ></path>
+                  </svg>
+                  スタッフ名
+                </div>
+              </div>
+            </div>
+            {/* <div>
+              <input type="checkbox" className="checkbox checkbox-md" />
+            </div> */}
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">
                 ルームチャージ
@@ -372,8 +384,8 @@ export default function ControlOrderSet() {
           </div>
           <div className="flex w-full">
             <div className="flex flex-col">
-              <p className="text-accent">指名種</p>
-              <div className="flex flex-col">
+              <p className="text-xs font-bold text-accent">指名種</p>
+              <div className="flex flex-col rounded-md border border-white bg-black p-4">
                 <Button className="min-w-[5rem]" natural>
                   本指
                 </Button>
@@ -385,68 +397,120 @@ export default function ControlOrderSet() {
                 </Button>
               </div>
             </div>
-            <div className="flex flex-col">
-              <p className="text-accent">キャスト検索</p>
-              <div className="flex flex-col">
-                <div className="flex">
-                  <input
-                    type="checkbox"
-                    checked
-                    className="checkbox checkbox-md"
-                  />
-                  <div className="flex flex-col">
-                    <label className="mt-3 text-xs font-bold text-accent">
-                      出勤中に絞り込む
-                    </label>
-                    <input
-                      type="number"
-                      {...register("age")}
-                      className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                      placeholder="チャージ料を入力"
-                    />
+            <div className="mx-4 flex flex-col">
+              <p className="text-xs font-bold text-accent">キャスト検索</p>
+              <div className="flex">
+                <Button className="min-w-[5rem]" natural>
+                  出勤
+                </Button>
+                <Button className="min-w-[5rem]" natural>
+                  全て
+                </Button>
+              </div>
+              <div className="mt-4 flex flex-col">
+                <div className="flex justify-around">
+                  <div
+                    className={
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    }
+                  >
+                    あ
+                  </div>
+                  <div
+                    className={
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    }
+                  >
+                    は
                   </div>
                 </div>
-                <div className="flex">
-                  <Button className="min-w-[5rem]" natural>
-                    あ
-                  </Button>
-                  <Button className="min-w-[5rem]" natural>
-                    は
-                  </Button>
-                </div>
-                <div className="flex">
-                  <Button className="min-w-[5rem]" natural>
+                <div className="mt-4 flex justify-around">
+                  <div
+                    className={
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    }
+                  >
                     か
-                  </Button>
-                  <Button className="min-w-[5rem]" natural>
+                  </div>
+                  <div
+                    className={
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    }
+                  >
                     ま
-                  </Button>
+                  </div>
                 </div>
-                <div className="flex">
-                  <Button className="min-w-[5rem]" natural>
+                <div className="mt-4 flex justify-around">
+                  <div
+                    className={
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    }
+                  >
                     さ
-                  </Button>
-                  <Button className="min-w-[5rem]" natural>
+                  </div>
+                  <div
+                    className={
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    }
+                  >
                     や
-                  </Button>
+                  </div>
                 </div>
-                <div className="flex">
-                  <Button className="min-w-[5rem]" natural>
+                <div className="mt-4 flex justify-around">
+                  <div
+                    className={
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    }
+                  >
                     た
-                  </Button>
-                  <Button className="min-w-[5rem]" natural>
+                  </div>
+                  <div
+                    className={
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    }
+                  >
                     ら
-                  </Button>
+                  </div>
                 </div>
-                <div className="flex">
-                  <Button className="min-w-[5rem]" natural>
+                <div className="mt-4 flex justify-around">
+                  <div
+                    className={
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    }
+                  >
                     な
-                  </Button>
-                  <Button className="min-w-[5rem]" natural>
+                  </div>
+                  <div
+                    className={
+                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    }
+                  >
                     わ
-                  </Button>
+                  </div>
                 </div>
               </div>
+            </div>
+            <div className="flex flex-wrap justify-center">
+              {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
+                (cast: any) => {
+                  if (cast.leaving_date == null) {
+                    return (
+                      <>
+                        {cast.cast_code != 0 && (
+                          <div
+                            className={
+                              "mx-1 my-2 flex w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 text-xs leading-4 tracking-wider"
+                            }
+                            onClick={() => {}}
+                          >
+                            {cast.name}
+                          </div>
+                        )}
+                      </>
+                    );
+                  }
+                }
+              )}
             </div>
           </div>
         </div>
