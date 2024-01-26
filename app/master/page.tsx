@@ -31,9 +31,24 @@ import useSettingsGlobal from "@/globalstates/settings";
 import SeatCategory from "@/components/master/(payment)/seatCategory";
 import SetPayment from "@/components/master/(payment)/setPayment";
 import Designate from "@/components/master/(payment)/designate";
+import useIsHeaderGlobal from "@/globalstates/isHeader";
+import useIsFooterGlobal from "@/globalstates/isFooter";
+import useIsCardGlobal from "@/globalstates/isCard";
+import useIsControlGlobal from "@/globalstates/isControl";
 
 export default function Mater() {
   const [settings, setSettings] = useSettingsGlobal();
+  const [isHeader, setIsHeader] = useIsHeaderGlobal();
+  const [isFooter, setIsFooter] = useIsFooterGlobal();
+  const [isCard, setIsCard] = useIsCardGlobal();
+  const [isControl, setIsControl] = useIsControlGlobal();
+
+  if (isHeader || isFooter || isCard || isControl) {
+    setIsHeader(false);
+    setIsFooter(false);
+    setIsCard(false);
+    setIsControl(false);
+  }
 
   const [page, setPage] = useState<"root" | "projects">("root");
   const [open, setOpen] = useState(false);
