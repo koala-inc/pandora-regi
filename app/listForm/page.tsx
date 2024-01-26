@@ -14,6 +14,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Schema, schema } from "@/validations/test";
 import { useState } from "react";
 import Toggle from "@/components/templates/toggle4";
+import useIsControlGlobal from "@/globalstates/isControl";
+import useIsCardGlobal from "@/globalstates/isCard";
+import useIsFooterGlobal from "@/globalstates/isFooter";
+import useIsHeaderGlobal from "@/globalstates/isHeader";
 
 function ContentHeader({ children }: { children: any }) {
   return <SubBorder size="h-[147.5px] w-[90%] px-4 py-2">{children}</SubBorder>;
@@ -35,6 +39,17 @@ export default function Mater() {
   const onSubmit: SubmitHandler<Schema> = (data) => alert(JSON.stringify(data));
 
   const [modal, setModal] = useState(false);
+  const [isHeader, setIsHeader] = useIsHeaderGlobal();
+  const [isFooter, setIsFooter] = useIsFooterGlobal();
+  const [isCard, setIsCard] = useIsCardGlobal();
+  const [isControl, setIsControl] = useIsControlGlobal();
+
+  if (isHeader || isFooter || isCard || isControl) {
+    setIsHeader(false);
+    setIsFooter(false);
+    setIsCard(false);
+    setIsControl(false);
+  }
 
   return (
     <main className="relative h-full w-full">

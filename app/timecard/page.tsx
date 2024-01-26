@@ -22,6 +22,15 @@ import {
   createAttendanceManagementCast,
   updateAttendanceManagementCast,
 } from "@/gqls/mutation/cast";
+import useIsFooterGlobal from "@/globalstates/isFooter";
+import useIsCardGlobal from "@/globalstates/isCard";
+import useIsControlGlobal from "@/globalstates/isControl";
+import useIsHeaderGlobal from "@/globalstates/isHeader";
+import {
+  searchAttendanceManagementStaff,
+  searchStaff,
+} from "@/gqls/query/staff";
+import { createAttendanceManagementStaff } from "@/gqls/mutation/staff";
 
 function Line({ ml }: { ml?: string }) {
   return (
@@ -80,15 +89,30 @@ const defaultVariables = {
 };
 
 export default function TimeCard() {
+  const [isHeader, setIsHeader] = useIsHeaderGlobal();
+  const [isFooter, setIsFooter] = useIsFooterGlobal();
+  const [isCard, setIsCard] = useIsCardGlobal();
+  const [isControl, setIsControl] = useIsControlGlobal();
+
+  if (isHeader || isFooter || isCard || isControl) {
+    setIsHeader(false);
+    setIsFooter(false);
+    setIsCard(false);
+    setIsControl(false);
+  }
+
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
 
   preload(searchCast, fetcher);
+  preload(searchStaff, fetcher);
 
   const [searchForm, setSearchForm] = useState<any>({});
 
   const searchData = useSWR<any>(searchCast, fetcher);
+  const searchSData = useSWR<any>(searchStaff, fetcher);
   const searchAData = useSWR<any>(searchAttendanceManagementCast, fetcher);
+  const searchASData = useSWR<any>(searchAttendanceManagementStaff, fetcher);
 
   const [datetimeH, setDatetimeH] = useState(
     format(new Date(), "HH", { locale: ja })
@@ -163,15 +187,28 @@ export default function TimeCard() {
             </Button>
           </div>
           <div className="mb-3 flex justify-around">
-            <Button className="min-w-[6rem]" natural>
-              在籍
-            </Button>
-            <Button className="min-w-[6rem]" natural>
-              体入/ヘルプ
-            </Button>
-            <Button className="min-w-[6rem]" natural>
-              他店舗ヘルプ
-            </Button>
+            {activeTab == 0 ? (
+              <>
+                <Button className="min-w-[6rem]" natural>
+                  在籍
+                </Button>
+                <Button className="min-w-[6rem]" natural>
+                  体入/ヘルプ
+                </Button>
+                <Button className="min-w-[6rem]" natural>
+                  他店舗ヘルプ
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button className="min-w-[6rem]" natural>
+                  在籍
+                </Button>
+                <Button className="min-w-[6rem]" natural>
+                  アルバイト
+                </Button>
+              </>
+            )}
           </div>
           <div className="my-4 flex w-full">
             <Line />
@@ -254,48 +291,98 @@ export default function TimeCard() {
             <Line />
           </div>
           <div className="flex flex-wrap justify-center">
-            {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
-              (cast: any) => {
-                if (cast.leaving_date == null) {
-                  return (
-                    <>
-                      {cast.cast_code != 0 && (
-                        <div
-                          className={
-                            "mx-1 my-2 flex w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 text-xs leading-4 tracking-wider"
-                          }
-                          onClick={() => {
-                            client
-                              .request(createAttendanceManagementCast, {
-                                cast_id: cast.id,
-                                working_date: new Date().toDateString(),
-                                attendance_status: 0,
-                                ...defaultVariables,
-                              })
-                              .then(() => {
-                                searchAData.mutate(
-                                  () =>
-                                    client.request(
-                                      searchAttendanceManagementCast,
+            {activeTab == 0 ? (
+              <>
+                {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
+                  (cast: any) => {
+                    if (cast.leaving_date == null) {
+                      return (
+                        <>
+                          {cast.cast_code != 0 && (
+                            <div
+                              className={
+                                "mx-1 my-2 flex w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 text-xs leading-4 tracking-wider"
+                              }
+                              onClick={() => {
+                                client
+                                  .request(createAttendanceManagementCast, {
+                                    cast_id: cast.id,
+                                    working_date: new Date().toDateString(),
+                                    attendance_status: 0,
+                                    ...defaultVariables,
+                                  })
+                                  .then(() => {
+                                    searchAData.mutate(
+                                      () =>
+                                        client.request(
+                                          searchAttendanceManagementCast,
+                                          {
+                                            ...defaultVariables,
+                                          }
+                                        ),
                                       {
-                                        ...defaultVariables,
+                                        populateCache: true,
+                                        revalidate: false,
                                       }
-                                    ),
-                                  {
-                                    populateCache: true,
-                                    revalidate: false,
-                                  }
-                                );
-                              });
-                          }}
-                        >
-                          {cast.name}
-                        </div>
-                      )}
-                    </>
-                  );
-                }
-              }
+                                    );
+                                  });
+                              }}
+                            >
+                              {cast.name}
+                            </div>
+                          )}
+                        </>
+                      );
+                    }
+                  }
+                )}
+              </>
+            ) : (
+              <>
+                {searchSData?.data?.staff[0]?.store_staff[0]?.staff?.map(
+                  (staff: any) => {
+                    if (staff.leaving_date == null) {
+                      return (
+                        <>
+                          {staff.staff_code != 0 && (
+                            <div
+                              className={
+                                "mx-1 my-2 flex w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 text-xs leading-4 tracking-wider"
+                              }
+                              onClick={() => {
+                                client
+                                  .request(createAttendanceManagementStaff, {
+                                    staff_id: staff.id,
+                                    working_date: new Date().toDateString(),
+                                    attendance_status: 0,
+                                    ...defaultVariables,
+                                  })
+                                  .then(() => {
+                                    searchASData.mutate(
+                                      () =>
+                                        client.request(
+                                          searchAttendanceManagementStaff,
+                                          {
+                                            ...defaultVariables,
+                                          }
+                                        ),
+                                      {
+                                        populateCache: true,
+                                        revalidate: false,
+                                      }
+                                    );
+                                  });
+                              }}
+                            >
+                              {staff.name}
+                            </div>
+                          )}
+                        </>
+                      );
+                    }
+                  }
+                )}
+              </>
             )}
           </div>
         </div>
@@ -498,92 +585,188 @@ export default function TimeCard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {searchAData?.data?.attendanceManagementCast[0]?.store_attendance_management_cast[0]?.attendance_management_cast?.map(
-                    (amc: any, index: any) => {
-                      {
-                        return (
-                          <tr key={index}>
-                            <th className="min-w-[2em] text-center text-lg">
-                              {
-                                searchData?.data?.cast[0]?.store_cast[0]?.cast[
-                                  amc.cast_id
-                                ].cast_code
-                              }
-                            </th>
-                            <th className="min-w-[2em] text-center text-lg">
-                              -
-                            </th>
-                            <th className="min-w-[4em] text-center text-lg">
-                              {
-                                searchData?.data?.cast[0]?.store_cast[0]?.cast[
-                                  amc.cast_id
-                                ].name
-                              }
-                            </th>
-                            <th className="min-w-[4em] text-center text-lg">
-                              在籍
-                            </th>
-                            <th className="min-w-[3.5em] text-center text-lg opacity-60">
-                              {format(
-                                amc.work_schedule_date_time_start,
-                                "HH:mm"
-                              )}
-                            </th>
-                            <th className="min-w-[3.5em] text-center text-lg opacity-60">
-                              {format(amc.work_schedule_date_time_end, "HH:mm")}
-                            </th>
-                            <th className="min-w-[3.5em] text-center text-lg">
-                              {format(amc.work_date_time_start, "HH:mm")}
-                            </th>
-                            <th className="min-w-[3.5em] text-center text-lg">
-                              {format(amc.work_date_time_end, "HH:mm")}
-                            </th>
-                            <th className="min-w-[2em] text-center text-lg">
-                              ×
-                            </th>
-                            <th className="min-w-[3.5em] text-center text-lg">
-                              <input
-                                type="text"
-                                value="0"
-                                className="w-[2em]"
-                              />
-                              分
-                            </th>
-                            <th className="min-w-[4em] text-center text-lg">
-                              -
-                            </th>
-                            <th className="flex min-w-[4em] items-center justify-center text-center text-lg">
-                              {amc.attendance_status == 0
-                                ? ""
-                                : amc.attendance_status == 1
-                                ? "来店"
-                                : amc.attendance_status == 2
-                                ? "出勤"
-                                : amc.attendance_status == 3
-                                ? "退勤"
-                                : ""}
-                              <Button natural className={"ml-8"}>
-                                {amc.attendance_status == 0
-                                  ? "来店"
-                                  : amc.attendance_status == 1
-                                  ? "出勤"
-                                  : amc.attendance_status == 2
-                                  ? "退勤"
-                                  : amc.attendance_status == 3
-                                  ? "退勤取り消し"
-                                  : ""}
-                              </Button>
-                            </th>
-                            <th className="min-w-[4em] text-center text-lg">
-                              <input
-                                type="checkbox"
-                                className="mt-[8px] h-[20px] w-[20px]"
-                              />
-                            </th>
-                          </tr>
-                        );
-                      }
-                    }
+                  {activeTab == 0 ? (
+                    <>
+                      {searchAData?.data?.attendanceManagementCast[0]?.store_attendance_management_cast[0]?.attendance_management_cast?.map(
+                        (amc: any, index: any) => {
+                          {
+                            return (
+                              <tr key={index}>
+                                <th className="min-w-[2em] text-center text-lg">
+                                  {
+                                    searchData?.data?.cast[0]?.store_cast[0]
+                                      ?.cast[amc.cast_id].cast_code
+                                  }
+                                </th>
+                                <th className="min-w-[2em] text-center text-lg">
+                                  -
+                                </th>
+                                <th className="min-w-[4em] text-center text-lg">
+                                  {
+                                    searchData?.data?.cast[0]?.store_cast[0]
+                                      ?.cast[amc.cast_id].name
+                                  }
+                                </th>
+                                <th className="min-w-[4em] text-center text-lg">
+                                  在籍
+                                </th>
+                                <th className="min-w-[3.5em] text-center text-lg opacity-60">
+                                  {format(
+                                    amc.work_schedule_date_time_start,
+                                    "HH:mm"
+                                  )}
+                                </th>
+                                <th className="min-w-[3.5em] text-center text-lg opacity-60">
+                                  {format(
+                                    amc.work_schedule_date_time_end,
+                                    "HH:mm"
+                                  )}
+                                </th>
+                                <th className="min-w-[3.5em] text-center text-lg">
+                                  {format(amc.work_date_time_start, "HH:mm")}
+                                </th>
+                                <th className="min-w-[3.5em] text-center text-lg">
+                                  {format(amc.work_date_time_end, "HH:mm")}
+                                </th>
+                                <th className="min-w-[2em] text-center text-lg">
+                                  ×
+                                </th>
+                                <th className="min-w-[3.5em] text-center text-lg">
+                                  <input
+                                    type="text"
+                                    value="0"
+                                    className="w-[2em]"
+                                  />
+                                  分
+                                </th>
+                                <th className="min-w-[4em] text-center text-lg">
+                                  -
+                                </th>
+                                <th className="flex min-w-[4em] items-center justify-center text-center text-lg">
+                                  {amc.attendance_status == 0
+                                    ? ""
+                                    : amc.attendance_status == 1
+                                    ? "来店"
+                                    : amc.attendance_status == 2
+                                    ? "出勤"
+                                    : amc.attendance_status == 3
+                                    ? "退勤"
+                                    : ""}
+                                  <Button natural className={"ml-8"}>
+                                    {amc.attendance_status == 0
+                                      ? "来店"
+                                      : amc.attendance_status == 1
+                                      ? "出勤"
+                                      : amc.attendance_status == 2
+                                      ? "退勤"
+                                      : amc.attendance_status == 3
+                                      ? "退勤取り消し"
+                                      : ""}
+                                  </Button>
+                                </th>
+                                <th className="min-w-[4em] text-center text-lg">
+                                  <input
+                                    type="checkbox"
+                                    className="mt-[8px] h-[20px] w-[20px]"
+                                  />
+                                </th>
+                              </tr>
+                            );
+                          }
+                        }
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {searchASData?.data?.attendanceManagementStaff[0]?.store_attendance_management_staff[0]?.attendance_management_staff?.map(
+                        (amc: any, index: any) => {
+                          {
+                            return (
+                              <tr key={index}>
+                                <th className="min-w-[2em] text-center text-lg">
+                                  {
+                                    searchData?.data?.staff[0]?.store_staff[0]
+                                      ?.staff[amc.staff_id].staff_code
+                                  }
+                                </th>
+                                <th className="min-w-[2em] text-center text-lg">
+                                  -
+                                </th>
+                                <th className="min-w-[4em] text-center text-lg">
+                                  {
+                                    searchData?.data?.staff[0]?.store_staff[0]
+                                      ?.staff[amc.staff_id].name
+                                  }
+                                </th>
+                                <th className="min-w-[4em] text-center text-lg">
+                                  在籍
+                                </th>
+                                <th className="min-w-[3.5em] text-center text-lg opacity-60">
+                                  {format(
+                                    amc.work_schedule_date_time_start,
+                                    "HH:mm"
+                                  )}
+                                </th>
+                                <th className="min-w-[3.5em] text-center text-lg opacity-60">
+                                  {format(
+                                    amc.work_schedule_date_time_end,
+                                    "HH:mm"
+                                  )}
+                                </th>
+                                <th className="min-w-[3.5em] text-center text-lg">
+                                  {format(amc.work_date_time_start, "HH:mm")}
+                                </th>
+                                <th className="min-w-[3.5em] text-center text-lg">
+                                  {format(amc.work_date_time_end, "HH:mm")}
+                                </th>
+                                <th className="min-w-[2em] text-center text-lg">
+                                  ×
+                                </th>
+                                <th className="min-w-[3.5em] text-center text-lg">
+                                  <input
+                                    type="text"
+                                    value="0"
+                                    className="w-[2em]"
+                                  />
+                                  分
+                                </th>
+                                <th className="min-w-[4em] text-center text-lg">
+                                  -
+                                </th>
+                                <th className="flex min-w-[4em] items-center justify-center text-center text-lg">
+                                  {amc.attendance_status == 0
+                                    ? ""
+                                    : amc.attendance_status == 1
+                                    ? "来店"
+                                    : amc.attendance_status == 2
+                                    ? "出勤"
+                                    : amc.attendance_status == 3
+                                    ? "退勤"
+                                    : ""}
+                                  <Button natural className={"ml-8"}>
+                                    {amc.attendance_status == 0
+                                      ? "来店"
+                                      : amc.attendance_status == 1
+                                      ? "出勤"
+                                      : amc.attendance_status == 2
+                                      ? "退勤"
+                                      : amc.attendance_status == 3
+                                      ? "退勤取り消し"
+                                      : ""}
+                                  </Button>
+                                </th>
+                                <th className="min-w-[4em] text-center text-lg">
+                                  <input
+                                    type="checkbox"
+                                    className="mt-[8px] h-[20px] w-[20px]"
+                                  />
+                                </th>
+                              </tr>
+                            );
+                          }
+                        }
+                      )}
+                    </>
                   )}
                 </tbody>
               </table>

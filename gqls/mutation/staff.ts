@@ -1,6 +1,13 @@
 import { gql } from "graphql-request";
 
-export { createStaff, createSalaryStaff, updateStaff, updateSalaryStaff };
+export {
+  createStaff,
+  createSalaryStaff,
+  updateStaff,
+  updateSalaryStaff,
+  createAttendanceManagementStaff,
+  updateAttendanceManagementStaff,
+};
 
 const createStaff = gql`
   mutation (
@@ -133,6 +140,104 @@ const updateSalaryStaff = gql`
     ) {
       salary_staff {
         id
+      }
+    }
+  }
+`;
+
+const createAttendanceManagementStaff = gql`
+  mutation (
+    $store_code: Int!
+    $staff_id: Int!
+    $working_date: String!
+    $work_schedule_date_time_start: String
+    $work_schedule_date_time_end: String
+    $attendance_status: Int
+    $time_card_date_time_start: String
+    $time_card_date_time_end: String
+    $work_date_time_start: String
+    $work_date_time_end: String
+    $late_time: Int
+    $is_processed: Int
+  ) {
+    createAttendanceManagementStaff(
+      input: {
+        store_code: $store_code
+        staff_id: $staff_id
+        working_date: $working_date
+        work_schedule_date_time_start: $work_schedule_date_time_start
+        work_schedule_date_time_end: $work_schedule_date_time_end
+        attendance_status: $attendance_status
+        time_card_date_time_start: $time_card_date_time_start
+        time_card_date_time_end: $time_card_date_time_end
+        work_date_time_start: $work_date_time_start
+        work_date_time_end: $work_date_time_end
+        late_time: $late_time
+        is_processed: $is_processed
+      }
+    ) {
+      attendance_management_staff {
+        staff_id
+        id
+        attendance_status
+        is_processed
+        late_time
+        time_card_date_time_end
+        time_card_date_time_start
+        work_date_time_end
+        work_date_time_start
+        work_schedule_date_time_end
+        work_schedule_date_time_start
+        working_date
+      }
+    }
+  }
+`;
+
+const updateAttendanceManagementStaff = gql`
+  mutation (
+    $store_code: Int!
+    $id: Int!
+    $work_schedule_date_time_start: String
+    $work_schedule_date_time_end: String
+    $attendance_status: Int
+    $time_card_date_time_start: String
+    $time_card_date_time_end: String
+    $work_date_time_start: String
+    $work_date_time_end: String
+    $late_time: Int
+    $is_processed: Int
+    $is_leaving_work_cancel: Int
+  ) {
+    updateAttendanceManagementStaff(
+      input: {
+        store_code: $store_code
+        id: $id
+        work_schedule_date_time_start: $work_schedule_date_time_start
+        work_schedule_date_time_end: $work_schedule_date_time_end
+        attendance_status: $attendance_status
+        time_card_date_time_start: $time_card_date_time_start
+        time_card_date_time_end: $time_card_date_time_end
+        work_date_time_start: $work_date_time_start
+        work_date_time_end: $work_date_time_end
+        late_time: $late_time
+        is_processed: $is_processed
+        is_leaving_work_cancel: $is_leaving_work_cancel
+      }
+    ) {
+      attendance_management_staff {
+        staff_id
+        id
+        attendance_status
+        is_processed
+        late_time
+        time_card_date_time_end
+        time_card_date_time_start
+        work_date_time_end
+        work_date_time_start
+        work_schedule_date_time_end
+        work_schedule_date_time_start
+        working_date
       }
     }
   }
