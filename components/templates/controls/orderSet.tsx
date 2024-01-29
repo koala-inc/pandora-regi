@@ -348,26 +348,31 @@ export default function ControlOrderSet() {
                 className="mr-2 h-[30px] rounded-md px-2 text-sm"
               />
             </div>
-            <Toggle />
-            <div className="flex flex-col">
-              <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
-                {callTimeHour.map((pref) => {
-                  return (
-                    <option key={pref.prefCode} value={pref.prefCode}>
-                      {pref.prefName}
-                    </option>
-                  );
-                })}
-              </select>
-              <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
-                {callTimeMinite.map((pref) => {
-                  return (
-                    <option key={pref.prefCode} value={pref.prefCode}>
-                      {pref.prefName}
-                    </option>
-                  );
-                })}
-              </select>
+            <div className="flex">
+              <Toggle />
+              <div className="flex flex-col">
+                <div className="flex">
+                  <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
+                    {callTimeHour.map((pref) => {
+                      return (
+                        <option key={pref.prefCode} value={pref.prefCode}>
+                          {pref.prefName}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  :
+                  <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
+                    {callTimeMinite.map((pref) => {
+                      return (
+                        <option key={pref.prefCode} value={pref.prefCode}>
+                          {pref.prefName}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
           <div className="flex w-full">
