@@ -8,9 +8,28 @@ import { searchCast } from "@/gqls/query/cast";
 import client from "@/connection";
 import { RequestDocument } from "graphql-request";
 import useSWR, { preload } from "swr";
+import Image from "next/image";
 
 function ContentHeader({ children }: { children: any }) {
-  return <SubBorder size="h-[147.5px] max-w-[550px]">{children}</SubBorder>;
+  return (
+    <SubBorder size="h-[147.5px] mt-[0px] max-w-[550px]">{children}</SubBorder>
+  );
+}
+
+function Line({ ml }: { ml?: string }) {
+  return (
+    <div className={"w-full flex flex-1 justify-between items-center " + ml}>
+      <Image src={"/assets/line.svg"} width={26} height={26} alt="" />
+      <div className="h-[0.9px] w-[calc(100%-56px)] rounded-full bg-secondary"></div>
+      <Image
+        src={"/assets/line.svg"}
+        width={26}
+        height={26}
+        className="rotate-180"
+        alt=""
+      />
+    </div>
+  );
 }
 
 function Content({ children }: { children: any }) {
@@ -190,8 +209,8 @@ export default function ControlOrderSet() {
             -
           </a>
         </div>
-        <div className="mt-[-1px] flex min-h-[520px] min-w-[920px] max-w-[calc(100dvw-405px)] flex-wrap rounded-b-xl rounded-r-xl bg-primary p-4 text-white">
-          <div className="flex min-h-[150px] min-w-full items-center justify-start overflow-x-scroll rounded-md border border-white bg-black p-4">
+        <div className="mt-[-1px] flex min-h-[630px] min-w-[920px] max-w-[calc(100dvw-405px)] flex-wrap rounded-b-xl rounded-r-xl bg-primary p-4 text-white">
+          <div className="flex min-h-[100px] min-w-full items-center justify-start overflow-x-scroll rounded-md border border-white bg-black p-4">
             {/* <div
               className={
                 "mr-2 flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
@@ -214,7 +233,7 @@ export default function ControlOrderSet() {
               22:00~
             </div> */}
           </div>
-          <div className="flex flex-wrap">
+          <div className="flex h-[220px] flex-wrap">
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">区分</label>
               <div className="flex">
@@ -281,6 +300,7 @@ export default function ControlOrderSet() {
                 placeholder="チャージ料を入力"
               />
             </div>
+            <hr className="w-full opacity-0" />
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">人数</label>
               <input
@@ -329,134 +349,126 @@ export default function ControlOrderSet() {
                 className="mr-2 h-[30px] rounded-md px-2 text-sm"
               />
             </div>
-            <div className="flex">
-              <Toggle />
-              <div className="flex flex-col">
-                <div className="flex">
-                  <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
-                    {callTimeHour.map((pref) => {
-                      return (
-                        <option key={pref.prefCode} value={pref.prefCode}>
-                          {pref.prefName}
-                        </option>
-                      );
-                    })}
-                  </select>
-                  :
-                  <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
-                    {callTimeMinite.map((pref) => {
-                      return (
-                        <option key={pref.prefCode} value={pref.prefCode}>
-                          {pref.prefName}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
+            <div className="flex flex-col">
+              <div className="flex">
+                <Toggle />
+                <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
+                  {callTimeHour.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefCode}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
+                :
+                <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
+                  {callTimeMinite.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefCode}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
             </div>
           </div>
-          <div className="flex w-full">
+          <div className="flex w-full justify-around">
             <div className="flex flex-col">
-              <p className="text-xs font-bold text-accent">指名種</p>
-              <div className="flex flex-col rounded-md border border-white bg-black p-4">
+              <p className="mb-1 text-xs font-bold text-accent">指名種</p>
+              <div className="flex h-[235px] flex-col overflow-scroll rounded-md border border-white bg-black p-4">
                 <Button className="min-w-[5rem]" natural>
                   本指
                 </Button>
-                <Button className="min-w-[5rem]" natural>
+                <Button className="mt-2 min-w-[5rem]" natural>
                   同伴
                 </Button>
-                <Button className="min-w-[5rem]" natural>
+                <Button className="mt-2 min-w-[5rem]" natural>
                   場内
                 </Button>
               </div>
             </div>
             <div className="mx-4 flex flex-col">
-              <p className="text-xs font-bold text-accent">キャスト検索</p>
-              <div className="flex">
+              <p className="mb-1 text-xs font-bold text-accent">キャスト検索</p>
+              <div className="mt-4 flex w-[300px]">
                 <Button className="min-w-[5rem]" natural>
                   出勤
                 </Button>
-                <Button className="min-w-[5rem]" natural>
+                <Button className="ml-3 min-w-[5rem]" natural>
                   全て
                 </Button>
               </div>
-              <div className="mt-4 flex flex-col">
+              <div className="mt-6 flex flex-col rounded-md border border-white bg-black p-5">
                 <div className="flex justify-around">
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
+                      "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
                     あ
                   </div>
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
-                    }
-                  >
-                    は
-                  </div>
-                </div>
-                <div className="mt-4 flex justify-around">
-                  <div
-                    className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
+                      "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
                     か
                   </div>
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
-                    }
-                  >
-                    ま
-                  </div>
-                </div>
-                <div className="mt-4 flex justify-around">
-                  <div
-                    className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
+                      "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
                     さ
                   </div>
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
-                    }
-                  >
-                    や
-                  </div>
-                </div>
-                <div className="mt-4 flex justify-around">
-                  <div
-                    className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
+                      "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
                     た
                   </div>
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
+                      "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
-                    ら
+                    な
                   </div>
                 </div>
                 <div className="mt-4 flex justify-around">
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
+                      "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
-                    な
+                    は
                   </div>
                   <div
                     className={
-                      "flex cursor-pointer items-center justify-center rounded-md bg-natural p-2 text-2xl leading-4 tracking-wider text-accent"
+                      "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
+                    }
+                  >
+                    ま
+                  </div>
+                  <div
+                    className={
+                      "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
+                    }
+                  >
+                    や
+                  </div>
+                  <div
+                    className={
+                      "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
+                    }
+                  >
+                    ら
+                  </div>
+                  <div
+                    className={
+                      "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
                   >
                     わ
@@ -465,8 +477,8 @@ export default function ControlOrderSet() {
               </div>
             </div>
             <div className="mx-4 flex flex-col">
-              <p className="text-xs font-bold text-accent">キャスト検索</p>
-              <div className="flex w-[180px] flex-wrap justify-center rounded-md border border-white bg-black p-1 ">
+              <p className="mb-1 text-xs font-bold text-accent">キャスト検索</p>
+              <div className="flex max-h-[235px] w-[260px] flex-wrap justify-center overflow-scroll rounded-md border border-white bg-black p-2">
                 {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
                   (cast: any) => {
                     if (cast.leaving_date == null) {
@@ -475,7 +487,7 @@ export default function ControlOrderSet() {
                           {cast.cast_code != 0 && (
                             <div
                               className={
-                                "mx-1 my-2 flex h-[30px] w-[70px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 text-xs leading-4 tracking-wider"
+                                "m-2 flex h-[40px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 text-xs leading-4 tracking-wider"
                               }
                               onClick={() => {
                                 setSelectCast((selectCast: any) => [
@@ -495,57 +507,35 @@ export default function ControlOrderSet() {
               </div>
             </div>
             <div className="mx-4 flex flex-col">
-              <p className="text-xs font-bold text-accent">選択キャスト</p>
-              <div className="flex min-h-[200px] w-[250px] flex-col flex-wrap justify-start rounded-md border border-white bg-black p-1">
+              <p className="mb-1 text-xs font-bold text-accent">選択キャスト</p>
+              <div className="flex min-h-[200px] w-[350px] flex-col flex-wrap justify-start rounded-md border border-white bg-black p-1">
+                <div className="mt-1 flex px-2 text-xs text-accent">
+                  <p className="w-[180px]">キャスト名</p>
+                  <p className="mx-2 h-[25px] w-[30px] rounded-md text-center">
+                    個数
+                  </p>
+                  <p className="ml-5 h-[25px] w-[70px] rounded-md px-2">料金</p>
+                </div>
                 {selectCast.map((cast: any, index: any) => (
-                  <div className="flex p-2" key="index">
-                    <p className="w-[80px]">{cast}</p>
-                    <div
-                      className={
-                        "cursor-pointer rounded-md border border-black bg-black font-bold text-red-500"
-                      }
-                    >
-                      <div className="rounded-md border-2 border-secondary bg-secondary">
-                        <div
-                          className={
-                            "flex min-h-[10px] items-center justify-center rounded-md border border-black bg-natural px-1 text-xs leading-4 tracking-wider"
-                          }
-                        >
-                          -
-                        </div>
-                      </div>
-                    </div>
-                    <input
-                      type="number"
-                      className="mx-1 h-[25px] w-[30px] rounded-md"
-                    />
-                    <div
-                      className={
-                        "cursor-pointer rounded-md border border-black bg-black font-bold text-blue-500"
-                      }
-                    >
-                      <div className="rounded-md border-2 border-secondary bg-secondary">
-                        <div
-                          className={
-                            "flex min-h-[10px] items-center justify-center rounded-md border border-black bg-natural px-1 text-xs leading-4 tracking-wider"
-                          }
-                        >
-                          +
-                        </div>
-                      </div>
-                    </div>
+                  <div className="flex px-2" key="index">
+                    <p className="w-[180px]">{cast}</p>
                     <input
                       type="text"
-                      className="ml-2 h-[25px] w-[50px] rounded-md"
+                      className="mx-2 h-[25px] w-[30px] rounded-md text-center"
+                      defaultValue={1}
+                    />
+                    <input
+                      type="text"
+                      className="ml-5 h-[25px] w-[70px] rounded-md px-2 text-right"
                     />
                   </div>
                 ))}
               </div>
-              <div className="flex p-4">
+              <div className="flex w-full justify-end p-4">
                 <Button className="min-w-[5rem]" natural>
                   キャンセル
                 </Button>
-                <Button className="min-w-[5rem]" natural>
+                <Button className="ml-3 min-w-[5rem]" natural>
                   登録
                 </Button>
               </div>

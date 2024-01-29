@@ -54,6 +54,9 @@ function Base() {
   return (
     <>
       <section className="flex flex-1 flex-col text-xs"></section>
+      <div className="mb-1 flex w-full">
+        <Line />
+      </div>
       <nav className="mt-4 flex w-full items-center justify-center">
         <Button className="mr-2 min-w-[8rem]" natural disabled>
           キャンセル
