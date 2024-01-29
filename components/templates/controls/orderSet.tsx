@@ -296,7 +296,6 @@ export default function ControlOrderSet() {
               </label>
               <input
                 type="number"
-                {...register("age")}
                 className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                 placeholder="チャージ料を入力"
               />
@@ -305,7 +304,6 @@ export default function ControlOrderSet() {
               <label className="mt-3 text-xs font-bold text-accent">人数</label>
               <input
                 type="number"
-                {...register("age")}
                 defaultValue={1}
                 className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                 placeholder="人数を入力"
@@ -317,7 +315,6 @@ export default function ControlOrderSet() {
               </label>
               <input
                 type="number"
-                {...register("age")}
                 defaultValue={60}
                 className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                 placeholder="時間を入力"
@@ -328,7 +325,6 @@ export default function ControlOrderSet() {
               <label className="mt-3 text-xs font-bold text-accent">料金</label>
               <input
                 type="number"
-                {...register("age")}
                 className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                 placeholder="料金を入力"
               />
@@ -338,8 +334,7 @@ export default function ControlOrderSet() {
                 セット開始時間
               </label>
               <input
-                type="date"
-                {...register("birthday")}
+                type="time"
                 className="mr-2 h-[30px] rounded-md px-2 text-sm"
               />
               <p>〜</p>
@@ -349,17 +344,13 @@ export default function ControlOrderSet() {
                 終了時間
               </label>
               <input
-                type="date"
-                {...register("birthday")}
+                type="time"
                 className="mr-2 h-[30px] rounded-md px-2 text-sm"
               />
             </div>
             <Toggle />
             <div className="flex flex-col">
-              <select
-                {...register("baitai")}
-                className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
-              >
+              <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
                 {callTimeHour.map((pref) => {
                   return (
                     <option key={pref.prefCode} value={pref.prefCode}>
@@ -368,10 +359,7 @@ export default function ControlOrderSet() {
                   );
                 })}
               </select>
-              <select
-                {...register("baitai")}
-                className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
-              >
+              <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
                 {callTimeMinite.map((pref) => {
                   return (
                     <option key={pref.prefCode} value={pref.prefCode}>
@@ -490,27 +478,42 @@ export default function ControlOrderSet() {
                 </div>
               </div>
             </div>
-            <div className="flex flex-wrap justify-center">
-              {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
-                (cast: any) => {
-                  if (cast.leaving_date == null) {
-                    return (
-                      <>
-                        {cast.cast_code != 0 && (
-                          <div
-                            className={
-                              "mx-1 my-2 flex w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 text-xs leading-4 tracking-wider"
-                            }
-                            onClick={() => {}}
-                          >
-                            {cast.name}
-                          </div>
-                        )}
-                      </>
-                    );
+            <div className="mx-4 flex flex-col">
+              <p className="text-xs font-bold text-accent">キャスト検索</p>
+              <div className="flex w-[180px] flex-wrap justify-center rounded-md border border-white bg-black p-1 ">
+                {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
+                  (cast: any) => {
+                    if (cast.leaving_date == null) {
+                      return (
+                        <>
+                          {cast.cast_code != 0 && (
+                            <div
+                              className={
+                                "mx-1 my-2 flex h-[30px] w-[70px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 text-xs leading-4 tracking-wider"
+                              }
+                              onClick={() => {}}
+                            >
+                              {cast.name}
+                            </div>
+                          )}
+                        </>
+                      );
+                    }
                   }
-                }
-              )}
+                )}
+              </div>
+            </div>
+            <div className="mx-4 flex flex-col">
+              <p className="text-xs font-bold text-accent">選択キャスト</p>
+              <div className="flex min-h-[200px] w-[180px] flex-wrap justify-center rounded-md border border-white bg-black p-1"></div>
+              <div className="flex p-4">
+                <Button className="min-w-[5rem]" natural>
+                  キャンセル
+                </Button>
+                <Button className="min-w-[5rem]" natural>
+                  登録
+                </Button>
+              </div>
             </div>
           </div>
         </div>
