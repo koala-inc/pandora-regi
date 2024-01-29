@@ -4,6 +4,7 @@ import Card from "@/components/templates/card";
 
 // グローバルステート
 import useIsControlGlobal from "@/globalstates/isControl";
+import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 
 function Lists({
   lists,
@@ -50,43 +51,82 @@ function Line({ ml }: { ml?: string }) {
   );
 }
 
-function Base() {
-  return (
-    <>
-      <section className="flex flex-1 flex-col text-xs"></section>
-      <div className="mb-1 flex w-full">
-        <Line />
-      </div>
-      <nav className="mt-4 flex w-full items-center justify-center">
-        <Button className="mr-2 min-w-[8rem]" natural disabled>
-          キャンセル
-        </Button>
-        <div
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <Button className="min-w-[8rem]" natural>
-            確定
-          </Button>
-        </div>
-      </nav>
-    </>
-  );
-}
-
 export default function OrderSheetSet() {
   const [isControl, setIsControl] = useIsControlGlobal();
+  const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
 
   return (
     <Card>
       <div
         className="flex h-full w-[340px] flex-col font-bold"
-        onClick={() => {
-          if (isControl != "") setIsControl("");
-        }}
+        // onClick={() => {
+        //   if (isControl != "") setIsControl("");
+        // }}
       >
-        <Base />
+        <section className="flex flex-1 flex-col text-xs">
+          {purchaseOrder.map((order: any, index: any) => (
+            <div
+              key={index}
+              className="my-1 flex flex-wrap border border-white bg-black p-2"
+            >
+              <div className="mx-2 flex flex-col">
+                <p className="text-accent">卓番</p>
+                <p>A1</p>
+              </div>
+              <div className="mx-2 flex flex-col">
+                <p className="text-accent">人数</p>
+                <p>{order.num}</p>
+              </div>
+              <div className="mx-2 flex w-full flex-col">
+                <p className="text-accent">指名</p>
+                <p>{order.cast.map((cast: any) => cast.name + " ")}</p>
+              </div>
+              <div className="mx-2 flex flex-col">
+                <p className="text-accent">セット</p>
+                <p></p>
+              </div>
+              <div className="mx-2 flex flex-col">
+                <p className="text-accent">区分</p>
+                <p></p>
+              </div>
+              <hr className="w-full opacity-0" />
+              <div className="mx-2 flex flex-col">
+                <p className="text-accent">セット料金</p>
+                <p>
+                  {order.setTime}分　¥{order.price.toLocaleString()}{" "}
+                  {order.startTime}~{order.endTime}
+                </p>
+              </div>
+              <div className="mx-2 flex flex-col">
+                <p className="text-accent">コール</p>
+                <p>
+                  {order.callTimeHour}:{order.callTimeMinite}
+                </p>
+              </div>
+              <div className="mx-2 flex flex-col">
+                <p className="text-accent">ルームチャージ</p>
+                <p>{order.roomCharge}</p>
+              </div>
+            </div>
+          ))}
+        </section>
+        <div className="mb-1 flex w-full">
+          <Line />
+        </div>
+        <nav className="mt-4 flex w-full items-center justify-center">
+          <Button className="mr-2 min-w-[8rem]" natural disabled>
+            キャンセル
+          </Button>
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <Button className="min-w-[8rem]" natural>
+              確定
+            </Button>
+          </div>
+        </nav>
       </div>
     </Card>
   );

@@ -32,6 +32,7 @@ import { searchSalaryStaff, searchStaff } from "@/gqls/query/staff";
 import { searchUser } from "@/gqls/query/user";
 import { searchVisit } from "@/gqls/query/visit";
 import { createCast } from "@/gqls/mutation/cast";
+import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 
 export default function DebugMenu() {
   const [settings, setSettings] = useSettingsGlobal();
@@ -39,6 +40,7 @@ export default function DebugMenu() {
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isCard, setIsCard] = useIsCardGlobal();
   const [isControl] = useIsControlGlobal();
+  const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [activeTab, setActiveTab] = useState(0);
   const [activeTab2, setActiveTab2] = useState(0);
   const [result, setResult] = useState(0);
@@ -113,6 +115,10 @@ export default function DebugMenu() {
                 </li>
                 <li className="flex">
                   <div className="w-[6rem]">isControl</div>: {String(isControl)}
+                </li>
+                <li className="flex">
+                  <div className="w-[6rem]">purchaseOrder</div>:{" "}
+                  {JSON.stringify(purchaseOrder)}
                 </li>
               </ul>
             )}

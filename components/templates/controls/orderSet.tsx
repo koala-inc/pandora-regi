@@ -9,6 +9,7 @@ import client from "@/connection";
 import { RequestDocument } from "graphql-request";
 import useSWR, { preload } from "swr";
 import Image from "next/image";
+import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -41,6 +42,8 @@ const defaultVariables = {
 };
 
 export default function ControlOrderSet() {
+  const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+  const [order, setOrder] = useState<any>({});
   const [activeTab, setActiveTab] = useState(0);
 
   const fetcher = (q: RequestDocument) =>
@@ -298,6 +301,14 @@ export default function ControlOrderSet() {
                 type="number"
                 className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                 placeholder="チャージ料を入力"
+                onChange={(e) => {
+                  setOrder((order: any) => {
+                    return {
+                      ...order,
+                      roomCharge: Number(e.target.value),
+                    };
+                  });
+                }}
               />
             </div>
             <hr className="w-full opacity-0" />
@@ -305,9 +316,17 @@ export default function ControlOrderSet() {
               <label className="mt-3 text-xs font-bold text-accent">人数</label>
               <input
                 type="number"
-                defaultValue={1}
+                defaultValue={0}
                 className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                 placeholder="人数を入力"
+                onChange={(e) => {
+                  setOrder((order: any) => {
+                    return {
+                      ...order,
+                      num: Number(e.target.value),
+                    };
+                  });
+                }}
               />
             </div>
             <div className="flex flex-col">
@@ -316,9 +335,17 @@ export default function ControlOrderSet() {
               </label>
               <input
                 type="number"
-                defaultValue={60}
+                defaultValue={0}
                 className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                 placeholder="時間を入力"
+                onChange={(e) => {
+                  setOrder((order: any) => {
+                    return {
+                      ...order,
+                      setTime: Number(e.target.value),
+                    };
+                  });
+                }}
               />
               <p>分</p>
             </div>
@@ -328,6 +355,14 @@ export default function ControlOrderSet() {
                 type="number"
                 className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                 placeholder="料金を入力"
+                onChange={(e) => {
+                  setOrder((order: any) => {
+                    return {
+                      ...order,
+                      price: Number(e.target.value),
+                    };
+                  });
+                }}
               />
             </div>
             <div className="flex flex-col">
@@ -337,6 +372,14 @@ export default function ControlOrderSet() {
               <input
                 type="time"
                 className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                onChange={(e) => {
+                  setOrder((order: any) => {
+                    return {
+                      ...order,
+                      startTime: e.target.value,
+                    };
+                  });
+                }}
               />
               <p>〜</p>
             </div>
@@ -347,25 +390,53 @@ export default function ControlOrderSet() {
               <input
                 type="time"
                 className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                onChange={(e) => {
+                  setOrder((order: any) => {
+                    return {
+                      ...order,
+                      endTime: e.target.value,
+                    };
+                  });
+                }}
               />
             </div>
             <div className="flex flex-col">
               <div className="flex">
                 <Toggle />
-                <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
+                <select
+                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                  onChange={(e) => {
+                    setOrder((order: any) => {
+                      return {
+                        ...order,
+                        callTimeHour: e.target.value,
+                      };
+                    });
+                  }}
+                >
                   {callTimeHour.map((pref) => {
                     return (
-                      <option key={pref.prefCode} value={pref.prefCode}>
+                      <option key={pref.prefCode} value={pref.prefName}>
                         {pref.prefName}
                       </option>
                     );
                   })}
                 </select>
                 :
-                <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
+                <select
+                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                  onChange={(e) => {
+                    setOrder((order: any) => {
+                      return {
+                        ...order,
+                        callTimeMinite: e.target.value,
+                      };
+                    });
+                  }}
+                >
                   {callTimeMinite.map((pref) => {
                     return (
-                      <option key={pref.prefCode} value={pref.prefCode}>
+                      <option key={pref.prefCode} value={pref.prefName}>
                         {pref.prefName}
                       </option>
                     );
@@ -480,10 +551,10 @@ export default function ControlOrderSet() {
               <p className="mb-1 text-xs font-bold text-accent">キャスト検索</p>
               <div className="flex max-h-[235px] w-[260px] flex-wrap justify-center overflow-scroll rounded-md border border-white bg-black p-2">
                 {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
-                  (cast: any) => {
+                  (cast: any, index: any) => {
                     if (cast.leaving_date == null) {
                       return (
-                        <>
+                        <div key={index}>
                           {cast.cast_code != 0 && (
                             <div
                               className={
@@ -494,12 +565,18 @@ export default function ControlOrderSet() {
                                   ...selectCast,
                                   cast.name,
                                 ]);
+                                setOrder((order: any) => {
+                                  return {
+                                    ...order,
+                                    cast: selectCast,
+                                  };
+                                });
                               }}
                             >
                               {cast.name}
                             </div>
                           )}
-                        </>
+                        </div>
                       );
                     }
                   }
@@ -508,7 +585,7 @@ export default function ControlOrderSet() {
             </div>
             <div className="mx-4 flex flex-col">
               <p className="mb-1 text-xs font-bold text-accent">選択キャスト</p>
-              <div className="flex min-h-[200px] w-[350px] flex-col flex-wrap justify-start rounded-md border border-white bg-black p-1">
+              <div className="flex max-h-[200px] min-h-[200px] w-[350px] flex-col justify-start overflow-scroll rounded-md border border-white bg-black p-1">
                 <div className="mt-1 flex px-2 text-xs text-accent">
                   <p className="w-[180px]">キャスト名</p>
                   <p className="mx-2 h-[25px] w-[30px] rounded-md text-center">
@@ -517,7 +594,7 @@ export default function ControlOrderSet() {
                   <p className="ml-5 h-[25px] w-[70px] rounded-md px-2">料金</p>
                 </div>
                 {selectCast.map((cast: any, index: any) => (
-                  <div className="flex px-2" key="index">
+                  <div className="my-1 flex px-2" key={index}>
                     <p className="w-[180px]">{cast}</p>
                     <input
                       type="text"
@@ -535,7 +612,13 @@ export default function ControlOrderSet() {
                 <Button className="min-w-[5rem]" natural>
                   キャンセル
                 </Button>
-                <Button className="ml-3 min-w-[5rem]" natural>
+                <Button
+                  className="ml-3 min-w-[5rem]"
+                  natural
+                  onClick={() => {
+                    setPurchaseOrder([...purchaseOrder, order]);
+                  }}
+                >
                   登録
                 </Button>
               </div>
