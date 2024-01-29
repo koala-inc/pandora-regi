@@ -9,9 +9,5 @@ import useGlobal from "@/globalstates/useGlobal";
  */
 
 export default function usePurchaseOrderGlobal() {
-  return useGlobal("purchaseOrder", [
-    {
-      test: true,
-    },
-  ]);
+  return useGlobal("purchaseOrder", []);
 }

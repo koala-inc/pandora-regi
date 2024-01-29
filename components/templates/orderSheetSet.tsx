@@ -79,7 +79,7 @@ export default function OrderSheetSet() {
               </div>
               <div className="mx-2 flex w-full flex-col">
                 <p className="text-accent">指名</p>
-                <p>{order.cast.map((cast: any) => cast.name + " ")}</p>
+                <p>{order.cast?.map((cast: any) => cast.name + " ")}</p>
               </div>
               <div className="mx-2 flex flex-col">
                 <p className="text-accent">セット</p>
@@ -93,7 +93,7 @@ export default function OrderSheetSet() {
               <div className="mx-2 flex flex-col">
                 <p className="text-accent">セット料金</p>
                 <p>
-                  {order.setTime}分　¥{order.price.toLocaleString()}{" "}
+                  {order.setTime}分　¥{order.price?.toLocaleString()}{" "}
                   {order.startTime}~{order.endTime}
                 </p>
               </div>
