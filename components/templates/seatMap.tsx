@@ -20,8 +20,6 @@ export default function SeatMap() {
           <section
             id="map"
             onClick={() => {
-              if (isHeader) setIsHeader(false);
-              if (isFooter) setIsFooter(false);
               if (isCard) setIsCard(false);
               if (isControl == "") setIsControl("");
             }}

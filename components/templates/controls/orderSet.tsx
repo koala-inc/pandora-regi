@@ -1,12 +1,7 @@
 import { motion } from "framer-motion";
 import Border from "@/components/templates/border";
 import SubBorder from "@/components/templates/subBorder";
-import useIsHeaderGlobal from "@/globalstates/isHeader";
-import useIsFooterGlobal from "@/globalstates/isFooter";
 import Button from "../button";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Schema, schema } from "@/validations/test";
 import { useState } from "react";
 import Toggle from "../toggle";
 import { searchCast } from "@/gqls/query/cast";
@@ -27,18 +22,7 @@ const defaultVariables = {
 };
 
 export default function ControlOrderSet() {
-  const [isHeader, setIsHeader] = useIsHeaderGlobal();
-  const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [activeTab, setActiveTab] = useState(0);
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Schema>({
-    resolver: zodResolver(schema),
-  });
-  const onSubmit: SubmitHandler<Schema> = (data) => alert(JSON.stringify(data));
 
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
@@ -48,6 +32,7 @@ export default function ControlOrderSet() {
   const [searchForm, setSearchForm] = useState<any>({});
 
   const searchData = useSWR<any>(searchCast, fetcher);
+  const [selectCast, setSelectCast] = useState<any>([]);
 
   const seatAlphabet = [
     {
@@ -157,10 +142,6 @@ export default function ControlOrderSet() {
           delay: 0.15,
         }}
         className="absolute left-[390px] top-1/2 z-20 min-h-[745px] min-w-[calc(100dvw-425px)] -translate-y-1/2"
-        onClick={() => {
-          if (isHeader) setIsHeader(false);
-          if (isFooter) setIsFooter(false);
-        }}
       >
         <ContentHeader>
           <div className="flex items-end rounded-md border border-white bg-black px-8 py-4">
@@ -496,7 +477,12 @@ export default function ControlOrderSet() {
                               className={
                                 "mx-1 my-2 flex h-[30px] w-[70px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 text-xs leading-4 tracking-wider"
                               }
-                              onClick={() => {}}
+                              onClick={() => {
+                                setSelectCast((selectCast: any) => [
+                                  ...selectCast,
+                                  cast.name,
+                                ]);
+                              }}
                             >
                               {cast.name}
                             </div>
@@ -510,7 +496,51 @@ export default function ControlOrderSet() {
             </div>
             <div className="mx-4 flex flex-col">
               <p className="text-xs font-bold text-accent">選択キャスト</p>
-              <div className="flex min-h-[200px] w-[180px] flex-wrap justify-center rounded-md border border-white bg-black p-1"></div>
+              <div className="flex min-h-[200px] w-[250px] flex-col flex-wrap justify-start rounded-md border border-white bg-black p-1">
+                {selectCast.map((cast: any, index: any) => (
+                  <div className="flex p-2" key="index">
+                    <p className="w-[80px]">{cast}</p>
+                    <div
+                      className={
+                        "cursor-pointer rounded-md border border-black bg-black font-bold text-red-500"
+                      }
+                    >
+                      <div className="rounded-md border-2 border-secondary bg-secondary">
+                        <div
+                          className={
+                            "flex min-h-[10px] items-center justify-center rounded-md border border-black bg-natural px-1 text-xs leading-4 tracking-wider"
+                          }
+                        >
+                          -
+                        </div>
+                      </div>
+                    </div>
+                    <input
+                      type="number"
+                      className="mx-1 h-[25px] w-[30px] rounded-md"
+                    />
+                    <div
+                      className={
+                        "cursor-pointer rounded-md border border-black bg-black font-bold text-blue-500"
+                      }
+                    >
+                      <div className="rounded-md border-2 border-secondary bg-secondary">
+                        <div
+                          className={
+                            "flex min-h-[10px] items-center justify-center rounded-md border border-black bg-natural px-1 text-xs leading-4 tracking-wider"
+                          }
+                        >
+                          +
+                        </div>
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      className="ml-2 h-[25px] w-[50px] rounded-md"
+                    />
+                  </div>
+                ))}
+              </div>
               <div className="flex p-4">
                 <Button className="min-w-[5rem]" natural>
                   キャンセル

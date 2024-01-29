@@ -1,12 +1,8 @@
 import Image from "next/image";
-import Border from "./border";
 import Button from "./button";
-import Toggle from "./toggle";
 import Card from "@/components/templates/card";
 
 // グローバルステート
-import useIsHeaderGlobal from "@/globalstates/isHeader";
-import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsControlGlobal from "@/globalstates/isControl";
 
 function Lists({
@@ -55,10 +51,6 @@ function Line({ ml }: { ml?: string }) {
 }
 
 function Base() {
-  const [isHeader, setIsHeader] = useIsHeaderGlobal();
-  const [isFooter, setIsFooter] = useIsFooterGlobal();
-  const [isControl, setIsControl] = useIsControlGlobal();
-
   return (
     <>
       <section className="flex flex-1 flex-col text-xs"></section>
@@ -81,8 +73,6 @@ function Base() {
 }
 
 export default function OrderSheetSet() {
-  const [isHeader, setIsHeader] = useIsHeaderGlobal();
-  const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
 
   return (
@@ -90,8 +80,6 @@ export default function OrderSheetSet() {
       <div
         className="flex h-full w-[340px] flex-col font-bold"
         onClick={() => {
-          if (isHeader) setIsHeader(false);
-          if (isFooter) setIsFooter(false);
           if (isControl != "") setIsControl("");
         }}
       >
