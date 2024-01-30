@@ -23,7 +23,7 @@ export default function Seat({
 
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
 
-  const bg = isPurchaseOrder ? " bg-natural" : " bg-blue-300";
+  const bg = isPurchaseOrder ? " bg-natural" : " bg-blue-200 opacity-90";
 
   // 指名は0.5rem
   // 入退店は0.8rem
