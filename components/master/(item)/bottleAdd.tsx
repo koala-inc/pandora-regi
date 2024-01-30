@@ -1,8 +1,6 @@
 import Control from "@/components/master/(component)/control";
 import Border from "@/components/master/border";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Schema, schema } from "@/validations/test";
+import Border2 from "@/components/templates/border";
 import Button from "@/components/templates/button";
 import { useState } from "react";
 import Image from "next/image";
@@ -12,44 +10,14 @@ import { RequestDocument } from "graphql-request";
 import client from "@/connection";
 import { searchCategory } from "@/gqls/query/category";
 import useSWR, { preload } from "swr";
+import { createBottle, updateBottle } from "@/gqls/mutation/bottle";
+import { searchBottle } from "@/gqls/query/bottle";
 
 const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
 };
 
 export default function BottleAdd() {
-  const [addModal, setAddModal] = useState(false);
-
-  const baitais = [
-    {
-      prefCode: 1,
-      prefName: "媒体A",
-    },
-    {
-      prefCode: 2,
-      prefName: "媒体A",
-    },
-    {
-      prefCode: 3,
-      prefName: "媒体C",
-    },
-  ];
-
-  const syokai = [
-    {
-      prefCode: 1,
-      prefName: "紹介A",
-    },
-    {
-      prefCode: 2,
-      prefName: "紹介B",
-    },
-    {
-      prefCode: 3,
-      prefName: "紹介C",
-    },
-  ];
-
   const kikan = [
     {
       prefCode: 1,
@@ -87,6 +55,15 @@ export default function BottleAdd() {
   preload(searchCategory, fetcher);
 
   const searchData = useSWR<any>(searchCategory, fetcher);
+  const [searchForm, setSearchForm] = useState<any>({});
+  const [createForm, setCreateForm] = useState<any>({});
+  const [updateForm, setUpdateForm] = useState<any>({});
+
+  const createData = useSWR<any>(createBottle, fetcher);
+  const updateData = useSWR<any>(updateBottle, fetcher);
+
+  const [addModal, setAddModal] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false);
 
   return (
     <>
@@ -114,13 +91,25 @@ export default function BottleAdd() {
               <input
                 className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                 placeholder="ボトル名を入力"
+                onChange={(e) => {
+                  setSearchForm((searchForm: any) => {
+                    return { ...searchForm, name: e.target.value };
+                  });
+                }}
               />
             </div>
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">
                 小カテゴリ
               </label>
-              <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
+              <select
+                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                onChange={(e) => {
+                  setSearchForm((searchForm: any) => {
+                    return { ...searchForm, item_category_id: e.target.value };
+                  });
+                }}
+              >
                 {searchData?.data?.category[0]?.store_category[0]?.category?.map(
                   (category: any, index: any) => {
                     if (
@@ -154,11 +143,63 @@ export default function BottleAdd() {
                 })}
               </select>
             </div>
-            <div className="ml-auto mr-4 flex flex-col justify-end">
-              <Button natural>検索</Button>
+            <div
+              className="ml-auto mr-4 flex flex-col justify-end"
+              onClick={() => {
+                searchData.mutate(
+                  () =>
+                    client.request(searchBottle, {
+                      ...searchForm,
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
+            >
+              <Border2
+                rounded="rounded-full"
+                size="h-[32px] w-[32px] p-[4px] bg-search"
+              >
+                <Image
+                  src={"/assets/search.svg"}
+                  width={26}
+                  height={26}
+                  className="!h-full !w-full"
+                  alt=""
+                />
+              </Border2>
             </div>
-            <div className="mr-4 flex flex-col justify-end">
-              <Button natural>クリア</Button>
+            <div
+              className="mr-4 flex flex-col justify-end"
+              onClick={() => {
+                setSearchForm(() => {});
+                searchData.mutate(
+                  () =>
+                    client.request(searchBottle, {
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
+            >
+              <Border2
+                rounded="rounded-full"
+                size="h-[32px] w-[32px] p-[4px] bg-reset"
+              >
+                <Image
+                  src={"/assets/reset.svg"}
+                  width={26}
+                  height={26}
+                  className="!h-full !w-full"
+                  alt=""
+                />
+              </Border2>
             </div>
           </div>
         </Border>

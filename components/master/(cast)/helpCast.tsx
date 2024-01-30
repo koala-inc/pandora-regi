@@ -1,5 +1,6 @@
 import Control from "@/components/master/(component)/control";
 import Border from "@/components/master/border";
+import Border2 from "@/components/templates/border";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Schema, schema } from "@/validations/test";
@@ -413,10 +414,18 @@ export default function CastList() {
                 );
               }}
             >
-              <Button natural>
-                検索
-                {/* <input type="button" value="検索" /> */}
-              </Button>
+              <Border2
+                rounded="rounded-full"
+                size="h-[32px] w-[32px] p-[4px] bg-search"
+              >
+                <Image
+                  src={"/assets/search.svg"}
+                  width={26}
+                  height={26}
+                  className="!h-full !w-full"
+                  alt=""
+                />
+              </Border2>
             </div>
             <div
               className="mr-4 flex flex-col justify-end"
@@ -434,7 +443,18 @@ export default function CastList() {
                 );
               }}
             >
-              <Button natural>クリア</Button>
+              <Border2
+                rounded="rounded-full"
+                size="h-[32px] w-[32px] p-[4px] bg-reset"
+              >
+                <Image
+                  src={"/assets/reset.svg"}
+                  width={26}
+                  height={26}
+                  className="!h-full !w-full"
+                  alt=""
+                />
+              </Border2>
             </div>
             <div
               className="mr-4 flex flex-col justify-end"

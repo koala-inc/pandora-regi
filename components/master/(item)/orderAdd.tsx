@@ -1,8 +1,6 @@
 import Control from "@/components/master/(component)/control";
 import Border from "@/components/master/border";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Schema, schema } from "@/validations/test";
+import Border2 from "@/components/templates/border";
 import Button from "@/components/templates/button";
 import { useState } from "react";
 import Image from "next/image";
@@ -12,9 +10,6 @@ import { RequestDocument } from "graphql-request";
 import client from "@/connection";
 import { searchCategory } from "@/gqls/query/category";
 import useSWR, { preload } from "swr";
-import { createItemAlias } from "@/gqls/mutation/itemAlias";
-import { updateCast } from "@/gqls/mutation/cast";
-import { searchItemAlias } from "@/gqls/query/itemAlias";
 
 const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
@@ -71,23 +66,11 @@ export default function OrderAdd() {
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
 
-  preload(searchItemAlias, fetcher);
+  preload(searchCategory, fetcher);
 
-  const searchData = useSWR<any>(searchItemAlias, fetcher);
+  const searchData = useSWR<any>(searchCategory, fetcher);
 
-  const [createForm, setCreateForm] = useState<any>({});
-
-  const [searchForm, setSearchForm] = useState<any>({});
-  const [updateForm, setUpdateForm] = useState<any>({});
-  const [searchCategory, setSearchCategory] = useState("入店日");
-
-  const createData = useSWR<any>(createItemAlias, fetcher);
-  const updateData = useSWR<any>(updateCast, fetcher);
-
-  const [detail, setDetail] = useState(false);
-  const [leave, setLeave] = useState(false);
-
-  const [updateModal, setUpdateModal] = useState(false);
+  const createForm = useState<any>({});
 
   return (
     <>
@@ -115,31 +98,13 @@ export default function OrderAdd() {
               <input
                 className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                 placeholder="オーダー名を入力"
-                onChange={(e) => {
-                  setCreateForm((createForm: any) => {
-                    return {
-                      ...createForm,
-                      name: e.target.value,
-                    };
-                  });
-                }}
               />
             </div>
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">
                 小カテゴリ
               </label>
-              <select
-                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                onChange={(e) => {
-                  setCreateForm((createForm: any) => {
-                    return {
-                      ...createForm,
-                      category: e.target.value,
-                    };
-                  });
-                }}
-              >
+              <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
                 {searchData?.data?.category[0]?.store_category[0]?.category?.map(
                   (category: any, index: any) => {
                     if (
@@ -163,20 +128,10 @@ export default function OrderAdd() {
               <label className="mt-3 text-xs font-bold text-accent">
                 オーダー種別
               </label>
-              <select
-                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                onChange={(e) => {
-                  setCreateForm((createForm: any) => {
-                    return {
-                      ...createForm,
-                      orderCategory: e.target.value,
-                    };
-                  });
-                }}
-              >
+              <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
                 {syokai.map((pref) => {
                   return (
-                    <option key={pref.prefCode} value={pref.prefName}>
+                    <option key={pref.prefCode} value={pref.prefCode}>
                       {pref.prefName}
                     </option>
                   );
@@ -184,10 +139,32 @@ export default function OrderAdd() {
               </select>
             </div>
             <div className="ml-auto mr-4 flex flex-col justify-end">
-              <Button natural>検索</Button>
+              <Border2
+                rounded="rounded-full"
+                size="h-[32px] w-[32px] p-[4px] bg-search"
+              >
+                <Image
+                  src={"/assets/search.svg"}
+                  width={26}
+                  height={26}
+                  className="!h-full !w-full"
+                  alt=""
+                />
+              </Border2>
             </div>
             <div className="mr-4 flex flex-col justify-end">
-              <Button natural>クリア</Button>
+              <Border2
+                rounded="rounded-full"
+                size="h-[32px] w-[32px] p-[4px] bg-reset"
+              >
+                <Image
+                  src={"/assets/reset.svg"}
+                  width={26}
+                  height={26}
+                  className="!h-full !w-full"
+                  alt=""
+                />
+              </Border2>
             </div>
           </div>
         </Border>
@@ -266,31 +243,13 @@ export default function OrderAdd() {
                 <input
                   className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                   placeholder="オーダー名を入力"
-                  onChange={(e) => {
-                    setCreateForm((createForm: any) => {
-                      return {
-                        ...createForm,
-                        name: e.target.value,
-                      };
-                    });
-                  }}
                 />
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
                   小カテゴリ
                 </label>
-                <select
-                  className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                  onChange={(e) => {
-                    setCreateForm((createForm: any) => {
-                      return {
-                        ...createForm,
-                        category: e.target.value,
-                      };
-                    });
-                  }}
-                >
+                <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
                   {searchData?.data?.category[0]?.store_category[0]?.category?.map(
                     (category: any, index: any) => {
                       if (
@@ -314,20 +273,10 @@ export default function OrderAdd() {
                 <label className="mt-3 text-xs font-bold text-accent">
                   オーダー種別
                 </label>
-                <select
-                  className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                  onChange={(e) => {
-                    setCreateForm((createForm: any) => {
-                      return {
-                        ...createForm,
-                        orderCategory: e.target.value,
-                      };
-                    });
-                  }}
-                >
+                <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
                   {syokai.map((pref) => {
                     return (
-                      <option key={pref.prefCode} value={pref.prefName}>
+                      <option key={pref.prefCode} value={pref.prefCode}>
                         {pref.prefName}
                       </option>
                     );
@@ -345,58 +294,14 @@ export default function OrderAdd() {
                   料金
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                   placeholder="料金を入力"
-                  onChange={(e) => {
-                    setCreateForm((createForm: any) => {
-                      return {
-                        ...createForm,
-                        price: e.target.value,
-                      };
-                    });
-                  }}
                 />
               </div>
 
               <div className="ml-auto mr-4 flex flex-col justify-end">
-                <Button
-                  natural
-                  onClick={() => {
-                    createData
-                      .mutate(
-                        () =>
-                          client.request(createItemAlias, {
-                            ...createForm,
-                            ...defaultVariables,
-                          }),
-                        {
-                          populateCache: true,
-                          revalidate: false,
-                        }
-                      )
-                      .then(() => {
-                        setCreateForm(() => {});
-                        setSearchForm(() => {});
-                        searchData
-                          .mutate(
-                            () =>
-                              client.request(createItemAlias, {
-                                ...defaultVariables,
-                              }),
-                            {
-                              populateCache: true,
-                              revalidate: false,
-                            }
-                          )
-                          .then(() => {
-                            setAddModal(false);
-                          });
-                      });
-                  }}
-                >
-                  登録
-                </Button>
+                <Button natural>登録</Button>
               </div>
             </div>
           </Border>
