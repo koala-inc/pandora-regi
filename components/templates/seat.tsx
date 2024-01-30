@@ -2,6 +2,7 @@ import { useLongPress } from "use-long-press";
 
 import useIsCardGlobal from "@/globalstates/isCard";
 import useIsControlGlobal from "@/globalstates/isControl";
+import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
 
 export default function Seat({
   children,
@@ -20,13 +21,18 @@ export default function Seat({
     threshold: Number(process.env.NEXT_PUBLIC_LONG_TAP_MILLI_SECOND) || 1000,
   });
 
+  const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
+
+  const bg = isPurchaseOrder ? " bg-natural" : " bg-blue-300";
+
   // 指名は0.5rem
   // 入退店は0.8rem
   return (
     <div
       className={
-        "relative flex h-full w-full cursor-pointer items-center justify-center rounded-xl border border-black bg-natural font-bold text-accent shadow-md transition-all " +
-        area
+        "relative flex h-full w-full cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all " +
+        area +
+        bg
       }
       onClick={() => {
         setIsCard(true);

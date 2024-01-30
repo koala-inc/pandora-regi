@@ -6,6 +6,7 @@ import useIsCardGlobal from "@/globalstates/isCard";
 import Image from "next/image";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import useIsControlGlobal from "@/globalstates/isControl";
+import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
 
 export default function SeatMap() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();

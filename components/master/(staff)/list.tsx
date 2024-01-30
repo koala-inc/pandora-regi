@@ -1,6 +1,6 @@
 import Control from "@/components/master/(component)/control";
 import Border from "@/components/master/border";
-import { Schema, schema } from "@/validations/test";
+import Border2 from "@/components/templates/border";
 import Button from "@/components/templates/button";
 import { useState } from "react";
 import Image from "next/image";
@@ -360,7 +360,18 @@ export default function StaffList() {
                 );
               }}
             >
-              <Button natural>検索</Button>
+              <Border2
+                rounded="rounded-full"
+                size="h-[32px] w-[32px] p-[4px] bg-search"
+              >
+                <Image
+                  src={"/assets/search.svg"}
+                  width={26}
+                  height={26}
+                  className="!h-full !w-full"
+                  alt=""
+                />
+              </Border2>
             </div>
             <div
               className="mr-4 flex flex-col justify-end"
@@ -378,7 +389,18 @@ export default function StaffList() {
                 );
               }}
             >
-              <Button natural>クリア</Button>
+              <Border2
+                rounded="rounded-full"
+                size="h-[32px] w-[32px] p-[4px] bg-reset"
+              >
+                <Image
+                  src={"/assets/reset.svg"}
+                  width={26}
+                  height={26}
+                  className="!h-full !w-full"
+                  alt=""
+                />
+              </Border2>
             </div>
             <div
               className="mr-4 flex flex-col justify-end"
