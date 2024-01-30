@@ -20,6 +20,8 @@ import useIsCardGlobal from "@/globalstates/isCard";
 import useIsControlGlobal from "@/globalstates/isControl";
 import OrderSheetSet from "@/components/templates/orderSheetSet";
 import HomeButton from "@/components/templates/homeButton";
+import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
+import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
 
 function Control(isControl: any) {
   switch (isControl) {
@@ -69,6 +71,7 @@ export default function Home() {
   const [isFooter] = useIsFooterGlobal();
   const [isCard] = useIsCardGlobal();
   const [isControl] = useIsControlGlobal();
+  const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
 
   return (
     <main className="relative h-full w-full">
@@ -77,9 +80,15 @@ export default function Home() {
         {isFooter && !isCard && <Footer />}
         {isCard && (
           <>
-            <OrderSheetSet />
+            {isPurchaseOrder ? (
+              <>
+                <OrderSheetSet />
+                <OrderSet />
+              </>
+            ) : (
+              <OrderSheet />
+            )}
             {/* {Control(isControl)} */}
-            <OrderSet />
           </>
         )}
       </AnimatePresence>

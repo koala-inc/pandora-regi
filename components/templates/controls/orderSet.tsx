@@ -568,7 +568,7 @@ export default function ControlOrderSet() {
                                 setOrder((order: any) => {
                                   return {
                                     ...order,
-                                    cast: selectCast,
+                                    cast: [...selectCast, cast.name],
                                   };
                                 });
                               }}

@@ -8,6 +8,7 @@ import Card from "@/components/templates/card";
 import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsControlGlobal from "@/globalstates/isControl";
+import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 
 function Lists({
   lists,
@@ -58,6 +59,7 @@ function Base() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
+  const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
 
   return (
     <>
@@ -69,7 +71,7 @@ function Base() {
           <div className="flex h-1/2 w-full items-center justify-between text-xs">
             <div className="flex min-w-[4em] flex-col items-center justify-center">
               <p className="text-[0.5rem] text-accent">人数</p>
-              <p>1名</p>
+              <p>{purchaseOrder[0]?.num}名</p>
             </div>
             <div
               className="flex min-w-[7em] flex-col items-center justify-center"
@@ -79,17 +81,19 @@ function Base() {
               }}
             >
               <p className="text-[0.5rem] text-accent">時間</p>
-              <p>20:00〜23:00</p>
+              <p>
+                {purchaseOrder[0]?.startTime}~{purchaseOrder[0]?.endTime}
+              </p>
             </div>
             <div className="flex min-w-[5em] flex-col items-center justify-center">
               <p className="text-[0.5rem] text-accent">コール時間</p>
               <p className="inline-flex">
                 <div className="mr-[2px] rounded-sm border-[0.5px] border-secondary px-1">
-                  20
+                  {purchaseOrder[0]?.callTimeHour}
                 </div>
                 :
                 <div className="ml-[2px] rounded-sm border-[0.5px] border-secondary px-1">
-                  00
+                  {purchaseOrder[0]?.callTimeMinite}
                 </div>
               </p>
             </div>
@@ -252,100 +256,98 @@ function Base() {
           </div>
           <div className="flex h-[13.1%] max-h-[107px] min-h-[98px]">
             <Lists
-              lists={
-                [
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "A",
-                  //   subTitle: "◯",
-                  //   lot: 100,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "aaaaaaaaaA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 105500,
-                  // },
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 12,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "A",
-                  //   subTitle: "◯",
-                  //   lot: 100,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "aaaaaaaaaA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 105500,
-                  // },
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 12,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "A",
-                  //   subTitle: "◯",
-                  //   lot: 100,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "aaaaaaaaaA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 105500,
-                  // },
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 12,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                ]
-              }
+              lists={[
+                {
+                  title: purchaseOrder[0]?.cast[0],
+                  subTitle: "",
+                  lot: 1,
+                  price: 0,
+                },
+                // {
+                //   title: "A",
+                //   subTitle: "◯",
+                //   lot: 100,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "aaaaaaaaaA",
+                //   subTitle: "◯",
+                //   lot: 1,
+                //   price: 105500,
+                // },
+                // {
+                //   title: "キャストA",
+                //   subTitle: "◯",
+                //   lot: 12,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "キャストA",
+                //   subTitle: "◯",
+                //   lot: 1,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "キャストA",
+                //   subTitle: "◯",
+                //   lot: 1,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "A",
+                //   subTitle: "◯",
+                //   lot: 100,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "aaaaaaaaaA",
+                //   subTitle: "◯",
+                //   lot: 1,
+                //   price: 105500,
+                // },
+                // {
+                //   title: "キャストA",
+                //   subTitle: "◯",
+                //   lot: 12,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "キャストA",
+                //   subTitle: "◯",
+                //   lot: 1,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "キャストA",
+                //   subTitle: "◯",
+                //   lot: 1,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "A",
+                //   subTitle: "◯",
+                //   lot: 100,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "aaaaaaaaaA",
+                //   subTitle: "◯",
+                //   lot: 1,
+                //   price: 105500,
+                // },
+                // {
+                //   title: "キャストA",
+                //   subTitle: "◯",
+                //   lot: 12,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "キャストA",
+                //   subTitle: "◯",
+                //   lot: 1,
+                //   price: 1000,
+                // },
+              ]}
             />
             <div
               className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
