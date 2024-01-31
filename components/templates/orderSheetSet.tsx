@@ -104,9 +104,7 @@ export default function OrderSheetSet() {
                 </div>
                 <div className="mx-2 flex flex-col">
                   <p className="text-accent">コール</p>
-                  <p>
-                    {order.callTimeHour}:{order.callTimeMinite}
-                  </p>
+                  <p>{order.callTime}</p>
                 </div>
                 <div className="mx-2 flex flex-col">
                   <p className="text-accent">ルームチャージ</p>

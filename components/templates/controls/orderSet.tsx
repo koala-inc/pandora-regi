@@ -168,9 +168,11 @@ export default function ControlOrderSet() {
         <ContentHeader>
           <div className="flex items-end rounded-md border border-white bg-black px-8 py-4">
             <div className="flex flex-col justify-end">
-              <label className="mt-3 text-xs font-bold text-accent">卓番</label>
+              <label className="mt-3 mb-1 text-xs font-bold text-accent">
+                卓番
+              </label>
               <div className="flex">
-                <select className="mr-2 h-[60px] w-[60px] rounded-md bg-black px-2 text-center text-4xl font-bold text-white">
+                <select className="mr-2 h-[45px] w-[60px] rounded-md bg-black px-2 text-center text-4xl font-bold text-white">
                   {seatAlphabet.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefCode}>
@@ -179,7 +181,7 @@ export default function ControlOrderSet() {
                     );
                   })}
                 </select>
-                <select className="mr-2 h-[60px] w-[60px] rounded-md bg-black px-2 text-center text-4xl font-bold text-white">
+                <select className="mr-2 h-[45px] w-[60px] rounded-md bg-black px-2 text-center text-4xl font-bold text-white">
                   {seatNumber.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefCode}>
@@ -236,11 +238,13 @@ export default function ControlOrderSet() {
               22:00~
             </div> */}
           </div>
-          <div className="flex h-[220px] flex-wrap">
+          <div className="flex h-[220px] mt-[-30px] px-2 mb-[30px] flex-wrap py-10 justify-start">
             <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">区分</label>
+              <label className="mt-3 mb-1 text-xs font-bold text-accent">
+                区分
+              </label>
               <div className="flex">
-                <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
+                <select className="mr-1 h-[45px] w-[7rem] rounded-md px-2 text-xl">
                   {type.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefCode}>
@@ -249,8 +253,8 @@ export default function ControlOrderSet() {
                     );
                   })}
                 </select>
-                <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
-                  {staff.map((pref) => {
+                <select className="mr-8 h-[45px] w-[7rem] rounded-md px-2 text-xl">
+                  {type.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefCode}>
                         {pref.prefName}
@@ -261,18 +265,27 @@ export default function ControlOrderSet() {
               </div>
             </div>
             <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">
+              <label className="mt-3 mb-1 text-xs font-bold text-accent">
                 販売促進スタッフ
               </label>
               <div className="relative flex">
+                <select className="mr-1 h-[45px] w-[10rem] rounded-md px-2 text-xl">
+                  {staff.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefCode}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
                 <div className="flex flex-col">
                   <input
                     type="text"
-                    className="mr-2 h-[30px] w-[12rem] rounded-md px-2 text-sm"
+                    className="mr-8 h-[45px] w-[19rem] rounded-md px-2 text-xl"
                     placeholder="スタッフ"
                   />
                 </div>
-                <div className="badge badge-info absolute left-[10px] top-[5px] w-[120px] gap-2">
+                {/* <div className="badge badge-info absolute left-[10px] top-[5px] w-[120px] gap-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -287,19 +300,19 @@ export default function ControlOrderSet() {
                     ></path>
                   </svg>
                   スタッフ名
-                </div>
+                </div> */}
               </div>
             </div>
             {/* <div>
               <input type="checkbox" className="checkbox checkbox-md" />
             </div> */}
             <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">
+              <label className="mt-3 mb-1 text-xs font-bold text-accent">
                 ルームチャージ
               </label>
               <input
                 type="number"
-                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                className="mr-4 h-[45px] w-[14rem] rounded-md px-2 text-xl"
                 placeholder="チャージ料を入力"
                 onChange={(e) => {
                   setOrder((order: any) => {
@@ -313,11 +326,13 @@ export default function ControlOrderSet() {
             </div>
             <hr className="w-full opacity-0" />
             <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">人数</label>
+              <label className="mt-3 mb-1 text-xs font-bold text-accent">
+                人数
+              </label>
               <input
                 type="number"
                 defaultValue={0}
-                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                className="mr-4 h-[45px] w-[6rem] rounded-md px-2 text-xl"
                 placeholder="人数を入力"
                 onChange={(e) => {
                   setOrder((order: any) => {
@@ -330,13 +345,13 @@ export default function ControlOrderSet() {
               />
             </div>
             <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">
+              <label className="mt-3 mb-1 text-xs font-bold text-accent">
                 セット時間
               </label>
               <input
                 type="number"
                 defaultValue={0}
-                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                className="mr-4 h-[45px] w-[6rem] rounded-md px-2 text-xl"
                 placeholder="時間を入力"
                 onChange={(e) => {
                   setOrder((order: any) => {
@@ -347,13 +362,14 @@ export default function ControlOrderSet() {
                   });
                 }}
               />
-              <p>分</p>
             </div>
             <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">料金</label>
+              <label className="mt-3 mb-1 text-xs font-bold text-accent">
+                料金
+              </label>
               <input
                 type="number"
-                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                className="mr-4 h-[45px] w-[12rem] rounded-md px-2 text-xl"
                 placeholder="料金を入力"
                 onChange={(e) => {
                   setOrder((order: any) => {
@@ -365,83 +381,61 @@ export default function ControlOrderSet() {
                 }}
               />
             </div>
-            <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">
-                セット開始時間
-              </label>
-              <input
-                type="time"
-                className="mr-2 h-[30px] rounded-md px-2 text-sm"
-                onChange={(e) => {
-                  setOrder((order: any) => {
-                    return {
-                      ...order,
-                      startTime: e.target.value,
-                    };
-                  });
-                }}
-              />
-              <p>〜</p>
+            <div className="flex">
+              <div className="flex flex-col">
+                <label className="mt-3 mb-1 text-xs font-bold text-accent">
+                  セット開始時間
+                </label>
+                <input
+                  type="time"
+                  className="mr-4 h-[45px] rounded-md px-2 text-xl"
+                  onChange={(e) => {
+                    setOrder((order: any) => {
+                      return {
+                        ...order,
+                        startTime: e.target.value,
+                      };
+                    });
+                  }}
+                />
+              </div>
+              <p className="text-sm mr-4 mt-[40px]">〜</p>
+              <div className="flex flex-col">
+                <label className="mt-3 mb-1 text-xs font-bold text-accent">
+                  終了時間
+                </label>
+                <input
+                  type="time"
+                  className="mr-8 h-[45px] rounded-md px-2 text-xl"
+                  onChange={(e) => {
+                    setOrder((order: any) => {
+                      return {
+                        ...order,
+                        endTime: e.target.value,
+                      };
+                    });
+                  }}
+                />
+              </div>
             </div>
             <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">
-                終了時間
+              <label className="mt-3 mb-1 text-xs font-bold text-accent">
+                コール時間
               </label>
-              <input
-                type="time"
-                className="mr-2 h-[30px] rounded-md px-2 text-sm"
-                onChange={(e) => {
-                  setOrder((order: any) => {
-                    return {
-                      ...order,
-                      endTime: e.target.value,
-                    };
-                  });
-                }}
-              />
-            </div>
-            <div className="flex flex-col">
               <div className="flex">
                 <Toggle />
-                <select
-                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                <input
+                  type="time"
+                  className="ml-4 mr-4 h-[45px] rounded-md px-2 text-xl"
                   onChange={(e) => {
                     setOrder((order: any) => {
                       return {
                         ...order,
-                        callTimeHour: e.target.value,
+                        callTime: e.target.value,
                       };
                     });
                   }}
-                >
-                  {callTimeHour.map((pref) => {
-                    return (
-                      <option key={pref.prefCode} value={pref.prefName}>
-                        {pref.prefName}
-                      </option>
-                    );
-                  })}
-                </select>
-                :
-                <select
-                  className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
-                  onChange={(e) => {
-                    setOrder((order: any) => {
-                      return {
-                        ...order,
-                        callTimeMinite: e.target.value,
-                      };
-                    });
-                  }}
-                >
-                  {callTimeMinite.map((pref) => {
-                    return (
-                      <option key={pref.prefCode} value={pref.prefName}>
-                        {pref.prefName}
-                      </option>
-                    );
-                  })}
-                </select>
+                />
               </div>
             </div>
           </div>
@@ -547,7 +541,7 @@ export default function ControlOrderSet() {
                 </div>
               </div>
             </div>
-            <div className="mx-4 flex flex-col">
+            <div className="mx-2 flex flex-col">
               <p className="mb-1 text-xs font-bold text-accent">キャスト検索</p>
               <div className="flex max-h-[235px] w-[260px] flex-wrap justify-center overflow-scroll rounded-md border border-white bg-black p-2">
                 {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
