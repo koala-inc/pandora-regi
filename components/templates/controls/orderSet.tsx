@@ -14,7 +14,7 @@ import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 
 function ContentHeader({ children }: { children: any }) {
   return (
-    <SubBorder size="h-[110px] mt-[0px] max-w-[550px]">{children}</SubBorder>
+    <SubBorder size="h-[110px] mt-[-2px] max-w-[550px]">{children}</SubBorder>
   );
 }
 
@@ -164,7 +164,7 @@ export default function ControlOrderSet() {
           duration: 0.15,
           delay: 0.15,
         }}
-        className="absolute left-[390px] top-1/2 z-20 min-h-[745px] min-w-[calc(100dvw-425px)] -translate-y-1/2"
+        className="absolute left-[390px] top-1/2 z-20 min-w-[calc(100dvw-425px)] -translate-y-1/2"
       >
         <ContentHeader>
           <div className="flex items-end rounded-md border border-white bg-black px-8 py-3">
@@ -213,8 +213,8 @@ export default function ControlOrderSet() {
             -
           </a>
         </div>
-        <div className="mt-[-1px] flex min-h-[630px] min-w-[920px] max-w-[calc(100dvw-405px)] flex-wrap rounded-b-xl rounded-r-xl bg-primary p-4 text-white">
-          <div className="flex min-h-[100px] min-w-full items-center justify-start overflow-x-scroll rounded-md border border-white bg-black p-4">
+        <div className="mt-[-1px] flex min-h-[670px] min-w-[920px] max-w-[calc(100dvw-405px)] flex-wrap rounded-b-xl rounded-r-xl bg-primary px-4 pt-6 pb-0 text-white">
+          <div className="mt-2 flex min-h-[100px] min-w-full items-center justify-start overflow-x-scroll rounded-md border border-white bg-black p-4">
             {/* <div
               className={
                 "mr-2 flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
@@ -548,13 +548,15 @@ export default function ControlOrderSet() {
               <div className="flex max-h-[235px] w-[260px] flex-wrap justify-center overflow-scroll rounded-md border border-white bg-black p-2">
                 {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
                   (cast: any, index: any) => {
+                    const size = cast.name.length > 3 ? "text-xs" : "text-lg";
                     if (cast.leaving_date == null) {
                       return (
                         <div key={index}>
                           {cast.cast_code != 0 && (
                             <div
                               className={
-                                "m-2 flex h-[40px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 text-xs leading-4 tracking-wider"
+                                "m-2 flex h-[40px] w-[100px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider " +
+                                size
                               }
                               onClick={() => {
                                 setSelectCast((selectCast: any) => [
