@@ -441,7 +441,7 @@ export default function ControlOrderSet() {
           <div className="w-full mb-6 flex justify-center mt-[-30px] ml-[20px] opacity-50">
             <Line />
           </div>
-          <div className="flex w-full justify-around">
+          <div className="flex w-full justify-around px-2">
             <div className="flex flex-col">
               <p className="mb-1 text-xs font-bold text-accent">指名種</p>
               <div className="flex h-[235px] flex-col overflow-scroll rounded-md border border-white bg-black p-4">
