@@ -1138,7 +1138,7 @@ export default function CastList() {
                 >
                   <Border2
                     rounded="rounded-full"
-                    size="h-[32px] w-[32px] p-[4px] bg-reset"
+                    size="h-[32px] w-[32px] p-[4px] bg-complate"
                   >
                     <Image
                       src={"/assets/complate.svg"}
@@ -1434,7 +1434,7 @@ export default function CastList() {
                 >
                   <Border2
                     rounded="rounded-full"
-                    size="h-[32px] w-[32px] p-[4px] bg-reset"
+                    size="h-[32px] w-[32px] p-[4px] bg-complate"
                   >
                     <Image
                       src={"/assets/complate.svg"}
