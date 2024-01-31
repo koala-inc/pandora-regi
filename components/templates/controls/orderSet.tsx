@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Border from "@/components/templates/border";
+import Border2 from "@/components/templates/border";
 import SubBorder from "@/components/templates/subBorder";
 import Button from "../button";
 import { useState } from "react";
@@ -13,7 +14,7 @@ import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 
 function ContentHeader({ children }: { children: any }) {
   return (
-    <SubBorder size="h-[147.5px] mt-[0px] max-w-[550px]">{children}</SubBorder>
+    <SubBorder size="h-[110px] mt-[0px] max-w-[550px]">{children}</SubBorder>
   );
 }
 
@@ -166,11 +167,9 @@ export default function ControlOrderSet() {
         className="absolute left-[390px] top-1/2 z-20 min-h-[745px] min-w-[calc(100dvw-425px)] -translate-y-1/2"
       >
         <ContentHeader>
-          <div className="flex items-end rounded-md border border-white bg-black px-8 py-4">
+          <div className="flex items-end rounded-md border border-white bg-black px-8 py-3">
             <div className="flex flex-col justify-end">
-              <label className="mt-3 mb-1 text-xs font-bold text-accent">
-                卓番
-              </label>
+              <label className="mb-1 text-xs font-bold text-accent">卓番</label>
               <div className="flex">
                 <select className="mr-2 h-[45px] w-[60px] rounded-md bg-black px-2 text-center text-4xl font-bold text-white">
                   {seatAlphabet.map((pref) => {
@@ -603,18 +602,39 @@ export default function ControlOrderSet() {
                 ))}
               </div>
               <div className="flex w-full justify-end p-4">
-                <Button className="min-w-[5rem]" natural>
-                  キャンセル
-                </Button>
-                <Button
-                  className="ml-3 min-w-[5rem]"
-                  natural
+                <div className="mr-4">
+                  <Border2
+                    rounded="rounded-full"
+                    size="h-[36px] w-[36px] p-[6px] bg-reset"
+                  >
+                    <Image
+                      src={"/assets/reset.svg"}
+                      width={26}
+                      height={26}
+                      className="!h-full !w-full"
+                      alt=""
+                    />
+                  </Border2>
+                </div>
+                <div
                   onClick={() => {
                     setPurchaseOrder([...purchaseOrder, order]);
                   }}
                 >
-                  登録
-                </Button>
+                  <Border2
+                    complate
+                    rounded="rounded-full"
+                    size="h-[36px] w-[36px] p-[6px]"
+                  >
+                    <Image
+                      src={"/assets/complate.svg"}
+                      width={26}
+                      height={26}
+                      className="!h-full !w-full"
+                      alt=""
+                    />
+                  </Border2>
+                </div>
               </div>
             </div>
           </div>
