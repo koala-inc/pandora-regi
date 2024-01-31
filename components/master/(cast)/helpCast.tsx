@@ -1136,7 +1136,18 @@ export default function CastList() {
                       });
                   }}
                 >
-                  <Button natural>登録</Button>
+                  <Border2
+                    rounded="rounded-full"
+                    size="h-[32px] w-[32px] p-[4px] bg-complate"
+                  >
+                    <Image
+                      src={"/assets/complate.svg"}
+                      width={26}
+                      height={26}
+                      className="!h-full !w-full"
+                      alt=""
+                    />
+                  </Border2>
                 </div>
               </div>
             </div>
@@ -1421,7 +1432,18 @@ export default function CastList() {
                       });
                   }}
                 >
-                  <Button natural>更新</Button>
+                  <Border2
+                    rounded="rounded-full"
+                    size="h-[32px] w-[32px] p-[4px] bg-complate"
+                  >
+                    <Image
+                      src={"/assets/complate.svg"}
+                      width={26}
+                      height={26}
+                      className="!h-full !w-full"
+                      alt=""
+                    />
+                  </Border2>
                 </div>
               </div>
             </div>
