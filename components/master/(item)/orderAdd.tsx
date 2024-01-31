@@ -303,7 +303,7 @@ export default function OrderAdd() {
               <div className="ml-auto mr-4 flex flex-col justify-end">
                 <Border2
                   rounded="rounded-full"
-                  size="h-[32px] w-[32px] p-[4px] !bg-complate"
+                  size="h-[32px] w-[32px] p-[4px] bg-complate"
                 >
                   <Image
                     src={"/assets/complate.svg"}

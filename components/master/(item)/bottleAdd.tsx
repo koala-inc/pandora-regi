@@ -488,8 +488,9 @@ export default function BottleAdd() {
                 }}
               >
                 <Border2
+                  complate
                   rounded="rounded-full"
-                  size="h-[32px] w-[32px] p-[4px] !bg-complate"
+                  size="h-[32px] w-[32px] p-[4px]"
                 >
                   <Image
                     src={"/assets/complate.svg"}
