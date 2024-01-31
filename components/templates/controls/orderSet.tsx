@@ -21,15 +21,15 @@ function ContentHeader({ children }: { children: any }) {
 function Line({ ml }: { ml?: string }) {
   return (
     <div className={"w-full flex flex-1 justify-between items-center " + ml}>
-      <Image src={"/assets/line.svg"} width={26} height={26} alt="" />
-      <div className="h-[0.9px] w-[calc(100%-56px)] rounded-full bg-secondary"></div>
-      <Image
+      {/* <Image src={"/assets/line.svg"} width={26} height={26} alt="" /> */}
+      <div className="h-[0.9px] w-[calc(100%-56px)] rounded-full bg-white"></div>
+      {/* <Image
         src={"/assets/line.svg"}
         width={26}
         height={26}
         className="rotate-180"
         alt=""
-      />
+      /> */}
     </div>
   );
 }
@@ -437,6 +437,9 @@ export default function ControlOrderSet() {
                 />
               </div>
             </div>
+          </div>
+          <div className="w-full mb-6 flex justify-center mt-[-30px] ml-[20px] opacity-50">
+            <Line />
           </div>
           <div className="flex w-full justify-around">
             <div className="flex flex-col">
