@@ -603,6 +603,18 @@ export default function ControlOrderSet() {
                       type="text"
                       className="ml-5 h-[25px] w-[70px] rounded-md px-2 text-right"
                     />
+                    <div
+                      className="ml-3 text-red-800"
+                      onClick={() => {
+                        setSelectCast((selectCast: any) =>
+                          selectCast.filter((castRes: any) => {
+                            return castRes !== cast;
+                          })
+                        );
+                      }}
+                    >
+                      ×
+                    </div>
                   </div>
                 ))}
               </div>
