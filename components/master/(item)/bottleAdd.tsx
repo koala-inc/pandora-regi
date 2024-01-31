@@ -53,8 +53,10 @@ export default function BottleAdd() {
     client.request(q, { ...defaultVariables });
 
   preload(searchCategory, fetcher);
+  preload(searchBottle, fetcher);
 
-  const searchData = useSWR<any>(searchCategory, fetcher);
+  const searchData = useSWR<any>(searchBottle, fetcher);
+  const searchData2 = useSWR<any>(searchCategory, fetcher);
   const [searchForm, setSearchForm] = useState<any>({});
   const [createForm, setCreateForm] = useState<any>({});
   const [updateForm, setUpdateForm] = useState<any>({});
@@ -106,11 +108,14 @@ export default function BottleAdd() {
                 className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                 onChange={(e) => {
                   setSearchForm((searchForm: any) => {
-                    return { ...searchForm, item_category_id: e.target.value };
+                    return {
+                      ...searchForm,
+                      item_category_id: Number(e.target.value),
+                    };
                   });
                 }}
               >
-                {searchData?.data?.category[0]?.store_category[0]?.category?.map(
+                {searchData2?.data?.category[0]?.store_category[0]?.category?.map(
                   (category: any, index: any) => {
                     if (
                       category.category_revision.parent_id != 0 &&
@@ -119,7 +124,7 @@ export default function BottleAdd() {
                       return (
                         <option
                           key={index}
-                          value={category.category_revision.name}
+                          value={category.category_revision.item_category_id}
                         >
                           {category.category_revision.name}
                         </option>
@@ -209,7 +214,7 @@ export default function BottleAdd() {
           size="p-4 flex flex-col min-h-[calc(98dvh-240px)] overflow-scroll"
           black
         >
-          <table className="table table-xs fixed z-10 -mt-[17px] h-[45px] w-[94%] rounded-none bg-neutral-900">
+          <table className="table table-xs fixed z-10 -mt-[16px] h-[45px] w-[94%] rounded-none bg-neutral-900">
             {/* head */}
             <thead>
               <tr className="text-accent">
@@ -244,7 +249,46 @@ export default function BottleAdd() {
                 </th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              {searchData?.data?.bottle[0]?.store_bottle[0]?.bottle?.map(
+                (bottle: any, index: any) => {
+                  return (
+                    <tr key={index}>
+                      <th>{bottle.bottle_revision.item_code}</th>
+                      <th>{bottle.bottle_revision.name}</th>
+                      <th>
+                        {searchData2?.data?.category[0]?.store_category[0]?.category?.map(
+                          (category: any, index: any) => {
+                            if (
+                              category.category_revision.item_category_id ==
+                              bottle.bottle_revision.item_category_id
+                            ) {
+                              return <>{category.category_revision.name}</>;
+                            }
+                          }
+                        )}
+                      </th>
+                      <th>-</th>
+                      <th>-</th>
+                      <th>{bottle.bottle_revision.cost}</th>
+                      <th>{bottle.bottle_revision.price}</th>
+                      <th>-</th>
+                      <th>
+                        <button
+                          className="btn btn-ghost btn-xs"
+                          onClick={() => {
+                            setUpdateForm(() => bottle);
+                            setUpdateModal(true);
+                          }}
+                        >
+                          編集
+                        </button>
+                      </th>
+                    </tr>
+                  );
+                }
+              )}
+            </tbody>
           </table>
         </Border>
       </Control>
@@ -273,6 +317,15 @@ export default function BottleAdd() {
                   type="number"
                   className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                   placeholder="IDを入力"
+                  onChange={(e) => {
+                    setCreateForm((createForm: any) => {
+                      return {
+                        ...createForm,
+                        item_code: e.target.value,
+                      };
+                    });
+                  }}
+                  value={createForm?.item_code || ""}
                 />
               </div>
               <div className="flex flex-col">
@@ -282,14 +335,34 @@ export default function BottleAdd() {
                 <input
                   className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                   placeholder="ボトル名を入力"
+                  onChange={(e) => {
+                    setCreateForm((createForm: any) => {
+                      return {
+                        ...createForm,
+                        name: e.target.value,
+                      };
+                    });
+                  }}
+                  value={createForm?.name || ""}
                 />
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
                   小カテゴリ
                 </label>
-                <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
-                  {searchData?.data?.category[0]?.store_category[0]?.category?.map(
+                <select
+                  className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                  onChange={(e) => {
+                    setCreateForm((createForm: any) => {
+                      return {
+                        ...createForm,
+                        item_category_id: Number(e.target.value),
+                      };
+                    });
+                  }}
+                  value={createForm?.item_category_id || ""}
+                >
+                  {searchData2?.data?.category[0]?.store_category[0]?.category?.map(
                     (category: any, index: any) => {
                       if (
                         category.category_revision.parent_id != 0 &&
@@ -298,7 +371,7 @@ export default function BottleAdd() {
                         return (
                           <option
                             key={index}
-                            value={category.category_revision.name}
+                            value={category.category_revision.item_category_id}
                           >
                             {category.category_revision.name}
                           </option>
@@ -315,7 +388,7 @@ export default function BottleAdd() {
                 <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
                   {kikan.map((pref) => {
                     return (
-                      <option key={pref.prefCode} value={pref.prefCode}>
+                      <option key={pref.prefCode} value={pref.prefName}>
                         {pref.prefName}
                       </option>
                     );
@@ -333,9 +406,18 @@ export default function BottleAdd() {
                   原価
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                   placeholder="原価を入力"
+                  onChange={(e) => {
+                    setCreateForm((createForm: any) => {
+                      return {
+                        ...createForm,
+                        cost: Number(e.target.value),
+                      };
+                    });
+                  }}
+                  value={createForm?.cost || ""}
                 />
               </div>
               <div className="flex flex-col">
@@ -343,9 +425,18 @@ export default function BottleAdd() {
                   料金
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                   placeholder="料金を入力"
+                  onChange={(e) => {
+                    setCreateForm((createForm: any) => {
+                      return {
+                        ...createForm,
+                        price: Number(e.target.value),
+                      };
+                    });
+                  }}
+                  value={createForm?.price || ""}
                 />
               </div>
               <div className="flex flex-col">
@@ -361,7 +452,41 @@ export default function BottleAdd() {
                   ヶ月
                 </div>
               </div>
-              <div className="ml-auto mr-4 flex flex-col justify-end">
+              <div
+                className="ml-auto mr-4 flex flex-col justify-end"
+                onClick={() => {
+                  createData
+                    .mutate(
+                      () =>
+                        client.request(createBottle, {
+                          ...createForm,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    )
+                    .then(() => {
+                      setCreateForm(() => {});
+                      setSearchForm(() => {});
+                      searchData
+                        .mutate(
+                          () =>
+                            client.request(searchBottle, {
+                              ...defaultVariables,
+                            }),
+                          {
+                            populateCache: true,
+                            revalidate: false,
+                          }
+                        )
+                        .then(() => {
+                          setAddModal(false);
+                        });
+                    });
+                }}
+              >
                 <Button natural>登録</Button>
               </div>
             </div>
