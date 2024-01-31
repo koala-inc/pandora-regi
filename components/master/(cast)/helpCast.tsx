@@ -523,7 +523,7 @@ export default function CastList() {
                     if (cast.leaving_date == null) {
                       return (
                         <>
-                          {cast.cast_code != 0 && (
+                          {cast.cast_code != 0 && cast.section != 1 && (
                             <>
                               <tr key={cast.cast_code}>
                                 <td>{cast.cast_code}</td>
@@ -579,7 +579,7 @@ export default function CastList() {
                   } else {
                     return (
                       <>
-                        {cast.cast_code == 0 && (
+                        {cast.cast_code == 0 && cast.section != 1 && (
                           <>
                             <tr key={cast.cast_code}>
                               <td>{cast.cast_code}</td>
@@ -1108,6 +1108,7 @@ export default function CastList() {
                         () =>
                           client.request(createCast, {
                             ...createForm,
+                            section: 2,
                             ...defaultVariables,
                           }),
                         {
