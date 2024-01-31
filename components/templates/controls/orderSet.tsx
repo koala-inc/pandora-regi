@@ -548,7 +548,7 @@ export default function ControlOrderSet() {
               <div className="flex max-h-[235px] w-[260px] flex-wrap justify-center overflow-scroll rounded-md border border-white bg-black p-2">
                 {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
                   (cast: any, index: any) => {
-                    const size = cast.name.length > 3 ? "text-xs" : "text-lg";
+                    const size = cast.name.length > 4 ? "text-xs" : "text-lg";
                     if (cast.leaving_date == null) {
                       return (
                         <div key={index}>
@@ -585,14 +585,14 @@ export default function ControlOrderSet() {
               <p className="mb-1 text-xs font-bold text-accent">選択キャスト</p>
               <div className="flex max-h-[200px] min-h-[200px] w-[350px] flex-col justify-start overflow-scroll rounded-md border border-white bg-black p-1">
                 <div className="mt-1 flex px-2 text-xs text-accent">
-                  <p className="w-[180px]">キャスト名</p>
-                  <p className="mx-2 h-[25px] w-[30px] rounded-md text-center">
+                  <p className="w-[168px]">キャスト名</p>
+                  <p className="h-[25px] w-[30px] rounded-md text-center">
                     個数
                   </p>
                   <p className="ml-5 h-[25px] w-[70px] rounded-md px-2">料金</p>
                 </div>
                 {selectCast.map((cast: any, index: any) => (
-                  <div className="my-1 flex px-2" key={index}>
+                  <div className="mb-2 flex px-2 text-xl" key={index}>
                     <p className="w-[180px]">{cast}</p>
                     <input
                       type="text"
@@ -604,7 +604,7 @@ export default function ControlOrderSet() {
                       className="ml-5 h-[25px] w-[70px] rounded-md px-2 text-right"
                     />
                     <div
-                      className="ml-3 text-red-800"
+                      className="ml-3 text-red-400 h-[16px] w-[16px]"
                       onClick={() => {
                         setSelectCast((selectCast: any) =>
                           selectCast.filter((castRes: any) => {
@@ -613,7 +613,13 @@ export default function ControlOrderSet() {
                         );
                       }}
                     >
-                      ×
+                      <Image
+                        src={"/assets/close.svg"}
+                        width={26}
+                        height={26}
+                        className="!h-full !w-full mt-1"
+                        alt=""
+                      />
                     </div>
                   </div>
                 ))}
