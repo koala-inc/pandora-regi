@@ -196,7 +196,7 @@ export default function TimeCard() {
                   体入/ヘルプ
                 </Button>
                 <Button className="min-w-[6rem]" natural>
-                  他店舗ヘルプ
+                  他店ヘルプ
                 </Button>
               </>
             ) : (
@@ -302,7 +302,7 @@ export default function TimeCard() {
                           {cast.cast_code != 0 && (
                             <div
                               className={
-                                "mx-1 my-2 flex w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 text-xs leading-4 tracking-wider " +
+                                "mx-1 my-2 flex w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 leading-4 tracking-wider " +
                                 size
                               }
                               onClick={() => {
@@ -352,7 +352,7 @@ export default function TimeCard() {
                           {staff.staff_code != 0 && (
                             <div
                               className={
-                                "mx-1 my-2 flex w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 text-xs leading-4 tracking-wider " +
+                                "mx-1 my-2 flex w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 leading-4 tracking-wider " +
                                 size
                               }
                               onClick={() => {
