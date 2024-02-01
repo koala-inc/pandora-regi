@@ -67,49 +67,43 @@ export default function OrderSheetSet() {
         //   if (isControl != "") setIsControl("");
         // }}
       >
-        <section className="flex flex-1 flex-col text-xs">
+        <section className="flex flex-1 flex-col text-sm">
           {isPurchaseOrder &&
             purchaseOrder.map((order: any, index: any) => (
               <div
                 key={index}
-                className="my-1 flex flex-wrap border border-white bg-black p-2"
+                className="my-1 flex flex-wrap border border-white bg-black p-3"
               >
                 <div className="mx-2 flex flex-col">
-                  <p className="text-accent">卓番</p>
                   <p>A1</p>
                 </div>
                 <div className="mx-2 flex flex-col">
-                  <p className="text-accent">人数</p>
-                  <p>{order.num}</p>
+                  <p>{order.num}名</p>
                 </div>
-                <div className="mx-2 flex w-full flex-col">
+                <div className="mt-2 mx-2 flex w-full flex-col">
                   <p className="text-accent">指名</p>
-                  <p>{order.cast?.map((cast: any) => cast + " ")}</p>
+                  <p>{order.cast?.map((cast: any) => cast + "　")}</p>
                 </div>
-                <div className="mx-2 flex flex-col">
-                  <p className="text-accent">セット</p>
-                  <p></p>
-                </div>
-                <div className="mx-2 flex flex-col">
+                <div className="mx-2 flex flex-col mt-2">
                   <p className="text-accent">区分</p>
-                  <p></p>
+                  <p>-</p>
+                </div>
+                <div className="mx-2 flex flex-col mt-2">
+                  <p className="text-accent">セット</p>
+                  <p>-</p>
+                </div>
+                <div className="mx-2 flex flex-col mt-2">
+                  <p className="text-accent">ルームチャージ</p>
+                  <p className="">¥{order.roomCharge?.toLocaleString()}</p>
                 </div>
                 <hr className="w-full opacity-0" />
-                <div className="mx-2 flex flex-col">
-                  <p className="text-accent">セット料金</p>
+                <div className="mx-2 flex flex-col mt-2">
+                  <p className="text-accent">セット内容</p>
                   <p>
-                    {order.setTime}分　¥{order.price?.toLocaleString()}{" "}
-                    {order.startTime}~{order.endTime}
+                    {order.setTime}分　{order.startTime}~{order.endTime}　¥
+                    {order.price?.toLocaleString()}
                   </p>
-                </div>
-                <div className="mx-2 flex flex-col">
-                  <p className="text-accent">コール</p>
-                  <p>{order.callTime}</p>
-                </div>
-                <div className="mx-2 flex flex-col">
-                  <p className="text-accent">ルームチャージ</p>
-                  <p>{order.roomCharge}</p>
-                </div>
+                </div>{" "}
               </div>
             ))}
         </section>
