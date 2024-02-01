@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Button from "./button";
 import Card from "@/components/templates/card";
+import Border2 from "@/components/templates/border";
 
 // グローバルステート
 import useIsControlGlobal from "@/globalstates/isControl";
@@ -111,10 +112,22 @@ export default function OrderSheetSet() {
           <Line />
         </div>
         <nav className="mt-4 flex w-full items-center justify-center">
-          <Button className="mr-2 min-w-[8rem]" natural disabled>
-            キャンセル
-          </Button>
+          <div className="w-[150px] flex justify-center items-center">
+            <Border2
+              rounded="rounded-full"
+              size="h-[42px] w-[42px] p-[8px] bg-reset"
+            >
+              <Image
+                src={"/assets/reset.svg"}
+                width={26}
+                height={26}
+                className="!h-full !w-full"
+                alt=""
+              />
+            </Border2>
+          </div>
           <div
+            className="w-[150px] flex justify-center items-center"
             onClick={(e) => {
               e.stopPropagation();
               setIsControl("");
@@ -122,9 +135,19 @@ export default function OrderSheetSet() {
               setIsPurchaseOrder(false);
             }}
           >
-            <Button className="min-w-[8rem]" natural>
-              確定
-            </Button>
+            <Border2
+              complate
+              rounded="rounded-full"
+              size="h-[42px] w-[42px] p-[2px]"
+            >
+              <Image
+                src={"/assets/check-list.svg"}
+                width={26}
+                height={26}
+                className="!h-full !w-full mr-[-4px]"
+                alt=""
+              />
+            </Border2>
           </div>
         </nav>
       </div>
