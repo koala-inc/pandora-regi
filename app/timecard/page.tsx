@@ -296,12 +296,14 @@ export default function TimeCard() {
                 {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
                   (cast: any) => {
                     if (cast.leaving_date == null) {
+                      const size = cast.name.length > 4 ? "text-xs" : "text-lg";
                       return (
                         <>
                           {cast.cast_code != 0 && (
                             <div
                               className={
-                                "mx-1 my-2 flex w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 text-xs leading-4 tracking-wider"
+                                "mx-1 my-2 flex w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 text-xs leading-4 tracking-wider " +
+                                size
                               }
                               onClick={() => {
                                 client
@@ -343,13 +345,15 @@ export default function TimeCard() {
               <>
                 {searchSData?.data?.staff[0]?.store_staff[0]?.staff?.map(
                   (staff: any) => {
+                    const size = staff.name.length > 4 ? "text-xs" : "text-lg";
                     if (staff.leaving_date == null) {
                       return (
                         <>
                           {staff.staff_code != 0 && (
                             <div
                               className={
-                                "mx-1 my-2 flex w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 text-xs leading-4 tracking-wider"
+                                "mx-1 my-2 flex w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 text-xs leading-4 tracking-wider " +
+                                size
                               }
                               onClick={() => {
                                 client
@@ -595,6 +599,8 @@ export default function TimeCard() {
                           <>
                             {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
                               (cast: any, index: any) => {
+                                const size =
+                                  cast.name.length > 4 ? "text-xs" : "text-lg";
                                 if (cast.id == amc.cast_id) {
                                   return (
                                     <tr key={index}>
@@ -604,7 +610,11 @@ export default function TimeCard() {
                                       <th className="min-w-[2em] text-center text-lg">
                                         -
                                       </th>
-                                      <th className="min-w-[4em] text-center text-lg">
+                                      <th
+                                        className={
+                                          "min-w-[4em] text-center " + size
+                                        }
+                                      >
                                         {cast.name}
                                       </th>
                                       <th className="min-w-[4em] text-center text-lg">
