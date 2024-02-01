@@ -53,7 +53,8 @@ export default function ItemCategoryLists() {
         className="absolute left-[210px] top-1/2 z-0 h-[98dvh] w-[calc(100dvw-300px)] max-w-[820px] -translate-y-1/2"
       >
         <Border2 size="h-full min-h-[calc(98dvh-10px)] w-full px-4 py-2 flex flex-col !justify-start !items-start">
-          <div className="flex max-w-full overflow-scroll">
+          <div className="flex max-w-full flex-wrap overflow-scroll">
+            <div className="w-full mt-3 text-accent">※ RC = ルームチャージ</div>
             <div className="relative mr-4 w-[780px] pt-4">
               <Border2
                 className="absolute right-[-15px] top-[10px]"
@@ -83,7 +84,7 @@ export default function ItemCategoryLists() {
                     />
                   </div>
                   <div className="flex flex-col py-2 mx-2">
-                    <p className="text-accent">延長時間（分）</p>
+                    <p className="text-accent">延長時間</p>
                     <input
                       type="text"
                       className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
@@ -104,51 +105,25 @@ export default function ItemCategoryLists() {
                     />
                   </div>
                   <div className="flex flex-col py-2 mx-2">
-                    <p className="text-accent">
-                      <br />
-                      ルームチャージ料
-                    </p>
+                    <p className="text-accent">RC料</p>
                     <input
                       type="text"
                       className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
                     />
                   </div>
                   <div className="flex flex-col py-2 mx-2">
-                    <p className="text-accent">
-                      ルームチャージ
-                      <br />
-                      延長時間（分）
-                    </p>
+                    <p className="text-accent">RC延長時間</p>
                     <input
                       type="text"
                       className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
                     />
                   </div>
                   <div className="flex flex-col py-2 mx-2">
-                    <p className="text-accent">
-                      ルームチャージ
-                      <br />
-                      延長料
-                    </p>
+                    <p className="text-accent">RC延長料</p>
                     <input
                       type="text"
                       className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
                     />
-                  </div>
-                  <div className="flex flex-col justify-end py-2 mx-2 ml-4">
-                    <Border2
-                      complate
-                      rounded="rounded-full"
-                      size="h-[32px] w-[32px] p-[4px]"
-                    >
-                      <Image
-                        src={"/assets/complate.svg"}
-                        width={26}
-                        height={26}
-                        className="!h-full !w-full"
-                        alt=""
-                      />
-                    </Border2>
                   </div>
                 </div>
               </Border>
