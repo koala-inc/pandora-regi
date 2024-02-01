@@ -8,15 +8,8 @@ import { ja } from "date-fns/locale/ja";
 
 import useIsHeaderGlobal from "@/globalstates/isHeader";
 
-function Content() {
+function Content({ datetime }: { datetime: any }) {
   const [, setIsHeader] = useIsHeaderGlobal();
-  const [datetime, setDatetime] = useState(new Date());
-
-  useEffect(() => {
-    setInterval(() => {
-      setDatetime(new Date());
-    }, 60 * 1000);
-  }, []);
 
   return (
     <div className="h-full w-full border-y-4 border-secondary bg-primary">
@@ -24,7 +17,7 @@ function Content() {
         <div className="px-6">
           <div className="text-accent">時間</div>
           <div className="text-4xl text-white">
-            {format(datetime, "HH:mm:ss", { locale: ja })}
+            {format(datetime, "HH:mm", { locale: ja })}
           </div>
         </div>
         <nav
@@ -48,7 +41,7 @@ function Content() {
   );
 }
 
-export default function Header() {
+export default function Header({ datetime }: { datetime: any }) {
   return (
     <motion.header
       initial={{ top: -90 }}
@@ -57,7 +50,7 @@ export default function Header() {
       transition={{ ease: "easeInOut", bounce: 0, duration: 0.1 }}
       className="absolute top-0 z-30 h-[90px] w-full border-y-2 border-black"
     >
-      <Content />
+      <Content datetime={datetime} />
     </motion.header>
   );
 }

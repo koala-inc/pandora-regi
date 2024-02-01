@@ -22,6 +22,7 @@ import OrderSheetSet from "@/components/templates/orderSheetSet";
 import HomeButton from "@/components/templates/homeButton";
 import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
+import { useEffect, useState } from "react";
 
 function Control(isControl: any) {
   switch (isControl) {
@@ -72,11 +73,18 @@ export default function Home() {
   const [isCard] = useIsCardGlobal();
   const [isControl] = useIsControlGlobal();
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
+  const [datetime, setDatetime] = useState(new Date());
+
+  useEffect(() => {
+    setInterval(() => {
+      setDatetime(new Date());
+    }, 1000);
+  }, []);
 
   return (
     <main className="relative h-full w-full">
       <AnimatePresence>
-        {isHeader && !isCard && <Header />}
+        {isHeader && !isCard && <Header datetime={datetime} />}
         {isFooter && !isCard && <Footer />}
         {isCard && (
           <>
