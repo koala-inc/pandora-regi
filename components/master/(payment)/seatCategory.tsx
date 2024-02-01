@@ -50,84 +50,122 @@ export default function ItemCategoryLists() {
           duration: 0.15,
           delay: 0.15,
         }}
-        className="absolute left-[210px] top-1/2 z-0 h-[98dvh] w-[calc(100dvw-300px)] -translate-y-1/2"
+        className="absolute left-[210px] top-1/2 z-0 h-[98dvh] w-[calc(100dvw-300px)] max-w-[820px] -translate-y-1/2"
       >
-        <Border2 size="h-full max-h-[calc(98dvh-10px)] min-w-full px-4 py-2 flex flex-col justify-start !items-start">
+        <Border2 size="h-full min-h-[calc(98dvh-10px)] w-full px-4 py-2 flex flex-col !justify-start !items-start">
           <div className="flex max-w-full overflow-scroll">
-            <div className="relative mr-4 w-[540px]">
-              <Border
-                className="absolute right-[-5px] top-[0px]"
+            <div className="relative mr-4 w-[780px] pt-4">
+              <Border2
+                className="absolute right-[-15px] top-[10px]"
                 rounded="rounded-full"
-                size="h-[20px] w-[20px] p-[2px] text-red-600"
+                size="h-[28px] w-[28px] p-[6px]"
               >
-                <div
-                  className="ml-[1px] mt-[-3px] flex h-full w-full items-center justify-center"
-                  onClick={() => {}}
-                >
-                  ×
-                </div>
-              </Border>
+                <Image
+                  src={"/assets/close.svg"}
+                  width={26}
+                  height={26}
+                  className="!h-full !w-full"
+                  alt=""
+                />
+              </Border2>
               <Border
                 className="my-2 w-full"
+                rounded="rounded-md border-white"
                 size="p-4 flex flex-col overflow-scroll"
                 black
               >
                 <div className="flex flex-wrap">
-                  <p className="text-accent">席カテゴリー名</p>
-                  <input
-                    type="text"
-                    className="h-[30px] w-[32rem] rounded-md px-2 text-sm"
-                  />
-                  <p className="mt-2 text-accent">延長時間（分）</p>
-                  <input
-                    type="text"
-                    className="h-[30px] w-[32rem] rounded-md px-2 text-sm"
-                  />
-                  <p className="mt-2 text-accent">延長料金</p>
-                  <input
-                    type="text"
-                    className="h-[30px] w-[32rem] rounded-md px-2 text-sm"
-                  />
-                  <p className="mt-2 text-accent">サービス料</p>
-                  <input
-                    type="text"
-                    className="h-[30px] w-[32rem] rounded-md px-2 text-sm"
-                  />
-                  <p className="mt-2 text-accent">ルームチャージ料</p>
-                  <input
-                    type="text"
-                    className="h-[30px] w-[32rem] rounded-md px-2 text-sm"
-                  />
-                  <p className="mt-2 text-accent">
-                    ルームチャージ延長時間（分）
-                  </p>
-                  <input
-                    type="text"
-                    className="h-[30px] w-[32rem] rounded-md px-2 text-sm"
-                  />
-                  <p className="mt-2 text-accent">ルームチャージ延長料</p>
-                  <input
-                    type="text"
-                    className="h-[30px] w-[32rem] rounded-md px-2 text-sm"
-                  />
+                  <div className="flex flex-col py-2 mx-2">
+                    <p className="text-accent">席カテゴリー名</p>
+                    <input
+                      type="text"
+                      className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                    />
+                  </div>
+                  <div className="flex flex-col py-2 mx-2">
+                    <p className="text-accent">延長時間（分）</p>
+                    <input
+                      type="text"
+                      className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                    />
+                  </div>
+                  <div className="flex flex-col py-2 mx-2">
+                    <p className="text-accent">延長料金</p>
+                    <input
+                      type="text"
+                      className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                    />
+                  </div>
+                  <div className="flex flex-col py-2 mx-2">
+                    <p className="text-accent">サービス料</p>
+                    <input
+                      type="text"
+                      className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                    />
+                  </div>
+                  <div className="flex flex-col py-2 mx-2">
+                    <p className="text-accent">
+                      <br />
+                      ルームチャージ料
+                    </p>
+                    <input
+                      type="text"
+                      className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                    />
+                  </div>
+                  <div className="flex flex-col py-2 mx-2">
+                    <p className="text-accent">
+                      ルームチャージ
+                      <br />
+                      延長時間（分）
+                    </p>
+                    <input
+                      type="text"
+                      className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                    />
+                  </div>
+                  <div className="flex flex-col py-2 mx-2">
+                    <p className="text-accent">
+                      ルームチャージ
+                      <br />
+                      延長料
+                    </p>
+                    <input
+                      type="text"
+                      className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                    />
+                  </div>
+                  <div className="flex flex-col justify-end py-2 mx-2 ml-4">
+                    <Border2
+                      complate
+                      rounded="rounded-full"
+                      size="h-[32px] w-[32px] p-[4px]"
+                    >
+                      <Image
+                        src={"/assets/complate.svg"}
+                        width={26}
+                        height={26}
+                        className="!h-full !w-full"
+                        alt=""
+                      />
+                    </Border2>
+                  </div>
                 </div>
               </Border>
-              <div
-                className="ml-[243px] mt-2 h-[45px] w-[45px]"
-                onClick={() => {}}
-              >
-                <Border
+              <div className="mt-8 ml-[330px] flex" onClick={() => {}}>
+                <Border2
+                  complate
                   rounded="rounded-full"
-                  size="h-[40px] w-[40px] p-[12px]"
+                  size="h-[32px] w-[32px] p-[4px] bg-primary"
                 >
                   <Image
-                    src={"/assets/add.svg"}
+                    src={"/assets/addGreen.svg"}
                     width={26}
                     height={26}
                     className="!h-full !w-full"
                     alt=""
                   />
-                </Border>
+                </Border2>
               </div>
             </div>
           </div>

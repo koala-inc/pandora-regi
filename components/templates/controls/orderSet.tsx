@@ -239,7 +239,7 @@ export default function ControlOrderSet() {
           </div>
           <div className="flex h-[220px] mt-[-30px] px-2 mb-[30px] flex-wrap py-10 justify-start">
             <div className="flex flex-col">
-              <label className="mt-3 mb-1 text-xs font-bold text-accent">
+              <label className="mt-3 mb-2 text-xs font-bold text-accent">
                 区分
               </label>
               <div className="flex">
@@ -264,7 +264,7 @@ export default function ControlOrderSet() {
               </div>
             </div>
             <div className="flex flex-col">
-              <label className="mt-3 mb-1 text-xs font-bold text-accent">
+              <label className="mt-3 mb-2 text-xs font-bold text-accent">
                 販売促進スタッフ
               </label>
               <div className="relative flex">
@@ -306,7 +306,7 @@ export default function ControlOrderSet() {
               <input type="checkbox" className="checkbox checkbox-md" />
             </div> */}
             <div className="flex flex-col">
-              <label className="mt-3 mb-1 text-xs font-bold text-accent">
+              <label className="mt-3 mb-2 text-xs font-bold text-accent">
                 ルームチャージ
               </label>
               <input
@@ -325,13 +325,16 @@ export default function ControlOrderSet() {
             </div>
             <hr className="w-full opacity-0" />
             <div className="flex flex-col">
-              <label className="mt-3 mb-1 text-xs font-bold text-accent">
-                人数
+              <label className="mt-3 mb-2 text-xs font-bold text-accent">
+                人数　
+                <span className="bg-rose-500 text-white px-[5px] py-[3px] text-xs rounded-md">
+                  必須
+                </span>
               </label>
               <input
                 type="number"
                 defaultValue={0}
-                className="mr-4 h-[45px] w-[6rem] rounded-md px-2 text-xl"
+                className="mr-8 h-[45px] w-[6rem] rounded-md px-2 text-xl"
                 placeholder="人数を入力"
                 onChange={(e) => {
                   setOrder((order: any) => {
@@ -344,13 +347,16 @@ export default function ControlOrderSet() {
               />
             </div>
             <div className="flex flex-col">
-              <label className="mt-3 mb-1 text-xs font-bold text-accent">
-                セット時間
+              <label className="mt-3 mb-2 text-xs font-bold text-accent">
+                セット時間　
+                <span className="bg-rose-500 text-white px-[5px] py-[3px] text-xs rounded-md">
+                  必須
+                </span>
               </label>
               <input
                 type="number"
                 defaultValue={0}
-                className="mr-4 h-[45px] w-[6rem] rounded-md px-2 text-xl"
+                className="mr-8 h-[45px] w-[10rem] rounded-md px-2 text-xl"
                 placeholder="時間を入力"
                 onChange={(e) => {
                   setOrder((order: any) => {
@@ -363,12 +369,15 @@ export default function ControlOrderSet() {
               />
             </div>
             <div className="flex flex-col">
-              <label className="mt-3 mb-1 text-xs font-bold text-accent">
-                料金
+              <label className="mt-3 mb-2 text-xs font-bold text-accent">
+                料金　
+                <span className="bg-rose-500 text-white px-[5px] py-[3px] text-xs rounded-md">
+                  必須
+                </span>
               </label>
               <input
                 type="number"
-                className="mr-4 h-[45px] w-[12rem] rounded-md px-2 text-xl"
+                className="mr-8 h-[45px] w-[12rem] rounded-md px-2 text-xl"
                 placeholder="料金を入力"
                 onChange={(e) => {
                   setOrder((order: any) => {
@@ -382,8 +391,11 @@ export default function ControlOrderSet() {
             </div>
             <div className="flex">
               <div className="flex flex-col">
-                <label className="mt-3 mb-1 text-xs font-bold text-accent">
-                  セット開始時間
+                <label className="mt-3 mb-2 text-xs font-bold text-accent">
+                  開始時間　
+                  <span className="bg-rose-500 text-white px-[5px] py-[3px] text-xs rounded-md">
+                    必須
+                  </span>
                 </label>
                 <input
                   type="time"
@@ -398,10 +410,13 @@ export default function ControlOrderSet() {
                   }}
                 />
               </div>
-              <p className="text-sm mr-4 mt-[40px]">〜</p>
+              <p className="text-sm mr-4 mt-[50px]">〜</p>
               <div className="flex flex-col">
-                <label className="mt-3 mb-1 text-xs font-bold text-accent">
-                  終了時間
+                <label className="mt-3 mb-2 text-xs font-bold text-accent">
+                  終了時間　
+                  <span className="bg-rose-500 text-white px-[5px] py-[3px] text-xs rounded-md">
+                    必須
+                  </span>
                 </label>
                 <input
                   type="time"
@@ -418,7 +433,7 @@ export default function ControlOrderSet() {
               </div>
             </div>
             <div className="flex flex-col">
-              <label className="mt-3 mb-1 text-xs font-bold text-accent">
+              <label className="mt-3 mb-2 text-xs font-bold text-accent">
                 コール時間
               </label>
               <div className="flex">

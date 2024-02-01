@@ -59,14 +59,13 @@ export default function ItemCategoryLists() {
                 if (category.category_revision.parent_id == 0) {
                   addForm[category.id] == "";
                   return (
-                    <div className="relative mr-4 w-[148px]" key={index}>
-                      <Border
-                        className="absolute right-[-5px] top-[0px]"
+                    <div className="pt-4 relative mr-4 w-[148px]" key={index}>
+                      <Border2
+                        className="absolute right-[-15px] top-[10px]"
                         rounded="rounded-full"
-                        size="h-[20px] w-[20px] p-[2px] text-red-600"
+                        size="h-[28px] w-[28px] p-[6px]"
                       >
                         <div
-                          className="ml-[1px] mt-[-3px] flex h-full w-full items-center justify-center"
                           onClick={() => {
                             client
                               .request(deleteCategory, {
@@ -88,9 +87,15 @@ export default function ItemCategoryLists() {
                               });
                           }}
                         >
-                          ×
+                          <Image
+                            src={"/assets/close.svg"}
+                            width={26}
+                            height={26}
+                            className="!h-full !w-full"
+                            alt=""
+                          />
                         </div>
-                      </Border>
+                      </Border2>
                       <Border
                         className="my-2 w-full"
                         rounded="rounded-md border-white"
@@ -229,7 +234,7 @@ export default function ItemCategoryLists() {
               }
             )}
             <div
-              className="ml-2 mt-11 h-[45px] w-[45px]"
+              className="ml-2 mt-[90px]"
               onClick={() => {
                 createData
                   .mutate(
@@ -258,15 +263,19 @@ export default function ItemCategoryLists() {
                   });
               }}
             >
-              <Border rounded="rounded-full" size="h-[40px] w-[40px] p-[12px]">
+              <Border2
+                complate
+                rounded="rounded-full"
+                size="h-[32px] w-[32px] p-[4px] bg-primary"
+              >
                 <Image
-                  src={"/assets/add.svg"}
+                  src={"/assets/addGreen.svg"}
                   width={26}
                   height={26}
                   className="!h-full !w-full"
                   alt=""
                 />
-              </Border>
+              </Border2>
             </div>
           </div>
         </Border2>

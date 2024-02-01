@@ -110,7 +110,7 @@ export default function CastList() {
               <label className="mt-3 text-xs font-bold text-accent">ID</label>
               <input
                 type="number"
-                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                className="mr-2 h-[30px] mt-1 w-[6rem] rounded-md px-2 text-sm"
                 placeholder="IDを入力"
                 onChange={(e) => {
                   if (e.target.value == "") {
@@ -152,7 +152,7 @@ export default function CastList() {
                 キャスト名
               </label>
               <input
-                className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                className="mr-2 h-[30px] mt-1 w-[8rem] rounded-md px-2 text-sm"
                 placeholder="源氏名を入力"
                 onChange={(e) => {
                   setSearchForm((searchForm: any) => {
@@ -180,7 +180,7 @@ export default function CastList() {
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">本名</label>
               <input
-                className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                className="mr-2 h-[30px] mt-1 w-[8rem] rounded-md px-2 text-sm"
                 placeholder="本名を入力"
                 onChange={(e) => {
                   setSearchForm((searchForm: any) => {
@@ -210,7 +210,7 @@ export default function CastList() {
                 フリガナ
               </label>
               <input
-                className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                className="mr-2 h-[30px] mt-1 w-[8rem] rounded-md px-2 text-sm"
                 placeholder="フリガナを入力"
                 onChange={(e) => {
                   setSearchForm((searchForm: any) => {
@@ -244,7 +244,7 @@ export default function CastList() {
               </label>
               <input
                 type="tel"
-                className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                className="mr-2 h-[30px] mt-1 w-[7rem] rounded-md px-2 text-sm"
                 placeholder="電話番号を入力"
                 onChange={(e) => {
                   setSearchForm((searchForm: any) => {
@@ -277,7 +277,7 @@ export default function CastList() {
                 期間カテゴリ
               </label>
               <select
-                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                className="mr-2 h-[30px] mt-1 w-[6rem] rounded-md px-2 text-sm"
                 onChange={(e) => {
                   setSearchCategory(e.target.value);
                 }}
@@ -295,7 +295,7 @@ export default function CastList() {
               <label className="mt-3 text-xs font-bold text-accent">期間</label>
               <input
                 type="date"
-                className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                className="mr-2 h-[30px] mt-1 rounded-md px-2 text-sm"
                 onChange={(e) => {
                   setSearchForm((searchForm: any) => {
                     return {
@@ -341,7 +341,7 @@ export default function CastList() {
               <label className="mt-3 text-xs font-bold text-accent"></label>
               <input
                 type="date"
-                className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                className="mr-2 h-[30px] mt-1 rounded-md px-2 text-sm"
                 onChange={(e) => {
                   setSearchForm((searchForm: any) => {
                     return {
@@ -861,11 +861,14 @@ export default function CastList() {
                 </div> */}
                 <div className="flex flex-col">
                   <label className="mt-3 text-xs font-bold text-accent">
-                    ID <small className="text-red-600">＊</small>
+                    ID{" "}
+                    <span className="bg-rose-500 text-white px-[5px] py-[3px] text-xs rounded-md">
+                      必須
+                    </span>
                   </label>
                   <input
                     type="number"
-                    className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[6rem] rounded-md px-2 text-sm"
                     placeholder="IDを入力"
                     onChange={(e) => {
                       setCreateForm((createForm: any) => {
@@ -883,7 +886,7 @@ export default function CastList() {
                     キャスト名
                   </label>
                   <input
-                    className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[8rem] rounded-md px-2 text-sm"
                     placeholder="源氏名を入力"
                     onChange={(e) => {
                       setCreateForm((createForm: any) => {
@@ -901,7 +904,7 @@ export default function CastList() {
                     フリガナ(キャスト名)
                   </label>
                   <input
-                    className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[8rem] rounded-md px-2 text-sm"
                     placeholder="フリガナを入力"
                     // onChange={(e) => {
                     //   setCreateForm((createForm: any) => {
@@ -916,10 +919,13 @@ export default function CastList() {
                 </div>
                 <div className="flex flex-col">
                   <label className="mt-3 text-xs font-bold text-accent">
-                    本名 <small className="text-red-600">＊</small>
+                    本名{" "}
+                    <span className="bg-rose-500 text-white px-[5px] py-[3px] text-xs rounded-md">
+                      必須
+                    </span>
                   </label>
                   <input
-                    className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[8rem] rounded-md px-2 text-sm"
                     placeholder="本名を入力"
                     onChange={(e) => {
                       setCreateForm((createForm: any) => {
@@ -937,7 +943,7 @@ export default function CastList() {
                     フリガナ(本名)
                   </label>
                   <input
-                    className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[8rem] rounded-md px-2 text-sm"
                     placeholder="フリガナを入力"
                     onChange={(e) => {
                       setCreateForm((createForm: any) => {
@@ -956,7 +962,7 @@ export default function CastList() {
                   </label>
                   <input
                     type="number"
-                    className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[7rem] rounded-md px-2 text-sm"
                     placeholder="時給を入力"
                   />
                 </div>
@@ -965,7 +971,7 @@ export default function CastList() {
                     日給
                   </label>
                   <input
-                    className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[7rem] rounded-md px-2 text-sm"
                     placeholder="日給を入力"
                   />
                 </div>
@@ -975,7 +981,7 @@ export default function CastList() {
                   </label>
                   <input
                     type="date"
-                    className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 rounded-md px-2 text-sm"
                     onChange={(e) => {
                       setCreateForm((createForm: any) => {
                         return {
@@ -995,7 +1001,7 @@ export default function CastList() {
                   </label>
                   <input
                     type="date"
-                    className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 rounded-md px-2 text-sm"
                     onChange={(e) => {
                       setCreateForm((createForm: any) => {
                         return {
@@ -1012,7 +1018,7 @@ export default function CastList() {
                     住所
                   </label>
                   <input
-                    className="mr-2 h-[30px] w-[17rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[17rem] rounded-md px-2 text-sm"
                     placeholder="住所を入力"
                     onChange={(e) => {
                       setCreateForm((createForm: any) => {
@@ -1031,7 +1037,7 @@ export default function CastList() {
                   </label>
                   <input
                     type="tel"
-                    className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[7rem] rounded-md px-2 text-sm"
                     placeholder="電話番号を入力"
                     onChange={(e) => {
                       setCreateForm((createForm: any) => {
@@ -1049,7 +1055,7 @@ export default function CastList() {
                     その他
                   </label>
                   <input
-                    className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[7rem] rounded-md px-2 text-sm"
                     placeholder="備考を入力"
                     onChange={(e) => {
                       setCreateForm((createForm: any) => {
@@ -1066,7 +1072,7 @@ export default function CastList() {
                   <label className="mt-3 text-xs font-bold text-accent">
                     媒体
                   </label>
-                  <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
+                  <select className="mr-2 h-[30px] mt-1 w-[7rem] rounded-md px-2 text-sm">
                     <option value="" selected disabled>
                       媒体を選択
                     </option>
@@ -1086,7 +1092,7 @@ export default function CastList() {
                   <label className="mt-3 text-xs font-bold text-accent">
                     紹介者
                   </label>
-                  <select className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm">
+                  <select className="mr-2 h-[30px] mt-1 w-[8rem] rounded-md px-2 text-sm">
                     <option value="" selected disabled>
                       紹介者を選択
                     </option>
@@ -1174,7 +1180,7 @@ export default function CastList() {
                     ID
                   </label>
                   <input
-                    className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[8rem] rounded-md px-2 text-sm"
                     value={updateForm?.cast_code || ""}
                     disabled
                   />
@@ -1184,7 +1190,7 @@ export default function CastList() {
                     キャスト名
                   </label>
                   <input
-                    className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[8rem] rounded-md px-2 text-sm"
                     placeholder="源氏名を入力"
                     onChange={(e) => {
                       setUpdateForm((upadteForm: any) => {
@@ -1202,7 +1208,7 @@ export default function CastList() {
                     フリガナ(キャスト名)
                   </label>
                   <input
-                    className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[8rem] rounded-md px-2 text-sm"
                     placeholder="フリガナを入力"
                     // onChange={(e) => {
                     //   setCreateForm((createForm: any) => {
@@ -1220,7 +1226,7 @@ export default function CastList() {
                     本名 <small className="text-red-600">＊</small>
                   </label>
                   <input
-                    className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[8rem] rounded-md px-2 text-sm"
                     placeholder="本名を入力"
                     onChange={(e) => {
                       setUpdateForm((updateForm: any) => {
@@ -1238,7 +1244,7 @@ export default function CastList() {
                     フリガナ(本名)
                   </label>
                   <input
-                    className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[8rem] rounded-md px-2 text-sm"
                     placeholder="フリガナを入力"
                     onChange={(e) => {
                       setUpdateForm((updateForm: any) => {
@@ -1257,7 +1263,7 @@ export default function CastList() {
                   </label>
                   <input
                     type="date"
-                    className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 rounded-md px-2 text-sm"
                     onChange={(e) => {
                       setUpdateForm((updateForm: any) => {
                         return {
@@ -1275,7 +1281,7 @@ export default function CastList() {
                   </label>
                   <input
                     type="date"
-                    className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 rounded-md px-2 text-sm"
                     onChange={(e) => {
                       setUpdateForm((updateForm: any) => {
                         return {
@@ -1295,7 +1301,7 @@ export default function CastList() {
                   </label>
                   <input
                     type="date"
-                    className="mr-2 h-[30px] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 rounded-md px-2 text-sm"
                     onChange={(e) => {
                       setUpdateForm((updateForm: any) => {
                         return {
@@ -1312,7 +1318,7 @@ export default function CastList() {
                     住所
                   </label>
                   <input
-                    className="mr-2 h-[30px] w-[17rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[17rem] rounded-md px-2 text-sm"
                     placeholder="住所を入力"
                     onChange={(e) => {
                       setUpdateForm((updateForm: any) => {
@@ -1331,7 +1337,7 @@ export default function CastList() {
                   </label>
                   <input
                     type="tel"
-                    className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[7rem] rounded-md px-2 text-sm"
                     placeholder="電話番号を入力"
                     onChange={(e) => {
                       setUpdateForm((updateForm: any) => {
@@ -1349,7 +1355,7 @@ export default function CastList() {
                     その他
                   </label>
                   <input
-                    className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm"
+                    className="mr-2 h-[30px] mt-1 w-[7rem] rounded-md px-2 text-sm"
                     placeholder="備考を入力"
                     onChange={(e) => {
                       setUpdateForm((updateForm: any) => {
@@ -1366,7 +1372,7 @@ export default function CastList() {
                   <label className="mt-3 text-xs font-bold text-accent">
                     媒体
                   </label>
-                  <select className="mr-2 h-[30px] w-[7rem] rounded-md px-2 text-sm">
+                  <select className="mr-2 h-[30px] mt-1 w-[7rem] rounded-md px-2 text-sm">
                     <option value="" selected disabled>
                       媒体を選択
                     </option>
@@ -1386,7 +1392,7 @@ export default function CastList() {
                   <label className="mt-3 text-xs font-bold text-accent">
                     紹介者
                   </label>
-                  <select className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm">
+                  <select className="mr-2 h-[30px] mt-1 w-[8rem] rounded-md px-2 text-sm">
                     <option value="" selected disabled>
                       紹介者を選択
                     </option>

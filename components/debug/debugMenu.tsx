@@ -149,6 +149,14 @@ export default function DebugMenu() {
           <div className="flex w-full flex-wrap">
             <div
               className={
+                activeTab2 == 99 ? "m-2 border-b-2 border-white p-2" : "m-2 p-2"
+              }
+              onClick={() => setActiveTab2(99)}
+            >
+              機能説明
+            </div>
+            <div
+              className={
                 activeTab2 == 0 ? "m-2 border-b-2 border-white p-2" : "m-2 p-2"
               }
               onClick={() => setActiveTab2(0)}
@@ -197,6 +205,12 @@ export default function DebugMenu() {
             </div>
           </div>
           <div className="flex w-full flex-wrap">
+            {activeTab2 == 99 && (
+              <>
+                <p>ctrl + p でコマンドパレット</p>
+                <p>席長押しでモード移行</p>
+              </>
+            )}
             {activeTab2 == 0 && (
               <>
                 <button
