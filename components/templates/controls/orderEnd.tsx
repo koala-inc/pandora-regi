@@ -64,17 +64,6 @@ export default function OrderEnd() {
               <Button bg="blue">精算</Button>
             </Border>
           </div>
-          <nav className="absolute right-0 top-[1px] z-10 cursor-pointer">
-            <Border rounded="rounded-full" size="h-[50px] w-[50px]">
-              <Image
-                src={"/assets/home.svg"}
-                width={26}
-                height={26}
-                className="!h-full !w-full"
-                alt=""
-              />
-            </Border>
-          </nav>
         </div>
       </motion.div>
     </>

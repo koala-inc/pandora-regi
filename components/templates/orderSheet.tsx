@@ -63,47 +63,42 @@ function Base() {
 
   return (
     <>
-      <section className="flex h-[70px] items-center justify-between">
-        <div className="flex h-full items-center justify-center p-1 text-3xl">
-          A1
+      <section className="flex items-center justify-around text-md">
+        <div className="flex-col flex items-center">
+          <p className="text-4xl mb-6">A1</p>
+          <Toggle />
         </div>
-        <div className="flex h-full w-full flex-col items-center justify-between">
-          <div className="flex h-1/2 w-full items-center justify-between text-xs">
-            <div className="flex min-w-[4em] flex-col items-center justify-center">
-              <p className="text-[0.5rem] text-accent">人数</p>
-              <p>{purchaseOrder[0]?.num}名</p>
-            </div>
-            <div
-              className="flex min-w-[7em] flex-col items-center justify-center"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsControl("TIME");
-              }}
-            >
-              <p className="text-[0.5rem] text-accent">時間</p>
-              <p>
-                {purchaseOrder[0]?.startTime}~{purchaseOrder[0]?.endTime}
-              </p>
-            </div>
-            <div className="flex min-w-[5em] flex-col items-center justify-center">
-              <p className="text-[0.5rem] text-accent">コール時間</p>
-              <p className="inline-flex">
-                <div className="mr-[2px] rounded-sm border-[0.5px] border-secondary px-1">
-                  {purchaseOrder[0]?.callTimeHour}
-                </div>
-                :
-                <div className="ml-[2px] rounded-sm border-[0.5px] border-secondary px-1">
-                  {purchaseOrder[0]?.callTimeMinite}
-                </div>
-              </p>
-            </div>
-            <div className="mt-[15.3px]">
-              <Toggle />
-            </div>
+        <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center">
+            <p className="text-[0.8rem] text-accent">人数</p>
+            <p>{purchaseOrder[0]?.num}名</p>
           </div>
-          <div className="flex h-1/2 w-full items-center justify-center text-xs">
+          <div className="mt-3 flex min-w-[4em] flex-col items-center justify-center">
+            <p className="text-[0.8rem] text-accent">コール時間</p>
+            <p>
+              {purchaseOrder[0]?.callTimeHour || "00"}:
+              {purchaseOrder[0]?.callTimeMinite || "00"}
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <div
+            className="flex flex-col items-center justify-center"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsControl("TIME");
+            }}
+          >
+            <p className="text-[0.8rem] text-accent">時間</p>
+            <p>
+              {purchaseOrder[0]?.startTime || "00:00"}~
+              {purchaseOrder[0]?.endTime || "00:00"}
+            </p>
+          </div>
+
+          <div className="mt-6 flex items-center justify-center">
             <Border
-              className="ml-[89px] mr-1"
+              className="mr-1"
               size="px-2 text-red-700"
               natural
               stroke="md"
@@ -116,7 +111,7 @@ function Base() {
           </div>
         </div>
       </section>
-      <nav className="flex items-start justify-around py-3">
+      <nav className="flex mt-4 items-start justify-around py-3">
         <div>
           <Border rounded="rounded-full" stroke="md">
             <Image
@@ -195,12 +190,12 @@ function Base() {
         </div>
       </nav>
       <section className="flex flex-1 flex-col text-xs">
-        <div className="mb-1 flex-1">
+        <div className="mb-1 flex-1 max-h-[120px]">
           <div className="mb-1 flex w-full">
             <div className="text-sm text-accent">セット料金</div>
             <Line ml="ml-10" />
           </div>
-          <div className="flex h-[13.1%] max-h-[107px] min-h-[98px]">
+          <div className="flex h-[13.1%] max-h-[70px] min-h-[70px]">
             <Lists
               lists={
                 [
@@ -249,12 +244,12 @@ function Base() {
             </div>
           </div>
         </div>
-        <div className="mb-1 flex-1">
+        <div className="mb-1 flex-1 max-h-[120px]">
           <div className="mb-1 flex w-full">
             <div className="text-sm text-accent">指名キャスト</div>
             <Line ml="ml-10" />
           </div>
-          <div className="flex h-[13.1%] max-h-[107px] min-h-[98px]">
+          <div className="flex h-[13.1%] max-h-[70px] min-h-[70px]">
             <Lists
               lists={[
                 {
@@ -496,7 +491,7 @@ function Add() {
         </div>
         <div className="flex h-full w-full flex-col items-center justify-between">
           <div className="flex h-1/2 w-full items-center justify-between text-xs">
-            <div className="flex min-w-[4em] flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center">
               <p className="text-[0.5rem] text-accent">人数</p>
               <p>1名</p>
             </div>

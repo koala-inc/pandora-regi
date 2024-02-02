@@ -94,9 +94,11 @@ export default function Home() {
                 <OrderSet />
               </>
             ) : (
-              <OrderSheet />
+              <>
+                <OrderSheet />
+                {Control(isControl)}
+              </>
             )}
-            {/* {Control(isControl)} */}
           </>
         )}
       </AnimatePresence>

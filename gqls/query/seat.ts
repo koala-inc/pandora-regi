@@ -7,6 +7,7 @@ const searchSeat = gql`
     seat(store_code: $store_code, id: $id, seat_area_id: $seat_area_id) {
       store_seat {
         seat {
+          id
           seat_revision {
             name
             id
