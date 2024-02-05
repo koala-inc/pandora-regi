@@ -366,6 +366,9 @@ export default function BottleAdd() {
                     });
                   }}
                 >
+                  <option selected disabled>
+                    選択してください。
+                  </option>
                   {searchData2?.data?.category[0]?.store_category[0]?.category?.map(
                     (category: any, index: any) => {
                       if (
