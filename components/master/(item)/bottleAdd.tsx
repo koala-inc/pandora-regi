@@ -270,8 +270,8 @@ export default function BottleAdd() {
                       </th>
                       <th>-</th>
                       <th>-</th>
-                      <th>{bottle.bottle_revision.cost}</th>
-                      <th>{bottle.bottle_revision.price}</th>
+                      <th>¥{bottle.bottle_revision.cost?.toLocaleString()}</th>
+                      <th>¥{bottle.bottle_revision.price?.toLocaleString()}</th>
                       <th>-</th>
                       <th>
                         <button

@@ -5,7 +5,8 @@ export { createSeatArea, createSeatSetPriceChange, deleteSeatArea };
 const createSeatArea = gql`
   mutation (
     $store_code: Int!
-    $name: String!
+    $name: String
+    $is_preset: Int
     $area_key: String
     $area_code: Int
     $price: Int
@@ -20,6 +21,7 @@ const createSeatArea = gql`
       input: {
         store_code: $store_code
         name: $name
+        is_preset: $is_preset
         area_key: $area_key
         area_code: $area_code
         price: $price
@@ -43,6 +45,7 @@ const createSeatArea = gql`
         name
         price
         service_tax
+        is_preset
       }
     }
   }

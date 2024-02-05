@@ -54,13 +54,13 @@ export default function ItemCategoryLists() {
         }}
         className="absolute left-[210px] top-1/2 z-0 h-[98dvh] w-[calc(100dvw-300px)] max-w-[820px] -translate-y-1/2"
       >
-        <Border2 size="h-full min-h-[calc(98dvh-10px)] w-full px-4 py-2 flex flex-col !justify-start !items-start">
+        <Border2 size="h-full min-h-[calc(98dvh-10px)] max-h-[calc(98dvh-10px)] pb-4 overflow-scroll w-full px-4 py-2 flex flex-col !justify-start !items-start">
           <div className="flex max-w-full flex-wrap overflow-scroll">
             <div className="w-full mt-3 text-accent">※ RC = ルームチャージ</div>
 
-            <div className="relative mr-4 w-[780px] pt-4">
-              {searchData?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
-                (area: any, index: any) => {
+            {searchData?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
+              (area: any, index: any) => (
+                <div className="relative mr-4 w-[780px] pt-4">
                   <div key={index}>
                     <Border2
                       className="absolute right-[-15px] top-[10px]"
@@ -107,8 +107,10 @@ export default function ItemCategoryLists() {
                         <div className="flex flex-col py-2 mx-2">
                           <p className="text-accent">席カテゴリー名</p>
                           <input
+                            key={"seat-" + area.id}
                             type="text"
                             className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                            defaultValue={area.name || ""}
                           />
                         </div>
                         <div className="flex flex-col py-2 mx-2">
@@ -155,46 +157,50 @@ export default function ItemCategoryLists() {
                         </div>
                       </div>
                     </Border>
-                  </div>;
-                }
-              )}
-              <div
-                className="mt-8 ml-[330px] flex"
-                onClick={() => {
-                  client
-                    .request(createSeatArea, {
-                      name: "タイトルなし",
-                      ...defaultVariables,
-                    })
-                    .then(() => {
-                      alert();
-                      searchData.mutate(
-                        () =>
-                          client.request(searchSeatArea, {
-                            ...defaultVariables,
-                          }),
-                        {
-                          populateCache: true,
-                          revalidate: false,
-                        }
-                      );
-                    });
-                }}
+                  </div>
+                </div>
+              )
+            )}
+            <div
+              className="mt-8 ml-[330px] flex"
+              onClick={() => {
+                alert(
+                  JSON.stringify(
+                    searchData?.data?.seatArea[0]?.store_seat_area[0]?.seat_area
+                  )
+                );
+
+                client
+                  .request(createSeatArea, {
+                    ...defaultVariables,
+                  })
+                  .then(() => {
+                    searchData.mutate(
+                      () =>
+                        client.request(searchSeatArea, {
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  });
+              }}
+            >
+              <Border2
+                complate
+                rounded="rounded-full"
+                size="h-[32px] w-[32px] p-[4px] bg-primary"
               >
-                <Border2
-                  complate
-                  rounded="rounded-full"
-                  size="h-[32px] w-[32px] p-[4px] bg-primary"
-                >
-                  <Image
-                    src={"/assets/addGreen.svg"}
-                    width={26}
-                    height={26}
-                    className="!h-full !w-full"
-                    alt=""
-                  />
-                </Border2>
-              </div>
+                <Image
+                  src={"/assets/addGreen.svg"}
+                  width={26}
+                  height={26}
+                  className="!h-full !w-full"
+                  alt=""
+                />
+              </Border2>
             </div>
           </div>
         </Border2>
