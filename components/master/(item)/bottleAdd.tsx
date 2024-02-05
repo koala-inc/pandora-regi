@@ -64,6 +64,8 @@ export default function BottleAdd() {
   const [addModal, setAddModal] = useState(false);
   const [updateModal, setUpdateModal] = useState(false);
 
+  const [isChecked, setIsChecked] = useState(false);
+
   return (
     <>
       <Control>
@@ -208,7 +210,7 @@ export default function BottleAdd() {
         <Border
           className="my-2 w-full"
           rounded="rounded-md border-white"
-          size="p-4 flex flex-col min-h-[calc(98dvh-240px)] overflow-scroll"
+          size="p-4 flex flex-col min-h-[calc(98dvh-240px)] max-h-[calc(98dvh-240px)] overflow-scroll"
           black
         >
           <table className="table table-xs fixed z-10 -mt-[16px] h-[45px] w-[94%] rounded-none bg-neutral-900">
@@ -266,10 +268,16 @@ export default function BottleAdd() {
                         )}
                       </th>
                       <th>-</th>
-                      <th>-</th>
+                      <th>
+                        {bottle.bottle_revision.is_notice_kitchen
+                          ? "有効"
+                          : "無効"}
+                      </th>
                       <th>¥{bottle.bottle_revision.cost?.toLocaleString()}</th>
                       <th>¥{bottle.bottle_revision.price?.toLocaleString()}</th>
-                      <th>-</th>
+                      <th>
+                        {bottle.bottle_revision.keep_expiration_day || 0}日
+                      </th>
                       <th>
                         <button
                           className="btn btn-ghost btn-xs"
@@ -357,7 +365,6 @@ export default function BottleAdd() {
                       };
                     });
                   }}
-                  value={createForm?.item_category_id || ""}
                 >
                   {searchData2?.data?.category[0]?.store_category[0]?.category?.map(
                     (category: any, index: any) => {
@@ -396,7 +403,7 @@ export default function BottleAdd() {
                 <label className="mt-3 text-xs font-bold text-accent">
                   キッチン送信
                 </label>
-                <Toggle />
+                <Toggle isChecked={isChecked} setIsChecked={setIsChecked} />
               </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
@@ -445,8 +452,17 @@ export default function BottleAdd() {
                     type="number"
                     className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
                     placeholder="ボトル期限を入力"
+                    onChange={(e) => {
+                      setCreateForm((createForm: any) => {
+                        return {
+                          ...createForm,
+                          keep_expiration_day: Number(e.target.value),
+                        };
+                      });
+                    }}
+                    value={createForm?.keep_expiration_day || ""}
                   />
-                  ヶ月
+                  日
                 </div>
               </div>
               <div
@@ -455,6 +471,7 @@ export default function BottleAdd() {
                   client
                     .request(createBottle, {
                       ...createForm,
+                      is_notice_kitchen: isChecked ? 1 : 0,
                       ...defaultVariables,
                     })
                     .then(() => {

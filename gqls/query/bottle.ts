@@ -39,6 +39,7 @@ const searchBottle = gql`
             group_code
             id
             is_notice_kitchen
+            keep_expiration_day
             item_category_id
             item_code
             item_id

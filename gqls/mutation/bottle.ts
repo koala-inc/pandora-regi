@@ -14,6 +14,7 @@ const createBottle = gql`
     $point: Int
     $is_notice_kitchen: Int
     $item_code: Int
+    $keep_expiration_day: Int
   ) {
     createBottle(
       input: {
@@ -27,6 +28,7 @@ const createBottle = gql`
         point: $point
         is_notice_kitchen: $is_notice_kitchen
         item_code: $item_code
+        keep_expiration_day: $keep_expiration_day
       }
     ) {
       bottle {
@@ -65,6 +67,7 @@ const updateBottle = gql`
     $display: Int
     $is_notice_kitchen: Int
     $point: Int
+    $keep_expiration_day: Int
   ) {
     updateBottle(
       input: {
@@ -79,6 +82,7 @@ const updateBottle = gql`
         display: $display
         is_notice_kitchen: $is_notice_kitchen
         point: $point
+        keep_expiration_day: $keep_expiration_day
       }
     ) {
       bottle {
