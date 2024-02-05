@@ -60,8 +60,8 @@ export default function ItemCategoryLists() {
 
             {searchData?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
               (area: any, index: any) => (
-                <div className="relative mr-4 w-[780px] pt-4">
-                  <div key={index}>
+                <div className="relative mr-4 w-[780px] pt-4" key={index}>
+                  <div>
                     <Border2
                       className="absolute right-[-15px] top-[10px]"
                       rounded="rounded-full"
