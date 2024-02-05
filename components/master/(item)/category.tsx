@@ -35,8 +35,6 @@ export default function ItemCategoryLists() {
   const [addForm, setAddForm] = useState<any>({});
 
   const searchData = useSWR<any>(searchCategory, fetcher);
-  const createData = useSWR<any>(createCategory, fetcher);
-  const updateData = useSWR<any>(updateCategory, fetcher);
 
   return (
     <>
@@ -108,18 +106,11 @@ export default function ItemCategoryLists() {
                           className="mb-2 h-[30px] w-[7.5rem] rounded-md px-2 text-sm"
                           defaultValue={category.category_revision.name}
                           onBlur={(e) => {
-                            updateData.mutate(
-                              () =>
-                                client.request(updateCategory, {
-                                  id: category.id,
-                                  name: e.target.value,
-                                  ...defaultVariables,
-                                }),
-                              {
-                                populateCache: true,
-                                revalidate: false,
-                              }
-                            );
+                            client.request(updateCategory, {
+                              id: category.id,
+                              name: e.target.value,
+                              ...defaultVariables,
+                            });
                           }}
                         />
                         <p className="text-accent">小カテゴリー</p>
@@ -138,18 +129,11 @@ export default function ItemCategoryLists() {
                                       subcategory.category_revision.name
                                     }
                                     onBlur={(e) => {
-                                      updateData.mutate(
-                                        () =>
-                                          client.request(updateCategory, {
-                                            id: subcategory.id,
-                                            name: e.target.value,
-                                            ...defaultVariables,
-                                          }),
-                                        {
-                                          populateCache: true,
-                                          revalidate: false,
-                                        }
-                                      );
+                                      client.request(updateCategory, {
+                                        id: subcategory.id,
+                                        name: e.target.value,
+                                        ...defaultVariables,
+                                      });
                                     }}
                                   />
                                   <Border
@@ -198,19 +182,12 @@ export default function ItemCategoryLists() {
                             className="!h-full !w-full"
                             alt=""
                             onClick={() => {
-                              createData
-                                .mutate(
-                                  () =>
-                                    client.request(createCategory, {
-                                      name: "",
-                                      parent_id: category.id,
-                                      ...defaultVariables,
-                                    }),
-                                  {
-                                    populateCache: true,
-                                    revalidate: false,
-                                  }
-                                )
+                              client
+                                .request(createCategory, {
+                                  name: "",
+                                  parent_id: category.id,
+                                  ...defaultVariables,
+                                })
                                 .then(() => {
                                   addForm[category.id] = "";
                                   searchData.mutate(
