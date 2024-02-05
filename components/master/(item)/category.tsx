@@ -213,19 +213,12 @@ export default function ItemCategoryLists() {
             <div
               className="ml-2 mt-[90px]"
               onClick={() => {
-                createData
-                  .mutate(
-                    () =>
-                      client.request(createCategory, {
-                        name: "",
-                        parent_id: 0,
-                        ...defaultVariables,
-                      }),
-                    {
-                      populateCache: true,
-                      revalidate: false,
-                    }
-                  )
+                client
+                  .request(createCategory, {
+                    name: "",
+                    parent_id: 0,
+                    ...defaultVariables,
+                  })
                   .then(() => {
                     searchData.mutate(
                       () =>
