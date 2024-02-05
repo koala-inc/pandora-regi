@@ -164,12 +164,6 @@ export default function ItemCategoryLists() {
             <div
               className="mt-8 ml-[330px] flex"
               onClick={() => {
-                alert(
-                  JSON.stringify(
-                    searchData?.data?.seatArea[0]?.store_seat_area[0]?.seat_area
-                  )
-                );
-
                 client
                   .request(createSeatArea, {
                     ...defaultVariables,
