@@ -65,7 +65,7 @@ function Base() {
     <>
       <section className="flex items-center justify-around text-md">
         <div className="flex-col flex items-center">
-          <p className="text-4xl mb-6">A1</p>
+          <p className="text-4xl mb-6">A1　</p>
           <Toggle />
         </div>
         <div className="flex flex-col items-center justify-center">
