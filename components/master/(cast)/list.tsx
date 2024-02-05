@@ -521,7 +521,65 @@ export default function CastList() {
                     if (cast.leaving_date == null) {
                       return (
                         <>
-                          {cast.cast_code != 0 && cast.section == 1 && (
+                          {cast.cast_code != 0 &&
+                            (cast.section == 1 || cast.section == 0) && (
+                              <>
+                                <tr key={cast.cast_code}>
+                                  <td>{cast.cast_code}</td>
+                                  <td>{cast.name}</td>
+                                  <td>{cast.real_name}</td>
+                                  <td>{0}円</td>
+                                  <td>{0}円</td>
+                                  <td>{cast.entry_date}</td>
+                                  <td>{cast.leaving_date}</td>
+                                  <th>
+                                    <button
+                                      className="btn btn-ghost btn-xs"
+                                      onClick={() => {
+                                        setUpdateForm(() => cast);
+                                        setUpdateModal(true);
+                                      }}
+                                    >
+                                      編集
+                                    </button>
+                                  </th>
+                                </tr>
+                                {detail && (
+                                  <>
+                                    <tr
+                                      key={cast.cast_code + "1"}
+                                      className="mt-3 border-b-0 border-t border-gray-300 opacity-50"
+                                    >
+                                      <th>生年月日</th>
+                                      <th>住所</th>
+                                      <th>電話番号</th>
+                                      <th>その他</th>
+                                      <th>媒体</th>
+                                      <th>紹介者</th>
+                                    </tr>
+                                    <tr
+                                      key={cast.cast_code + "2"}
+                                      className="border-b border-gray-500 opacity-50"
+                                    >
+                                      <td>{cast.birthday}</td>
+                                      <td>{cast.address}</td>
+                                      <td>{cast.remarks}</td>
+                                      <td>{cast.phone_number}</td>
+                                      <td>-</td>
+                                      <td>-</td>
+                                    </tr>
+                                  </>
+                                )}
+                              </>
+                            )}
+                        </>
+                      );
+                    }
+                  } else {
+                    return (
+                      <>
+                        {cast.cast_code != 0 &&
+                          (cast.section == 1 || cast.section == 0) && (
                             <>
                               <tr key={cast.cast_code}>
                                 <td>{cast.cast_code}</td>
@@ -562,8 +620,8 @@ export default function CastList() {
                                   >
                                     <td>{cast.birthday}</td>
                                     <td>{cast.address}</td>
-                                    <td>{cast.remarks}</td>
                                     <td>{cast.phone_number}</td>
+                                    <td>{cast.remarks}</td>
                                     <td>-</td>
                                     <td>-</td>
                                   </tr>
@@ -571,62 +629,6 @@ export default function CastList() {
                               )}
                             </>
                           )}
-                        </>
-                      );
-                    }
-                  } else {
-                    return (
-                      <>
-                        {cast.cast_code == 0 && cast.section == 1 && (
-                          <>
-                            <tr key={cast.cast_code}>
-                              <td>{cast.cast_code}</td>
-                              <td>{cast.name}</td>
-                              <td>{cast.real_name}</td>
-                              <td>{0}円</td>
-                              <td>{0}円</td>
-                              <td>{cast.entry_date}</td>
-                              <td>{cast.leaving_date}</td>
-                              <th>
-                                <button
-                                  className="btn btn-ghost btn-xs"
-                                  onClick={() => {
-                                    setUpdateForm(() => cast);
-                                    setUpdateModal(true);
-                                  }}
-                                >
-                                  編集
-                                </button>
-                              </th>
-                            </tr>
-                            {detail && (
-                              <>
-                                <tr
-                                  key={cast.cast_code + "1"}
-                                  className="mt-3 border-b-0 border-t border-gray-300 opacity-50"
-                                >
-                                  <th>生年月日</th>
-                                  <th>住所</th>
-                                  <th>電話番号</th>
-                                  <th>その他</th>
-                                  <th>媒体</th>
-                                  <th>紹介者</th>
-                                </tr>
-                                <tr
-                                  key={cast.cast_code + "2"}
-                                  className="border-b border-gray-500 opacity-50"
-                                >
-                                  <td>{cast.birthday}</td>
-                                  <td>{cast.address}</td>
-                                  <td>{cast.phone_number}</td>
-                                  <td>{cast.remarks}</td>
-                                  <td>-</td>
-                                  <td>-</td>
-                                </tr>
-                              </>
-                            )}
-                          </>
-                        )}
                       </>
                     );
                   }
