@@ -41,8 +41,6 @@ export default function CastList() {
   const [searchCategory, setSearchCategory] = useState("入店日");
 
   const searchData = useSWR<any>(searchCast, fetcher);
-  const createData = useSWR<any>(createCast, fetcher);
-  const updateData = useSWR<any>(updateCast, fetcher);
 
   const [detail, setDetail] = useState(false);
   const [leave, setLeave] = useState(false);
@@ -1109,19 +1107,12 @@ export default function CastList() {
                 <div
                   className="ml-auto mr-4 flex flex-col justify-end"
                   onClick={() => {
-                    createData
-                      .mutate(
-                        () =>
-                          client.request(createCast, {
-                            ...createForm,
-                            section: 1,
-                            ...defaultVariables,
-                          }),
-                        {
-                          populateCache: true,
-                          revalidate: false,
-                        }
-                      )
+                    client
+                      .request(createCast, {
+                        ...createForm,
+                        section: 1,
+                        ...defaultVariables,
+                      })
                       .then(() => {
                         setCreateForm(() => {});
                         setSearchForm(() => {});

@@ -61,9 +61,6 @@ export default function BottleAdd() {
   const [createForm, setCreateForm] = useState<any>({});
   const [updateForm, setUpdateForm] = useState<any>({});
 
-  const createData = useSWR<any>(createBottle, fetcher);
-  const updateData = useSWR<any>(updateBottle, fetcher);
-
   const [addModal, setAddModal] = useState(false);
   const [updateModal, setUpdateModal] = useState(false);
 
@@ -455,18 +452,11 @@ export default function BottleAdd() {
               <div
                 className="ml-auto mr-4 flex flex-col justify-end"
                 onClick={() => {
-                  createData
-                    .mutate(
-                      () =>
-                        client.request(createBottle, {
-                          ...createForm,
-                          ...defaultVariables,
-                        }),
-                      {
-                        populateCache: true,
-                        revalidate: false,
-                      }
-                    )
+                  client
+                    .request(createBottle, {
+                      ...createForm,
+                      ...defaultVariables,
+                    })
                     .then(() => {
                       setCreateForm(() => {});
                       setSearchForm(() => {});

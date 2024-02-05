@@ -38,7 +38,7 @@ export default function ItemCategoryLists() {
   const [addForm, setAddForm] = useState<any>({});
 
   const searchData = useSWR<any>(searchSeatArea, fetcher);
-  const createData = useSWR<any>(createSeatArea, fetcher);
+  // const createData = useSWR<any>(createSeatArea, fetcher);
 
   return (
     <>

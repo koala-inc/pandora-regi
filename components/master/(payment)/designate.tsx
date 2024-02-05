@@ -36,8 +36,6 @@ export default function Designate() {
   const [addForm, setAddForm] = useState<any>({});
 
   const searchData = useSWR<any>(searchCategory, fetcher);
-  const createData = useSWR<any>(createCategory, fetcher);
-  const updateData = useSWR<any>(updateCategory, fetcher);
 
   return (
     <>

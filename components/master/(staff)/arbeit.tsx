@@ -27,8 +27,6 @@ export default function StaffList() {
   const [searchCategory, setSearchCategory] = useState("入店日");
 
   const searchData = useSWR<any>(searchStaff, fetcher);
-  const createData = useSWR<any>(createStaff, fetcher);
-  const updateData = useSWR<any>(updateStaff, fetcher);
 
   const [detail, setDetail] = useState(false);
   const [leave, setLeave] = useState(false);
@@ -805,18 +803,11 @@ export default function StaffList() {
               <div
                 className="ml-auto mr-4 flex flex-col justify-end"
                 onClick={() => {
-                  createData
-                    .mutate(
-                      () =>
-                        client.request(createStaff, {
-                          ...createForm,
-                          ...defaultVariables,
-                        }),
-                      {
-                        populateCache: true,
-                        revalidate: false,
-                      }
-                    )
+                  client
+                    .request(createStaff, {
+                      ...createForm,
+                      ...defaultVariables,
+                    })
                     .then(() => {
                       setCreateForm(() => {});
                       setSearchForm(() => {});
