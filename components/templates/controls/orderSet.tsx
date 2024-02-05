@@ -327,7 +327,7 @@ export default function ControlOrderSet() {
             <div className="flex flex-col">
               <label className="mt-3 mb-2 text-xs font-bold text-accent">
                 人数　
-                <span className="bg-red-700 text-gray-200 text-white px-[5px] py-[3px] text-xs rounded-md">
+                <span className="bg-red-700 text-white px-[5px] py-[3px] text-xs rounded-md">
                   必須
                 </span>
               </label>
@@ -349,7 +349,7 @@ export default function ControlOrderSet() {
             <div className="flex flex-col">
               <label className="mt-3 mb-2 text-xs font-bold text-accent">
                 セット時間　
-                <span className="bg-red-700 text-gray-200 text-white px-[5px] py-[3px] text-xs rounded-md">
+                <span className="bg-red-700 text-white px-[5px] py-[3px] text-xs rounded-md">
                   必須
                 </span>
               </label>
@@ -371,7 +371,7 @@ export default function ControlOrderSet() {
             <div className="flex flex-col">
               <label className="mt-3 mb-2 text-xs font-bold text-accent">
                 料金　
-                <span className="bg-red-700 text-gray-200 text-white px-[5px] py-[3px] text-xs rounded-md">
+                <span className="bg-red-700 text-white px-[5px] py-[3px] text-xs rounded-md">
                   必須
                 </span>
               </label>
@@ -393,7 +393,7 @@ export default function ControlOrderSet() {
               <div className="flex flex-col">
                 <label className="mt-3 mb-2 text-xs font-bold text-accent">
                   開始時間　
-                  <span className="bg-red-700 text-gray-200 text-white px-[5px] py-[3px] text-xs rounded-md">
+                  <span className="bg-red-700 text-white px-[5px] py-[3px] text-xs rounded-md">
                     必須
                   </span>
                 </label>
@@ -414,7 +414,7 @@ export default function ControlOrderSet() {
               <div className="flex flex-col">
                 <label className="mt-3 mb-2 text-xs font-bold text-accent">
                   終了時間　
-                  <span className="bg-red-700 text-gray-200 text-white px-[5px] py-[3px] text-xs rounded-md">
+                  <span className="bg-red-700  text-white px-[5px] py-[3px] text-xs rounded-md">
                     必須
                   </span>
                 </label>
