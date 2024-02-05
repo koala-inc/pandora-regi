@@ -6,9 +6,23 @@ import Border2 from "@/components/templates/border";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import useSWR, { preload } from "swr";
+import client from "@/connection";
+import { RequestDocument } from "graphql-request";
+import { searchSeatArea } from "@/gqls/query/seat";
+
+const defaultVariables = {
+  store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
+};
 
 export default function SetPayment() {
   const [activeTab, setActiveTab] = useState(0);
+  const fetcher = (q: RequestDocument) =>
+    client.request(q, { ...defaultVariables });
+
+  // preload(searchSeatArea, fetcher);
+  const searchData = useSWR<any>(searchSeatArea, fetcher);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -22,17 +36,22 @@ export default function SetPayment() {
       }}
       className="absolute left-[220px] top-1/2 z-20 -translate-y-1/2"
     >
-      <div className="tabs mt-3">
-        <a
-          className={`tab-md tab mr-1 w-[7em] rounded-t-xl ${
-            activeTab == 0
-              ? "tab-active bg-primary text-white"
-              : "tab-lifted bg-secondary text-black"
-          }`}
-          onClick={() => setActiveTab(0)}
-        >
-          -
-        </a>
+      <div className="tabs mt-3 justify-start">
+        {searchData?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
+          (area: any, index: any) => (
+            <a
+              key={index}
+              className={`tab-md tab mr-1 w-[7em] rounded-t-xl ${
+                activeTab == index
+                  ? "tab-active bg-primary text-white"
+                  : "tab-lifted bg-secondary text-black"
+              }`}
+              onClick={() => setActiveTab(index)}
+            >
+              {area.name}
+            </a>
+          )
+        )}
       </div>
       <div className="mt-[-1px] min-h-[calc(98dvh-80px)] w-full pr-8 rounded-b-xl rounded-r-xl bg-primary px-4 pt-6 pb-0 text-white">
         <Border

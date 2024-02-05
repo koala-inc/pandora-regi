@@ -6,18 +6,12 @@ import { motion } from "framer-motion";
 import Border2 from "@/components/templates/border";
 import Toggle from "@/components/templates/toggle4";
 import client from "@/connection";
-import {
-  createCategory,
-  deleteCategory,
-  updateCategory,
-} from "@/gqls/mutation/category";
-import { searchCategory } from "@/gqls/query/category";
 import { RequestDocument } from "graphql-request";
 import Image from "next/image";
 import { useState } from "react";
 import useSWR, { preload } from "swr";
 import { searchSeatArea } from "@/gqls/query/seat";
-import { createSeatArea } from "@/gqls/mutation/seat";
+import { createSeatArea, updateSeatArea } from "@/gqls/mutation/seat";
 import { deleteSeatArea } from "@/gqls/mutation/seat copy";
 
 const defaultVariables = {
@@ -29,8 +23,6 @@ export default function ItemCategoryLists() {
 
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
-
-  preload(searchSeatArea, fetcher);
 
   const [searchForm, setSearchForm] = useState<any>({});
   const [createForm, setCreateForm] = useState<any>({});
@@ -111,6 +103,26 @@ export default function ItemCategoryLists() {
                             type="text"
                             className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
                             defaultValue={area.name || ""}
+                            onBlur={(e) => {
+                              client
+                                .request(updateSeatArea, {
+                                  id: area.id,
+                                  name: e.target.value,
+                                  ...defaultVariables,
+                                })
+                                .then(() => {
+                                  searchData.mutate(
+                                    () =>
+                                      client.request(searchSeatArea, {
+                                        ...defaultVariables,
+                                      }),
+                                    {
+                                      populateCache: true,
+                                      revalidate: false,
+                                    }
+                                  );
+                                });
+                            }}
                           />
                         </div>
                         <div className="flex flex-col py-2 mx-2">
@@ -118,6 +130,27 @@ export default function ItemCategoryLists() {
                           <input
                             type="text"
                             className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                            defaultValue={area.extra_time || ""}
+                            onBlur={(e) => {
+                              client
+                                .request(updateSeatArea, {
+                                  id: area.id,
+                                  extra_time: Number(e.target.value),
+                                  ...defaultVariables,
+                                })
+                                .then(() => {
+                                  searchData.mutate(
+                                    () =>
+                                      client.request(searchSeatArea, {
+                                        ...defaultVariables,
+                                      }),
+                                    {
+                                      populateCache: true,
+                                      revalidate: false,
+                                    }
+                                  );
+                                });
+                            }}
                           />
                         </div>
                         <div className="flex flex-col py-2 mx-2">
@@ -125,6 +158,27 @@ export default function ItemCategoryLists() {
                           <input
                             type="text"
                             className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                            defaultValue={area.extra_price || ""}
+                            onBlur={(e) => {
+                              client
+                                .request(updateSeatArea, {
+                                  id: area.id,
+                                  extra_price: Number(e.target.value),
+                                  ...defaultVariables,
+                                })
+                                .then(() => {
+                                  searchData.mutate(
+                                    () =>
+                                      client.request(searchSeatArea, {
+                                        ...defaultVariables,
+                                      }),
+                                    {
+                                      populateCache: true,
+                                      revalidate: false,
+                                    }
+                                  );
+                                });
+                            }}
                           />
                         </div>
                         <div className="flex flex-col py-2 mx-2">
@@ -132,6 +186,27 @@ export default function ItemCategoryLists() {
                           <input
                             type="text"
                             className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                            defaultValue={area.service_tax || ""}
+                            onBlur={(e) => {
+                              client
+                                .request(updateSeatArea, {
+                                  id: area.id,
+                                  service_tax: Number(e.target.value),
+                                  ...defaultVariables,
+                                })
+                                .then(() => {
+                                  searchData.mutate(
+                                    () =>
+                                      client.request(searchSeatArea, {
+                                        ...defaultVariables,
+                                      }),
+                                    {
+                                      populateCache: true,
+                                      revalidate: false,
+                                    }
+                                  );
+                                });
+                            }}
                           />
                         </div>
                         <div className="flex flex-col py-2 mx-2">
@@ -139,6 +214,27 @@ export default function ItemCategoryLists() {
                           <input
                             type="text"
                             className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                            defaultValue={area.charge_price || ""}
+                            onBlur={(e) => {
+                              client
+                                .request(updateSeatArea, {
+                                  id: area.id,
+                                  charge_price: Number(e.target.value),
+                                  ...defaultVariables,
+                                })
+                                .then(() => {
+                                  searchData.mutate(
+                                    () =>
+                                      client.request(searchSeatArea, {
+                                        ...defaultVariables,
+                                      }),
+                                    {
+                                      populateCache: true,
+                                      revalidate: false,
+                                    }
+                                  );
+                                });
+                            }}
                           />
                         </div>
                         <div className="flex flex-col py-2 mx-2">
@@ -146,6 +242,27 @@ export default function ItemCategoryLists() {
                           <input
                             type="text"
                             className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                            defaultValue={area.extra_charge_time || ""}
+                            onBlur={(e) => {
+                              client
+                                .request(updateSeatArea, {
+                                  id: area.id,
+                                  extra_charge_time: Number(e.target.value),
+                                  ...defaultVariables,
+                                })
+                                .then(() => {
+                                  searchData.mutate(
+                                    () =>
+                                      client.request(searchSeatArea, {
+                                        ...defaultVariables,
+                                      }),
+                                    {
+                                      populateCache: true,
+                                      revalidate: false,
+                                    }
+                                  );
+                                });
+                            }}
                           />
                         </div>
                         <div className="flex flex-col py-2 mx-2">
@@ -153,6 +270,27 @@ export default function ItemCategoryLists() {
                           <input
                             type="text"
                             className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                            defaultValue={area.extra_charge_price || ""}
+                            onBlur={(e) => {
+                              client
+                                .request(updateSeatArea, {
+                                  id: area.id,
+                                  extra_charge_price: Number(e.target.value),
+                                  ...defaultVariables,
+                                })
+                                .then(() => {
+                                  searchData.mutate(
+                                    () =>
+                                      client.request(searchSeatArea, {
+                                        ...defaultVariables,
+                                      }),
+                                    {
+                                      populateCache: true,
+                                      revalidate: false,
+                                    }
+                                  );
+                                });
+                            }}
                           />
                         </div>
                       </div>

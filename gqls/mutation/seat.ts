@@ -1,6 +1,11 @@
 import { gql } from "graphql-request";
 
-export { createSeatArea, createSeatSetPriceChange, deleteSeatArea };
+export {
+  createSeatArea,
+  createSeatSetPriceChange,
+  deleteSeatArea,
+  updateSeatArea,
+};
 
 const createSeatArea = gql`
   mutation (
@@ -74,6 +79,57 @@ const createSeatSetPriceChange = gql`
         id
         set_price
         slip_key
+      }
+    }
+  }
+`;
+
+const updateSeatArea = gql`
+  mutation (
+    $store_code: Int!
+    $id: Int!
+    $name: String
+    $is_preset: Int
+    $area_key: String
+    $area_code: Int
+    $price: Int
+    $charge_price: Int
+    $extra_time: Int
+    $extra_price: Int
+    $extra_charge_time: Int
+    $extra_charge_price: Int
+    $service_tax: Int
+  ) {
+    updateSeatArea(
+      input: {
+        store_code: $store_code
+        id: $id
+        name: $name
+        is_preset: $is_preset
+        area_key: $area_key
+        area_code: $area_code
+        price: $price
+        charge_price: $charge_price
+        extra_time: $extra_time
+        extra_price: $extra_price
+        extra_charge_time: $extra_charge_time
+        extra_charge_price: $extra_charge_price
+        service_tax: $service_tax
+      }
+    ) {
+      seat_area {
+        area_code
+        area_key
+        charge_price
+        extra_charge_price
+        extra_charge_time
+        extra_price
+        extra_time
+        id
+        name
+        price
+        service_tax
+        is_preset
       }
     }
   }

@@ -11,6 +11,7 @@ import { RequestDocument } from "graphql-request";
 import useSWR, { preload } from "swr";
 import Image from "next/image";
 import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
+import { searchSeatArea } from "@/gqls/query/seat";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -51,6 +52,8 @@ export default function ControlOrderSet() {
     client.request(q, { ...defaultVariables });
 
   preload(searchCast, fetcher);
+
+  const searchData2 = useSWR<any>(searchSeatArea, fetcher);
 
   const [searchForm, setSearchForm] = useState<any>({});
 
@@ -201,17 +204,22 @@ export default function ControlOrderSet() {
             </div>
           </div>
         </ContentHeader>
-        <div className="tabs mt-3">
-          <a
-            className={`tab-md tab mr-1 w-[7em] rounded-t-xl ${
-              activeTab == 0
-                ? "tab-active bg-primary text-white"
-                : "tab-lifted bg-secondary text-black"
-            }`}
-            onClick={() => setActiveTab(0)}
-          >
-            -
-          </a>
+        <div className="tabs mt-3 justify-start">
+          {searchData2?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
+            (area: any, index: any) => (
+              <a
+                key={index}
+                className={`tab-md tab mr-1 w-[7em] rounded-t-xl ${
+                  activeTab == index
+                    ? "tab-active bg-primary text-white"
+                    : "tab-lifted bg-secondary text-black"
+                }`}
+                onClick={() => setActiveTab(index)}
+              >
+                {area.name}
+              </a>
+            )
+          )}
         </div>
         <div className="mt-[-1px] flex min-h-[670px] min-w-[920px] max-w-[calc(100dvw-405px)] flex-wrap rounded-b-xl rounded-r-xl bg-primary px-4 pt-6 pb-0 text-white">
           <div className="mt-2 flex min-h-[100px] min-w-full items-center justify-start overflow-x-scroll rounded-md border border-white bg-black p-4">
