@@ -115,6 +115,7 @@ export default function OrderItemAdd() {
                       setActiveTab(index);
                       setSubCategoryActive(category.id);
                     }}
+                    key={index}
                   >
                     {category.category_revision.name}
                   </a>
@@ -139,6 +140,7 @@ export default function OrderItemAdd() {
                       className={
                         "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
                       }
+                      key={index}
                     >
                       {bottle.bottle_revision.name}
                     </div>
@@ -154,6 +156,7 @@ export default function OrderItemAdd() {
                       className={
                         "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
                       }
+                      key={index}
                     >
                       {menu.menu_revision.name}
                     </div>
