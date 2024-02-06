@@ -7,6 +7,20 @@ import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsAnimateGlobal from "@/globalstates/settings";
 import Button from "../button";
 import { useState } from "react";
+import Control from "@/components/master/(component)/control";
+import Toggle from "@/components/templates/toggle4";
+import client from "@/connection";
+import {
+  createCategory,
+  deleteCategory,
+  updateCategory,
+} from "@/gqls/mutation/category";
+import { searchCategory } from "@/gqls/query/category";
+import { RequestDocument } from "graphql-request";
+import Image from "next/image";
+import useSWR, { preload } from "swr";
+import { searchBottle } from "@/gqls/query/bottle";
+import { searchMenu } from "@/gqls/query/menu";
 
 function ContentHeader({ children }: { children: any }) {
   return <SubBorder size="h-[100px] w-full px-4 py-2">{children}</SubBorder>;
@@ -16,10 +30,32 @@ function Content({ children }: { children: any }) {
   return <Border size="h-[582.5px] w-full px-4 py-2">{children}</Border>;
 }
 
+const defaultVariables = {
+  store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
+};
+
 export default function OrderItemAdd() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [activeTab, setActiveTab] = useState(0);
+  const [update, setUpdate] = useState(false);
+
+  const fetcher = (q: RequestDocument) =>
+    client.request(q, { ...defaultVariables });
+
+  preload(searchCategory, fetcher);
+
+  const [searchForm, setSearchForm] = useState<any>({});
+  const [createForm, setCreateForm] = useState<any>({});
+  const [updateForm, setUpdateForm] = useState<any>({});
+  const [addForm, setAddForm] = useState<any>({});
+
+  const searchData = useSWR<any>(searchCategory, fetcher);
+  const searchData2 = useSWR<any>(searchBottle, fetcher);
+  const searchData3 = useSWR<any>(searchMenu, fetcher);
+
+  const [categoryActive, setCategoryActive] = useState(-1);
+  const [subCategoryActive, setSubCategoryActive] = useState(-1);
 
   return (
     <>
@@ -47,262 +83,84 @@ export default function OrderItemAdd() {
           <Button>検索</Button>
         </ContentHeader>
         <div className="flex py-2">
-          <Button>ドリンク</Button>
-          <Button>フード</Button>
-          <Button>ボトル</Button>
+          {searchData?.data?.category[0]?.store_category[0]?.category?.map(
+            (category: any, index: any) => {
+              if (category.category_revision.parent_id == 0) {
+                return (
+                  <div
+                    key={index}
+                    onClick={() => {
+                      setCategoryActive(category.id);
+                    }}
+                  >
+                    <Button>{category.category_revision.name}</Button>
+                  </div>
+                );
+              }
+            }
+          )}
         </div>
-        <div className="tabs mt-3">
-          <a
-            className={`tab tab-md mr-1 w-[7em] rounded-t-xl ${
-              activeTab == 0
-                ? "tab-active bg-primary text-white"
-                : "tab-lifted bg-secondary text-black"
-            }`}
-            onClick={() => setActiveTab(0)}
-          >
-            焼酎
-          </a>
-          <a
-            className={`tab tab-md mr-1 w-[7em] rounded-t-xl ${
-              activeTab == 1
-                ? "tab-active bg-primary text-white"
-                : "tab-lifted bg-secondary text-black"
-            }`}
-            onClick={() => setActiveTab(1)}
-          >
-            果実酒
-          </a>
-          <a
-            className={`tab tab-md mr-1 w-[7em] rounded-t-xl ${
-              activeTab == 2
-                ? "tab-active bg-primary text-white"
-                : "tab-lifted bg-secondary text-black"
-            }`}
-            onClick={() => setActiveTab(2)}
-          >
-            日本酒
-          </a>
-          <a
-            className={`tab tab-md mr-1 w-[7em] rounded-t-xl ${
-              activeTab == 2
-                ? "tab-active bg-primary text-white"
-                : "tab-lifted bg-secondary text-black"
-            }`}
-            onClick={() => setActiveTab(2)}
-          >
-            日本酒
-          </a>
-          <a
-            className={`tab tab-md mr-1 w-[7em] rounded-t-xl ${
-              activeTab == 2
-                ? "tab-active bg-primary text-white"
-                : "tab-lifted bg-secondary text-black"
-            }`}
-            onClick={() => setActiveTab(2)}
-          >
-            日本酒
-          </a>
-          <a
-            className={`tab tab-md mr-1 w-[7em] rounded-t-xl ${
-              activeTab == 2
-                ? "tab-active bg-primary text-white"
-                : "tab-lifted bg-secondary text-black"
-            }`}
-            onClick={() => setActiveTab(2)}
-          >
-            日本酒
-          </a>
-          <a
-            className={`tab tab-md mr-1 w-[7em] rounded-t-xl ${
-              activeTab == 2
-                ? "tab-active bg-primary text-white"
-                : "tab-lifted bg-secondary text-black"
-            }`}
-            onClick={() => setActiveTab(2)}
-          >
-            日本酒
-          </a>
-          <a
-            className={`tab tab-md mr-1 w-[7em] rounded-t-xl ${
-              activeTab == 2
-                ? "tab-active bg-primary text-white"
-                : "tab-lifted bg-secondary text-black"
-            }`}
-            onClick={() => setActiveTab(2)}
-          >
-            日本酒
-          </a>
-          <a
-            className={`tab tab-md mr-1 w-[7em] rounded-t-xl ${
-              activeTab == 2
-                ? "tab-active bg-primary text-white"
-                : "tab-lifted bg-secondary text-black"
-            }`}
-            onClick={() => setActiveTab(2)}
-          >
-            日本酒
-          </a>
+        <div className="tabs mt-3 justify-start">
+          {searchData?.data?.category[0]?.store_category[0]?.category?.map(
+            (category: any, index: any) => {
+              if (category.category_revision.parent_id == categoryActive) {
+                return (
+                  <a
+                    className={`tab tab-md mr-1 w-[9em] rounded-t-xl ${
+                      activeTab == index
+                        ? "tab-active bg-primary text-white"
+                        : "tab-lifted bg-secondary text-black"
+                    }`}
+                    onClick={() => {
+                      setActiveTab(index);
+                      setSubCategoryActive(category.id);
+                    }}
+                  >
+                    {category.category_revision.name}
+                  </a>
+                );
+              }
+            }
+          )}
+
           {/* <a className="tab tab-lifted tab-lg w-[8em] rounded-t-xl bg-neutral-400 text-black">
           +
         </a> */}
         </div>
         <div className="mt-[-1px] flex h-[520px] w-[1020px] rounded-b-xl rounded-r-xl bg-primary p-4 text-white">
           <div className="grid w-full grid-cols-8 grid-rows-7 content-start items-center justify-center rounded-md border border-white bg-black p-4">
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+            {searchData2?.data?.bottle[0]?.store_bottle[0]?.bottle?.map(
+              (bottle: any, index: any) => {
+                if (
+                  bottle.bottle_revision.item_category_id == subCategoryActive
+                ) {
+                  return (
+                    <div
+                      className={
+                        "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+                      }
+                    >
+                      {bottle.bottle_revision.name}
+                    </div>
+                  );
+                }
               }
-            >
-              ジンロ
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+            )}
+            {searchData3?.data?.menu[0]?.store_menu[0]?.menu?.map(
+              (menu: any, index: any) => {
+                if (menu.menu_revision.item_category_id == subCategoryActive) {
+                  return (
+                    <div
+                      className={
+                        "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+                      }
+                    >
+                      {menu.menu_revision.name}
+                    </div>
+                  );
+                }
               }
-            >
-              鏡月
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              いいちこ
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              鏡月
-              <br />
-              プレミアム
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              ジンロ
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              鏡月
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              いいちこ
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              鏡月
-              <br />
-              プレミアム
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              ジンロ
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              鏡月
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              いいちこ
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              鏡月
-              <br />
-              プレミアム
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              ジンロ
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              鏡月
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              いいちこ
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              ジンロ
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              鏡月
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              いいちこ
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              鏡月
-              <br />
-              プレミアム
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              ジンロ
-            </div>
-            <div
-              className={
-                "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              鏡月
-            </div>
+            )}
           </div>
         </div>
       </motion.div>

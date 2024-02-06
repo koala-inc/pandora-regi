@@ -52,7 +52,7 @@ function Control(isControl: any) {
       );
     case "ITEM":
       // オーダー追加コンポーネント
-      return <OrderAdd />;
+      return <OrderItemAdd />;
     case "APPROX":
       // 概算コンポーネント
       return (
