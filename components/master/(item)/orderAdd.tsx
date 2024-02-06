@@ -407,7 +407,6 @@ export default function OrderAdd() {
               <div
                 className="ml-auto mr-4 flex flex-col justify-end"
                 onClick={() => {
-                  alert(JSON.stringify(createForm));
                   client
                     .request(createMenu, {
                       ...createForm,
