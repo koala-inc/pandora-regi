@@ -78,14 +78,6 @@ export default function BottleAdd() {
           <p className="w-full text-left">ボトルを検索</p>
           <div className="flex w-full flex-wrap">
             <div className="flex flex-col">
-              <label className="mt-3 text-xs font-bold text-accent">ID</label>
-              <input
-                type="number"
-                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                placeholder="IDを入力"
-              />
-            </div>
-            <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">
                 ボトル名
               </label>
@@ -217,7 +209,6 @@ export default function BottleAdd() {
             {/* head */}
             <thead>
               <tr className="text-accent">
-                <th className="w-[6em] align-bottom">ID</th>
                 <th className="w-[15em] align-bottom">ボトル名</th>
                 <th className="w-[15em] align-bottom">小カテゴリ</th>
                 <th className="w-[10em] align-bottom">ボトル種別</th>
@@ -235,7 +226,6 @@ export default function BottleAdd() {
             {/* head */}
             <thead>
               <tr className="text-accent">
-                <th className="w-[6em] align-bottom"></th>
                 <th className="w-[15em] align-bottom"></th>
                 <th className="w-[15em] align-bottom"></th>
                 <th className="w-[10em] align-bottom"></th>
@@ -253,7 +243,6 @@ export default function BottleAdd() {
                 (bottle: any, index: any) => {
                   return (
                     <tr key={index}>
-                      <th>{bottle.bottle_revision.item_code}</th>
                       <th>{bottle.bottle_revision.name}</th>
                       <th>
                         {searchData2?.data?.category[0]?.store_category[0]?.category?.map(
@@ -316,23 +305,6 @@ export default function BottleAdd() {
           <Border className="w-full" size="p-4 flex flex-col" black>
             <p className="w-full text-left">新規ボトル登録</p>
             <div className="flex w-full flex-wrap">
-              <div className="flex flex-col">
-                <label className="mt-3 text-xs font-bold text-accent">ID</label>
-                <input
-                  type="number"
-                  className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                  placeholder="IDを入力"
-                  onChange={(e) => {
-                    setCreateForm((createForm: any) => {
-                      return {
-                        ...createForm,
-                        item_code: e.target.value,
-                      };
-                    });
-                  }}
-                  value={createForm?.item_code || ""}
-                />
-              </div>
               <div className="flex flex-col">
                 <label className="mt-3 text-xs font-bold text-accent">
                   ボトル名
