@@ -91,6 +91,8 @@ export default function OrderItemAdd() {
                     key={index}
                     onClick={() => {
                       setCategoryActive(category.id);
+                      setSubCategoryActive(-1);
+                      setActiveTab(-1);
                     }}
                   >
                     <Button>{category.category_revision.name}</Button>
@@ -107,12 +109,12 @@ export default function OrderItemAdd() {
                 return (
                   <a
                     className={`tab tab-md mr-1 w-[9em] rounded-t-xl ${
-                      activeTab == index
+                      activeTab == category.id
                         ? "tab-active bg-primary text-white"
                         : "tab-lifted bg-secondary text-black"
                     }`}
                     onClick={() => {
-                      setActiveTab(index);
+                      setActiveTab(category.id);
                       setSubCategoryActive(category.id);
                     }}
                     key={index}
