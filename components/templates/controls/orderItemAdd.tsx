@@ -57,6 +57,8 @@ export default function OrderItemAdd() {
   const [categoryActive, setCategoryActive] = useState(-1);
   const [subCategoryActive, setSubCategoryActive] = useState(-1);
 
+  let count = 0;
+
   return (
     <>
       <motion.div
@@ -106,6 +108,11 @@ export default function OrderItemAdd() {
           {searchData?.data?.category[0]?.store_category[0]?.category?.map(
             (category: any, index: any) => {
               if (category.category_revision.parent_id == categoryActive) {
+                if (activeTab == -1 && count == 0) {
+                  setActiveTab(category.id);
+                  setSubCategoryActive(category.id);
+                }
+                count += 1;
                 return (
                   <a
                     className={`tab tab-md mr-1 w-[9em] rounded-t-xl ${
