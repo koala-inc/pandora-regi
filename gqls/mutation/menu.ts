@@ -6,6 +6,7 @@ const createMenu = gql`
   mutation (
     $store_code: Int!
     $item_category_id: Int
+    $group_code: Int
     $type: Int
     $name: String!
     $price: Int
@@ -19,6 +20,7 @@ const createMenu = gql`
       input: {
         store_code: $store_code
         item_category_id: $item_category_id
+        group_code: $group_code
         type: $type
         name: $name
         price: $price
