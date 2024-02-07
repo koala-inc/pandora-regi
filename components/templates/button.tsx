@@ -27,19 +27,19 @@ export default function Button({
 
   switch (bg) {
     case "red":
-      bgColor = " bg-[#6b0012]";
+      bgColor = " !bg-[#6b0012]";
       bgText = " text-white";
       break;
     case "blue":
-      bgColor = " bg-[#002d6b]";
+      bgColor = " !bg-[#002d6b]";
       bgText = " text-white";
       break;
     case "green":
-      bgColor = " bg-[#006b3e]";
+      bgColor = " !bg-[#006b3e]";
       bgText = " text-white";
       break;
     case "orange":
-      bgColor = " bg-[#e83929]";
+      bgColor = " !bg-[#e83929]";
       bgText = " text-white";
       break;
   }
