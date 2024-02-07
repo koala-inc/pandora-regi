@@ -9,9 +9,8 @@ const searchCast = gql`
     $cast_code: [Int]
     $staff_id: [Int]
     $name: String
-    $name_syllabary_search_code: Int
+    $name_ruby_syllabary_search_code: Int
     $real_name: String
-    $real_name_ruby: String
     $section: [Int]
     $entry_date_from: String
     $entry_date_to: String
@@ -30,9 +29,8 @@ const searchCast = gql`
       cast_code: $cast_code
       staff_id: $staff_id
       name: $name
-      name_syllabary_search_code: $name_syllabary_search_code
+      name_ruby_syllabary_search_code: $name_ruby_syllabary_search_code
       real_name: $real_name
-      real_name_ruby: $real_name_ruby
       section: $section
       entry_date_from: $entry_date_from
       entry_date_to: $entry_date_to
@@ -56,6 +54,7 @@ const searchCast = gql`
           leaving_date
           media_id
           name
+          name_ruby
           phone_number
           real_name
           real_name_ruby

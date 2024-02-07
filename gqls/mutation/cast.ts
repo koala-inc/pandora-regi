@@ -14,6 +14,7 @@ const createCast = gql`
     $store_code: Int!
     $cast_code: Int!
     $name: String!
+    $name_ruby: String
     $real_name: String
     $real_name_ruby: String
     $section: Int
@@ -31,6 +32,7 @@ const createCast = gql`
         store_code: $store_code
         cast_code: $cast_code
         name: $name
+        name_ruby: $name_ruby
         real_name: $real_name
         real_name_ruby: $real_name_ruby
         section: $section
@@ -131,6 +133,7 @@ const updateCast = gql`
     $id: Int!
     $cast_code: Int
     $name: String
+    $name_ruby: String
     $real_name: String
     $real_name_ruby: String
     $section: Int
@@ -150,6 +153,7 @@ const updateCast = gql`
         id: $id
         cast_code: $cast_code
         name: $name
+        name_ruby: $name_ruby
         real_name: $real_name
         real_name_ruby: $real_name_ruby
         section: $section

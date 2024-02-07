@@ -620,25 +620,23 @@ function Add() {
           </div>
           <div className="flex h-[39.3%] max-h-[307px] min-h-[294px]">
             <Lists
-              lists={
-                [
-                  // {
-                  //   title: "吉四六",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "生ビール",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "ドンペリ白",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                ]
-              }
+              lists={[
+                {
+                  title: "吉四六",
+                  lot: 1,
+                  price: 1000,
+                },
+                {
+                  title: "生ビール",
+                  lot: 1,
+                  price: 1000,
+                },
+                {
+                  title: "ドンペリ白",
+                  lot: 1,
+                  price: 1000,
+                },
+              ]}
             />
           </div>
         </div>
@@ -650,7 +648,9 @@ function Add() {
             <div className="mt-4 flex w-full items-center justify-between text-2xl text-accent">
               <div>合計</div>
               <div className="flex-1 text-right">¥{(0).toLocaleString()}-</div>→
-              <div className="flex-1 text-right">¥{(0).toLocaleString()}-</div>
+              <div className="flex-1 text-right">
+                ¥{(3000).toLocaleString()}-
+              </div>
             </div>
           </div>
         </div>

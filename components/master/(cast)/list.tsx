@@ -906,15 +906,15 @@ export default function CastList() {
                   <input
                     className="mr-2 h-[30px] mt-1 w-[8rem] rounded-md px-2 text-sm"
                     placeholder="フリガナを入力"
-                    // onChange={(e) => {
-                    //   setCreateForm((createForm: any) => {
-                    //     return {
-                    //       ...createForm,
-                    //       real_name_ruby: e.target.value,
-                    //     };
-                    //   });
-                    // }}
-                    // value={createForm?.real_name_ruby || ""}
+                    onChange={(e) => {
+                      setCreateForm((createForm: any) => {
+                        return {
+                          ...createForm,
+                          name_ruby: e.target.value,
+                        };
+                      });
+                    }}
+                    value={createForm?.name_ruby || ""}
                   />
                 </div>
                 <div className="flex flex-col">
@@ -1203,15 +1203,15 @@ export default function CastList() {
                   <input
                     className="mr-2 h-[30px] mt-1 w-[8rem] rounded-md px-2 text-sm"
                     placeholder="フリガナを入力"
-                    // onChange={(e) => {
-                    //   setCreateForm((createForm: any) => {
-                    //     return {
-                    //       ...createForm,
-                    //       real_name_ruby: e.target.value,
-                    //     };
-                    //   });
-                    // }}
-                    // value={createForm?.real_name_ruby || ""}
+                    onChange={(e) => {
+                      setUpdateForm((updateForm: any) => {
+                        return {
+                          ...updateForm,
+                          name_ruby: e.target.value,
+                        };
+                      });
+                    }}
+                    value={updateForm?.name_ruby || ""}
                   />
                 </div>
                 <div className="flex flex-col">
