@@ -65,7 +65,7 @@ export default function OrderEnd() {
                 <Border2
                   className="my-2 w-[300px]"
                   rounded="border-white rounded-md"
-                  size="p-4 flex flex-col min-h-[80px] overflow-scroll justify-center"
+                  size="p-4 flex flex-col min-h-[90px] overflow-scroll justify-center"
                   black
                 >
                   <div className="text-accent w-full text-left">残金</div>
