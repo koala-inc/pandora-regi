@@ -94,7 +94,7 @@ export default function OrderItemAdd() {
             <div>
               <Border2
                 rounded="rounded-full"
-                size="h-[45px] w-[45px] p-[8px] bg-search"
+                size="h-[45px] w-[45px] p-[10px] bg-search"
               >
                 <Image
                   src={"/assets/search.svg"}

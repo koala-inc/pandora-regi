@@ -690,6 +690,188 @@ function Add() {
   );
 }
 
+function CastAdd() {
+  const [isHeader, setIsHeader] = useIsHeaderGlobal();
+  const [isFooter, setIsFooter] = useIsFooterGlobal();
+  const [isControl, setIsControl] = useIsControlGlobal();
+  const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+
+  return (
+    <>
+      <section className="flex items-center justify-around text-md mb-4">
+        <div className="flex-col flex items-center w-[77.45px]">
+          <p className="text-4xl w-full text-left">A1</p>
+        </div>
+        <div className="flex flex-col items-center justify-center w-[64px]">
+          <div className="flex flex-col items-center justify-center">
+            <p className="text-[0.8rem] text-accent">人数</p>
+            <p>{purchaseOrder[0]?.num}名</p>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center w-[111.77px]">
+          <div
+            className="flex flex-col items-center justify-center"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsControl("TIME");
+            }}
+          >
+            <p className="text-[0.8rem] text-accent">時間</p>
+            <p>
+              {purchaseOrder[0]?.startTime || "00:00"}~
+              {purchaseOrder[0]?.endTime || "00:00"}
+            </p>
+          </div>
+        </div>
+      </section>
+      <section className="flex flex-1 flex-col text-xs">
+        <div className="mb-1 flex-1">
+          <div className="mb-1 flex w-full">
+            <div className="text-sm text-accent">キャスト</div>
+            <Line ml="ml-10" />
+          </div>
+          <div className="flex h-[39.3%] max-h-[100px] min-h-[100px]">
+            <Lists
+              lists={[
+                {
+                  title: "キャストA",
+                  subTitle: "◯",
+                  lot: 1,
+                  price: 1000,
+                },
+                {
+                  title: "A",
+                  subTitle: "◯",
+                  lot: 100,
+                  price: 1000,
+                },
+                {
+                  title: "キャストA",
+                  subTitle: "◯",
+                  lot: 1,
+                  price: 1000,
+                },
+                {
+                  title: "A",
+                  subTitle: "◯",
+                  lot: 100,
+                  price: 1000,
+                },
+              ]}
+            />
+          </div>
+          <div className="flex w-full">
+            <Line />
+          </div>
+          <div className="flex w-full border border-white rounded-md my-3 px-3 py-2 pt-4">
+            <div className="flex flex-col w-[50px]">
+              <p className="h-[20px]"></p>
+              <p className="h-[40px] flex items-center">小計</p>
+              <p className="h-[40px] flex items-center">合計</p>
+            </div>
+            <div className="flex flex-col w-[200px] text-right">
+              <p className="h-[20px] text-center">現在</p>
+              <p className="h-[40px] text-accent text-xl flex items-center justify-end">
+                ¥0-
+              </p>
+              <p className="h-[40px] text-accent text-xl flex items-center justify-end">
+                ¥0-
+              </p>
+            </div>
+            <div className="flex flex-col w-[20px] mx-2 text-right">
+              <p className="h-[20px]"></p>
+              <p className="h-[40px] flex items-center">→</p>
+              <p className="h-[40px] flex items-center">→</p>
+            </div>
+            <div className="flex flex-col w-[200px] text-right">
+              <p className="h-[20px] text-center">見込み</p>
+              <p className="h-[40px] text-accent text-xl flex items-center justify-end">
+                ¥0-
+              </p>
+              <p className="h-[40px] text-accent text-xl flex items-center justify-end">
+                ¥0-
+              </p>
+            </div>
+          </div>
+          <div className="flex w-full">
+            <Line />
+          </div>
+          <div className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2">
+            <div className="flex flex-col w-[30px] text-xs">
+              <p className="text-accent h-[20px]"></p>
+              <p className="h-[30px] flex items-center">同伴</p>
+            </div>
+            <div className="flex flex-col w-[60px] text-right">
+              <p className="text-accent h-[20px]"></p>
+              <p className="h-[30px] text-accent flex items-center">作業さん</p>
+            </div>
+            <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
+              <p className="text-accent h-[20px]"></p>
+              <input
+                className="h-[30px] px-2 rounded-md text-white"
+                placeholder="個"
+              />
+            </div>
+            <div className="flex flex-col w-[80px] mr-2 text-right justify-center">
+              <p className="text-accent h-[20px]"></p>
+              <input
+                className="h-[30px] px-2 rounded-md text-white"
+                placeholder="金額"
+              />
+            </div>
+            <div className="flex flex-col w-[80px] text-right justify-center">
+              <p className="text-accent h-[20px] text-xs">指名開始時間</p>
+              <input
+                type="time"
+                className="h-[30px] px-2 rounded-md text-white"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="flex w-full">
+          <Line />
+        </div>
+      </section>
+      <nav className="mt-4 flex w-full items-center justify-center">
+        <div className="w-[150px] flex justify-center items-center">
+          <Border2
+            rounded="rounded-full"
+            size="h-[42px] w-[42px] p-[8px] bg-reset"
+          >
+            <Image
+              src={"/assets/reset.svg"}
+              width={26}
+              height={26}
+              className="!h-full !w-full"
+              alt=""
+            />
+          </Border2>
+        </div>
+        <div
+          className="w-[150px] flex justify-center items-center"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <Border2
+            complate
+            rounded="rounded-full"
+            size="h-[42px] w-[42px] p-[2px]"
+          >
+            <Image
+              src={"/assets/check-list.svg"}
+              width={26}
+              height={26}
+              className="!h-full !w-full mr-[-4px]"
+              alt=""
+            />
+          </Border2>
+        </div>
+      </nav>
+    </>
+  );
+}
+
 export default function OrderSheet() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
@@ -705,7 +887,13 @@ export default function OrderSheet() {
           if (isControl != "") setIsControl("");
         }}
       >
-        {isControl == "ITEM" ? <Add /> : <Base />}
+        {isControl == "ITEM" ? (
+          <Add />
+        ) : isControl == "CAST" ? (
+          <CastAdd />
+        ) : (
+          <Base />
+        )}
       </div>
     </Card>
   );

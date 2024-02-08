@@ -23,6 +23,7 @@ import HomeButton from "@/components/templates/homeButton";
 import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
 import { useEffect, useState } from "react";
+import OrderCastAdd from "@/components/templates/controls/orderCastAdd";
 
 function Control(isControl: any) {
   switch (isControl) {
@@ -45,11 +46,7 @@ function Control(isControl: any) {
       return <OrderSet />;
     case "CAST":
       // セットの追加コンポーネント
-      return (
-        <div className="absolute right-[15px] top-1/2 flex w-full max-w-[calc(100%-420px)] items-center justify-center bg-primary text-white">
-          指名追加コンポーネント
-        </div>
-      );
+      return <OrderCastAdd />;
     case "ITEM":
       // オーダー追加コンポーネント
       return <OrderItemAdd />;
