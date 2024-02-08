@@ -27,12 +27,7 @@ const createChampagne = gql`
         is_notice_kitchen: $is_notice_kitchen
       }
     ) {
-      champagne {
-        champagne_revision {
-          item_id
-          name
-        }
-      }
+      __typename
     }
   }
 `;
@@ -66,12 +61,7 @@ const updateChampagne: string = gql`
         point: $point
       }
     ) {
-      champagne {
-        champagne_revision {
-          item_id
-          name
-        }
-      }
+      __typename
     }
   }
 `;

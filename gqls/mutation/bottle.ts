@@ -31,12 +31,7 @@ const createBottle = gql`
         keep_expiration_day: $keep_expiration_day
       }
     ) {
-      bottle {
-        bottle_revision {
-          item_id
-          name
-        }
-      }
+      __typename
     }
   }
 `;
@@ -44,12 +39,7 @@ const createBottle = gql`
 const deleteBottle = gql`
   mutation ($store_code: Int!, $id: Int!) {
     deleteBottle(input: { store_code: $store_code, id: $id }) {
-      bottle {
-        bottle_revision {
-          item_id
-          name
-        }
-      }
+      __typename
     }
   }
 `;
@@ -86,10 +76,7 @@ const updateBottle = gql`
       }
     ) {
       bottle {
-        bottle_revision {
-          item_id
-          name
-        }
+        __typename
       }
     }
   }

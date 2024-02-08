@@ -38,20 +38,7 @@ const createSeatArea = gql`
         service_tax: $service_tax
       }
     ) {
-      seat_area {
-        area_code
-        area_key
-        charge_price
-        extra_charge_price
-        extra_charge_time
-        extra_price
-        extra_time
-        id
-        name
-        price
-        service_tax
-        is_preset
-      }
+      __typename
     }
   }
 `;
@@ -71,15 +58,7 @@ const createSeatSetPriceChange = gql`
         set_price: $set_price
       }
     ) {
-      seat_set_price_change {
-        charge_price
-        created_at
-        deleted_at
-        edited_at
-        id
-        set_price
-        slip_key
-      }
+      __typename
     }
   }
 `;
@@ -117,20 +96,7 @@ const updateSeatArea = gql`
         service_tax: $service_tax
       }
     ) {
-      seat_area {
-        area_code
-        area_key
-        charge_price
-        extra_charge_price
-        extra_charge_time
-        extra_price
-        extra_time
-        id
-        name
-        price
-        service_tax
-        is_preset
-      }
+      __typename
     }
   }
 `;
@@ -138,19 +104,7 @@ const updateSeatArea = gql`
 const deleteSeatArea = gql`
   mutation ($store_code: Int!, $id: Int!) {
     deleteSeatArea(input: { store_code: $store_code, id: $id }) {
-      seat_area {
-        area_code
-        area_key
-        charge_price
-        extra_charge_price
-        extra_charge_time
-        extra_price
-        extra_time
-        id
-        name
-        price
-        service_tax
-      }
+      __typename
     }
   }
 `;

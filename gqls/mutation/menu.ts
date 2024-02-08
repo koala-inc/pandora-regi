@@ -31,12 +31,7 @@ const createMenu = gql`
         is_notice_kitchen: $is_notice_kitchen
       }
     ) {
-      menu {
-        menu_revision {
-          item_id
-          name
-        }
-      }
+      __typename
     }
   }
 `;
@@ -71,10 +66,7 @@ const updateMenu = gql`
       }
     ) {
       menu {
-        menu_revision {
-          item_id
-          name
-        }
+        __typename
       }
     }
   }

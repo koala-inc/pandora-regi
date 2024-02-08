@@ -12,7 +12,7 @@ import { useState } from "react";
 import useSWR, { preload } from "swr";
 import { searchSeatArea } from "@/gqls/query/seat";
 import { createSeatArea, updateSeatArea } from "@/gqls/mutation/seat";
-import { deleteSeatArea } from "@/gqls/mutation/seat copy";
+import { deleteSeatArea } from "@/gqls/mutation/seat";
 
 const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",

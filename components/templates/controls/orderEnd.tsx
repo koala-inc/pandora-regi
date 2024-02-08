@@ -9,6 +9,7 @@ import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 import useIsCardGlobal from "@/globalstates/isCard";
 import useIsControlGlobal from "@/globalstates/isControl";
 import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
+import { useState } from "react";
 
 export default function OrderEnd() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
@@ -17,6 +18,8 @@ export default function OrderEnd() {
   const [isCard, setIsCard] = useIsCardGlobal();
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+
+  const [type, setType] = useState(false);
 
   return (
     <>
@@ -59,7 +62,7 @@ export default function OrderEnd() {
                   </div>
                   <div className="flex flex-col w-full">
                     <div className="text-accent w-full text-left">値引き</div>
-                    <input className="w-full border rounded-md text-right" />
+                    <input className="w-full border p-[3px] rounded-md text-right" />
                   </div>
                 </Border2>
                 <Border2
@@ -69,23 +72,108 @@ export default function OrderEnd() {
                   black
                 >
                   <div className="text-accent w-full text-left">残金</div>
-                  <div className="w-full text-right text-red-400">¥0</div>
+                  <div className="w-full text-right text-2xl text-red-400">
+                    ¥0
+                  </div>
                 </Border2>
               </div>
-              <div className="p-4 pt-0 w-full">
+              <div className="p-4 pt-0 w-full flex justify-center items-center">
                 <Border2
                   className="my-2 w-full"
                   rounded="border-white rounded-md"
-                  size="p-4 flex flex-col min-h-[100px] overflow-scroll"
+                  size="p-4 flex min-h-[100px] overflow-scroll !items-end"
                   black
                 >
-                  -
+                  <div className="flex flex-col w-[30rem] mr-4">
+                    <div className="text-accent w-full text-left">支払方法</div>
+                    <select
+                      className="w-full text-md p-2 rounded-md"
+                      onChange={(e) => {
+                        if (Number(e.target.value) == 1) {
+                          setType(true);
+                        } else {
+                          setType(false);
+                        }
+                      }}
+                    >
+                      <option value={1}>カード</option>
+                      <option value={2} selected>
+                        現金
+                      </option>
+                      <option value={3}>ポイント</option>
+                      <option value={4}>掛</option>
+                    </select>
+                  </div>
+                  <div
+                    className={
+                      type
+                        ? "flex flex-col w-[30rem] mr-4"
+                        : "flex flex-col w-[30rem] mr-4 grayscale opacity-20"
+                    }
+                  >
+                    <div className="text-accent w-full text-left">
+                      カード種類
+                    </div>
+                    <select
+                      className="w-full text-md p-2 rounded-md"
+                      disabled={!type}
+                    >
+                      <option disabled selected>
+                        選択してください。
+                      </option>
+                      <option>JCB</option>
+                      <option>VISA</option>
+                      <option>MASTER</option>
+                      <option>AMEX</option>
+                      <option>DINERS</option>
+                      <option>UNION(銀聯)</option>
+                    </select>
+                  </div>
+                  <div
+                    className={
+                      type
+                        ? "flex flex-col w-[20rem] mr-4"
+                        : "flex flex-col w-[20rem] mr-4 grayscale opacity-20"
+                    }
+                  >
+                    <div className="text-accent w-full text-left">手数料</div>
+                    <select
+                      className="w-full text-md text-right p-2 rounded-md"
+                      disabled={!type}
+                    >
+                      <option selected>0％</option>
+                      <option>10％</option>
+                    </select>
+                  </div>
+                  <div className="flex flex-col w-[30rem] mr-4">
+                    <div className="text-accent w-full text-left">預り金</div>
+                    <input className="w-full border p-[6px] rounded-md text-right" />
+                  </div>
+                  <div className="flex flex-col min-w-[6rem] mr-4 h-full justify-end">
+                    <Button natural>残金</Button>
+                  </div>
+                  <div className="flex h-[40px] items-center">
+                    <Border2
+                      rounded="rounded-full"
+                      size="h-[28px] w-[28px] p-[6px]"
+                    >
+                      <div>
+                        <Image
+                          src={"/assets/close.svg"}
+                          width={26}
+                          height={26}
+                          className="!h-full !w-full"
+                          alt=""
+                        />
+                      </div>
+                    </Border2>
+                  </div>
                 </Border2>
               </div>
             </div>
           </Border>
           <Border className="mr-2 h-[210px] w-[146px]" size="h-[200px] w-full">
-            <div className="flex w-full flex-col p-1">
+            <div className="flex w-full flex-col p-4">
               <p className="mb-1 text-center font-bold text-accent">
                 レシート発行
               </p>
@@ -93,35 +181,50 @@ export default function OrderEnd() {
               <Button className="mt-1" natural>
                 明細
               </Button>
-              <Button className="mt-3" bg="green">
+              <Button className="mt-3" bg="green" natural>
                 領収書
               </Button>
             </div>
           </Border>
-          <div className="flex h-[300px] flex-col justify-between">
+          <div className="flex h-[300px] flex-col justify-start">
             <Border
-              className="mr-2 h-[210px] w-[146px]"
-              size="h-[200px] w-full flex-col"
+              className="mr-2 h-[140px] w-[146px]"
+              size="h-[130px] w-full flex-col"
             >
-              <Button bg="orange">伝票破棄</Button>
-              <Button bg="green">立て直し</Button>
+              <div className="flex w-full flex-col p-4">
+                <Button bg="orange" natural>
+                  伝票破棄
+                </Button>
+                <Button bg="green" className="mt-3" natural>
+                  立て直し
+                </Button>
+              </div>
             </Border>
             <Border
-              className="mr-2 h-[210px] w-[146px]"
-              size="h-[200px] w-full flex-col"
+              className="mt-3 mr-2 h-[200px] w-[146px]"
+              size="h-[190px] w-full flex-col"
             >
-              <Button bg="red">取消</Button>
-              <Button
-                bg="blue"
-                onClick={() => {
-                  setPurchaseOrder([]);
-                  setIsPurchaseOrder(true);
-                  setIsControl("");
-                  setIsCard(false);
-                }}
-              >
-                精算
-              </Button>
+              <div className="flex w-full flex-col p-4">
+                <Button bg="red" natural>
+                  取消
+                </Button>
+                <Button className="mt-3" natural>
+                  先預り
+                </Button>
+                <Button
+                  bg="blue"
+                  className="mt-3"
+                  natural
+                  onClick={() => {
+                    setPurchaseOrder([]);
+                    setIsPurchaseOrder(true);
+                    setIsControl("");
+                    setIsCard(false);
+                  }}
+                >
+                  精算
+                </Button>
+              </div>
             </Border>
           </div>
         </div>

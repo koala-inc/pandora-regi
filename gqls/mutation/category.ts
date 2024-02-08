@@ -7,14 +7,7 @@ const createCategory = gql`
     createCategory(
       input: { name: $name, parent_id: $parent_id, store_code: $store_code }
     ) {
-      category {
-        category_revision {
-          id
-          item_category_id
-          name
-          parent_id
-        }
-      }
+      __typename
     }
   }
 `;
@@ -22,14 +15,7 @@ const createCategory = gql`
 const updateCategory = gql`
   mutation ($name: String!, $id: Int!, $store_code: Int!) {
     updateCategory(input: { name: $name, id: $id, store_code: $store_code }) {
-      category {
-        category_revision {
-          id
-          item_category_id
-          name
-          parent_id
-        }
-      }
+      __typename
     }
   }
 `;

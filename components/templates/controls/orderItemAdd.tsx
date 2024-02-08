@@ -23,7 +23,11 @@ import { searchBottle } from "@/gqls/query/bottle";
 import { searchMenu } from "@/gqls/query/menu";
 
 function ContentHeader({ children }: { children: any }) {
-  return <SubBorder size="h-[100px] w-full px-4 py-2">{children}</SubBorder>;
+  return (
+    <SubBorder size="mt-0 h-[100px] !w-[800px] px-10 py-2">
+      {children}
+    </SubBorder>
+  );
 }
 
 function Content({ children }: { children: any }) {
@@ -37,7 +41,7 @@ const defaultVariables = {
 export default function OrderItemAdd() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(-1);
   const [update, setUpdate] = useState(false);
 
   const fetcher = (q: RequestDocument) =>
@@ -54,10 +58,11 @@ export default function OrderItemAdd() {
   const searchData2 = useSWR<any>(searchBottle, fetcher);
   const searchData3 = useSWR<any>(searchMenu, fetcher);
 
-  const [categoryActive, setCategoryActive] = useState(-1);
+  const [categoryActive, setCategoryActive] = useState(-2);
   const [subCategoryActive, setSubCategoryActive] = useState(-1);
 
   let count = 0;
+  let count2 = 0;
 
   return (
     <>
@@ -78,16 +83,40 @@ export default function OrderItemAdd() {
         }}
       >
         <ContentHeader>
-          <Button>オーダー入力</Button>
-          <Button>店内履歴</Button>
-          <Button>オーダー修正</Button>
-          <input />
-          <Button>検索</Button>
+          <div className="w-full flex justify-start items-center">
+            <Button className="mr-3">オーダー入力</Button>
+            <Button className="mr-3">店内履歴</Button>
+            <Button className="mr-6">オーダー修正</Button>
+            <input
+              className="p-4 h-[45px] text-lg text-white rounded-md mr-4 border border-white"
+              placeholder="オーダー名を入力"
+            />
+            <div>
+              <Border2
+                rounded="rounded-full"
+                size="h-[45px] w-[45px] p-[8px] bg-search"
+              >
+                <Image
+                  src={"/assets/search.svg"}
+                  width={26}
+                  height={26}
+                  className="!h-full !w-full"
+                  alt=""
+                />
+              </Border2>
+            </div>
+          </div>
         </ContentHeader>
         <div className="flex py-2">
           {searchData?.data?.category[0]?.store_category[0]?.category?.map(
             (category: any, index: any) => {
               if (category.category_revision.parent_id == 0) {
+                if (categoryActive == -2 && count2 == 0) {
+                  setCategoryActive(category.id);
+                  setSubCategoryActive(-1);
+                  setActiveTab(-1);
+                }
+                count2 += 1;
                 return (
                   <div
                     key={index}
@@ -96,8 +125,15 @@ export default function OrderItemAdd() {
                       setSubCategoryActive(-1);
                       setActiveTab(-1);
                     }}
+                    className={
+                      category.id == categoryActive
+                        ? "mr-3"
+                        : "mr-3 grayscale opacity-30"
+                    }
                   >
-                    <Button>{category.category_revision.name}</Button>
+                    <div className="text-black mx-auto flex h-[50px] w-[150px] cursor-pointer items-center justify-center rounded-md shadow-md bg-gradient-to-b from-[#cdd8e8] from-0% via-[#b9c5d8] via-50% to-[#a7bad4] p-2 text-center text-base leading-4 tracking-wider">
+                      {category.category_revision.name}
+                    </div>
                   </div>
                 );
               }
@@ -137,8 +173,8 @@ export default function OrderItemAdd() {
           +
         </a> */}
         </div>
-        <div className="mt-[-1px] flex h-[520px] w-[1020px] rounded-b-xl rounded-r-xl bg-primary p-4 text-white">
-          <div className="grid w-full grid-cols-8 grid-rows-7 content-start items-center justify-center rounded-md border border-white bg-black p-4">
+        <div className="mt-[-1px] flex h-[590px] w-[calc(100vw-405px)] rounded-b-xl rounded-r-xl bg-primary p-4 text-white">
+          <div className="grid w-full grid-cols-10 grid-rows-7 content-start items-center justify-center rounded-md border border-white bg-black p-4">
             {searchData2?.data?.bottle[0]?.store_bottle[0]?.bottle?.map(
               (bottle: any, index: any) => {
                 if (

@@ -5,11 +5,7 @@ export { createUser };
 const createUser: string = gql`
   mutation ($store_code: Int!, $name: String) {
     createUser(input: { store_code: $store_code, name: $name }) {
-      user {
-        created_at
-        id
-        name
-      }
+      __typename
     }
   }
 `;

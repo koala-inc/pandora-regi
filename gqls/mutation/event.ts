@@ -39,24 +39,7 @@ const createEvent = gql`
         is_information_center: $is_information_center
       }
     ) {
-      event {
-        event_revision {
-          event_item_id
-          id
-          is_information_center
-          is_tax_service
-          item_category_id
-          item_id
-          name
-          point
-          price
-          seat_area_id
-          set_adaptation_end_time
-          set_adaptation_start_time
-          set_time
-        }
-        id
-      }
+      __typename
     }
   }
 `;
@@ -64,20 +47,7 @@ const createEvent = gql`
 const deleteEvent: string = gql`
   mutation ($store_code: Int!, $id: Int!) {
     deleteEvent(input: { store_code: $store_code, id: $id }) {
-      event {
-        event_revision {
-          event_item_id
-          id
-          is_information_center
-          is_tax_service
-          item_category_id
-          item_id
-          name
-          price
-          set_time
-        }
-        id
-      }
+      __typename
     }
   }
 `;

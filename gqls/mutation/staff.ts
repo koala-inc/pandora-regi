@@ -44,10 +44,7 @@ const createStaff = gql`
         remarks: $remarks
       }
     ) {
-      staff {
-        id
-        name
-      }
+      __typename
     }
   }
 `;
@@ -69,9 +66,7 @@ const createSalaryStaff = gql`
         wage_daily: $wage_daily
       }
     ) {
-      salary_staff {
-        id
-      }
+      __typename
     }
   }
 `;
@@ -113,10 +108,7 @@ const updateStaff = gql`
         display: $display
       }
     ) {
-      staff {
-        id
-        name
-      }
+      __typename
     }
   }
 `;
@@ -138,9 +130,7 @@ const updateSalaryStaff = gql`
         wage_daily: $wage_daily
       }
     ) {
-      salary_staff {
-        id
-      }
+      __typename
     }
   }
 `;
@@ -170,17 +160,7 @@ const createAttendanceManagementStaff = gql`
         work_date_time_end: $work_date_time_end
       }
     ) {
-      attendance_management_staff {
-        staff_id
-        id
-        time_card_date_time_end
-        time_card_date_time_start
-        work_date_time_end
-        work_date_time_start
-        work_schedule_date_time_end
-        work_schedule_date_time_start
-        working_date
-      }
+      __typename
     }
   }
 `;
@@ -216,20 +196,7 @@ const updateAttendanceManagementStaff = gql`
         is_leaving_work_cancel: $is_leaving_work_cancel
       }
     ) {
-      attendance_management_staff {
-        staff_id
-        id
-        attendance_status
-        is_processed
-        late_time
-        time_card_date_time_end
-        time_card_date_time_start
-        work_date_time_end
-        work_date_time_start
-        work_schedule_date_time_end
-        work_schedule_date_time_start
-        working_date
-      }
+      __typename
     }
   }
 `;

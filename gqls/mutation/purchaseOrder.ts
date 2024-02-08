@@ -35,27 +35,7 @@ const createPurchaseOrder = gql`
         ordered_at: $ordered_at
       }
     ) {
-      purchase_order {
-        purchase_order_cast {
-          cast_id
-          id
-          purchase_order_id
-        }
-        purchase_order_revision {
-          item_id
-          id
-          price
-          seat_id
-          seat_user_id
-          slip_key
-        }
-        purchase_order_staff {
-          staff_id
-          id
-          purchase_order_id
-        }
-        id
-      }
+      __typename
     }
   }
 `;
@@ -63,12 +43,7 @@ const createPurchaseOrder = gql`
 const deletePurchaseOrder = gql`
   mutation ($store_code: Int!, $id: Int!) {
     deletePurchaseOrder(input: { store_code: $store_code, id: $id }) {
-      purchase_order {
-        purchase_order_revision {
-          id
-          user_id
-        }
-      }
+      __typename
     }
   }
 `;

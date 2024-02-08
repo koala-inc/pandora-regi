@@ -35,23 +35,7 @@ const createDesignate = gql`
         symbol: $symbol
       }
     ) {
-      designate {
-        designate_revision {
-          extra_price
-          extra_time
-          group_code
-          id
-          is_tax_service
-          item_category_id
-          item_id
-          name
-          price
-          symbol
-          type
-        }
-        id
-        type
-      }
+      __typename
     }
   }
 `;
@@ -59,21 +43,7 @@ const createDesignate = gql`
 const deleteDesignate = gql`
   mutation ($store_code: Int!, $id: Int!) {
     deleteDesignate(input: { store_code: $store_code, id: $id }) {
-      designate {
-        designate_revision {
-          extra_price
-          extra_time
-          group_code
-          id
-          is_tax_service
-          item_category_id
-          item_id
-          name
-          price
-          symbol
-          type
-        }
-      }
+      __typename
     }
   }
 `;

@@ -11,10 +11,7 @@ const createItemAlias = gql`
         alias_name: $alias_name
       }
     ) {
-      item_alias {
-        alias_name
-        item_id
-      }
+      __typename
     }
   }
 `;
