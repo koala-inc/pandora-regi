@@ -3,6 +3,7 @@ import Border from "./border";
 import Button from "./button";
 import Toggle from "./toggle";
 import Card from "@/components/templates/card";
+import Border2 from "@/components/templates/border";
 
 // グローバルステート
 import useIsHeaderGlobal from "@/globalstates/isHeader";
@@ -518,7 +519,7 @@ function Add() {
             <div className="text-sm text-accent">オーダー</div>
             <Line ml="ml-10" />
           </div>
-          <div className="flex h-[39.3%] max-h-[307px] min-h-[294px]">
+          <div className="flex h-[39.3%] max-h-[100px] min-h-[100px]">
             <Lists
               lists={[
                 {
@@ -539,42 +540,150 @@ function Add() {
               ]}
             />
           </div>
+          <div className="flex w-full">
+            <Line />
+          </div>
+          <div className="flex w-full border border-white rounded-md my-3 px-3 py-2 pt-4">
+            <div className="flex flex-col w-[50px]">
+              <p className="h-[20px]"></p>
+              <p className="h-[40px] flex items-center">小計</p>
+              <p className="h-[40px] flex items-center">合計</p>
+            </div>
+            <div className="flex flex-col w-[200px] text-right">
+              <p className="h-[20px] text-center">現在</p>
+              <p className="h-[40px] text-accent text-xl flex items-center justify-end">
+                ¥0-
+              </p>
+              <p className="h-[40px] text-accent text-xl flex items-center justify-end">
+                ¥0-
+              </p>
+            </div>
+            <div className="flex flex-col w-[20px] mx-2 text-right">
+              <p className="h-[20px]"></p>
+              <p className="h-[40px] flex items-center">→</p>
+              <p className="h-[40px] flex items-center">→</p>
+            </div>
+            <div className="flex flex-col w-[200px] text-right">
+              <p className="h-[20px] text-center">見込み</p>
+              <p className="h-[40px] text-accent text-xl flex items-center justify-end">
+                ¥0-
+              </p>
+              <p className="h-[40px] text-accent text-xl flex items-center justify-end">
+                ¥0-
+              </p>
+            </div>
+          </div>
+          <div className="flex w-full">
+            <Line />
+          </div>
+          <div className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2">
+            <div className="flex flex-col w-[60px] text-xs">
+              <p className="h-[20px] flex items-center">送信する</p>
+              <p className="h-[20px] flex items-center">ゲスト</p>
+            </div>
+            <div className="flex flex-col w-[120px] text-right">
+              <p className="h-[40px] text-accent text-lg flex items-center">
+                77
+              </p>
+            </div>
+            <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
+              <input
+                className="h-[30px] px-2 rounded-md text-white"
+                placeholder="個"
+              />
+            </div>
+            <div className="flex flex-col w-[80px] text-right justify-center">
+              <input
+                className="h-[30px] px-2 rounded-md text-white"
+                placeholder="金額"
+              />
+            </div>
+          </div>
+          <div className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2">
+            <div className="flex flex-col w-[60px] text-xs">
+              <p className="h-[20px] flex items-center">送信する</p>
+              <p className="h-[20px] flex items-center">ゲスト</p>
+            </div>
+            <div className="flex flex-col w-[120px] text-right">
+              <p className="h-[40px] text-accent text-lg flex items-center">
+                test
+              </p>
+            </div>
+            <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
+              <input
+                className="h-[30px] px-2 rounded-md text-white"
+                placeholder="個"
+              />
+            </div>
+            <div className="flex flex-col w-[80px] text-right justify-center">
+              <input
+                className="h-[30px] px-2 rounded-md text-white"
+                placeholder="金額"
+              />
+            </div>
+          </div>
+          <div className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2">
+            <div className="flex flex-col w-[60px] text-xs">
+              <p className="h-[20px] flex items-center">送信する</p>
+              <p className="h-[20px] flex items-center">ゲスト</p>
+            </div>
+            <div className="flex flex-col w-[120px] text-right">
+              <p className="h-[40px] text-accent text-lg flex items-center">
+                a
+              </p>
+            </div>
+            <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
+              <input
+                className="h-[30px] px-2 rounded-md text-white"
+                placeholder="個"
+              />
+            </div>
+            <div className="flex flex-col w-[80px] text-right justify-center">
+              <input
+                className="h-[30px] px-2 rounded-md text-white"
+                placeholder="金額"
+              />
+            </div>
+          </div>
         </div>
         <div className="flex w-full">
           <Line />
         </div>
-        <div className="flex">
-          <div className="w-full">
-            <div className="mt-4 flex w-full items-center justify-between text-2xl text-accent">
-              <div>合計</div>
-              <div className="flex-1 text-right">¥{(0).toLocaleString()}-</div>→
-              <div className="flex-1 text-right">
-                ¥{(3000).toLocaleString()}-
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
       <nav className="mt-4 flex w-full items-center justify-center">
-        <div
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsControl("");
-          }}
-        >
-          <Button className="mr-2 min-w-[8rem]" natural disabled>
-            キャンセル
-          </Button>
+        <div className="w-[150px] flex justify-center items-center">
+          <Border2
+            rounded="rounded-full"
+            size="h-[42px] w-[42px] p-[8px] bg-reset"
+          >
+            <Image
+              src={"/assets/reset.svg"}
+              width={26}
+              height={26}
+              className="!h-full !w-full"
+              alt=""
+            />
+          </Border2>
         </div>
         <div
+          className="w-[150px] flex justify-center items-center"
           onClick={(e) => {
             e.stopPropagation();
-            setIsControl("");
           }}
         >
-          <Button className="min-w-[8rem]" natural>
-            確定
-          </Button>
+          <Border2
+            complate
+            rounded="rounded-full"
+            size="h-[42px] w-[42px] p-[2px]"
+          >
+            <Image
+              src={"/assets/check-list.svg"}
+              width={26}
+              height={26}
+              className="!h-full !w-full mr-[-4px]"
+              alt=""
+            />
+          </Border2>
         </div>
       </nav>
     </>
