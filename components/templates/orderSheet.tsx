@@ -705,7 +705,7 @@ export default function OrderSheet() {
           if (isControl != "") setIsControl("");
         }}
       >
-        {isControl == "" || isControl == "END" ? <Base /> : <Add />}
+        {isControl == "ITEM" ? <Add /> : <Base />}
       </div>
     </Card>
   );
