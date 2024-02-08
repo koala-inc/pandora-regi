@@ -486,25 +486,17 @@ function Add() {
 
   return (
     <>
-      <section className="flex items-center justify-around text-md">
-        <div className="flex-col flex items-center">
-          <p className="text-4xl mb-6">A1　</p>
-          <Toggle />
+      <section className="flex items-center justify-around text-md mb-4">
+        <div className="flex-col flex items-center w-[77.45px]">
+          <p className="text-4xl w-full text-left">A1</p>
         </div>
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center w-[64px]">
           <div className="flex flex-col items-center justify-center">
             <p className="text-[0.8rem] text-accent">人数</p>
             <p>{purchaseOrder[0]?.num}名</p>
           </div>
-          <div className="mt-3 flex min-w-[4em] flex-col items-center justify-center">
-            <p className="text-[0.8rem] text-accent">コール時間</p>
-            <p>
-              {purchaseOrder[0]?.callTimeHour || "00"}:
-              {purchaseOrder[0]?.callTimeMinite || "00"}
-            </p>
-          </div>
         </div>
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center w-[111.77px]">
           <div
             className="flex flex-col items-center justify-center"
             onClick={(e) => {
@@ -518,100 +510,8 @@ function Add() {
               {purchaseOrder[0]?.endTime || "00:00"}
             </p>
           </div>
-
-          <div className="mt-6 flex items-center justify-center">
-            <Border
-              className="mr-1"
-              size="px-2 text-red-700"
-              natural
-              stroke="md"
-            >
-              -30
-            </Border>
-            <Border size="px-2 text-blue-700" natural stroke="md">
-              +30
-            </Border>
-          </div>
         </div>
       </section>
-      <nav className="flex items-start justify-around py-3">
-        <div>
-          <Border rounded="rounded-full" stroke="md">
-            <Image
-              src={"/assets/custody.svg"}
-              width={24}
-              height={24}
-              alt=""
-              className="p-1"
-            />
-          </Border>
-          <div className="w-full text-center text-[0.5rem] text-accent">
-            荷物
-          </div>
-        </div>
-        <div>
-          <Border rounded="rounded-full" stroke="md">
-            <Image
-              src={"/assets/customer.svg"}
-              width={24}
-              height={24}
-              alt=""
-              className="p-1"
-            />
-          </Border>
-          <div className="w-full text-center text-[0.5rem] text-accent">
-            顧客
-          </div>
-        </div>
-        <div>
-          <Border rounded="rounded-full" stroke="md">
-            <Image
-              src={"/assets/keepbottle.svg"}
-              width={24}
-              height={24}
-              alt=""
-              className="p-1"
-            />
-          </Border>
-          <div className="w-full text-center text-[0.5rem] text-accent">
-            ボトル
-          </div>
-        </div>
-        <div>
-          <Border rounded="rounded-full" stroke="md">
-            <Image
-              src={"/assets/manager.svg"}
-              width={24}
-              height={24}
-              alt=""
-              className="p-1"
-            />
-          </Border>
-          <div className="w-full text-center text-[0.5rem] text-accent">
-            販促
-          </div>
-        </div>
-        <div>
-          <Border rounded="rounded-full" size="px-2" stroke="md">
-            1
-          </Border>
-        </div>
-        <div>
-          <Border rounded="rounded-full" size="px-2" stroke="md">
-            2
-          </Border>
-        </div>
-        <div>
-          <Border rounded="rounded-full" size="px-2" stroke="md">
-            3
-          </Border>
-        </div>
-        <div>
-          <Border rounded="rounded-full" size="px-2" stroke="md">
-            4
-          </Border>
-        </div>
-      </nav>
       <section className="flex flex-1 flex-col text-xs">
         <div className="mb-1 flex-1">
           <div className="mb-1 flex w-full">

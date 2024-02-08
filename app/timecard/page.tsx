@@ -189,10 +189,42 @@ export default function TimeCard() {
           <div className="mb-3 flex justify-around">
             {activeTab == 0 ? (
               <>
-                <Button className="min-w-[6rem]" natural>
+                <Button
+                  className="min-w-[6rem]"
+                  natural
+                  onClick={() => {
+                    searchData.mutate(
+                      () =>
+                        client.request(searchCast, {
+                          section: 1,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  }}
+                >
                   在籍
                 </Button>
-                <Button className="min-w-[6rem]" natural>
+                <Button
+                  className="min-w-[6rem]"
+                  natural
+                  onClick={() => {
+                    searchData.mutate(
+                      () =>
+                        client.request(searchCast, {
+                          section: 2,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  }}
+                >
                   体入/ヘルプ
                 </Button>
                 <Button className="min-w-[6rem]" natural>
@@ -218,6 +250,19 @@ export default function TimeCard() {
               className={
                 "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
               }
+              onClick={() => {
+                searchData.mutate(
+                  () =>
+                    client.request(searchCast, {
+                      name_ruby_syllabary_search_code: 1,
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
             >
               あ
             </div>
@@ -225,6 +270,19 @@ export default function TimeCard() {
               className={
                 "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
               }
+              onClick={() => {
+                searchData.mutate(
+                  () =>
+                    client.request(searchCast, {
+                      name_ruby_syllabary_search_code: 2,
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
             >
               か
             </div>
@@ -232,6 +290,19 @@ export default function TimeCard() {
               className={
                 "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
               }
+              onClick={() => {
+                searchData.mutate(
+                  () =>
+                    client.request(searchCast, {
+                      name_ruby_syllabary_search_code: 3,
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
             >
               さ
             </div>
@@ -239,6 +310,19 @@ export default function TimeCard() {
               className={
                 "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
               }
+              onClick={() => {
+                searchData.mutate(
+                  () =>
+                    client.request(searchCast, {
+                      name_ruby_syllabary_search_code: 4,
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
             >
               た
             </div>
@@ -246,6 +330,19 @@ export default function TimeCard() {
               className={
                 "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
               }
+              onClick={() => {
+                searchData.mutate(
+                  () =>
+                    client.request(searchCast, {
+                      name_ruby_syllabary_search_code: 5,
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
             >
               な
             </div>
@@ -255,6 +352,19 @@ export default function TimeCard() {
               className={
                 "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
               }
+              onClick={() => {
+                searchData.mutate(
+                  () =>
+                    client.request(searchCast, {
+                      name_ruby_syllabary_search_code: 6,
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
             >
               は
             </div>
@@ -262,6 +372,19 @@ export default function TimeCard() {
               className={
                 "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
               }
+              onClick={() => {
+                searchData.mutate(
+                  () =>
+                    client.request(searchCast, {
+                      name_ruby_syllabary_search_code: 7,
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
             >
               ま
             </div>
@@ -269,6 +392,19 @@ export default function TimeCard() {
               className={
                 "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
               }
+              onClick={() => {
+                searchData.mutate(
+                  () =>
+                    client.request(searchCast, {
+                      name_ruby_syllabary_search_code: 8,
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
             >
               や
             </div>
@@ -276,6 +412,19 @@ export default function TimeCard() {
               className={
                 "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
               }
+              onClick={() => {
+                searchData.mutate(
+                  () =>
+                    client.request(searchCast, {
+                      name_ruby_syllabary_search_code: 9,
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
             >
               ら
             </div>
@@ -283,6 +432,19 @@ export default function TimeCard() {
               className={
                 "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
               }
+              onClick={() => {
+                searchData.mutate(
+                  () =>
+                    client.request(searchCast, {
+                      name_ruby_syllabary_search_code: 10,
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
             >
               わ
             </div>
@@ -290,7 +452,7 @@ export default function TimeCard() {
           <div className="my-4 flex w-full">
             <Line />
           </div>
-          <div className="flex flex-wrap justify-center">
+          <div className="flex flex-wrap justify-start">
             {activeTab == 0 ? (
               <>
                 {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(

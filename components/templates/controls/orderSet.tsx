@@ -51,8 +51,6 @@ export default function ControlOrderSet() {
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
 
-  preload(searchCast, fetcher);
-
   const searchData2 = useSWR<any>(searchSeatArea, fetcher);
 
   const [searchForm, setSearchForm] = useState<any>({});
@@ -485,7 +483,22 @@ export default function ControlOrderSet() {
                 <Button className="min-w-[5rem]" natural>
                   出勤
                 </Button>
-                <Button className="ml-3 min-w-[5rem]" natural>
+                <Button
+                  className="ml-3 min-w-[5rem]"
+                  natural
+                  onClick={() => {
+                    searchData.mutate(
+                      () =>
+                        client.request(searchCast, {
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  }}
+                >
                   全て
                 </Button>
               </div>
@@ -495,6 +508,19 @@ export default function ControlOrderSet() {
                     className={
                       "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
+                    onClick={() => {
+                      searchData.mutate(
+                        () =>
+                          client.request(searchCast, {
+                            name_ruby_syllabary_search_code: 1,
+                            ...defaultVariables,
+                          }),
+                        {
+                          populateCache: true,
+                          revalidate: false,
+                        }
+                      );
+                    }}
                   >
                     あ
                   </div>
@@ -502,6 +528,19 @@ export default function ControlOrderSet() {
                     className={
                       "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
+                    onClick={() => {
+                      searchData.mutate(
+                        () =>
+                          client.request(searchCast, {
+                            name_ruby_syllabary_search_code: 2,
+                            ...defaultVariables,
+                          }),
+                        {
+                          populateCache: true,
+                          revalidate: false,
+                        }
+                      );
+                    }}
                   >
                     か
                   </div>
@@ -509,6 +548,19 @@ export default function ControlOrderSet() {
                     className={
                       "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
+                    onClick={() => {
+                      searchData.mutate(
+                        () =>
+                          client.request(searchCast, {
+                            name_ruby_syllabary_search_code: 3,
+                            ...defaultVariables,
+                          }),
+                        {
+                          populateCache: true,
+                          revalidate: false,
+                        }
+                      );
+                    }}
                   >
                     さ
                   </div>
@@ -516,6 +568,19 @@ export default function ControlOrderSet() {
                     className={
                       "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
+                    onClick={() => {
+                      searchData.mutate(
+                        () =>
+                          client.request(searchCast, {
+                            name_ruby_syllabary_search_code: 4,
+                            ...defaultVariables,
+                          }),
+                        {
+                          populateCache: true,
+                          revalidate: false,
+                        }
+                      );
+                    }}
                   >
                     た
                   </div>
@@ -523,6 +588,19 @@ export default function ControlOrderSet() {
                     className={
                       "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
+                    onClick={() => {
+                      searchData.mutate(
+                        () =>
+                          client.request(searchCast, {
+                            name_ruby_syllabary_search_code: 5,
+                            ...defaultVariables,
+                          }),
+                        {
+                          populateCache: true,
+                          revalidate: false,
+                        }
+                      );
+                    }}
                   >
                     な
                   </div>
@@ -532,6 +610,19 @@ export default function ControlOrderSet() {
                     className={
                       "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
+                    onClick={() => {
+                      searchData.mutate(
+                        () =>
+                          client.request(searchCast, {
+                            name_ruby_syllabary_search_code: 6,
+                            ...defaultVariables,
+                          }),
+                        {
+                          populateCache: true,
+                          revalidate: false,
+                        }
+                      );
+                    }}
                   >
                     は
                   </div>
@@ -539,6 +630,19 @@ export default function ControlOrderSet() {
                     className={
                       "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
+                    onClick={() => {
+                      searchData.mutate(
+                        () =>
+                          client.request(searchCast, {
+                            name_ruby_syllabary_search_code: 7,
+                            ...defaultVariables,
+                          }),
+                        {
+                          populateCache: true,
+                          revalidate: false,
+                        }
+                      );
+                    }}
                   >
                     ま
                   </div>
@@ -546,6 +650,19 @@ export default function ControlOrderSet() {
                     className={
                       "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
+                    onClick={() => {
+                      searchData.mutate(
+                        () =>
+                          client.request(searchCast, {
+                            name_ruby_syllabary_search_code: 8,
+                            ...defaultVariables,
+                          }),
+                        {
+                          populateCache: true,
+                          revalidate: false,
+                        }
+                      );
+                    }}
                   >
                     や
                   </div>
@@ -553,6 +670,19 @@ export default function ControlOrderSet() {
                     className={
                       "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
+                    onClick={() => {
+                      searchData.mutate(
+                        () =>
+                          client.request(searchCast, {
+                            name_ruby_syllabary_search_code: 9,
+                            ...defaultVariables,
+                          }),
+                        {
+                          populateCache: true,
+                          revalidate: false,
+                        }
+                      );
+                    }}
                   >
                     ら
                   </div>
@@ -560,6 +690,19 @@ export default function ControlOrderSet() {
                     className={
                       "m-1 flex cursor-pointer items-center justify-center rounded-md bg-natural p-3 text-2xl leading-4 tracking-wider text-accent"
                     }
+                    onClick={() => {
+                      searchData.mutate(
+                        () =>
+                          client.request(searchCast, {
+                            name_ruby_syllabary_search_code: 10,
+                            ...defaultVariables,
+                          }),
+                        {
+                          populateCache: true,
+                          revalidate: false,
+                        }
+                      );
+                    }}
                   >
                     わ
                   </div>
@@ -568,7 +711,7 @@ export default function ControlOrderSet() {
             </div>
             <div className="mx-2 flex flex-col">
               <p className="mb-1 text-xs font-bold text-accent">キャスト検索</p>
-              <div className="flex max-h-[235px] min-h-[235px] w-[260px] flex-wrap justify-center overflow-scroll rounded-md border border-white bg-black p-2">
+              <div className="flex max-h-[235px] min-h-[235px] w-[260px] flex-wrap justify-start overflow-scroll rounded-md border border-white bg-black p-2">
                 {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
                   (cast: any, index: any) => {
                     const size = cast.name.length > 4 ? "text-xs" : "text-lg";
@@ -578,7 +721,7 @@ export default function ControlOrderSet() {
                           {cast.cast_code != 0 && (
                             <div
                               className={
-                                "m-2 flex h-[40px] w-[100px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider " +
+                                "m-2 flex h-[40px] w-[105px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider " +
                                 size
                               }
                               onClick={() => {
