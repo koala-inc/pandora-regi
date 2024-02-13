@@ -3,6 +3,9 @@ import "./globals.css";
 import DevTool from "@/components/debug/devTool";
 import Background from "@/components/parts/background";
 import Build from "@/components/build/buildMenu";
+import "@mantine/core/styles.css";
+import { MantineProvider, ColorSchemeScript } from "@mantine/core";
+import { theme } from "../theme";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || ""),
@@ -94,7 +97,7 @@ export default function RootLayout({
     <html lang="ja">
       <body className="relative h-full w-full">
         <Background />
-        {children}
+        <MantineProvider theme={theme}>{children}</MantineProvider>
         <DevTool />
       </body>
     </html>

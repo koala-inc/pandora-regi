@@ -35,6 +35,7 @@ import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsCardGlobal from "@/globalstates/isCard";
 import useIsControlGlobal from "@/globalstates/isControl";
+import SeatEditor from "@/components/master/(system)/seatEditor";
 
 export default function Mater() {
   const [settings, setSettings] = useSettingsGlobal();
@@ -191,7 +192,7 @@ export default function Mater() {
         {
           name: "ヘルプ・体入キャスト",
           component: <HelpCastList />,
-          disabled: true,
+          disabled: false,
         },
       ],
     },
@@ -208,7 +209,7 @@ export default function Mater() {
         {
           name: "アルバイトスタッフ",
           component: <ArbeitList />,
-          disabled: true,
+          disabled: false,
         },
       ],
     },
@@ -231,17 +232,17 @@ export default function Mater() {
         {
           name: "オーダー配置",
           component: <OrderSet />,
-          disabled: true,
+          disabled: false,
         },
         {
           name: "オーダー登録",
           component: <OrderAdd />,
-          disabled: true,
+          disabled: false,
         },
         {
           name: "ボトル登録",
           component: <BottleAdd />,
-          disabled: true,
+          disabled: false,
         },
       ],
     },
@@ -270,12 +271,12 @@ export default function Mater() {
         {
           name: "セット料金",
           component: <SetPayment />,
-          disabled: true,
+          disabled: false,
         },
         {
           name: "指名料",
           component: <Designate />,
-          disabled: true,
+          disabled: false,
         },
       ],
     },
@@ -307,9 +308,14 @@ export default function Mater() {
           disabled: true,
         },
         {
+          name: "席エディター",
+          component: <SeatEditor />,
+          disabled: false,
+        },
+        {
           name: "その他",
           component: <Another />,
-          disabled: true,
+          disabled: false,
         },
       ],
     },
