@@ -36,6 +36,7 @@ import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsCardGlobal from "@/globalstates/isCard";
 import useIsControlGlobal from "@/globalstates/isControl";
 import SeatEditor from "@/components/master/(system)/seatEditor";
+import ReactFullScreenComponent from "react-easyfullscreen";
 
 export default function Mater() {
   const [settings, setSettings] = useSettingsGlobal();
@@ -309,7 +310,21 @@ export default function Mater() {
         },
         {
           name: "席エディター",
-          component: <SeatEditor />,
+          component: (
+            <>
+              <ReactFullScreenComponent>
+                {({ ref, onRequest, onExit }) => {
+                  onRequest();
+                  return (
+                    <SeatEditor
+                      onExit={onExit}
+                      setMasterActivePage={setMasterActivePage}
+                    />
+                  );
+                }}
+              </ReactFullScreenComponent>
+            </>
+          ),
           disabled: false,
         },
         {
@@ -329,7 +344,7 @@ export default function Mater() {
 
   return (
     <main className="relative h-full w-full">
-      <SideMenu nav={nav} />
+      {masterActivePage == "席エディター" ? <></> : <SideMenu nav={nav} />}
       <AnimatePresence>
         {nav.map((item) => {
           if (item.submenu) {

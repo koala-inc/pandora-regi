@@ -99,6 +99,10 @@ export default function ControlOrderSet() {
       prefCode: "案内所",
       prefName: "案内所",
     },
+    {
+      prefCode: "ジョイント",
+      prefName: "ジョイント",
+    },
   ];
   const staff = [
     {
@@ -112,6 +116,21 @@ export default function ControlOrderSet() {
     {
       prefCode: "スタッフ３",
       prefName: "スタッフ３",
+    },
+  ];
+
+  const shop = [
+    {
+      prefCode: "店舗１",
+      prefName: "店舗１",
+    },
+    {
+      prefCode: "店舗２",
+      prefName: "店舗２",
+    },
+    {
+      prefCode: "店舗３",
+      prefName: "店舗３",
     },
   ];
 
@@ -153,6 +172,7 @@ export default function ControlOrderSet() {
     },
   ];
 
+  const [status, setStatus] = useState("");
   return (
     <>
       <motion.div
@@ -258,8 +278,30 @@ export default function ControlOrderSet() {
                     );
                   })}
                 </select>
-                <select className="mr-8 h-[45px] w-[7rem] rounded-md px-2 text-xl">
+                <select
+                  className="mr-1 h-[45px] w-[7rem] rounded-md px-2 text-xl"
+                  onChange={(e) => {
+                    setStatus(e.target.value);
+                  }}
+                >
                   {type.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefCode}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
+                <select
+                  className={
+                    status == "ジョイント"
+                      ? "mr-8 h-[45px] w-[7rem] rounded-md px-2 text-xl"
+                      : "mr-8 h-[45px] w-[7rem] rounded-md px-2 text-xl opacity-0"
+                  }
+                  disabled={status != "ジョイント"}
+                >
+                  <option>店舗を選択</option>
+                  {shop.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefCode}>
                         {pref.prefName}
