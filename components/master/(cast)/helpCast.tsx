@@ -41,8 +41,6 @@ export default function CastList() {
   const [searchCategory, setSearchCategory] = useState("入店日");
 
   const searchData = useSWR<any>(searchCast, fetcher);
-  const createData = useSWR<any>(createCast, fetcher);
-  const updateData = useSWR<any>(updateCast, fetcher);
 
   const [detail, setDetail] = useState(false);
   const [leave, setLeave] = useState(false);
@@ -523,7 +521,7 @@ export default function CastList() {
                     if (cast.leaving_date == null) {
                       return (
                         <>
-                          {cast.cast_code != 0 && cast.section != 1 && (
+                          {cast.cast_code != 0 && cast.section == 2 && (
                             <>
                               <tr key={cast.cast_code}>
                                 <td>{cast.cast_code}</td>
@@ -579,7 +577,7 @@ export default function CastList() {
                   } else {
                     return (
                       <>
-                        {cast.cast_code == 0 && cast.section != 1 && (
+                        {cast.cast_code != 0 && cast.section == 2 && (
                           <>
                             <tr key={cast.cast_code}>
                               <td>{cast.cast_code}</td>
@@ -1103,19 +1101,12 @@ export default function CastList() {
                 <div
                   className="ml-auto mr-4 flex flex-col justify-end"
                   onClick={() => {
-                    createData
-                      .mutate(
-                        () =>
-                          client.request(createCast, {
-                            ...createForm,
-                            section: 2,
-                            ...defaultVariables,
-                          }),
-                        {
-                          populateCache: true,
-                          revalidate: false,
-                        }
-                      )
+                    client
+                      .request(createCast, {
+                        ...createForm,
+                        section: 2,
+                        ...defaultVariables,
+                      })
                       .then(() => {
                         setCreateForm(() => {});
                         setSearchForm(() => {});

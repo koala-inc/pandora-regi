@@ -269,15 +269,6 @@ export default function ControlOrderSet() {
                 区分
               </label>
               <div className="flex">
-                <select className="mr-1 h-[45px] w-[7rem] rounded-md px-2 text-xl">
-                  {type.map((pref) => {
-                    return (
-                      <option key={pref.prefCode} value={pref.prefCode}>
-                        {pref.prefName}
-                      </option>
-                    );
-                  })}
-                </select>
                 <select
                   className="mr-1 h-[45px] w-[7rem] rounded-md px-2 text-xl"
                   onChange={(e) => {
@@ -294,20 +285,40 @@ export default function ControlOrderSet() {
                 </select>
                 <select
                   className={
-                    status == "ジョイント"
+                    status != "なし"
                       ? "mr-8 h-[45px] w-[7rem] rounded-md px-2 text-xl"
                       : "mr-8 h-[45px] w-[7rem] rounded-md px-2 text-xl opacity-0"
                   }
-                  disabled={status != "ジョイント"}
+                  disabled={status == "なし"}
                 >
-                  <option>店舗を選択</option>
-                  {shop.map((pref) => {
-                    return (
-                      <option key={pref.prefCode} value={pref.prefCode}>
-                        {pref.prefName}
-                      </option>
-                    );
-                  })}
+                  {status == "外販" && (
+                    <>
+                      <option>外販を選択</option>
+                      <option>外販１</option>
+                      <option>外販２</option>
+                      <option>外販３</option>
+                    </>
+                  )}
+                  {status == "案内所" && (
+                    <>
+                      <option>案内所を選択</option>
+                      <option>案内所１</option>
+                      <option>案内所２</option>
+                      <option>案内所３</option>
+                    </>
+                  )}
+                  {status == "ジョイント" && (
+                    <>
+                      <option>店舗を選択</option>
+                      {shop.map((pref) => {
+                        return (
+                          <option key={pref.prefCode} value={pref.prefCode}>
+                            {pref.prefName}
+                          </option>
+                        );
+                      })}
+                    </>
+                  )}
                 </select>
               </div>
             </div>
