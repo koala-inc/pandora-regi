@@ -57,7 +57,7 @@ export default function ItemCategoryLists() {
                 if (category.category_revision.parent_id == 0) {
                   addForm[category.id] == "";
                   return (
-                    <div className="pt-4 relative mr-8 w-[148px]" key={index}>
+                    <div className="pt-4 relative mr-8 w-[215px]" key={index}>
                       <Border2
                         className="absolute right-[-15px] top-[10px]"
                         rounded="rounded-full"
@@ -103,7 +103,7 @@ export default function ItemCategoryLists() {
                         <p className="text-accent">大カテゴリー</p>
                         <input
                           type="text"
-                          className="mb-2 h-[30px] w-[7.5rem] rounded-md px-2 text-sm"
+                          className="mb-2 h-[30px] w-[9rem] rounded-md px-2 mr-[1.9rem] text-sm"
                           defaultValue={category.category_revision.name}
                           onBlur={(e) => {
                             client.request(updateCategory, {
@@ -124,7 +124,7 @@ export default function ItemCategoryLists() {
                                 <div className="relative flex" key={index}>
                                   <input
                                     type="text"
-                                    className="mb-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                                    className="mb-2 h-[30px] w-[9rem] rounded-md px-2 text-sm"
                                     defaultValue={
                                       subcategory.category_revision.name
                                     }
@@ -137,7 +137,7 @@ export default function ItemCategoryLists() {
                                     }}
                                   />
                                   <Border
-                                    className="ml-[1px] mt-[3px] h-[23px] w-[24px]"
+                                    className="ml-[5px] mt-[3px] h-[23px] w-[26px]"
                                     rounded="rounded-full"
                                     size="h-[20px] w-[20px] p-[2px] text-red-600"
                                   >

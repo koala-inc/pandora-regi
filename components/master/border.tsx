@@ -23,7 +23,7 @@ export default function Border({
     >
       <div
         className={
-          "border border-secondary max-h-[calc(100dvh-50px)] overflow-scroll " +
+          "border-2 border-secondary max-h-[calc(100dvh-50px)] overflow-scroll " +
           rounded
         }
       >
