@@ -12,6 +12,7 @@ import useSWR, { preload } from "swr";
 import Image from "next/image";
 import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 import { searchSeatArea } from "@/gqls/query/seat";
+import { searchEvent } from "@/gqls/query/event";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -46,12 +47,13 @@ const defaultVariables = {
 export default function ControlOrderSet() {
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [order, setOrder] = useState<any>({});
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(-1);
 
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
 
   const searchData2 = useSWR<any>(searchSeatArea, fetcher);
+  const searchData3 = useSWR<any>(searchEvent, fetcher);
 
   const [searchForm, setSearchForm] = useState<any>({});
 
@@ -173,6 +175,8 @@ export default function ControlOrderSet() {
   ];
 
   const [status, setStatus] = useState("");
+
+  let count = 0;
   return (
     <>
       <motion.div
@@ -224,23 +228,44 @@ export default function ControlOrderSet() {
         </ContentHeader>
         <div className="tabs mt-3 justify-start">
           {searchData2?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
-            (area: any, index: any) => (
-              <a
-                key={index}
-                className={`tab-md tab mr-1 w-[7em] rounded-t-xl ${
-                  activeTab == index
-                    ? "tab-active bg-primary text-white"
-                    : "tab-lifted bg-secondary text-black"
-                }`}
-                onClick={() => setActiveTab(index)}
-              >
-                {area.name}
-              </a>
-            )
+            (area: any, index: any) => {
+              if (activeTab == -1 && count == 0) {
+                setActiveTab(area.id);
+              }
+              count += 1;
+              return (
+                <a
+                  key={index}
+                  className={`tab-md tab mr-1 w-[7em] rounded-t-xl ${
+                    activeTab == area.id
+                      ? "tab-active bg-primary text-white"
+                      : "tab-lifted bg-secondary text-black"
+                  }`}
+                  onClick={() => setActiveTab(area.id)}
+                >
+                  {area.name}
+                </a>
+              );
+            }
           )}
         </div>
         <div className="mt-[-1px] flex min-h-[670px] min-w-[920px] max-w-[calc(100dvw-405px)] flex-wrap rounded-b-xl rounded-r-xl bg-primary px-4 pt-6 pb-0 text-white">
           <div className="mt-2 flex min-h-[100px] min-w-full items-center justify-start overflow-x-scroll rounded-md border border-white bg-black p-4">
+            {searchData3?.data?.event[0]?.store_event[0]?.event?.map(
+              (event: any, index: any) => {
+                if (activeTab == event.event_revision.seat_area_id) {
+                  return (
+                    <div
+                      className={
+                        "mr-2 flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+                      }
+                    >
+                      {event.event_revision.name}
+                    </div>
+                  );
+                }
+              }
+            )}
             {/* <div
               className={
                 "mr-2 flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
