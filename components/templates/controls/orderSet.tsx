@@ -175,6 +175,7 @@ export default function ControlOrderSet() {
   ];
 
   const [status, setStatus] = useState("");
+  const [activeTabRC, setActiveTabRC] = useState(0);
 
   let count = 0;
   return (
@@ -231,6 +232,7 @@ export default function ControlOrderSet() {
             (area: any, index: any) => {
               if (activeTab == -1 && count == 0) {
                 setActiveTab(area.id);
+                setActiveTabRC(area.charge_price);
               }
               count += 1;
               return (
@@ -241,7 +243,10 @@ export default function ControlOrderSet() {
                       ? "tab-active bg-primary text-white"
                       : "tab-lifted bg-secondary text-black"
                   }`}
-                  onClick={() => setActiveTab(area.id)}
+                  onClick={() => {
+                    setActiveTab(area.id);
+                    setActiveTabRC(area.charge_price);
+                  }}
                 >
                   {area.name}
                 </a>
@@ -259,6 +264,16 @@ export default function ControlOrderSet() {
                       className={
                         "mr-2 flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
                       }
+                      onClick={() => {
+                        setOrder((order: any) => {
+                          return {
+                            ...order,
+                            setTime: Number(event.event_revision.set_time),
+                            price: Number(event.event_revision.price),
+                            roomCharge: Number(activeTabRC),
+                          };
+                        });
+                      }}
                     >
                       {event.event_revision.name}
                     </div>
@@ -266,27 +281,6 @@ export default function ControlOrderSet() {
                 }
               }
             )}
-            {/* <div
-              className={
-                "mr-2 flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              20:00~
-            </div>
-            <div
-              className={
-                "mr-1 flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              21:00~
-            </div>
-            <div
-              className={
-                "mr-1 flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
-              }
-            >
-              22:00~
-            </div> */}
           </div>
           <div className="flex h-[220px] mt-[-30px] px-2 mb-[30px] flex-wrap py-10 justify-start">
             <div className="flex flex-col">
@@ -397,6 +391,7 @@ export default function ControlOrderSet() {
                 type="number"
                 className="mr-4 h-[45px] w-[14rem] rounded-md px-2 text-xl"
                 placeholder="チャージ料を入力"
+                value={order.roomCharge}
                 onChange={(e) => {
                   setOrder((order: any) => {
                     return {
@@ -420,6 +415,7 @@ export default function ControlOrderSet() {
                 defaultValue={0}
                 className="mr-8 h-[45px] w-[6rem] rounded-md px-2 text-xl"
                 placeholder="人数を入力"
+                value={order.num}
                 onChange={(e) => {
                   setOrder((order: any) => {
                     return {
@@ -442,6 +438,7 @@ export default function ControlOrderSet() {
                 defaultValue={0}
                 className="mr-8 h-[45px] w-[10rem] rounded-md px-2 text-xl"
                 placeholder="時間を入力"
+                value={order.setTime}
                 onChange={(e) => {
                   setOrder((order: any) => {
                     return {
@@ -463,6 +460,7 @@ export default function ControlOrderSet() {
                 type="number"
                 className="mr-8 h-[45px] w-[12rem] rounded-md px-2 text-xl"
                 placeholder="料金を入力"
+                value={order.price}
                 onChange={(e) => {
                   setOrder((order: any) => {
                     return {
