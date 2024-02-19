@@ -53,6 +53,7 @@ export default function ControlOrderSet() {
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [order, setOrder] = useState<any>({});
   const [activeTab, setActiveTab] = useState(-1);
+  const [nowDate, setNowDate] = useState(dayjs(new Date()));
 
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
@@ -284,22 +285,23 @@ export default function ControlOrderSet() {
                         } else {
                           setStatus("なし");
                         }
-                        const date = new Date();
-                        date.setMinutes(Math.round(date.getMinutes() / 5) * 5);
+                        const date = dayjs(new Date()).minute(
+                          Math.round(nowDate.minute() / 5) * 5
+                        );
                         setOrder((order: any) => {
                           return {
                             ...order,
                             setTime: Number(event.event_revision.set_time),
                             price: Number(event.event_revision.price),
                             roomCharge: Number(activeTabRC),
-                            startTime: dayjs(date).format("HH:mm"),
-                            endTime: dayjs(date)
+                            startTime: date.format("HH:mm"),
+                            endTime: date
                               .add(
                                 Number(event.event_revision.set_time),
                                 "minute"
                               )
                               .format("HH:mm"),
-                            callTime: dayjs(date)
+                            callTime: date
                               .add(
                                 Number(event.event_revision.set_time) - 10,
                                 "minute"
@@ -307,6 +309,7 @@ export default function ControlOrderSet() {
                               .format("HH:mm"),
                           };
                         });
+                        setNowDate(date);
                       }}
                     >
                       {event.event_revision.name}
@@ -451,7 +454,6 @@ export default function ControlOrderSet() {
               </label>
               <input
                 type="text"
-                defaultValue={0}
                 className="mr-8 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl"
                 placeholder="0"
                 maxLength={3}
@@ -478,16 +480,27 @@ export default function ControlOrderSet() {
               </label>
               <input
                 type="text"
-                defaultValue={0}
                 className="mr-8 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl"
                 placeholder="0"
                 maxLength={3}
                 value={order.setTime?.toLocaleString()}
                 onChange={(e) => {
+                  const date = nowDate.hour(
+                    Number(order.startTime.split(":")[0])
+                  );
+                  const newDate = date.minute(
+                    Number(order.startTime.split(":")[1])
+                  );
                   setOrder((order: any) => {
                     return {
                       ...order,
                       setTime: Number(e.target.value.replace(/[^0-9]/g, "")),
+                      endTime: newDate
+                        .add(Number(order.setTime || 0), "minute")
+                        .format("HH:mm"),
+                      callTime: newDate
+                        .add(Number(order.setTime || 0) - 10, "minute")
+                        .format("HH:mm"),
                     };
                   });
                 }}
@@ -533,12 +546,24 @@ export default function ControlOrderSet() {
                 <input
                   type="time"
                   className="mr-4 h-[45px] rounded-md px-2 text-xl"
-                  defaultValue={order.startTime}
+                  value={order.startTime}
                   onChange={(e) => {
                     setOrder((order: any) => {
+                      const date = nowDate.hour(
+                        Number(e.target.value.split(":")[0])
+                      );
+                      const newDate = date.minute(
+                        Number(e.target.value.split(":")[1])
+                      );
                       return {
                         ...order,
-                        startTime: e.target.value,
+                        startTime: newDate.format("HH:mm"),
+                        endTime: newDate
+                          .add(Number(order.setTime || 0), "minute")
+                          .format("HH:mm"),
+                        callTime: newDate
+                          .add(Number(order.setTime || 0) - 10, "minute")
+                          .format("HH:mm"),
                       };
                     });
                   }}
@@ -555,12 +580,21 @@ export default function ControlOrderSet() {
                 <input
                   type="time"
                   className="mr-8 h-[45px] rounded-md px-2 text-xl"
-                  defaultValue={order.endTime}
+                  value={order.endTime}
                   onChange={(e) => {
                     setOrder((order: any) => {
+                      const date = nowDate.hour(
+                        Number(e.target.value.split(":")[0])
+                      );
+                      const newDate = date.minute(
+                        Number(e.target.value.split(":")[1])
+                      );
                       return {
                         ...order,
-                        endTime: e.target.value,
+                        endTime: newDate.format("HH:mm"),
+                        callTime: newDate
+                          .subtract(10, "minute")
+                          .format("HH:mm"),
                       };
                     });
                   }}
