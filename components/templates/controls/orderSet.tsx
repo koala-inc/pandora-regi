@@ -13,6 +13,7 @@ import Image from "next/image";
 import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 import { searchSeatArea } from "@/gqls/query/seat";
 import { searchEvent } from "@/gqls/query/event";
+import { searchDesignate } from "@/gqls/query/designate";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -54,6 +55,7 @@ export default function ControlOrderSet() {
 
   const searchData2 = useSWR<any>(searchSeatArea, fetcher);
   const searchData3 = useSWR<any>(searchEvent, fetcher);
+  const searchData4 = useSWR<any>(searchDesignate, fetcher);
 
   const [searchForm, setSearchForm] = useState<any>({});
 
@@ -174,10 +176,12 @@ export default function ControlOrderSet() {
     },
   ];
 
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("なし");
   const [activeTabRC, setActiveTabRC] = useState(0);
 
   const [searchType, setSearchType] = useState("全て");
+  const [selectDesignate, setSelectDesignate] = useState("");
+  const [selectDesignateSymbol, setSelectDesignateSymbol] = useState("");
 
   let count = 0;
   return (
@@ -271,7 +275,7 @@ export default function ControlOrderSet() {
                         if (event.event_revision.is_information_center == 1) {
                           setStatus("案内所");
                         } else {
-                          setStatus("");
+                          setStatus("なし");
                         }
                         setOrder((order: any) => {
                           return {
@@ -567,15 +571,29 @@ export default function ControlOrderSet() {
             <div className="flex flex-col">
               <p className="mb-1 text-xs font-bold text-accent">指名種</p>
               <div className="flex h-[235px] flex-col overflow-scroll rounded-md border border-white bg-black p-4">
-                <Button className="min-w-[5rem]" natural>
-                  本指
-                </Button>
-                <Button className="mt-2 min-w-[5rem]" natural>
-                  同伴
-                </Button>
-                <Button className="mt-2 min-w-[5rem]" natural>
-                  場内
-                </Button>
+                {searchData4?.data?.designate[0]?.store_designate[0]?.designate?.map(
+                  (designate: any, index: any) => {
+                    return (
+                      <Button
+                        className={
+                          designate.id == selectDesignate
+                            ? "min-w-[5rem] mb-2"
+                            : "min-w-[5rem] mb-2 opacity-60"
+                        }
+                        key={index}
+                        natural
+                        onClick={() => {
+                          setSelectDesignate(designate.id);
+                          setSelectDesignateSymbol(
+                            designate.designate_revision.symbol
+                          );
+                        }}
+                      >
+                        {designate.designate_revision.name}
+                      </Button>
+                    );
+                  }
+                )}
               </div>
             </div>
             <div className="mx-4 flex flex-col">
@@ -843,12 +861,15 @@ export default function ControlOrderSet() {
                               onClick={() => {
                                 setSelectCast((selectCast: any) => [
                                   ...selectCast,
-                                  cast.name,
+                                  selectDesignateSymbol + cast.name,
                                 ]);
                                 setOrder((order: any) => {
                                   return {
                                     ...order,
-                                    cast: [...selectCast, cast.name],
+                                    cast: [
+                                      ...selectCast,
+                                      selectDesignateSymbol + cast.name,
+                                    ],
                                   };
                                 });
                               }}
