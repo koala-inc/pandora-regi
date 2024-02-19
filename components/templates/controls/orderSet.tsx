@@ -261,6 +261,7 @@ export default function ControlOrderSet() {
                 if (activeTab == event.event_revision.seat_area_id) {
                   return (
                     <div
+                      key={index}
                       className={
                         "mr-2 flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
                       }
