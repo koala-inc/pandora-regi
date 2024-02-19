@@ -112,7 +112,12 @@ export default function OrderSheetSet() {
           <Line />
         </div>
         <nav className="mt-4 flex w-full items-center justify-center">
-          <div className="w-[150px] flex justify-center items-center">
+          <div
+            className="w-[150px] flex justify-center items-center"
+            onClick={() => {
+              setPurchaseOrder([]);
+            }}
+          >
             <Border2
               rounded="rounded-full"
               size="h-[42px] w-[42px] p-[8px] bg-reset"

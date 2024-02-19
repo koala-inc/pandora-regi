@@ -143,7 +143,7 @@ export default function SetPayment() {
                     <p className="text-accent">基本時間</p>
                     <input
                       type="text"
-                      className="h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                      className="h-[30px] w-[8rem] rounded-md px-2 text-right pr-7 text-sm"
                       defaultValue={
                         event.event_revision.set_time?.toLocaleString() || ""
                       }
@@ -178,7 +178,7 @@ export default function SetPayment() {
                     <p className="text-accent">基本料金</p>
                     <input
                       type="text"
-                      className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                      className="h-[30px] w-[10rem] rounded-md px-2 text-right pr-7 text-sm"
                       defaultValue={
                         event.event_revision.price?.toLocaleString() || ""
                       }

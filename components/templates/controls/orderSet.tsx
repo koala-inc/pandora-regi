@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import Border from "@/components/templates/border";
-import Border2 from "@/components/templates/border";
+import Border2 from "@/components/master/border";
 import SubBorder from "@/components/templates/subBorder";
 import Button from "../button";
 import { useState } from "react";
@@ -390,8 +390,8 @@ export default function ControlOrderSet() {
               </label>
               <input
                 type="text"
-                className="mr-4 h-[45px] w-[14rem] rounded-md px-2 text-xl"
-                placeholder="チャージ料を入力"
+                className="mr-4 h-[45px] w-[14rem] text-right rounded-md px-2 pr-8 text-xl"
+                placeholder="0"
                 value={order.roomCharge?.toLocaleString()}
                 onChange={(e) => {
                   setOrder((order: any) => {
@@ -417,8 +417,9 @@ export default function ControlOrderSet() {
               <input
                 type="text"
                 defaultValue={0}
-                className="mr-8 h-[45px] w-[6rem] rounded-md px-2 text-xl"
-                placeholder="人数を入力"
+                className="mr-8 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl"
+                placeholder="0"
+                maxLength={3}
                 value={order.num?.toLocaleString()}
                 onChange={(e) => {
                   setOrder((order: any) => {
@@ -443,8 +444,9 @@ export default function ControlOrderSet() {
               <input
                 type="text"
                 defaultValue={0}
-                className="mr-8 h-[45px] w-[10rem] rounded-md px-2 text-xl"
-                placeholder="時間を入力"
+                className="mr-8 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl"
+                placeholder="0"
+                maxLength={3}
                 value={order.setTime?.toLocaleString()}
                 onChange={(e) => {
                   setOrder((order: any) => {
@@ -468,8 +470,9 @@ export default function ControlOrderSet() {
               </label>
               <input
                 type="text"
-                className="mr-8 h-[45px] w-[12rem] rounded-md px-2 text-xl"
-                placeholder="料金を入力"
+                className="mr-8 h-[45px] w-[12rem] text-right rounded-md px-2 pr-8 text-xl"
+                placeholder="0"
+                maxLength={10}
                 value={order.price?.toLocaleString()}
                 onChange={(e) => {
                   setOrder((order: any) => {
@@ -858,30 +861,42 @@ export default function ControlOrderSet() {
                       type="text"
                       className="ml-5 h-[25px] w-[70px] rounded-md px-2 text-right"
                     />
-                    <div
-                      className="ml-3 text-red-400 h-[16px] w-[16px]"
-                      onClick={() => {
-                        setSelectCast((selectCast: any) =>
-                          selectCast.filter((castRes: any) => {
-                            return castRes !== cast;
-                          })
-                        );
-                      }}
+                    <Border2
+                      className="ml-3 mt-[1px] h-[23px] w-[26px]"
+                      rounded="rounded-full"
+                      size="h-[18px] w-[18px] p-[2px] text-red-600"
                     >
-                      <Image
-                        src={"/assets/close.svg"}
-                        width={26}
-                        height={26}
-                        className="!h-full !w-full mt-1"
-                        alt=""
-                      />
-                    </div>
+                      <div
+                        className="ml-[1px] mt-[-3px] flex h-full w-full items-center justify-center"
+                        onClick={() => {
+                          setSelectCast((selectCast: any) =>
+                            selectCast.filter((castRes: any) => {
+                              return castRes !== cast;
+                            })
+                          );
+                        }}
+                      >
+                        -
+                      </div>
+                    </Border2>
                   </div>
                 ))}
               </div>
               <div className="flex w-full justify-end p-4">
-                <div className="mr-4">
-                  <Border2
+                <div
+                  className="mr-4"
+                  onClick={() => {
+                    setOrder({
+                      num: 0,
+                      setTime: 0,
+                      price: 0,
+                      roomCharge: 0,
+                      cast: [],
+                    });
+                    setSelectCast([]);
+                  }}
+                >
+                  <Border
                     rounded="rounded-full"
                     size="h-[36px] w-[36px] p-[6px] bg-reset"
                   >
@@ -892,14 +907,14 @@ export default function ControlOrderSet() {
                       className="!h-full !w-full"
                       alt=""
                     />
-                  </Border2>
+                  </Border>
                 </div>
                 <div
                   onClick={() => {
                     setPurchaseOrder([...purchaseOrder, order]);
                   }}
                 >
-                  <Border2
+                  <Border
                     complate
                     rounded="rounded-full"
                     size="h-[36px] w-[36px] p-[6px]"
@@ -911,7 +926,7 @@ export default function ControlOrderSet() {
                       className="!h-full !w-full"
                       alt=""
                     />
-                  </Border2>
+                  </Border>
                 </div>
               </div>
             </div>

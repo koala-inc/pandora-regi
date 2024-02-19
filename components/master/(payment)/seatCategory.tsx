@@ -129,7 +129,7 @@ export default function ItemCategoryLists() {
                           <p className="text-accent">延長時間</p>
                           <input
                             type="text"
-                            className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                            className="h-[30px] w-[10rem] rounded-md px-2 text-right pr-7 text-sm"
                             defaultValue={
                               area.extra_time?.toLocaleString() || ""
                             }
@@ -164,7 +164,7 @@ export default function ItemCategoryLists() {
                           <p className="text-accent">延長料金</p>
                           <input
                             type="text"
-                            className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                            className="h-[30px] w-[10rem] rounded-md px-2 text-right pr-7 text-sm"
                             defaultValue={
                               area.extra_price?.toLocaleString() || ""
                             }
@@ -199,7 +199,7 @@ export default function ItemCategoryLists() {
                           <p className="text-accent">サービス料</p>
                           <input
                             type="text"
-                            className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                            className="h-[30px] w-[10rem] rounded-md px-2 text-right pr-7 text-sm"
                             defaultValue={
                               area.service_tax?.toLocaleString() || ""
                             }
@@ -234,7 +234,7 @@ export default function ItemCategoryLists() {
                           <p className="text-accent">RC料</p>
                           <input
                             type="text"
-                            className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                            className="h-[30px] w-[10rem] rounded-md px-2 text-right pr-7 text-sm"
                             defaultValue={
                               area.charge_price?.toLocaleString() || ""
                             }
@@ -269,7 +269,7 @@ export default function ItemCategoryLists() {
                           <p className="text-accent">RC延長時間</p>
                           <input
                             type="text"
-                            className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                            className="h-[30px] w-[10rem] rounded-md px-2 text-right pr-7 text-sm"
                             defaultValue={
                               area.extra_charge_time?.toLocaleString() || ""
                             }
@@ -304,7 +304,7 @@ export default function ItemCategoryLists() {
                           <p className="text-accent">RC延長料</p>
                           <input
                             type="text"
-                            className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                            className="h-[30px] w-[10rem] rounded-md px-2 text-right pr-7 text-sm"
                             defaultValue={
                               area.extra_charge_price?.toLocaleString() || ""
                             }
