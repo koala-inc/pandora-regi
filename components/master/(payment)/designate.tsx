@@ -34,7 +34,7 @@ export default function Designate() {
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
 
-  preload(searchDesignate, fetcher);
+  // preload(searchDesignate, fetcher);
 
   const [searchForm, setSearchForm] = useState<any>({});
   const [createForm, setCreateForm] = useState<any>({});
@@ -320,7 +320,7 @@ export default function Designate() {
                                     円
                                   </p>
                                 </div>
-                                <div className="relatibe flex flex-col mr-3">
+                                <div className="relative flex flex-col mr-3">
                                   <p className="text-accent">指名料</p>
                                   <input
                                     type="text"

@@ -14,6 +14,10 @@ import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 import { searchSeatArea } from "@/gqls/query/seat";
 import { searchEvent } from "@/gqls/query/event";
 import { searchDesignate } from "@/gqls/query/designate";
+import dayjs from "dayjs";
+import ja from "dayjs/locale/ja";
+
+dayjs.locale(ja);
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -61,6 +65,8 @@ export default function ControlOrderSet() {
 
   const searchData = useSWR<any>(searchCast, fetcher);
   const [selectCast, setSelectCast] = useState<any>([]);
+
+  const [setName, setSetName] = useState("");
 
   const seatAlphabet = [
     {
@@ -272,17 +278,33 @@ export default function ControlOrderSet() {
                         "mr-2 flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
                       }
                       onClick={() => {
+                        setSetName(event.event_revision.name);
                         if (event.event_revision.is_information_center == 1) {
                           setStatus("案内所");
                         } else {
                           setStatus("なし");
                         }
+                        const date = new Date();
+                        date.setMinutes(Math.round(date.getMinutes() / 5) * 5);
                         setOrder((order: any) => {
                           return {
                             ...order,
                             setTime: Number(event.event_revision.set_time),
                             price: Number(event.event_revision.price),
                             roomCharge: Number(activeTabRC),
+                            startTime: dayjs(date).format("HH:mm"),
+                            endTime: dayjs(date)
+                              .add(
+                                Number(event.event_revision.set_time),
+                                "minute"
+                              )
+                              .format("HH:mm"),
+                            callTime: dayjs(date)
+                              .add(
+                                Number(event.event_revision.set_time) - 10,
+                                "minute"
+                              )
+                              .format("HH:mm"),
                           };
                         });
                       }}
@@ -511,6 +533,7 @@ export default function ControlOrderSet() {
                 <input
                   type="time"
                   className="mr-4 h-[45px] rounded-md px-2 text-xl"
+                  defaultValue={order.startTime}
                   onChange={(e) => {
                     setOrder((order: any) => {
                       return {
@@ -532,6 +555,7 @@ export default function ControlOrderSet() {
                 <input
                   type="time"
                   className="mr-8 h-[45px] rounded-md px-2 text-xl"
+                  defaultValue={order.endTime}
                   onChange={(e) => {
                     setOrder((order: any) => {
                       return {
@@ -552,6 +576,7 @@ export default function ControlOrderSet() {
                 <input
                   type="time"
                   className="ml-4 mr-4 h-[45px] rounded-md px-2 text-xl"
+                  defaultValue={order.callTime}
                   onChange={(e) => {
                     setOrder((order: any) => {
                       return {
@@ -955,7 +980,14 @@ export default function ControlOrderSet() {
                 </div>
                 <div
                   onClick={() => {
-                    setPurchaseOrder([...purchaseOrder, order]);
+                    setPurchaseOrder([
+                      ...purchaseOrder,
+                      {
+                        ...order,
+                        setName: setName,
+                        status: status,
+                      },
+                    ]);
                   }}
                 >
                   <Border

@@ -76,10 +76,7 @@ function Base() {
           </div>
           <div className="mt-3 flex min-w-[4em] flex-col items-center justify-center">
             <p className="text-[0.8rem] text-accent">コール時間</p>
-            <p>
-              {purchaseOrder[0]?.callTimeHour || "00"}:
-              {purchaseOrder[0]?.callTimeMinite || "00"}
-            </p>
+            <p>{purchaseOrder[0]?.callTime}</p>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center">
@@ -252,98 +249,100 @@ function Base() {
           </div>
           <div className="flex h-[13.1%] max-h-[70px] min-h-[70px]">
             <Lists
-              lists={[
-                {
-                  title: purchaseOrder[0]?.cast[0],
-                  subTitle: "",
-                  lot: 1,
-                  price: 0,
-                },
-                // {
-                //   title: "A",
-                //   subTitle: "◯",
-                //   lot: 100,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "aaaaaaaaaA",
-                //   subTitle: "◯",
-                //   lot: 1,
-                //   price: 105500,
-                // },
-                // {
-                //   title: "キャストA",
-                //   subTitle: "◯",
-                //   lot: 12,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "キャストA",
-                //   subTitle: "◯",
-                //   lot: 1,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "キャストA",
-                //   subTitle: "◯",
-                //   lot: 1,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "A",
-                //   subTitle: "◯",
-                //   lot: 100,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "aaaaaaaaaA",
-                //   subTitle: "◯",
-                //   lot: 1,
-                //   price: 105500,
-                // },
-                // {
-                //   title: "キャストA",
-                //   subTitle: "◯",
-                //   lot: 12,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "キャストA",
-                //   subTitle: "◯",
-                //   lot: 1,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "キャストA",
-                //   subTitle: "◯",
-                //   lot: 1,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "A",
-                //   subTitle: "◯",
-                //   lot: 100,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "aaaaaaaaaA",
-                //   subTitle: "◯",
-                //   lot: 1,
-                //   price: 105500,
-                // },
-                // {
-                //   title: "キャストA",
-                //   subTitle: "◯",
-                //   lot: 12,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "キャストA",
-                //   subTitle: "◯",
-                //   lot: 1,
-                //   price: 1000,
-                // },
-              ]}
+              lists={
+                [
+                  // {
+                  //   title: purchaseOrder[0]?.cast[0] || "",
+                  //   subTitle: "",
+                  //   lot: 1,
+                  //   price: 0,
+                  // },
+                  // {
+                  //   title: "A",
+                  //   subTitle: "◯",
+                  //   lot: 100,
+                  //   price: 1000,
+                  // },
+                  // {
+                  //   title: "aaaaaaaaaA",
+                  //   subTitle: "◯",
+                  //   lot: 1,
+                  //   price: 105500,
+                  // },
+                  // {
+                  //   title: "キャストA",
+                  //   subTitle: "◯",
+                  //   lot: 12,
+                  //   price: 1000,
+                  // },
+                  // {
+                  //   title: "キャストA",
+                  //   subTitle: "◯",
+                  //   lot: 1,
+                  //   price: 1000,
+                  // },
+                  // {
+                  //   title: "キャストA",
+                  //   subTitle: "◯",
+                  //   lot: 1,
+                  //   price: 1000,
+                  // },
+                  // {
+                  //   title: "A",
+                  //   subTitle: "◯",
+                  //   lot: 100,
+                  //   price: 1000,
+                  // },
+                  // {
+                  //   title: "aaaaaaaaaA",
+                  //   subTitle: "◯",
+                  //   lot: 1,
+                  //   price: 105500,
+                  // },
+                  // {
+                  //   title: "キャストA",
+                  //   subTitle: "◯",
+                  //   lot: 12,
+                  //   price: 1000,
+                  // },
+                  // {
+                  //   title: "キャストA",
+                  //   subTitle: "◯",
+                  //   lot: 1,
+                  //   price: 1000,
+                  // },
+                  // {
+                  //   title: "キャストA",
+                  //   subTitle: "◯",
+                  //   lot: 1,
+                  //   price: 1000,
+                  // },
+                  // {
+                  //   title: "A",
+                  //   subTitle: "◯",
+                  //   lot: 100,
+                  //   price: 1000,
+                  // },
+                  // {
+                  //   title: "aaaaaaaaaA",
+                  //   subTitle: "◯",
+                  //   lot: 1,
+                  //   price: 105500,
+                  // },
+                  // {
+                  //   title: "キャストA",
+                  //   subTitle: "◯",
+                  //   lot: 12,
+                  //   price: 1000,
+                  // },
+                  // {
+                  //   title: "キャストA",
+                  //   subTitle: "◯",
+                  //   lot: 1,
+                  //   price: 1000,
+                  // },
+                ]
+              }
             />
             <div
               className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"

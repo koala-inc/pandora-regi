@@ -79,7 +79,7 @@ export default function OrderSheetSet() {
                   <p>A1</p>
                 </div>
                 <div className="mx-2 flex flex-col">
-                  <p>{order.num}名</p>
+                  <p>{order.num || 0}名</p>
                 </div>
                 <div className="mt-2 mx-2 flex w-full flex-col">
                   <p className="text-accent">指名</p>
@@ -87,11 +87,11 @@ export default function OrderSheetSet() {
                 </div>
                 <div className="mx-2 flex flex-col mt-2">
                   <p className="text-accent">区分</p>
-                  <p>-</p>
+                  <p>{order.status}</p>
                 </div>
                 <div className="mx-2 flex flex-col mt-2">
                   <p className="text-accent">セット</p>
-                  <p>-</p>
+                  <p>{order.setName}</p>
                 </div>
                 <div className="mx-2 flex flex-col mt-2">
                   <p className="text-accent">ルームチャージ</p>
