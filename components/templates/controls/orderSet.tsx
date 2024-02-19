@@ -384,27 +384,30 @@ export default function ControlOrderSet() {
             {/* <div>
               <input type="checkbox" className="checkbox checkbox-md" />
             </div> */}
-            <div className="flex flex-col">
+            <div className="relative flex flex-col">
               <label className="mt-3 mb-2 text-xs font-bold text-accent">
                 ルームチャージ
               </label>
               <input
-                type="number"
+                type="text"
                 className="mr-4 h-[45px] w-[14rem] rounded-md px-2 text-xl"
                 placeholder="チャージ料を入力"
-                value={order.roomCharge}
+                value={order.roomCharge?.toLocaleString()}
                 onChange={(e) => {
                   setOrder((order: any) => {
                     return {
                       ...order,
-                      roomCharge: Number(e.target.value),
+                      roomCharge: Number(e.target.value.replace(/[^0-9]/g, "")),
                     };
                   });
                 }}
               />
+              <p className="absolute text-xl bottom-[8px] right-[25px] opacity-60">
+                円
+              </p>
             </div>
             <hr className="w-full opacity-0" />
-            <div className="flex flex-col">
+            <div className="relative flex flex-col">
               <label className="mt-3 mb-2 text-xs font-bold text-accent">
                 人数　
                 <span className="bg-red-700 text-white px-[5px] py-[3px] text-xs rounded-md">
@@ -412,22 +415,25 @@ export default function ControlOrderSet() {
                 </span>
               </label>
               <input
-                type="number"
+                type="text"
                 defaultValue={0}
                 className="mr-8 h-[45px] w-[6rem] rounded-md px-2 text-xl"
                 placeholder="人数を入力"
-                value={order.num}
+                value={order.num?.toLocaleString()}
                 onChange={(e) => {
                   setOrder((order: any) => {
                     return {
                       ...order,
-                      num: Number(e.target.value),
+                      num: Number(e.target.value.replace(/[^0-9]/g, "")),
                     };
                   });
                 }}
               />
+              <p className="absolute text-xl bottom-[8px] right-[40px] opacity-60">
+                名
+              </p>
             </div>
-            <div className="flex flex-col">
+            <div className="relative flex flex-col">
               <label className="mt-3 mb-2 text-xs font-bold text-accent">
                 セット時間　
                 <span className="bg-red-700 text-white px-[5px] py-[3px] text-xs rounded-md">
@@ -435,22 +441,25 @@ export default function ControlOrderSet() {
                 </span>
               </label>
               <input
-                type="number"
+                type="text"
                 defaultValue={0}
                 className="mr-8 h-[45px] w-[10rem] rounded-md px-2 text-xl"
                 placeholder="時間を入力"
-                value={order.setTime}
+                value={order.setTime?.toLocaleString()}
                 onChange={(e) => {
                   setOrder((order: any) => {
                     return {
                       ...order,
-                      setTime: Number(e.target.value),
+                      setTime: Number(e.target.value.replace(/[^0-9]/g, "")),
                     };
                   });
                 }}
               />
+              <p className="absolute text-xl bottom-[8px] right-[40px] opacity-60">
+                分
+              </p>
             </div>
-            <div className="flex flex-col">
+            <div className="relative flex flex-col">
               <label className="mt-3 mb-2 text-xs font-bold text-accent">
                 料金　
                 <span className="bg-red-700 text-white px-[5px] py-[3px] text-xs rounded-md">
@@ -458,19 +467,22 @@ export default function ControlOrderSet() {
                 </span>
               </label>
               <input
-                type="number"
+                type="text"
                 className="mr-8 h-[45px] w-[12rem] rounded-md px-2 text-xl"
                 placeholder="料金を入力"
-                value={order.price}
+                value={order.price?.toLocaleString()}
                 onChange={(e) => {
                   setOrder((order: any) => {
                     return {
                       ...order,
-                      price: Number(e.target.value),
+                      price: Number(e.target.value.replace(/[^0-9]/g, "")),
                     };
                   });
                 }}
               />
+              <p className="absolute text-xl bottom-[8px] right-[40px] opacity-60">
+                円
+              </p>
             </div>
             <div className="flex">
               <div className="flex flex-col">

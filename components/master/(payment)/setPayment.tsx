@@ -139,17 +139,21 @@ export default function SetPayment() {
                       }}
                     />
                   </div>
-                  <div className="flex flex-col mr-3">
-                    <p className="text-accent">基本時間（分）</p>
+                  <div className="relative flex flex-col mr-3">
+                    <p className="text-accent">基本時間</p>
                     <input
                       type="text"
                       className="h-[30px] w-[8rem] rounded-md px-2 text-sm"
-                      defaultValue={event.event_revision.set_time || ""}
+                      defaultValue={
+                        event.event_revision.set_time?.toLocaleString() || ""
+                      }
                       onBlur={(e) => {
                         client
                           .request(updateEvent, {
                             id: event.id,
-                            set_time: Number(e.target.value),
+                            set_time: Number(
+                              e.target.value.replace(/[^0-9]/g, "")
+                            ),
                             ...defaultVariables,
                           })
                           .then(() => {
@@ -166,18 +170,25 @@ export default function SetPayment() {
                           });
                       }}
                     />
+                    <p className="absolute bottom-[3px] right-[7px] opacity-60">
+                      分
+                    </p>
                   </div>
-                  <div className="flex flex-col mr-3">
+                  <div className="relative flex flex-col mr-3">
                     <p className="text-accent">基本料金</p>
                     <input
                       type="text"
                       className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
-                      defaultValue={event.event_revision.price || ""}
+                      defaultValue={
+                        event.event_revision.price?.toLocaleString() || ""
+                      }
                       onBlur={(e) => {
                         client
                           .request(updateEvent, {
                             id: event.id,
-                            price: Number(e.target.value),
+                            price: Number(
+                              e.target.value.replace(/[^0-9]/g, "")
+                            ),
                             ...defaultVariables,
                           })
                           .then(() => {
@@ -194,6 +205,9 @@ export default function SetPayment() {
                           });
                       }}
                     />
+                    <p className="absolute bottom-[3px] right-[7px] opacity-60">
+                      円
+                    </p>
                   </div>
                   <div className="flex flex-col mr-3">
                     <p className="text-accent">税/サ</p>

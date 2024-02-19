@@ -130,12 +130,16 @@ export default function ItemCategoryLists() {
                           <input
                             type="text"
                             className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
-                            defaultValue={area.extra_time || ""}
+                            defaultValue={
+                              area.extra_time?.toLocaleString() || ""
+                            }
                             onBlur={(e) => {
                               client
                                 .request(updateSeatArea, {
                                   id: area.id,
-                                  extra_time: Number(e.target.value),
+                                  extra_time: Number(
+                                    e.target.value.replace(/[^0-9]/g, "")
+                                  ),
                                   ...defaultVariables,
                                 })
                                 .then(() => {
@@ -161,12 +165,16 @@ export default function ItemCategoryLists() {
                           <input
                             type="text"
                             className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
-                            defaultValue={area.extra_price || ""}
+                            defaultValue={
+                              area.extra_price?.toLocaleString() || ""
+                            }
                             onBlur={(e) => {
                               client
                                 .request(updateSeatArea, {
                                   id: area.id,
-                                  extra_price: Number(e.target.value),
+                                  extra_price: Number(
+                                    e.target.value.replace(/[^0-9]/g, "")
+                                  ),
                                   ...defaultVariables,
                                 })
                                 .then(() => {
@@ -192,12 +200,16 @@ export default function ItemCategoryLists() {
                           <input
                             type="text"
                             className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
-                            defaultValue={area.service_tax || ""}
+                            defaultValue={
+                              area.service_tax?.toLocaleString() || ""
+                            }
                             onBlur={(e) => {
                               client
                                 .request(updateSeatArea, {
                                   id: area.id,
-                                  service_tax: Number(e.target.value),
+                                  service_tax: Number(
+                                    e.target.value.replace(/[^0-9]/g, "")
+                                  ),
                                   ...defaultVariables,
                                 })
                                 .then(() => {
@@ -223,12 +235,16 @@ export default function ItemCategoryLists() {
                           <input
                             type="text"
                             className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
-                            defaultValue={area.charge_price || ""}
+                            defaultValue={
+                              area.charge_price?.toLocaleString() || ""
+                            }
                             onBlur={(e) => {
                               client
                                 .request(updateSeatArea, {
                                   id: area.id,
-                                  charge_price: Number(e.target.value),
+                                  charge_price: Number(
+                                    e.target.value.replace(/[^0-9]/g, "")
+                                  ),
                                   ...defaultVariables,
                                 })
                                 .then(() => {
@@ -254,12 +270,16 @@ export default function ItemCategoryLists() {
                           <input
                             type="text"
                             className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
-                            defaultValue={area.extra_charge_time || ""}
+                            defaultValue={
+                              area.extra_charge_time?.toLocaleString() || ""
+                            }
                             onBlur={(e) => {
                               client
                                 .request(updateSeatArea, {
                                   id: area.id,
-                                  extra_charge_time: Number(e.target.value),
+                                  extra_charge_time: Number(
+                                    e.target.value.replace(/[^0-9]/g, "")
+                                  ),
                                   ...defaultVariables,
                                 })
                                 .then(() => {
@@ -285,12 +305,16 @@ export default function ItemCategoryLists() {
                           <input
                             type="text"
                             className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
-                            defaultValue={area.extra_charge_price || ""}
+                            defaultValue={
+                              area.extra_charge_price?.toLocaleString() || ""
+                            }
                             onBlur={(e) => {
                               client
                                 .request(updateSeatArea, {
                                   id: area.id,
-                                  extra_charge_price: Number(e.target.value),
+                                  extra_charge_price: Number(
+                                    e.target.value.replace(/[^0-9]/g, "")
+                                  ),
                                   ...defaultVariables,
                                 })
                                 .then(() => {
