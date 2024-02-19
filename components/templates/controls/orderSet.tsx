@@ -177,6 +177,8 @@ export default function ControlOrderSet() {
   const [status, setStatus] = useState("");
   const [activeTabRC, setActiveTabRC] = useState(0);
 
+  const [searchType, setSearchType] = useState("全て");
+
   let count = 0;
   return (
     <>
@@ -266,6 +268,11 @@ export default function ControlOrderSet() {
                         "mr-2 flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
                       }
                       onClick={() => {
+                        if (event.event_revision.is_information_center == 1) {
+                          setStatus("案内所");
+                        } else {
+                          setStatus("");
+                        }
                         setOrder((order: any) => {
                           return {
                             ...order,
@@ -291,6 +298,7 @@ export default function ControlOrderSet() {
               <div className="flex">
                 <select
                   className="mr-1 h-[45px] w-[7rem] rounded-md px-2 text-xl"
+                  value={status}
                   onChange={(e) => {
                     setStatus(e.target.value);
                   }}
@@ -306,8 +314,8 @@ export default function ControlOrderSet() {
                 <select
                   className={
                     status != "なし"
-                      ? "mr-8 h-[45px] w-[7rem] rounded-md px-2 text-xl"
-                      : "mr-8 h-[45px] w-[7rem] rounded-md px-2 text-xl opacity-0"
+                      ? "mr-8 h-[45px] w-[10rem] rounded-md px-2 text-xl"
+                      : "mr-8 h-[45px] w-[10rem] rounded-md px-2 text-xl opacity-0"
                   }
                   disabled={status == "なし"}
                 >
@@ -390,8 +398,9 @@ export default function ControlOrderSet() {
               </label>
               <input
                 type="text"
-                className="mr-4 h-[45px] w-[14rem] text-right rounded-md px-2 pr-8 text-xl"
+                className="mr-4 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl"
                 placeholder="0"
+                maxLength={7}
                 value={order.roomCharge?.toLocaleString()}
                 onChange={(e) => {
                   setOrder((order: any) => {
@@ -470,9 +479,9 @@ export default function ControlOrderSet() {
               </label>
               <input
                 type="text"
-                className="mr-8 h-[45px] w-[12rem] text-right rounded-md px-2 pr-8 text-xl"
+                className="mr-8 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl"
                 placeholder="0"
-                maxLength={10}
+                maxLength={7}
                 value={order.price?.toLocaleString()}
                 onChange={(e) => {
                   setOrder((order: any) => {
@@ -572,13 +581,28 @@ export default function ControlOrderSet() {
             <div className="mx-4 flex flex-col">
               <p className="mb-1 text-xs font-bold text-accent">キャスト検索</p>
               <div className="mt-4 flex w-[300px]">
-                <Button className="min-w-[5rem]" natural>
+                <Button
+                  className={
+                    searchType != "出勤"
+                      ? "min-w-[5rem] opacity-50"
+                      : "min-w-[5rem]"
+                  }
+                  natural
+                  onClick={() => {
+                    setSearchType("出勤");
+                  }}
+                >
                   出勤
                 </Button>
                 <Button
-                  className="ml-3 min-w-[5rem]"
+                  className={
+                    searchType != "全て"
+                      ? "ml-3 min-w-[5rem] opacity-50"
+                      : "ml-3 min-w-[5rem]"
+                  }
                   natural
                   onClick={() => {
+                    setSearchType("全て");
                     searchData.mutate(
                       () =>
                         client.request(searchCast, {
