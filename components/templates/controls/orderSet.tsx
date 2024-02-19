@@ -888,15 +888,14 @@ export default function ControlOrderSet() {
               <p className="mb-1 text-xs font-bold text-accent">選択キャスト</p>
               <div className="flex max-h-[200px] min-h-[200px] w-[350px] flex-col justify-start overflow-scroll rounded-md border border-white bg-black p-1">
                 <div className="mt-1 flex px-2 text-xs text-accent">
-                  <p className="w-[168px]">キャスト名</p>
-                  <p className="h-[25px] w-[30px] rounded-md text-center">
-                    個数
-                  </p>
-                  <p className="ml-5 h-[25px] w-[70px] rounded-md px-2">料金</p>
+                  <p className="w-[140px]">キャスト名</p>
+                  <p className="h-[25px] w-[30px] mx-2 text-center">個数</p>
+                  <p className="ml-5 h-[25px] w-[70px] mx-2">料金</p>
+                  <p className="ml-3 h-[25px] w-[26px]"></p>
                 </div>
                 {selectCast.map((cast: any, index: any) => (
                   <div className="mb-2 flex px-2 text-xl" key={index}>
-                    <p className="w-[180px]">{cast}</p>
+                    <p className="w-[140px]">{cast}</p>
                     <input
                       type="text"
                       className="mx-2 h-[25px] w-[30px] rounded-md text-center"
