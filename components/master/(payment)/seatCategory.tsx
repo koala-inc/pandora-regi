@@ -95,7 +95,7 @@ export default function ItemCategoryLists() {
                       size="p-4 flex flex-col overflow-scroll"
                       black
                     >
-                      <div className="flex flex-wrap">
+                      <div className="relative flex flex-wrap">
                         <div className="flex flex-col py-2 mx-2">
                           <p className="text-accent">席カテゴリー名</p>
                           <input
@@ -125,7 +125,7 @@ export default function ItemCategoryLists() {
                             }}
                           />
                         </div>
-                        <div className="flex flex-col py-2 mx-2">
+                        <div className="relative flex flex-col py-2 mx-2">
                           <p className="text-accent">延長時間</p>
                           <input
                             type="text"
@@ -152,8 +152,11 @@ export default function ItemCategoryLists() {
                                 });
                             }}
                           />
+                          <p className="absolute bottom-[11px] right-[7px] opacity-60">
+                            分
+                          </p>
                         </div>
-                        <div className="flex flex-col py-2 mx-2">
+                        <div className="relative flex flex-col py-2 mx-2">
                           <p className="text-accent">延長料金</p>
                           <input
                             type="text"
@@ -180,8 +183,11 @@ export default function ItemCategoryLists() {
                                 });
                             }}
                           />
+                          <p className="absolute bottom-[11px] right-[7px] opacity-60">
+                            円
+                          </p>
                         </div>
-                        <div className="flex flex-col py-2 mx-2">
+                        <div className="relative flex flex-col py-2 mx-2">
                           <p className="text-accent">サービス料</p>
                           <input
                             type="text"
@@ -208,8 +214,11 @@ export default function ItemCategoryLists() {
                                 });
                             }}
                           />
+                          <p className="absolute bottom-[11px] right-[7px] opacity-60">
+                            ％
+                          </p>
                         </div>
-                        <div className="flex flex-col py-2 mx-2">
+                        <div className="relative flex flex-col py-2 mx-2">
                           <p className="text-accent">RC料</p>
                           <input
                             type="text"
@@ -236,8 +245,11 @@ export default function ItemCategoryLists() {
                                 });
                             }}
                           />
+                          <p className="absolute bottom-[11px] right-[7px] opacity-60">
+                            円
+                          </p>
                         </div>
-                        <div className="flex flex-col py-2 mx-2">
+                        <div className="relative flex flex-col py-2 mx-2">
                           <p className="text-accent">RC延長時間</p>
                           <input
                             type="text"
@@ -264,8 +276,11 @@ export default function ItemCategoryLists() {
                                 });
                             }}
                           />
+                          <p className="absolute bottom-[11px] right-[7px] opacity-60">
+                            分
+                          </p>
                         </div>
-                        <div className="flex flex-col py-2 mx-2">
+                        <div className="relative flex flex-col py-2 mx-2">
                           <p className="text-accent">RC延長料</p>
                           <input
                             type="text"
@@ -292,6 +307,9 @@ export default function ItemCategoryLists() {
                                 });
                             }}
                           />
+                          <p className="absolute bottom-[11px] right-[7px] opacity-60">
+                            円
+                          </p>
                         </div>
                       </div>
                     </Border>
