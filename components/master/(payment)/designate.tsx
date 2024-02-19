@@ -62,11 +62,16 @@ export default function Designate() {
             <div className="flex w-full flex-col mt-3">
               <p className="text-accent">指名延長料発生条件</p>
               <div className="flex">
-                <input
-                  type="text"
-                  className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                />
-                <p>分以上で発生させる</p>
+                <div className="relative">
+                  <input
+                    type="text"
+                    className="h-[30px] w-[6rem] rounded-md px-2 text-right pr-7 text-sm"
+                  />
+                  <p className="absolute bottom-[4px] right-[7px] opacity-60">
+                    分
+                  </p>
+                </div>
+                <p className="ml-2">以上で発生させる</p>
               </div>
             </div>
             {searchData?.data?.designate[0]?.store_designate[0]?.designate?.map(
@@ -142,11 +147,11 @@ export default function Designate() {
                           }}
                         />
                       </div>
-                      <div className="flex flex-col mr-3">
+                      <div className="relative flex flex-col mr-3">
                         <p className="text-accent">指名料</p>
                         <input
                           type="text"
-                          className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                          className="h-[30px] w-[6rem] rounded-md px-2 text-right pr-7 text-sm"
                           defaultValue={designate.designate_revision.price?.toLocaleString()}
                           onBlur={(e) => {
                             client
@@ -171,12 +176,15 @@ export default function Designate() {
                               });
                           }}
                         />
+                        <p className="absolute bottom-[2.5px] right-[7px] opacity-60">
+                          円
+                        </p>
                       </div>
-                      <div className="flex flex-col mr-3">
+                      <div className="relative flex flex-col mr-3">
                         <p className="text-accent">指名延長料</p>
                         <input
                           type="text"
-                          className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                          className="h-[30px] w-[6rem] rounded-md px-2 text-right pr-7 text-sm"
                           defaultValue={designate.designate_revision.extra_price?.toLocaleString()}
                           onBlur={(e) => {
                             client
@@ -201,6 +209,9 @@ export default function Designate() {
                               });
                           }}
                         />
+                        <p className="absolute bottom-[2.5px] right-[7px] opacity-60">
+                          円
+                        </p>
                       </div>
                       <div className="flex flex-col mr-3">
                         <p className="text-accent">税/サ</p>
@@ -299,19 +310,25 @@ export default function Designate() {
                                 同伴：レシート表記
                               </p>
                               <div className="flex">
-                                <div className="flex flex-col mr-3">
+                                <div className="relative flex flex-col mr-3">
                                   <p className="text-accent">同伴料</p>
                                   <input
                                     type="text"
-                                    className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                                    className="h-[30px] w-[6rem] rounded-md px-2 text-right pr-7 text-sm"
                                   />
+                                  <p className="absolute bottom-[2.5px] right-[7px] opacity-60">
+                                    円
+                                  </p>
                                 </div>
-                                <div className="flex flex-col mr-3">
+                                <div className="relatibe flex flex-col mr-3">
                                   <p className="text-accent">指名料</p>
                                   <input
                                     type="text"
-                                    className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                                    className="h-[30px] w-[6rem] rounded-md px-2 text-right pr-7 text-sm"
                                   />
+                                  <p className="absolute bottom-[2.5px] right-[7px] opacity-60">
+                                    円
+                                  </p>
                                 </div>
                               </div>
                             </div>
