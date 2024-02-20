@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-export default function Toggle() {
-  const [isChecked, setIsChecked] = useState(false);
+export default function Toggle({ isChecked, setIsChecked }: any) {
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };

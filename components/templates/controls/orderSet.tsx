@@ -54,6 +54,7 @@ export default function ControlOrderSet() {
   const [order, setOrder] = useState<any>({});
   const [activeTab, setActiveTab] = useState(-1);
   const [nowDate, setNowDate] = useState(dayjs(new Date()));
+  const [toggle, setToggle] = useState(false);
 
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
@@ -496,10 +497,20 @@ export default function ControlOrderSet() {
                       ...order,
                       setTime: Number(e.target.value.replace(/[^0-9]/g, "")),
                       endTime: newDate
-                        .add(Number(order.setTime || 0), "minute")
+                        .add(
+                          Number(
+                            Number(e.target.value.replace(/[^0-9]/g, "")) || 0
+                          ),
+                          "minute"
+                        )
                         .format("HH:mm"),
                       callTime: newDate
-                        .add(Number(order.setTime || 0) - 10, "minute")
+                        .add(
+                          Number(
+                            Number(e.target.value.replace(/[^0-9]/g, "")) || 0
+                          ) - 10,
+                          "minute"
+                        )
                         .format("HH:mm"),
                     };
                   });
@@ -606,10 +617,14 @@ export default function ControlOrderSet() {
                 コール時間
               </label>
               <div className="flex">
-                <Toggle />
+                <Toggle isChecked={toggle} setIsChecked={setToggle} />
                 <input
                   type="time"
-                  className="ml-4 mr-4 h-[45px] rounded-md px-2 text-xl"
+                  className={
+                    toggle
+                      ? "ml-4 mr-4 h-[45px] rounded-md px-2 text-xl opacity-10"
+                      : "ml-4 mr-4 h-[45px] rounded-md px-2 text-xl"
+                  }
                   defaultValue={order.callTime}
                   onChange={(e) => {
                     setOrder((order: any) => {

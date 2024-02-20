@@ -10,6 +10,7 @@ import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsControlGlobal from "@/globalstates/isControl";
 import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
+import { useState } from "react";
 
 function Lists({
   lists,
@@ -61,13 +62,14 @@ function Base() {
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+  const [toggle, setToggle] = useState(false);
 
   return (
     <>
       <section className="flex items-center justify-around text-md">
         <div className="flex-col flex items-center">
           <p className="text-4xl mb-6">A1　</p>
-          <Toggle />
+          <Toggle isChecked={toggle} setIsChecked={setToggle} />
         </div>
         <div className="flex flex-col items-center justify-center">
           <div className="flex flex-col items-center justify-center">
@@ -76,7 +78,7 @@ function Base() {
           </div>
           <div className="mt-3 flex min-w-[4em] flex-col items-center justify-center">
             <p className="text-[0.8rem] text-accent">コール時間</p>
-            <p>{purchaseOrder[0]?.callTime}</p>
+            <p>{toggle ? "-" : purchaseOrder[0]?.callTime}</p>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center">
