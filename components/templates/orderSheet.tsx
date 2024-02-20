@@ -219,7 +219,7 @@ function Base() {
             <div className="text-sm text-accent">セット料金</div>
             <Line ml="ml-10" />
           </div>
-          <div className="flex h-[120px] max-h-[100px] min-h-[100px]">
+          <div className="flex text-sm px-2 h-[120px] max-h-[100px] min-h-[100px]">
             <Lists
               lists={[
                 {
@@ -276,7 +276,7 @@ function Base() {
             <div className="text-sm text-accent">指名キャスト</div>
             <Line ml="ml-10" />
           </div>
-          <div className="flex max-h-[100px] min-h-[100px]">
+          <div className="flex text-sm px-2 max-h-[100px] min-h-[100px]">
             <Lists
               lists={
                 purchaseOrder[0].cast.map((cast: any) => {
@@ -284,7 +284,7 @@ function Base() {
                     title: cast.split("##")[0],
                     subTitle: "",
                     lot: 1,
-                    price: cast.split("##")[1],
+                    price: Number(cast.split("##")[1]),
                   };
                 })
                 // [
@@ -408,7 +408,7 @@ function Base() {
             <div className="text-sm text-accent">オーダー</div>
             <Line ml="ml-10" />
           </div>
-          <div className="flex max-h-[130px] min-h-[130px]">
+          <div className="flex text-sm px-2 max-h-[130px] min-h-[130px]">
             <Lists
               lists={
                 [
@@ -455,21 +455,21 @@ function Base() {
         <div className="flex w-full">
           <Line />
         </div>
-        <div className="flex">
+        <div className="flex px-2">
           <div className="w-full">
-            <div className="mt-3 flex w-full items-center justify-between">
+            <div className="mt-3 flex text-sm w-full items-center justify-between">
               <div>小計</div>
               <div>¥{totalPay.toLocaleString()}-</div>
             </div>
-            <div className="mt-1 flex w-full items-center justify-between">
+            <div className="mt-1 flex text-sm w-full items-center justify-between">
               <div>サービス</div>
               <div>¥{(totalPay * 0.3).toLocaleString()}-</div>
             </div>
-            <div className="mt-1 flex w-full items-center justify-between">
+            <div className="mt-1 flex text-sm w-full items-center justify-between">
               <div>税</div>
               <div>¥{(totalPay * 1.3 * 0.1).toLocaleString()}-</div>
             </div>
-            <div className="mt-4 flex w-full items-center justify-between text-2xl text-accent">
+            <div className="mt-2 flex w-full items-center justify-between text-2xl text-accent">
               <div>合計</div>
               <div className="flex-1 text-right">
                 ¥{(totalPay * 1.3 * 1.1).toLocaleString()}-
