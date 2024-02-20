@@ -18,14 +18,16 @@ export default function OrderEnd() {
   const [isCard, setIsCard] = useIsCardGlobal();
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
-  const [totalPay, setTotalPay] = useState(() => {
-    let total = 0;
-    purchaseOrder[0].cast.map((cast: any) => {
-      total += Number(cast.split("##")[1]);
-    });
-    total += Number(purchaseOrder[0].price);
-    return total;
+  let total = 0;
+  purchaseOrder[0].cast.map((cast: any) => {
+    total += Number(cast.split("##")[1]);
   });
+  total += Number(purchaseOrder[0].price);
+  purchaseOrder[0].orderItem.map((orderItem: any) => {
+    total += Number(orderItem.price);
+  });
+
+  const totalPay = total * 1.3 * 1.1;
 
   const [type, setType] = useState(false);
 

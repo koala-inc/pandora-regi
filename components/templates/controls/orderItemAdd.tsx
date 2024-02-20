@@ -9,6 +9,7 @@ import Button from "../button";
 import { useState } from "react";
 import Control from "@/components/master/(component)/control";
 import Toggle from "@/components/templates/toggle4";
+import Toggle3 from "@/components/templates/toggle3";
 import client from "@/connection";
 import {
   createCategory,
@@ -21,6 +22,7 @@ import Image from "next/image";
 import useSWR, { preload } from "swr";
 import { searchBottle } from "@/gqls/query/bottle";
 import { searchMenu } from "@/gqls/query/menu";
+import usePurchaseOrderItemAddGlobal from "@/globalstates/purchaseOrderItemAdd";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -61,6 +63,9 @@ export default function OrderItemAdd() {
   const [categoryActive, setCategoryActive] = useState(-2);
   const [subCategoryActive, setSubCategoryActive] = useState(-1);
 
+  const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
+    usePurchaseOrderItemAddGlobal();
+
   let count = 0;
   let count2 = 0;
 
@@ -83,12 +88,12 @@ export default function OrderItemAdd() {
         }}
       >
         <ContentHeader>
-          <div className="w-full flex justify-start items-center">
+          <div className="w-full flex justify-center items-center">
             <Button className="mr-3">オーダー入力</Button>
             <Button className="mr-3 opacity-50">店内履歴</Button>
             <Button className="mr-6 opacity-50">オーダー修正</Button>
             <input
-              className="p-4 h-[45px] w-[180px] text-lg text-white rounded-md mr-4"
+              className="p-4 h-[45px] w-[180px] text-lg text-white rounded-md mr-4 ml-4"
               placeholder="オーダー名を入力"
             />
             <div>
@@ -108,6 +113,9 @@ export default function OrderItemAdd() {
           </div>
         </ContentHeader>
         <div className="flex py-2">
+          <div className="bg-primary rounded-md mr-4 p-2 flex justify-center items-center">
+            <Toggle3 />
+          </div>
           {searchData?.data?.category[0]?.store_category[0]?.category?.map(
             (category: any, index: any) => {
               if (category.category_revision.parent_id == 0) {
@@ -186,6 +194,16 @@ export default function OrderItemAdd() {
                         "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
                       }
                       key={index}
+                      onClick={() => {
+                        setPurchaseOrderItemAdd([
+                          ...purchaseOrderItemAdd,
+                          {
+                            title: bottle.bottle_revision.name,
+                            lot: 1,
+                            price: bottle.bottle_revision.price,
+                          },
+                        ]);
+                      }}
                     >
                       {bottle.bottle_revision.name}
                     </div>
@@ -202,6 +220,16 @@ export default function OrderItemAdd() {
                         "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
                       }
                       key={index}
+                      onClick={() => {
+                        setPurchaseOrderItemAdd([
+                          ...purchaseOrderItemAdd,
+                          {
+                            title: menu.menu_revision.name,
+                            lot: 1,
+                            price: menu.menu_revision.price,
+                          },
+                        ]);
+                      }}
                     >
                       {menu.menu_revision.name}
                     </div>

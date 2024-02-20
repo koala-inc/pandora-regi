@@ -11,6 +11,7 @@ import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsControlGlobal from "@/globalstates/isControl";
 import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 import { useState } from "react";
+import usePurchaseOrderItemAddGlobal from "@/globalstates/purchaseOrderItemAdd";
 
 function Lists({
   lists,
@@ -33,7 +34,7 @@ function Lists({
           <div className="w-[10%] text-left">{list.subTitle || ""}</div>
           <div className="w-[20%] text-right">{list.lot}</div>
           <div className="w-[30%] text-right">
-            {list.price.toLocaleString()}円
+            {list.price?.toLocaleString()}円
           </div>
         </li>
       ))}
@@ -64,14 +65,16 @@ function Base() {
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [toggle, setToggle] = useState(purchaseOrder[0].toggle);
 
-  const [totalPay, setTotalPay] = useState(() => {
-    let total = 0;
-    purchaseOrder[0].cast.map((cast: any) => {
-      total += Number(cast.split("##")[1]);
-    });
-    total += Number(purchaseOrder[0].price);
-    return total;
+  let total = 0;
+  purchaseOrder[0].cast.map((cast: any) => {
+    total += Number(cast.split("##")[1]);
   });
+  total += Number(purchaseOrder[0].price);
+  purchaseOrder[0].orderItem.map((orderItem: any) => {
+    total += Number(orderItem.price);
+  });
+
+  const totalPay = total;
 
   return (
     <>
@@ -409,27 +412,7 @@ function Base() {
             <Line ml="ml-10" />
           </div>
           <div className="flex text-sm px-2 max-h-[130px] min-h-[130px]">
-            <Lists
-              lists={
-                [
-                  // {
-                  //   title: "吉四六",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "生ビール",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "ドンペリ白",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                ]
-              }
-            />
+            <Lists lists={purchaseOrder[0]?.orderItem || []} />
             <div
               className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
               onClick={(e) => {
@@ -522,6 +505,26 @@ function Add() {
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+  const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
+    usePurchaseOrderItemAddGlobal();
+
+  let total = 0;
+  purchaseOrder[0].cast.map((cast: any) => {
+    total += Number(cast.split("##")[1]);
+  });
+  total += Number(purchaseOrder[0].price);
+  purchaseOrder[0].orderItem.map((orderItem: any) => {
+    total += Number(orderItem.price);
+  });
+
+  const totalPay = total;
+
+  let total2 = 0;
+  purchaseOrderItemAdd.map((purchaseOrderItemAdd: any) => {
+    total2 += Number(purchaseOrderItemAdd.price);
+  });
+
+  const totalPay2 = total2 + totalPay;
 
   return (
     <>
@@ -558,25 +561,7 @@ function Add() {
             <Line ml="ml-10" />
           </div>
           <div className="flex h-[39.3%] max-h-[100px] min-h-[100px]">
-            <Lists
-              lists={[
-                {
-                  title: "吉四六",
-                  lot: 1,
-                  price: 1000,
-                },
-                {
-                  title: "生ビール",
-                  lot: 1,
-                  price: 1000,
-                },
-                {
-                  title: "ドンペリ白",
-                  lot: 1,
-                  price: 1000,
-                },
-              ]}
-            />
+            <Lists lists={purchaseOrder[0]?.orderItem || []} />
           </div>
           <div className="flex w-full">
             <Line />
@@ -589,11 +574,23 @@ function Add() {
             </div>
             <div className="flex flex-col w-[200px] text-right">
               <p className="h-[20px] text-center">現在</p>
-              <p className="h-[40px] text-accent text-xl flex items-center justify-end">
-                0円
+              <p
+                className={
+                  totalPay > 9999999
+                    ? "h-[40px] text-accent text-[15px] flex items-center justify-end"
+                    : "h-[40px] text-accent text-xl flex items-center justify-end"
+                }
+              >
+                {totalPay.toLocaleString()}円
               </p>
-              <p className="h-[40px] text-accent text-xl flex items-center justify-end">
-                0円
+              <p
+                className={
+                  totalPay > 9999999
+                    ? "h-[40px] text-accent text-[15px] flex items-center justify-end"
+                    : "h-[40px] text-accent text-xl flex items-center justify-end"
+                }
+              >
+                {(totalPay * 1.3 * 1.1).toLocaleString()}円
               </p>
             </div>
             <div className="flex flex-col w-[20px] mx-2 text-right">
@@ -603,86 +600,56 @@ function Add() {
             </div>
             <div className="flex flex-col w-[200px] text-right">
               <p className="h-[20px] text-center">見込み</p>
-              <p className="h-[40px] text-accent text-xl flex items-center justify-end">
-                0円
+              <p
+                className={
+                  totalPay2 > 9999999
+                    ? "h-[40px] text-accent text-[15px] flex items-center justify-end"
+                    : "h-[40px] text-accent text-xl flex items-center justify-end"
+                }
+              >
+                {totalPay2.toLocaleString()}円
               </p>
-              <p className="h-[40px] text-accent text-xl flex items-center justify-end">
-                0円
+              <p
+                className={
+                  totalPay2 > 9999999
+                    ? "h-[40px] text-accent text-[15px] flex items-center justify-end"
+                    : "h-[40px] text-accent text-xl flex items-center justify-end"
+                }
+              >
+                {(totalPay2 * 1.3 * 1.1).toLocaleString()}円
               </p>
             </div>
           </div>
           <div className="flex w-full">
             <Line />
           </div>
-          <div className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2">
-            <div className="flex flex-col w-[60px] text-xs">
-              <p className="h-[20px] flex items-center">送信する</p>
-              <p className="h-[20px] flex items-center">ゲスト</p>
+          {purchaseOrderItemAdd?.map((purchaseOrderItemAdd: any) => (
+            <div className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2">
+              <div className="flex flex-col w-[60px] text-xs">
+                <p className="h-[20px] flex items-center">送信する</p>
+                <p className="h-[20px] flex items-center">ゲスト</p>
+              </div>
+              <div className="flex flex-col w-[120px] text-right">
+                <p className="h-[40px] text-accent text-lg flex items-center">
+                  {purchaseOrderItemAdd.title}
+                </p>
+              </div>
+              <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
+                <input
+                  className="h-[30px] px-2 rounded-md text-white"
+                  placeholder="個"
+                  value={purchaseOrderItemAdd.lot}
+                />
+              </div>
+              <div className="flex flex-col w-[80px] text-right justify-center">
+                <input
+                  className="h-[30px] px-2 rounded-md text-white"
+                  placeholder="金額"
+                  value={purchaseOrderItemAdd.price.toLocaleString()}
+                />
+              </div>
             </div>
-            <div className="flex flex-col w-[120px] text-right">
-              <p className="h-[40px] text-accent text-lg flex items-center">
-                77
-              </p>
-            </div>
-            <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
-              <input
-                className="h-[30px] px-2 rounded-md text-white"
-                placeholder="個"
-              />
-            </div>
-            <div className="flex flex-col w-[80px] text-right justify-center">
-              <input
-                className="h-[30px] px-2 rounded-md text-white"
-                placeholder="金額"
-              />
-            </div>
-          </div>
-          <div className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2">
-            <div className="flex flex-col w-[60px] text-xs">
-              <p className="h-[20px] flex items-center">送信する</p>
-              <p className="h-[20px] flex items-center">ゲスト</p>
-            </div>
-            <div className="flex flex-col w-[120px] text-right">
-              <p className="h-[40px] text-accent text-lg flex items-center">
-                test
-              </p>
-            </div>
-            <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
-              <input
-                className="h-[30px] px-2 rounded-md text-white"
-                placeholder="個"
-              />
-            </div>
-            <div className="flex flex-col w-[80px] text-right justify-center">
-              <input
-                className="h-[30px] px-2 rounded-md text-white"
-                placeholder="金額"
-              />
-            </div>
-          </div>
-          <div className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2">
-            <div className="flex flex-col w-[60px] text-xs">
-              <p className="h-[20px] flex items-center">送信する</p>
-              <p className="h-[20px] flex items-center">ゲスト</p>
-            </div>
-            <div className="flex flex-col w-[120px] text-right">
-              <p className="h-[40px] text-accent text-lg flex items-center">
-                a
-              </p>
-            </div>
-            <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
-              <input
-                className="h-[30px] px-2 rounded-md text-white"
-                placeholder="個"
-              />
-            </div>
-            <div className="flex flex-col w-[80px] text-right justify-center">
-              <input
-                className="h-[30px] px-2 rounded-md text-white"
-                placeholder="金額"
-              />
-            </div>
-          </div>
+          ))}
         </div>
         <div className="flex w-full">
           <Line />
@@ -694,19 +661,45 @@ function Add() {
             rounded="rounded-full"
             size="h-[42px] w-[42px] p-[8px] bg-reset"
           >
-            <Image
-              src={"/assets/reset.svg"}
-              width={26}
-              height={26}
-              className="!h-full !w-full"
-              alt=""
-            />
+            <div
+              onClick={() => {
+                setPurchaseOrderItemAdd([]);
+              }}
+            >
+              <Image
+                src={"/assets/reset.svg"}
+                width={26}
+                height={26}
+                className="!h-full !w-full"
+                alt=""
+              />
+            </div>
           </Border2>
         </div>
         <div
           className="w-[150px] flex justify-center items-center"
           onClick={(e) => {
             e.stopPropagation();
+            if (purchaseOrder[0].orderItem) {
+              setPurchaseOrder([
+                {
+                  ...purchaseOrder[0],
+                  orderItem: [
+                    ...purchaseOrder[0].orderItem,
+                    ...purchaseOrderItemAdd,
+                  ],
+                },
+              ]);
+            } else {
+              setPurchaseOrder([
+                {
+                  ...purchaseOrder[0],
+                  orderItem: purchaseOrderItemAdd,
+                },
+              ]);
+            }
+            setPurchaseOrderItemAdd([]);
+            setIsControl("");
           }}
         >
           <Border2
@@ -922,7 +915,6 @@ export default function OrderSheet() {
         onClick={() => {
           if (isHeader) setIsHeader(false);
           if (isFooter) setIsFooter(false);
-          if (isControl != "") setIsControl("");
         }}
       >
         {isControl == "ITEM" ? (
