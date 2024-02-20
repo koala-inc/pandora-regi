@@ -142,7 +142,7 @@ export default function ItemCategoryLists() {
                                     size="h-[20px] w-[20px] p-[2px] text-red-600"
                                   >
                                     <div
-                                      className="ml-[1px] mt-[-3px] flex h-full w-full items-center justify-center"
+                                      className="p-[1.5px] flex h-full w-full items-center justify-center"
                                       onClick={() => {
                                         client
                                           .request(deleteCategory, {
@@ -163,7 +163,13 @@ export default function ItemCategoryLists() {
                                           });
                                       }}
                                     >
-                                      -
+                                      <Image
+                                        src={"/assets/minus.svg"}
+                                        width={24}
+                                        height={24}
+                                        className="!h-full !w-full"
+                                        alt=""
+                                      />
                                     </div>
                                   </Border>
                                 </div>
@@ -176,7 +182,7 @@ export default function ItemCategoryLists() {
                           size="h-[20px] w-[20px] p-[2px]"
                         >
                           <Image
-                            src={"/assets/add.svg"}
+                            src={"/assets/addGreen.svg"}
                             width={16}
                             height={16}
                             className="!h-full !w-full"

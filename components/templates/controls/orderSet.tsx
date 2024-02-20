@@ -985,29 +985,34 @@ export default function ControlOrderSet() {
                 <div className="mt-1 flex px-2 text-xs text-accent">
                   <p className="w-[140px]">キャスト名</p>
                   <p className="h-[25px] w-[30px] mx-2 text-center">個数</p>
-                  <p className="ml-5 h-[25px] w-[70px] mx-2">料金</p>
-                  <p className="ml-3 h-[25px] w-[26px]"></p>
+                  <p className="ml-5 h-[25px] w-[90px] mx-2">料金</p>
+                  <p className="ml-3 h-[25px] w-[25px]"></p>
                 </div>
                 {selectCast.map((cast: any, index: any) => (
-                  <div className="mb-2 flex px-2 text-xl" key={index}>
+                  <div className="mb-2 flex px-2 text-md" key={index}>
                     <p className="w-[140px]">{cast.split("##")[0]}</p>
                     <input
                       type="text"
                       className="mx-2 h-[25px] w-[30px] rounded-md text-center"
                       defaultValue={1}
                     />
-                    <input
-                      type="text"
-                      className="ml-5 h-[25px] w-[70px] rounded-md px-2 text-right"
-                      value={cast.split("##")[1]}
-                    />
+                    <div className="relative">
+                      <input
+                        type="text"
+                        className="ml-5 h-[25px] w-[90px] rounded-md px-2 pr-[25px] text-right"
+                        value={Number(cast.split("##")[1]).toLocaleString()}
+                      />
+                      <p className="absolute text-md bottom-[0.5px] right-[5px] opacity-60">
+                        円
+                      </p>
+                    </div>
                     <Border2
-                      className="ml-3 mt-[1px] h-[23px] w-[26px]"
+                      className="ml-3 mt-[1px] h-[23px] w-[25px]"
                       rounded="rounded-full"
                       size="h-[18px] w-[18px] p-[2px] text-red-600"
                     >
                       <div
-                        className="ml-[1px] mt-[-3px] flex h-full w-full items-center justify-center"
+                        className="flex h-full w-full p-[1.5px] items-center justify-center"
                         onClick={() => {
                           setSelectCast((selectCast: any) =>
                             selectCast.filter((castRes: any) => {
@@ -1016,7 +1021,13 @@ export default function ControlOrderSet() {
                           );
                         }}
                       >
-                        -
+                        <Image
+                          src={"/assets/minus.svg"}
+                          width={24}
+                          height={24}
+                          className="!h-full !w-full"
+                          alt=""
+                        />
                       </div>
                     </Border2>
                   </div>

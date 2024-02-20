@@ -85,14 +85,14 @@ export default function OrderItemAdd() {
         <ContentHeader>
           <div className="w-full flex justify-start items-center">
             <Button className="mr-3">オーダー入力</Button>
-            <Button className="mr-3">店内履歴</Button>
-            <Button className="mr-6">オーダー修正</Button>
+            <Button className="mr-3 opacity-50">店内履歴</Button>
+            <Button className="mr-6 opacity-50">オーダー修正</Button>
             <input
-              className="p-4 h-[45px] text-lg text-white rounded-md mr-4 border border-white"
+              className="p-4 h-[45px] w-[180px] text-lg text-white rounded-md mr-4 border border-white"
               placeholder="オーダー名を入力"
             />
             <div>
-              <Border2
+              <Border
                 rounded="rounded-full"
                 size="h-[45px] w-[45px] p-[10px] bg-search"
               >
@@ -103,7 +103,7 @@ export default function OrderItemAdd() {
                   className="!h-full !w-full"
                   alt=""
                 />
-              </Border2>
+              </Border>
             </div>
           </div>
         </ContentHeader>
