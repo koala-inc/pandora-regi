@@ -446,16 +446,26 @@ function Base() {
             </div>
             <div className="mt-1 flex text-sm w-full items-center justify-between">
               <div>サービス</div>
-              <div>{(totalPay * 0.3).toLocaleString()}円</div>
+              <div>
+                {(Math.ceil((totalPay / 100) * 0.3) * 100).toLocaleString()}円
+              </div>
             </div>
             <div className="mt-1 flex text-sm w-full items-center justify-between">
               <div>税</div>
-              <div>{(totalPay * 1.3 * 0.1).toLocaleString()}円</div>
+              <div>
+                {(
+                  Math.ceil((totalPay / 100) * 1.3 * 0.1) * 100
+                ).toLocaleString()}
+                円
+              </div>
             </div>
             <div className="mt-2 flex w-full items-center justify-between text-2xl text-accent">
               <div>合計</div>
               <div className="flex-1 text-right">
-                {(totalPay * 1.3 * 1.1).toLocaleString()}円
+                {(
+                  Math.ceil((totalPay / 100) * 1.3 * 1.1) * 100
+                ).toLocaleString()}
+                円
               </div>
             </div>
           </div>

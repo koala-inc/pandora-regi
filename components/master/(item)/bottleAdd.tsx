@@ -526,7 +526,7 @@ export default function BottleAdd() {
                 </label>
                 <select
                   className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                  defaultValue={updateForm.item_category_id}
+                  defaultValue={updateForm?.item_category_id}
                   onChange={(e) => {
                     setUpdateForm((updateForm: any) => {
                       return {
