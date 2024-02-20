@@ -594,7 +594,7 @@ export default function TimeCard() {
                   </p>
                   <input
                     type="text"
-                    className="ml-4 mr-2 h-[40px] rounded-md border border-white"
+                    className="ml-4 mr-2 h-[40px] w-[150px] rounded-md border border-white"
                   />
                 </div>
                 <Border

@@ -25,7 +25,7 @@ function Lists({
 }) {
   return (
     <ul className="hidden-scrollbar w-full overflow-y-scroll">
-      {lists.map((list, index) => (
+      {lists?.map((list, index) => (
         <li
           key={index}
           className="mb-1 flex w-full items-center justify-between"
@@ -63,14 +63,14 @@ function Base() {
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
-  const [toggle, setToggle] = useState(purchaseOrder[0].toggle);
+  const [toggle, setToggle] = useState(purchaseOrder[0]?.toggle || false);
 
   let total = 0;
-  purchaseOrder[0].cast.map((cast: any) => {
+  purchaseOrder[0]?.cast?.map((cast: any) => {
     total += Number(cast.split("##")[1]);
   });
-  total += Number(purchaseOrder[0].price);
-  purchaseOrder[0].orderItem.map((orderItem: any) => {
+  total += Number(purchaseOrder[0]?.price);
+  purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
     total += Number(orderItem.price);
   });
 
@@ -226,9 +226,9 @@ function Base() {
             <Lists
               lists={[
                 {
-                  title: purchaseOrder[0].setName,
+                  title: purchaseOrder[0]?.setName,
                   lot: 1,
-                  price: purchaseOrder[0].price,
+                  price: purchaseOrder[0]?.price,
                 },
                 // {
                 //   title: "メイン",
@@ -282,7 +282,7 @@ function Base() {
           <div className="flex text-sm px-2 max-h-[100px] min-h-[100px]">
             <Lists
               lists={
-                purchaseOrder[0].cast.map((cast: any) => {
+                purchaseOrder[0]?.cast?.map((cast: any) => {
                   return {
                     title: cast.split("##")[0],
                     subTitle: "",
@@ -509,11 +509,11 @@ function Add() {
     usePurchaseOrderItemAddGlobal();
 
   let total = 0;
-  purchaseOrder[0].cast.map((cast: any) => {
+  purchaseOrder[0]?.cast?.map((cast: any) => {
     total += Number(cast.split("##")[1]);
   });
-  total += Number(purchaseOrder[0].price);
-  purchaseOrder[0].orderItem.map((orderItem: any) => {
+  total += Number(purchaseOrder[0]?.price);
+  purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
     total += Number(orderItem.price);
   });
 
@@ -685,12 +685,12 @@ function Add() {
           className="w-[150px] flex justify-center items-center"
           onClick={(e) => {
             e.stopPropagation();
-            if (purchaseOrder[0].orderItem) {
+            if (purchaseOrder[0]?.orderItem) {
               setPurchaseOrder([
                 {
                   ...purchaseOrder[0],
                   orderItem: [
-                    ...purchaseOrder[0].orderItem,
+                    ...purchaseOrder[0]?.orderItem,
                     ...purchaseOrderItemAdd,
                   ],
                 },

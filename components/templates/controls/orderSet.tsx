@@ -934,49 +934,52 @@ export default function ControlOrderSet() {
             </div>
             <div className="mx-2 flex flex-col">
               <p className="mb-1 text-xs font-bold text-accent">キャスト検索</p>
-              <div className="flex max-h-[235px] min-h-[235px] w-[260px] flex-wrap justify-start overflow-scroll rounded-md border border-white bg-black p-2">
+              <div className="flex max-h-[235px] min-h-[235px] w-[260px] flex-wrap justify-start items-start overflow-scroll rounded-md border border-white bg-black p-2">
                 {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
                   (cast: any, index: any) => {
                     const size = cast.name.length > 4 ? "text-xs" : "text-lg";
-                    if (cast.leaving_date == null) {
+                    if (cast.leaving_date == null && cast.cast_code != 0) {
                       return (
                         <div key={index}>
-                          {cast.cast_code != 0 && (
-                            <div
-                              className={
-                                "m-2 flex h-[40px] w-[105px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider " +
-                                size
-                              }
-                              onClick={() => {
-                                setSelectCast((selectCast: any) => [
-                                  ...selectCast,
-                                  selectDesignateSymbol +
-                                    cast.name +
-                                    "##" +
-                                    selectDesignatePrice,
-                                ]);
-                                setOrder((order: any) => {
-                                  return {
-                                    ...order,
-                                    cast: [
-                                      ...selectCast,
-                                      selectDesignateSymbol +
-                                        cast.name +
-                                        "##" +
-                                        selectDesignatePrice,
-                                    ],
-                                  };
-                                });
-                              }}
-                            >
-                              {cast.name}
-                            </div>
-                          )}
+                          <div
+                            className={
+                              "m-2 flex h-[40px] w-[105px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider " +
+                              size
+                            }
+                            onClick={() => {
+                              setSelectCast((selectCast: any) => [
+                                ...selectCast,
+                                selectDesignateSymbol +
+                                  cast.name +
+                                  "##" +
+                                  selectDesignatePrice,
+                              ]);
+                              setOrder((order: any) => {
+                                return {
+                                  ...order,
+                                  cast: [
+                                    ...selectCast,
+                                    selectDesignateSymbol +
+                                      cast.name +
+                                      "##" +
+                                      selectDesignatePrice,
+                                  ],
+                                };
+                              });
+                            }}
+                          >
+                            {cast.name}
+                          </div>
                         </div>
                       );
                     }
                   }
                 )}
+                <div className="opacity-0 m-2 flex h-[40px] w-[105px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider"></div>
+                <div className="opacity-0 m-2 flex h-[40px] w-[105px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider"></div>
+                <div className="opacity-0 m-2 flex h-[40px] w-[105px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider"></div>
+                <div className="opacity-0 m-2 flex h-[40px] w-[105px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider"></div>
+                <div className="opacity-0 m-2 flex h-[40px] w-[105px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider"></div>
               </div>
             </div>
             <div className="mx-4 flex flex-col">

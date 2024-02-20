@@ -137,9 +137,11 @@ export default function OrderSheetSet() {
             className="w-[150px] flex justify-center items-center"
             onClick={(e) => {
               e.stopPropagation();
-              setIsControl("");
-              setIsCard(false);
-              setIsPurchaseOrder(false);
+              if (purchaseOrder.length >= 1) {
+                setIsControl("");
+                setIsCard(false);
+                setIsPurchaseOrder(false);
+              }
             }}
           >
             <Border2
