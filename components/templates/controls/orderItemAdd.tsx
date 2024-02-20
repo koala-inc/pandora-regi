@@ -88,7 +88,7 @@ export default function OrderItemAdd() {
             <Button className="mr-3 opacity-50">店内履歴</Button>
             <Button className="mr-6 opacity-50">オーダー修正</Button>
             <input
-              className="p-4 h-[45px] w-[180px] text-lg text-white rounded-md mr-4 border border-white"
+              className="p-4 h-[45px] w-[180px] text-lg text-white rounded-md mr-4"
               placeholder="オーダー名を入力"
             />
             <div>
