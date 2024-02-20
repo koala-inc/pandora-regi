@@ -188,10 +188,11 @@ export default function ControlOrderSet() {
   const [activeTabRC, setActiveTabRC] = useState(0);
 
   const [searchType, setSearchType] = useState("全て");
-  const [selectDesignate, setSelectDesignate] = useState("");
+  const [selectDesignate, setSelectDesignate] = useState(-1);
   const [selectDesignateSymbol, setSelectDesignateSymbol] = useState("");
 
   let count = 0;
+  let count2 = 0;
   return (
     <>
       <motion.div
@@ -647,6 +648,13 @@ export default function ControlOrderSet() {
               <div className="flex h-[235px] flex-col overflow-scroll rounded-md border border-white bg-black p-4">
                 {searchData4?.data?.designate[0]?.store_designate[0]?.designate?.map(
                   (designate: any, index: any) => {
+                    if (selectDesignate == -1 && count2 == 0) {
+                      setSelectDesignate(designate.id);
+                      setSelectDesignateSymbol(
+                        designate.designate_revision.symbol
+                      );
+                    }
+                    count2 += 1;
                     return (
                       <Button
                         className={

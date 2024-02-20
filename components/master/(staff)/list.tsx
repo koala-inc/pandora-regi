@@ -580,7 +580,7 @@ export default function StaffList() {
         className="absolute bottom-[15px] right-[15px] z-10 cursor-pointer"
         onClick={() => setAddModal(true)}
       >
-        <Border rounded="rounded-full" size="h-[50px] w-[50px] p-[12px]">
+        <Border2 rounded="rounded-full" size="h-[50px] w-[50px] p-[12px]">
           <Image
             src={"/assets/add.svg"}
             width={26}
@@ -588,7 +588,7 @@ export default function StaffList() {
             className="!h-full !w-full"
             alt=""
           />
-        </Border>
+        </Border2>
       </nav>
       {addModal && (
         <Modal setModal={setAddModal}>
