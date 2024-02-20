@@ -273,8 +273,16 @@ export default function BottleAdd() {
                         <button
                           className="btn btn-ghost btn-xs"
                           onClick={() => {
-                            setUpdateForm(() => bottle);
+                            setUpdateForm(() => {
+                              return {
+                                id: bottle.id,
+                                ...bottle.bottle_revision,
+                              };
+                            });
                             setUpdateModal(true);
+                            setIsChecked(
+                              bottle.bottle_revision.is_notice_kitchen
+                            );
                           }}
                         >
                           編集
@@ -467,6 +475,192 @@ export default function BottleAdd() {
                         )
                         .then(() => {
                           setAddModal(false);
+                        });
+                    });
+                }}
+              >
+                <Border2
+                  complate
+                  rounded="rounded-full"
+                  size="h-[32px] w-[32px] p-[4px]"
+                >
+                  <Image
+                    src={"/assets/complate.svg"}
+                    width={26}
+                    height={26}
+                    className="!h-full !w-full"
+                    alt=""
+                  />
+                </Border2>
+              </div>
+            </div>
+          </Border>
+        </Modal>
+      )}
+      {updateModal && (
+        <Modal setModal={setUpdateModal}>
+          <Border className="w-full" size="p-4 flex flex-col" black>
+            <p className="w-full text-left">ボトル編集</p>
+            <div className="flex w-full flex-wrap">
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  ボトル名
+                </label>
+                <input
+                  className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                  placeholder="ボトル名を入力"
+                  onChange={(e) => {
+                    setUpdateForm((updateForm: any) => {
+                      return {
+                        ...updateForm,
+                        name: e.target.value,
+                      };
+                    });
+                  }}
+                  value={updateForm?.name || ""}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  小カテゴリ
+                </label>
+                <select
+                  className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                  defaultValue={updateForm.item_category_id}
+                  onChange={(e) => {
+                    setUpdateForm((updateForm: any) => {
+                      return {
+                        ...updateForm,
+                        item_category_id: Number(e.target.value),
+                      };
+                    });
+                  }}
+                >
+                  {searchData2?.data?.category[0]?.store_category[0]?.category?.map(
+                    (category: any, index: any) => {
+                      if (
+                        category.category_revision.parent_id != 0 &&
+                        category.category_revision.name != ""
+                      ) {
+                        return (
+                          <option
+                            key={index}
+                            value={category.category_revision.item_category_id}
+                          >
+                            {category.category_revision.name}
+                          </option>
+                        );
+                      }
+                    }
+                  )}
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  ボトル種別
+                </label>
+                <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
+                  <option>-</option>
+                  {kikan.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefName}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  キッチン送信
+                </label>
+                <Toggle isChecked={isChecked} setIsChecked={setIsChecked} />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  原価
+                </label>
+                <input
+                  type="text"
+                  className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                  placeholder="原価を入力"
+                  onChange={(e) => {
+                    setUpdateForm((updateForm: any) => {
+                      return {
+                        ...updateForm,
+                        cost: Number(e.target.value),
+                      };
+                    });
+                  }}
+                  value={updateForm?.cost || ""}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  料金
+                </label>
+                <input
+                  type="text"
+                  className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                  placeholder="料金を入力"
+                  onChange={(e) => {
+                    setUpdateForm((updateForm: any) => {
+                      return {
+                        ...updateForm,
+                        price: Number(e.target.value),
+                      };
+                    });
+                  }}
+                  value={updateForm?.price || ""}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  ボトル期限
+                </label>
+                <div>
+                  <input
+                    type="number"
+                    className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                    placeholder="ボトル期限を入力"
+                    onChange={(e) => {
+                      setUpdateForm((updateForm: any) => {
+                        return {
+                          ...updateForm,
+                          keep_expiration_day: Number(e.target.value),
+                        };
+                      });
+                    }}
+                    value={updateForm?.keep_expiration_day || ""}
+                  />
+                  日
+                </div>
+              </div>
+              <div
+                className="ml-auto mr-4 flex flex-col justify-end"
+                onClick={() => {
+                  client
+                    .request(updateBottle, {
+                      ...updateForm,
+                      is_notice_kitchen: isChecked ? 1 : 0,
+                      ...defaultVariables,
+                    })
+                    .then(() => {
+                      setUpdateForm(() => {});
+                      setSearchForm(() => {});
+                      searchData
+                        .mutate(
+                          () =>
+                            client.request(searchBottle, {
+                              ...defaultVariables,
+                            }),
+                          {
+                            populateCache: true,
+                            revalidate: false,
+                          }
+                        )
+                        .then(() => {
+                          setUpdateModal(false);
                         });
                     });
                 }}
