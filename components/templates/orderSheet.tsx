@@ -64,6 +64,15 @@ function Base() {
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [toggle, setToggle] = useState(purchaseOrder[0].toggle);
 
+  const [totalPay, setTotalPay] = useState(() => {
+    let total = 0;
+    purchaseOrder[0].cast.map((cast: any) => {
+      total += Number(cast.split("##")[1]);
+    });
+    total += Number(purchaseOrder[0].price);
+    return total;
+  });
+
   return (
     <>
       <section className="flex items-center justify-around text-md">
@@ -91,8 +100,7 @@ function Base() {
           >
             <p className="text-[0.8rem] text-accent">時間</p>
             <p>
-              {purchaseOrder[0]?.startTime || "00:00"}~
-              {purchaseOrder[0]?.endTime || "00:00"}
+              {purchaseOrder[0]?.startTime}~{purchaseOrder[0]?.endTime}
             </p>
           </div>
 
@@ -197,30 +205,33 @@ function Base() {
           </div>
           <div className="flex h-[13.1%] max-h-[70px] min-h-[70px]">
             <Lists
-              lists={
-                [
-                  // {
-                  //   title: "メイン",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "┗特別クーポン",
-                  //   lot: 1,
-                  //   price: -1000,
-                  // },
-                  // {
-                  //   title: "メイン",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "延長",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                ]
-              }
+              lists={[
+                {
+                  title: purchaseOrder[0].setName,
+                  lot: 1,
+                  price: purchaseOrder[0].price,
+                },
+                // {
+                //   title: "メイン",
+                //   lot: 1,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "┗特別クーポン",
+                //   lot: 1,
+                //   price: -1000,
+                // },
+                // {
+                //   title: "メイン",
+                //   lot: 1,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "延長",
+                //   lot: 1,
+                //   price: 1000,
+                // },
+              ]}
             />
             <div
               className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
@@ -252,98 +263,106 @@ function Base() {
           <div className="flex h-[13.1%] max-h-[70px] min-h-[70px]">
             <Lists
               lists={
-                [
-                  // {
-                  //   title: purchaseOrder[0]?.cast[0] || "",
-                  //   subTitle: "",
-                  //   lot: 1,
-                  //   price: 0,
-                  // },
-                  // {
-                  //   title: "A",
-                  //   subTitle: "◯",
-                  //   lot: 100,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "aaaaaaaaaA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 105500,
-                  // },
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 12,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "A",
-                  //   subTitle: "◯",
-                  //   lot: 100,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "aaaaaaaaaA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 105500,
-                  // },
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 12,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "A",
-                  //   subTitle: "◯",
-                  //   lot: 100,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "aaaaaaaaaA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 105500,
-                  // },
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 12,
-                  //   price: 1000,
-                  // },
-                  // {
-                  //   title: "キャストA",
-                  //   subTitle: "◯",
-                  //   lot: 1,
-                  //   price: 1000,
-                  // },
-                ]
+                purchaseOrder[0].cast.map((cast: any) => {
+                  return {
+                    title: cast.split("##")[0],
+                    subTitle: "",
+                    lot: 1,
+                    price: cast.split("##")[1],
+                  };
+                })
+                // [
+                // {
+                //   title: purchaseOrder[0]?.cast[0] || "",
+                //   subTitle: "",
+                //   lot: 1,
+                //   price: 0,
+                // },
+                // {
+                //   title: "A",
+                //   subTitle: "◯",
+                //   lot: 100,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "aaaaaaaaaA",
+                //   subTitle: "◯",
+                //   lot: 1,
+                //   price: 105500,
+                // },
+                // {
+                //   title: "キャストA",
+                //   subTitle: "◯",
+                //   lot: 12,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "キャストA",
+                //   subTitle: "◯",
+                //   lot: 1,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "キャストA",
+                //   subTitle: "◯",
+                //   lot: 1,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "A",
+                //   subTitle: "◯",
+                //   lot: 100,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "aaaaaaaaaA",
+                //   subTitle: "◯",
+                //   lot: 1,
+                //   price: 105500,
+                // },
+                // {
+                //   title: "キャストA",
+                //   subTitle: "◯",
+                //   lot: 12,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "キャストA",
+                //   subTitle: "◯",
+                //   lot: 1,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "キャストA",
+                //   subTitle: "◯",
+                //   lot: 1,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "A",
+                //   subTitle: "◯",
+                //   lot: 100,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "aaaaaaaaaA",
+                //   subTitle: "◯",
+                //   lot: 1,
+                //   price: 105500,
+                // },
+                // {
+                //   title: "キャストA",
+                //   subTitle: "◯",
+                //   lot: 12,
+                //   price: 1000,
+                // },
+                // {
+                //   title: "キャストA",
+                //   subTitle: "◯",
+                //   lot: 1,
+                //   price: 1000,
+                // },
+                // ]
               }
             />
             <div
@@ -424,19 +443,21 @@ function Base() {
           <div className="w-full">
             <div className="mt-3 flex w-full items-center justify-between">
               <div>小計</div>
-              <div>¥{(0).toLocaleString()}-</div>
+              <div>¥{totalPay.toLocaleString()}-</div>
             </div>
             <div className="mt-1 flex w-full items-center justify-between">
               <div>サービス</div>
-              <div>¥{(0).toLocaleString()}-</div>
+              <div>¥{(totalPay * 0.3).toLocaleString()}-</div>
             </div>
             <div className="mt-1 flex w-full items-center justify-between">
               <div>税</div>
-              <div>¥{(0).toLocaleString()}-</div>
+              <div>¥{(totalPay * 1.3 * 0.1).toLocaleString()}-</div>
             </div>
             <div className="mt-4 flex w-full items-center justify-between text-2xl text-accent">
               <div>合計</div>
-              <div className="flex-1 text-right">¥{(0).toLocaleString()}-</div>
+              <div className="flex-1 text-right">
+                ¥{(totalPay * 1.3 * 1.1).toLocaleString()}-
+              </div>
             </div>
           </div>
           <div

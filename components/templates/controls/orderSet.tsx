@@ -190,6 +190,7 @@ export default function ControlOrderSet() {
   const [searchType, setSearchType] = useState("全て");
   const [selectDesignate, setSelectDesignate] = useState(-1);
   const [selectDesignateSymbol, setSelectDesignateSymbol] = useState("");
+  const [selectDesignatePrice, setSelectDesignatePrice] = useState(0);
 
   let count = 0;
   let count2 = 0;
@@ -653,6 +654,9 @@ export default function ControlOrderSet() {
                       setSelectDesignateSymbol(
                         designate.designate_revision.symbol
                       );
+                      setSelectDesignatePrice(
+                        designate.designate_revision.price
+                      );
                     }
                     count2 += 1;
                     return (
@@ -668,6 +672,9 @@ export default function ControlOrderSet() {
                           setSelectDesignate(designate.id);
                           setSelectDesignateSymbol(
                             designate.designate_revision.symbol
+                          );
+                          setSelectDesignatePrice(
+                            designate.designate_revision.price
                           );
                         }}
                       >
@@ -943,14 +950,20 @@ export default function ControlOrderSet() {
                               onClick={() => {
                                 setSelectCast((selectCast: any) => [
                                   ...selectCast,
-                                  selectDesignateSymbol + cast.name,
+                                  selectDesignateSymbol +
+                                    cast.name +
+                                    "##" +
+                                    selectDesignatePrice,
                                 ]);
                                 setOrder((order: any) => {
                                   return {
                                     ...order,
                                     cast: [
                                       ...selectCast,
-                                      selectDesignateSymbol + cast.name,
+                                      selectDesignateSymbol +
+                                        cast.name +
+                                        "##" +
+                                        selectDesignatePrice,
                                     ],
                                   };
                                 });
@@ -977,7 +990,7 @@ export default function ControlOrderSet() {
                 </div>
                 {selectCast.map((cast: any, index: any) => (
                   <div className="mb-2 flex px-2 text-xl" key={index}>
-                    <p className="w-[140px]">{cast}</p>
+                    <p className="w-[140px]">{cast.split("##")[0]}</p>
                     <input
                       type="text"
                       className="mx-2 h-[25px] w-[30px] rounded-md text-center"
@@ -986,6 +999,7 @@ export default function ControlOrderSet() {
                     <input
                       type="text"
                       className="ml-5 h-[25px] w-[70px] rounded-md px-2 text-right"
+                      value={cast.split("##")[1]}
                     />
                     <Border2
                       className="ml-3 mt-[1px] h-[23px] w-[26px]"
@@ -1041,15 +1055,15 @@ export default function ControlOrderSet() {
                     let flag2 = true;
                     let flag3 = true;
                     let flag4 = true;
-                    if (Number(order.num) <= 0) {
+                    if (Number(order.num) <= 0 || !order.num) {
                       alert("人数を正しく入力してください。");
                       flag1 = false;
                     }
-                    if (Number(order.setTime) <= 0) {
+                    if (Number(order.setTime) <= 0 || !order.setTime) {
                       alert("セット時間を正しく入力してください。");
                       flag2 = false;
                     }
-                    if (Number(order.price) <= 0) {
+                    if (Number(order.price) <= 0 || !order.price) {
                       alert("金額を正しく入力してください。");
                       flag3 = false;
                     }

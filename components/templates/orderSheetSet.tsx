@@ -79,7 +79,7 @@ export default function OrderSheetSet() {
                   <p>A1</p>
                 </div>
                 <div className="mx-2 flex flex-col">
-                  <p>{order.num || 0}名</p>
+                  <p>{order.num}名</p>
                 </div>
                 <div className="mt-2 mx-2 flex w-full flex-col">
                   <p className="text-accent">指名</p>
