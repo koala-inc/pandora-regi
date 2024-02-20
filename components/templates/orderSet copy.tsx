@@ -27,7 +27,7 @@ function Lists({
           <div className="w-[10%] text-left">{list.subTitle || ""}</div>
           <div className="w-[20%] text-right">{list.lot}</div>
           <div className="w-[30%] text-right">
-            ¥{list.price.toLocaleString()}-
+            {list.price.toLocaleString()}円
           </div>
         </li>
       ))}
@@ -399,19 +399,19 @@ export default function OrderSet() {
             <div className="w-full">
               <div className="mt-3 flex w-full items-center justify-between">
                 <div>小計</div>
-                <div>¥10,000-</div>
+                <div>10,000円</div>
               </div>
               <div className="mt-1 flex w-full items-center justify-between">
                 <div>サービス</div>
-                <div>¥3,000-</div>
+                <div>3,000円</div>
               </div>
               <div className="mt-1 flex w-full items-center justify-between">
                 <div>税</div>
-                <div>¥1,300-</div>
+                <div>1,300円</div>
               </div>
               <div className="mt-4 flex w-full items-center justify-between text-2xl text-accent">
                 <div>合計</div>
-                <div className="flex-1 text-right">¥15,300-</div>
+                <div className="flex-1 text-right">15,300円</div>
               </div>
             </div>
             <div

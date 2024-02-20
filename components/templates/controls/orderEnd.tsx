@@ -63,12 +63,12 @@ export default function OrderEnd() {
                   <div className="flex flex-col w-full mr-4">
                     <div className="text-accent w-full text-left">合計金額</div>
                     <div className="w-full text-right text-2xl">
-                      ¥{totalPay.toLocaleString()}
+                      {totalPay.toLocaleString()}円
                     </div>
                   </div>
                   <div className="flex flex-col w-full mr-4">
                     <div className="text-accent w-full text-left">手数料</div>
-                    <div className="w-full text-right text-2xl">¥{0}</div>
+                    <div className="w-full text-right text-2xl">{0}円</div>
                   </div>
                   <div className="flex flex-col w-full">
                     <div className="text-accent w-full text-left">値引き</div>
@@ -83,7 +83,7 @@ export default function OrderEnd() {
                 >
                   <div className="text-accent w-full text-left">残金</div>
                   <div className="w-full text-right text-2xl text-red-400">
-                    ¥{totalPay.toLocaleString()}
+                    {totalPay.toLocaleString()}円
                   </div>
                 </Border2>
               </div>

@@ -62,7 +62,7 @@ export default function Mater() {
             <div className="w-full text-[0.8rem] font-bold text-accent">
               日払人数/合計額
             </div>
-            <div className="text-2xl font-bold text-white">0/¥0</div>
+            <div className="text-2xl font-bold text-white">0/0円</div>
           </div>
           <div className="flex flex-col items-start justify-center">
             <div className="w-full text-[0.8rem] font-bold text-accent">
@@ -86,13 +86,13 @@ export default function Mater() {
             <div className="w-full text-[0.8rem] font-bold text-accent">
               送り人数/合計額
             </div>
-            <div className="text-2xl font-bold text-white">0/¥0</div>
+            <div className="text-2xl font-bold text-white">0/0円</div>
           </div>
           <div className="flex flex-col items-start justify-center">
             <div className="w-full text-[0.8rem] font-bold text-accent">
               報酬支払人数/支払額合計
             </div>
-            <div className="text-2xl font-bold text-white">0/¥0</div>
+            <div className="text-2xl font-bold text-white">0/0円</div>
           </div>
           <div className="flex flex-col items-start justify-center">
             <div className="w-full text-[0.8rem] font-bold text-accent">

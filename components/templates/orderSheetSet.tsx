@@ -30,7 +30,7 @@ function Lists({
           <div className="w-[10%] text-left">{list.subTitle || ""}</div>
           <div className="w-[20%] text-right">{list.lot}</div>
           <div className="w-[30%] text-right">
-            ¥{list.price.toLocaleString()}-
+            {list.price.toLocaleString()}円
           </div>
         </li>
       ))}
@@ -97,14 +97,14 @@ export default function OrderSheetSet() {
                 </div>
                 <div className="mx-2 flex flex-col mt-2">
                   <p className="text-accent">ルームチャージ</p>
-                  <p className="">¥{order.roomCharge?.toLocaleString()}</p>
+                  <p className="">{order.roomCharge?.toLocaleString()}円</p>
                 </div>
                 <hr className="w-full opacity-0" />
                 <div className="mx-2 flex flex-col mt-2">
                   <p className="text-accent">セット内容</p>
                   <p>
-                    {order.setTime}分　{order.startTime}~{order.endTime}　¥
-                    {order.price?.toLocaleString()}
+                    {order.setTime}分　{order.startTime}~{order.endTime}　
+                    {order.price?.toLocaleString()}円
                   </p>
                 </div>{" "}
               </div>

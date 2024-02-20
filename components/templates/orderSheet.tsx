@@ -33,7 +33,7 @@ function Lists({
           <div className="w-[10%] text-left">{list.subTitle || ""}</div>
           <div className="w-[20%] text-right">{list.lot}</div>
           <div className="w-[30%] text-right">
-            ¥{list.price.toLocaleString()}-
+            {list.price.toLocaleString()}円
           </div>
         </li>
       ))}
@@ -459,20 +459,20 @@ function Base() {
           <div className="w-full">
             <div className="mt-3 flex text-sm w-full items-center justify-between">
               <div>小計</div>
-              <div>¥{totalPay.toLocaleString()}-</div>
+              <div>{totalPay.toLocaleString()}円</div>
             </div>
             <div className="mt-1 flex text-sm w-full items-center justify-between">
               <div>サービス</div>
-              <div>¥{(totalPay * 0.3).toLocaleString()}-</div>
+              <div>{(totalPay * 0.3).toLocaleString()}円</div>
             </div>
             <div className="mt-1 flex text-sm w-full items-center justify-between">
               <div>税</div>
-              <div>¥{(totalPay * 1.3 * 0.1).toLocaleString()}-</div>
+              <div>{(totalPay * 1.3 * 0.1).toLocaleString()}円</div>
             </div>
             <div className="mt-2 flex w-full items-center justify-between text-2xl text-accent">
               <div>合計</div>
               <div className="flex-1 text-right">
-                ¥{(totalPay * 1.3 * 1.1).toLocaleString()}-
+                {(totalPay * 1.3 * 1.1).toLocaleString()}円
               </div>
             </div>
           </div>
@@ -590,10 +590,10 @@ function Add() {
             <div className="flex flex-col w-[200px] text-right">
               <p className="h-[20px] text-center">現在</p>
               <p className="h-[40px] text-accent text-xl flex items-center justify-end">
-                ¥0-
+                0円
               </p>
               <p className="h-[40px] text-accent text-xl flex items-center justify-end">
-                ¥0-
+                0円
               </p>
             </div>
             <div className="flex flex-col w-[20px] mx-2 text-right">
@@ -604,10 +604,10 @@ function Add() {
             <div className="flex flex-col w-[200px] text-right">
               <p className="h-[20px] text-center">見込み</p>
               <p className="h-[40px] text-accent text-xl flex items-center justify-end">
-                ¥0-
+                0円
               </p>
               <p className="h-[40px] text-accent text-xl flex items-center justify-end">
-                ¥0-
+                0円
               </p>
             </div>
           </div>
@@ -810,10 +810,10 @@ function CastAdd() {
             <div className="flex flex-col w-[200px] text-right">
               <p className="h-[20px] text-center">現在</p>
               <p className="h-[40px] text-accent text-xl flex items-center justify-end">
-                ¥0-
+                0円
               </p>
               <p className="h-[40px] text-accent text-xl flex items-center justify-end">
-                ¥0-
+                0円
               </p>
             </div>
             <div className="flex flex-col w-[20px] mx-2 text-right">
@@ -824,10 +824,10 @@ function CastAdd() {
             <div className="flex flex-col w-[200px] text-right">
               <p className="h-[20px] text-center">見込み</p>
               <p className="h-[40px] text-accent text-xl flex items-center justify-end">
-                ¥0-
+                0円
               </p>
               <p className="h-[40px] text-accent text-xl flex items-center justify-end">
-                ¥0-
+                0円
               </p>
             </div>
           </div>

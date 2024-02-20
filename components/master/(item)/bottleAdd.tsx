@@ -262,8 +262,10 @@ export default function BottleAdd() {
                           ? "有効"
                           : "無効"}
                       </th>
-                      <th>¥{bottle.bottle_revision.cost?.toLocaleString()}</th>
-                      <th>¥{bottle.bottle_revision.price?.toLocaleString()}</th>
+                      <th>{bottle.bottle_revision.cost?.toLocaleString()}円</th>
+                      <th>
+                        {bottle.bottle_revision.price?.toLocaleString()}円
+                      </th>
                       <th>
                         {bottle.bottle_revision.keep_expiration_day || 0}日
                       </th>

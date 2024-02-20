@@ -32,7 +32,7 @@ export default function Calculator() {
           </span>
         </div>
         <div className="flex h-[60px] w-full items-center justify-end rounded-md bg-neutral-900 px-3 text-4xl text-white">
-          ¥{Number(result).toLocaleString()} {tax && "込"}
+          {Number(result).toLocaleString()}円 {tax && "込"}
         </div>
         <div className="mt-4 grid grid-cols-4 grid-rows-4 content-center items-center justify-center gap-4 text-3xl font-bold">
           <div className="flex items-center justify-center">

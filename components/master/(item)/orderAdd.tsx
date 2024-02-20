@@ -232,7 +232,7 @@ export default function OrderAdd() {
                       <th>
                         {menu.menu_revision.is_notice_kitchen ? "有効" : "無効"}
                       </th>
-                      <th>¥{menu.menu_revision.price?.toLocaleString()}</th>
+                      <th>{menu.menu_revision.price?.toLocaleString()}円</th>
                       <th>
                         <button
                           className="btn btn-ghost btn-xs"
