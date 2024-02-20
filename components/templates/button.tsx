@@ -57,7 +57,7 @@ export default function Button({
       <div className="rounded-md border-4 border-secondary bg-secondary">
         <div
           className={
-            "flex tracking-wider leading-4 items-center justify-center rounded-md border border-black px-3 py-1 " +
+            "text-xs flex tracking-wider leading-4 items-center justify-center rounded-md border border-black px-3 py-1 " +
             textSize +
             disabledCss +
             naturalBg +
