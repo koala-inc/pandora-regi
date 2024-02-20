@@ -83,7 +83,9 @@ export default function OrderSheetSet() {
                 </div>
                 <div className="mt-2 mx-2 flex w-full flex-col">
                   <p className="text-accent">指名</p>
-                  <p>{order.cast?.map((cast: any) => cast + "　")}</p>
+                  <p>
+                    {order.cast?.map((cast: any) => cast.split("##")[0] + "　")}
+                  </p>
                 </div>
                 <div className="mx-2 flex flex-col mt-2">
                   <p className="text-accent">区分</p>
