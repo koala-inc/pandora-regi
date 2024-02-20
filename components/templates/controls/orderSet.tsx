@@ -94,8 +94,8 @@ export default function ControlOrderSet() {
       prefName: "2",
     },
     {
-      prefCode: "3",
-      prefName: "3",
+      prefCode: "99",
+      prefName: "99",
     },
   ];
   const type = [
@@ -213,7 +213,7 @@ export default function ControlOrderSet() {
             <div className="flex flex-col justify-end">
               <label className="mb-1 text-xs font-bold text-accent">卓番</label>
               <div className="flex">
-                <select className="mr-2 h-[45px] w-[60px] rounded-md bg-black px-2 text-center text-4xl font-bold text-white">
+                <select className="mr-2 h-[45px] w-[60px] rounded-md bg-black px-2 text-center text-3xl font-bold text-white">
                   {seatAlphabet.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefCode}>
@@ -222,7 +222,7 @@ export default function ControlOrderSet() {
                     );
                   })}
                 </select>
-                <select className="mr-2 h-[45px] w-[60px] rounded-md bg-black px-2 text-center text-4xl font-bold text-white">
+                <select className="mr-2 h-[45px] w-[80px] rounded-md bg-black px-2 text-center text-3xl font-bold text-white">
                   {seatNumber.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefCode}>
