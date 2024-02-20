@@ -177,22 +177,38 @@ function Base() {
           </div>
         </div>
         <div>
-          <Border rounded="rounded-full" size="px-2" stroke="md">
+          <Border
+            rounded="rounded-full"
+            size="text-xs w-[26px] h-[26px]"
+            stroke="md"
+          >
             1
           </Border>
         </div>
         <div>
-          <Border rounded="rounded-full" size="px-2" stroke="md">
+          <Border
+            rounded="rounded-full"
+            size="text-xs w-[26px] h-[26px]"
+            stroke="md"
+          >
             2
           </Border>
         </div>
         <div>
-          <Border rounded="rounded-full" size="px-2" stroke="md">
+          <Border
+            rounded="rounded-full"
+            size="text-xs w-[26px] h-[26px]"
+            stroke="md"
+          >
             3
           </Border>
         </div>
         <div>
-          <Border rounded="rounded-full" size="px-2" stroke="md">
+          <Border
+            rounded="rounded-full"
+            size="text-xs w-[26px] h-[26px]"
+            stroke="md"
+          >
             4
           </Border>
         </div>
@@ -203,7 +219,7 @@ function Base() {
             <div className="text-sm text-accent">セット料金</div>
             <Line ml="ml-10" />
           </div>
-          <div className="flex h-[13.1%] max-h-[70px] min-h-[70px]">
+          <div className="flex h-[120px] max-h-[100px] min-h-[100px]">
             <Lists
               lists={[
                 {
@@ -234,7 +250,7 @@ function Base() {
               ]}
             />
             <div
-              className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
+              className="my-auto flex w-[60px] h-full flex-col items-center justify-center pl-3"
               onClick={(e) => {
                 e.stopPropagation();
                 setIsControl("SET");
@@ -260,7 +276,7 @@ function Base() {
             <div className="text-sm text-accent">指名キャスト</div>
             <Line ml="ml-10" />
           </div>
-          <div className="flex h-[13.1%] max-h-[70px] min-h-[70px]">
+          <div className="flex max-h-[100px] min-h-[100px]">
             <Lists
               lists={
                 purchaseOrder[0].cast.map((cast: any) => {
@@ -392,7 +408,7 @@ function Base() {
             <div className="text-sm text-accent">オーダー</div>
             <Line ml="ml-10" />
           </div>
-          <div className="flex h-[13.1%] max-h-[107px] min-h-[98px]">
+          <div className="flex max-h-[130px] min-h-[130px]">
             <Lists
               lists={
                 [
