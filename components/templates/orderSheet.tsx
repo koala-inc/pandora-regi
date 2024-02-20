@@ -62,7 +62,7 @@ function Base() {
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(purchaseOrder[0].toggle);
 
   return (
     <>

@@ -1037,14 +1037,37 @@ export default function ControlOrderSet() {
                 </div>
                 <div
                   onClick={() => {
-                    setPurchaseOrder([
-                      ...purchaseOrder,
-                      {
-                        ...order,
-                        setName: setName,
-                        status: status,
-                      },
-                    ]);
+                    let flag1 = true;
+                    let flag2 = true;
+                    let flag3 = true;
+                    let flag4 = true;
+                    if (Number(order.num) <= 0) {
+                      alert("人数を正しく入力してください。");
+                      flag1 = false;
+                    }
+                    if (Number(order.setTime) <= 0) {
+                      alert("セット時間を正しく入力してください。");
+                      flag2 = false;
+                    }
+                    if (Number(order.price) <= 0) {
+                      alert("金額を正しく入力してください。");
+                      flag3 = false;
+                    }
+                    if (!(order.startTime && order.endTime)) {
+                      alert("時間を入力してください。");
+                      flag4 = false;
+                    }
+                    if (flag1 && flag2 && flag3 && flag4) {
+                      setPurchaseOrder([
+                        ...purchaseOrder,
+                        {
+                          ...order,
+                          toggle: toggle,
+                          setName: setName,
+                          status: status,
+                        },
+                      ]);
+                    }
                   }}
                 >
                   <Border
