@@ -672,6 +672,28 @@ function Add() {
         </div>
       </section>
       <nav className="mt-4 flex w-full items-center justify-center">
+        <div
+          className="w-[150px] flex justify-center items-center"
+          onClick={(e) => {
+            e.stopPropagation();
+            setPurchaseOrderItemAdd([]);
+            setIsControl("");
+          }}
+        >
+          <Border2
+            natural
+            rounded="rounded-full"
+            size="h-[42px] w-[42px] p-[2px]"
+          >
+            <Image
+              src={"/assets/arrow-left.svg"}
+              width={26}
+              height={26}
+              className="!h-full !w-full mr-[-4px]"
+              alt=""
+            />
+          </Border2>
+        </div>
         <div className="w-[150px] flex justify-center items-center">
           <Border2
             rounded="rounded-full"
