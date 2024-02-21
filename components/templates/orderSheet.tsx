@@ -442,28 +442,21 @@ function Base() {
           <div className="w-full">
             <div className="mt-3 flex text-sm w-full items-center justify-between">
               <div>小計</div>
-              <div>{totalPay.toLocaleString()}円</div>
+              <div>{Math.floor(totalPay).toLocaleString()}円</div>
             </div>
             <div className="mt-1 flex text-sm w-full items-center justify-between">
               <div>サービス</div>
-              <div>
-                {(Math.ceil((totalPay / 100) * 0.3) * 100).toLocaleString()}円
-              </div>
+              <div>{Math.floor(totalPay * 0.3).toLocaleString()}円</div>
             </div>
             <div className="mt-1 flex text-sm w-full items-center justify-between">
               <div>税</div>
-              <div>
-                {(
-                  Math.ceil((totalPay / 100) * 1.3 * 0.1) * 100
-                ).toLocaleString()}
-                円
-              </div>
+              <div>{Math.floor(totalPay * 1.3 * 0.1).toLocaleString()}円</div>
             </div>
             <div className="mt-2 flex w-full items-center justify-between text-2xl text-accent">
               <div>合計</div>
               <div className="flex-1 text-right">
                 {(
-                  Math.ceil((totalPay / 100) * 1.3 * 1.1) * 100
+                  Math.ceil(Math.floor(totalPay * 1.3 * 1.1) / 100) * 100
                 ).toLocaleString()}
                 円
               </div>
@@ -591,7 +584,7 @@ function Add() {
                     : "h-[40px] text-accent text-xl flex items-center justify-end"
                 }
               >
-                {totalPay.toLocaleString()}円
+                {Math.floor(totalPay).toLocaleString()}円
               </p>
               <p
                 className={
@@ -600,7 +593,10 @@ function Add() {
                     : "h-[40px] text-accent text-xl flex items-center justify-end"
                 }
               >
-                {(totalPay * 1.3 * 1.1).toLocaleString()}円
+                {(
+                  Math.ceil(Math.floor(totalPay * 1.3 * 1.1) / 100) * 100
+                ).toLocaleString()}
+                円
               </p>
             </div>
             <div className="flex flex-col w-[20px] mx-2 text-right">
@@ -617,7 +613,7 @@ function Add() {
                     : "h-[40px] text-accent text-xl flex items-center justify-end"
                 }
               >
-                {totalPay2.toLocaleString()}円
+                {Math.floor(totalPay2).toLocaleString()}円
               </p>
               <p
                 className={
@@ -626,7 +622,10 @@ function Add() {
                     : "h-[40px] text-accent text-xl flex items-center justify-end"
                 }
               >
-                {(totalPay2 * 1.3 * 1.1).toLocaleString()}円
+                {(
+                  Math.ceil(Math.floor(totalPay2 * 1.3 * 1.1) / 100) * 100
+                ).toLocaleString()}
+                円
               </p>
             </div>
           </div>
@@ -659,7 +658,7 @@ function Add() {
                   <input
                     className="h-[30px] px-2 rounded-md text-white"
                     placeholder="金額"
-                    value={purchaseOrderItemAdd.price.toLocaleString()}
+                    value={purchaseOrderItemAdd.price?.toLocaleString()}
                   />
                 </div>
               </div>

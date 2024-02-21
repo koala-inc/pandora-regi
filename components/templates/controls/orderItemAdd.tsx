@@ -139,7 +139,7 @@ export default function OrderItemAdd() {
                         : "mr-3 grayscale opacity-30"
                     }
                   >
-                    <div className="text-black mx-auto flex h-[50px] w-[150px] cursor-pointer items-center justify-center rounded-md shadow-md bg-gradient-to-b from-[#cdd8e8] from-0% via-[#b9c5d8] via-50% to-[#a7bad4] p-2 text-center text-base leading-4 tracking-wider">
+                    <div className="text-black mx-auto flex h-[50px] w-[180px] cursor-pointer items-center justify-center rounded-md shadow-md bg-gradient-to-b from-[#cdd8e8] from-0% via-[#b9c5d8] via-50% to-[#a7bad4] p-2 text-center text-base leading-4 tracking-wider">
                       {category.category_revision.name}
                     </div>
                   </div>
@@ -148,7 +148,7 @@ export default function OrderItemAdd() {
             }
           )}
         </div>
-        <div className="tabs mt-3 justify-start">
+        <div className="tabs mt-3 justify-start ">
           {searchData?.data?.category[0]?.store_category[0]?.category?.map(
             (category: any, index: any) => {
               if (category.category_revision.parent_id == categoryActive) {
@@ -159,7 +159,7 @@ export default function OrderItemAdd() {
                 count += 1;
                 return (
                   <a
-                    className={`tab tab-md mr-1 w-[9em] rounded-t-xl ${
+                    className={`!text-xs tab tab-md mr-1 w-[12em] rounded-t-xl ${
                       activeTab == category.id
                         ? "tab-active bg-primary text-white"
                         : "tab-lifted bg-secondary text-black"
