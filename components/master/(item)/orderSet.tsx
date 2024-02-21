@@ -91,7 +91,7 @@ export default function OrderSet() {
                 count += 1;
                 return (
                   <a
-                    className={`!text-xs tab tab-md mr-1 w-[12em] rounded-t-xl ${
+                    className={`!text-xs tab tab-md mr-1 w-[9em] h-[3.5em] rounded-t-xl ${
                       activeTab == category.id
                         ? "tab-active bg-primary text-white"
                         : "tab-lifted bg-secondary text-black"

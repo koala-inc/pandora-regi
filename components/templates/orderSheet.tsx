@@ -563,13 +563,13 @@ function Add() {
             <div className="text-sm text-accent">オーダー</div>
             <Line ml="ml-10" />
           </div>
-          <div className="flex h-[39.3%] max-h-[100px] min-h-[100px]">
+          <div className="flex text-sm px-2 max-h-[90px] min-h-[90px]">
             <Lists lists={purchaseOrder[0]?.orderItem || []} />
           </div>
           <div className="flex w-full">
             <Line />
           </div>
-          <div className="flex w-full border border-white rounded-md my-3 px-3 py-2 pt-4">
+          <div className="flex w-full border border-white rounded-md my-2 px-3 py-2 pt-4">
             <div className="flex flex-col w-[50px]">
               <p className="h-[20px]"></p>
               <p className="h-[40px] flex items-center">小計</p>
@@ -632,38 +632,40 @@ function Add() {
           <div className="flex w-full">
             <Line />
           </div>
-          {purchaseOrderItemAdd?.map(
-            (purchaseOrderItemAdd: any, index: any) => (
-              <div
-                className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2"
-                key={index}
-              >
-                <div className="flex flex-col w-[60px] text-xs">
-                  <p className="h-[20px] flex items-center">送信する</p>
-                  <p className="h-[20px] flex items-center">ゲスト</p>
+          <div className="h-[350px] overflow-scroll">
+            {purchaseOrderItemAdd?.map(
+              (purchaseOrderItemAdd: any, index: any) => (
+                <div
+                  className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2"
+                  key={index}
+                >
+                  <div className="flex flex-col w-[60px] text-xs">
+                    <p className="h-[20px] flex items-center">送信する</p>
+                    <p className="h-[20px] flex items-center">ゲスト</p>
+                  </div>
+                  <div className="flex flex-col w-[120px] text-right">
+                    <p className="h-[40px] text-accent text-lg flex items-center">
+                      {purchaseOrderItemAdd.title}
+                    </p>
+                  </div>
+                  <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
+                    <input
+                      className="h-[30px] px-2 rounded-md text-white"
+                      placeholder="個"
+                      value={purchaseOrderItemAdd.lot}
+                    />
+                  </div>
+                  <div className="flex flex-col w-[80px] text-right justify-center">
+                    <input
+                      className="h-[30px] px-2 rounded-md text-white"
+                      placeholder="金額"
+                      value={purchaseOrderItemAdd.price?.toLocaleString()}
+                    />
+                  </div>
                 </div>
-                <div className="flex flex-col w-[120px] text-right">
-                  <p className="h-[40px] text-accent text-lg flex items-center">
-                    {purchaseOrderItemAdd.title}
-                  </p>
-                </div>
-                <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
-                  <input
-                    className="h-[30px] px-2 rounded-md text-white"
-                    placeholder="個"
-                    value={purchaseOrderItemAdd.lot}
-                  />
-                </div>
-                <div className="flex flex-col w-[80px] text-right justify-center">
-                  <input
-                    className="h-[30px] px-2 rounded-md text-white"
-                    placeholder="金額"
-                    value={purchaseOrderItemAdd.price?.toLocaleString()}
-                  />
-                </div>
-              </div>
-            )
-          )}
+              )
+            )}
+          </div>
         </div>
         <div className="flex w-full">
           <Line />

@@ -99,7 +99,7 @@ export default function OrderItemAdd() {
             <div>
               <Border
                 rounded="rounded-full"
-                size="h-[45px] w-[45px] p-[10px] bg-search"
+                size="h-[36px] w-[36px] p-[6px] bg-search"
               >
                 <Image
                   src={"/assets/search.svg"}
@@ -159,7 +159,7 @@ export default function OrderItemAdd() {
                 count += 1;
                 return (
                   <a
-                    className={`!text-xs tab tab-md mr-1 w-[12em] rounded-t-xl ${
+                    className={`!text-xs tab tab-md mr-1 w-[9em] h-[3.5em] rounded-t-xl ${
                       activeTab == category.id
                         ? "tab-active bg-primary text-white"
                         : "tab-lifted bg-secondary text-black"
