@@ -671,7 +671,7 @@ function Add() {
           <Line />
         </div>
       </section>
-      <nav className="mt-4 flex w-full items-center justify-center">
+      <nav className="mt-4 flex w-[80%] mx-auto items-center justify-center">
         <div
           className="w-[150px] flex justify-center items-center"
           onClick={(e) => {
@@ -683,13 +683,13 @@ function Add() {
           <Border2
             natural
             rounded="rounded-full"
-            size="h-[42px] w-[42px] p-[2px]"
+            size="h-[42px] w-[42px] p-[6px]"
           >
             <Image
               src={"/assets/arrow-left.svg"}
               width={26}
               height={26}
-              className="!h-full !w-full mr-[-4px]"
+              className="!h-full !w-full"
               alt=""
             />
           </Border2>
