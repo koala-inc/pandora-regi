@@ -71,7 +71,7 @@ function Base() {
   });
   total += Number(purchaseOrder[0]?.price);
   purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
-    total += Number(orderItem.price);
+    total += Number(orderItem.price) * Number(orderItem.lot);
   });
 
   const totalPay = total;
@@ -517,14 +517,15 @@ function Add() {
   });
   total += Number(purchaseOrder[0]?.price);
   purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
-    total += Number(orderItem.price);
+    total += Number(orderItem.price) * Number(orderItem.lot);
   });
 
   const totalPay = total;
 
   let total2 = 0;
   purchaseOrderItemAdd.map((purchaseOrderItemAdd: any) => {
-    total2 += Number(purchaseOrderItemAdd.price);
+    total2 +=
+      Number(purchaseOrderItemAdd.price) * Number(purchaseOrderItemAdd.lot);
   });
 
   const totalPay2 = total2 + totalPay;
@@ -652,14 +653,22 @@ function Add() {
                     <input
                       className="h-[30px] px-2 rounded-md text-white"
                       placeholder="個"
-                      value={purchaseOrderItemAdd.lot}
+                      defaultValue={purchaseOrderItemAdd.lot}
+                      onChange={(e) => {
+                        purchaseOrderItemAdd.lot = Number(e.target.value);
+                      }}
                     />
                   </div>
                   <div className="flex flex-col w-[80px] text-right justify-center">
                     <input
                       className="h-[30px] px-2 rounded-md text-white"
                       placeholder="金額"
-                      value={purchaseOrderItemAdd.price?.toLocaleString()}
+                      defaultValue={purchaseOrderItemAdd.price?.toLocaleString()}
+                      onChange={(e) => {
+                        purchaseOrderItemAdd.price = Number(
+                          e.target.value.replace(/[^0-9]/g, "")
+                        );
+                      }}
                     />
                   </div>
                 </div>
@@ -718,26 +727,28 @@ function Add() {
           className="w-[150px] flex justify-center items-center"
           onClick={(e) => {
             e.stopPropagation();
-            if (purchaseOrder[0]?.orderItem) {
-              setPurchaseOrder([
-                {
-                  ...purchaseOrder[0],
-                  orderItem: [
-                    ...purchaseOrder[0]?.orderItem,
-                    ...purchaseOrderItemAdd,
-                  ],
-                },
-              ]);
-            } else {
-              setPurchaseOrder([
-                {
-                  ...purchaseOrder[0],
-                  orderItem: purchaseOrderItemAdd,
-                },
-              ]);
+            if (purchaseOrderItemAdd.length >= 1) {
+              if (purchaseOrder[0]?.orderItem) {
+                setPurchaseOrder([
+                  {
+                    ...purchaseOrder[0],
+                    orderItem: [
+                      ...purchaseOrder[0]?.orderItem,
+                      ...purchaseOrderItemAdd,
+                    ],
+                  },
+                ]);
+              } else {
+                setPurchaseOrder([
+                  {
+                    ...purchaseOrder[0],
+                    orderItem: purchaseOrderItemAdd,
+                  },
+                ]);
+              }
+              setPurchaseOrderItemAdd([]);
+              setIsControl("");
             }
-            setPurchaseOrderItemAdd([]);
-            setIsControl("");
           }}
         >
           <Border2
