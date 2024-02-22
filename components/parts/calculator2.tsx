@@ -196,7 +196,7 @@ export default function Calculator2() {
             className="flex h-[60px] w-[45%] mx-2 items-center justify-center tracking-widest rounded-md　px-3 text-4xl text-white"
             onClick={() => {
               const num = Number(minite) - miniteType;
-              if (num < 0) {
+              if (num < 1) {
                 if (num == 0) {
                   setMinite("59");
                 } else {
