@@ -90,9 +90,11 @@ export default function Calculator2() {
                   } else {
                     if (Number(hour) < 2) {
                       setHour((hour) => hour.slice(1) + "7");
-                      setIsHour(false);
-                      setIsMinite(true);
+                    } else {
+                      setHour("07");
                     }
+                    setIsHour(false);
+                    setIsMinite(true);
                   }
                 }
                 if (isMinite) {
@@ -108,9 +110,11 @@ export default function Calculator2() {
                   } else {
                     if (Number(minite) < 6) {
                       setMinite((minite) => minite.slice(1) + "7");
-                      setIsHour(false);
-                      setIsMinite(false);
+                    } else {
+                      setMinite("07");
                     }
+                    setIsHour(false);
+                    setIsMinite(false);
                   }
                 }
               }}
@@ -139,9 +143,11 @@ export default function Calculator2() {
                   } else {
                     if (Number(hour) < 2) {
                       setHour((hour) => hour.slice(1) + "8");
-                      setIsHour(false);
-                      setIsMinite(true);
+                    } else {
+                      setHour("08");
                     }
+                    setIsHour(false);
+                    setIsMinite(true);
                   }
                 }
                 if (isMinite) {
@@ -157,9 +163,11 @@ export default function Calculator2() {
                   } else {
                     if (Number(minite) < 6) {
                       setMinite((minite) => minite.slice(1) + "8");
-                      setIsHour(false);
-                      setIsMinite(false);
+                    } else {
+                      setMinite("08");
                     }
+                    setIsHour(false);
+                    setIsMinite(false);
                   }
                 }
               }}
@@ -188,9 +196,11 @@ export default function Calculator2() {
                   } else {
                     if (Number(hour) < 2) {
                       setHour((hour) => hour.slice(1) + "9");
-                      setIsHour(false);
-                      setIsMinite(true);
+                    } else {
+                      setHour("09");
                     }
+                    setIsHour(false);
+                    setIsMinite(true);
                   }
                 }
                 if (isMinite) {
@@ -206,9 +216,11 @@ export default function Calculator2() {
                   } else {
                     if (Number(minite) < 6) {
                       setMinite((minite) => minite.slice(1) + "9");
-                      setIsHour(false);
-                      setIsMinite(false);
+                    } else {
+                      setMinite("09");
                     }
+                    setIsHour(false);
+                    setIsMinite(false);
                   }
                 }
               }}
@@ -235,11 +247,13 @@ export default function Calculator2() {
                     setIsHour(false);
                     setIsMinite(true);
                   } else {
-                    if (Number(hour) < 3) {
+                    if (Number(hour) < 2) {
                       setHour((hour) => hour.slice(1) + "4");
-                      setIsHour(false);
-                      setIsMinite(true);
+                    } else {
+                      setHour("04");
                     }
+                    setIsHour(false);
+                    setIsMinite(true);
                   }
                 }
                 if (isMinite) {
@@ -255,6 +269,8 @@ export default function Calculator2() {
                       setMinite((minite) => minite.slice(1) + "4");
                       setIsHour(false);
                       setIsMinite(false);
+                    } else {
+                      setMinite("04");
                     }
                   }
                 }
@@ -284,9 +300,11 @@ export default function Calculator2() {
                   } else {
                     if (Number(hour) < 2) {
                       setHour((hour) => hour.slice(1) + "5");
-                      setIsHour(false);
-                      setIsMinite(true);
+                    } else {
+                      setHour("05");
                     }
+                    setIsHour(false);
+                    setIsMinite(true);
                   }
                 }
                 if (isMinite) {
@@ -302,6 +320,8 @@ export default function Calculator2() {
                       setMinite((minite) => minite.slice(1) + "5");
                       setIsHour(false);
                       setIsMinite(false);
+                    } else {
+                      setMinite("05");
                     }
                   }
                 }
@@ -331,9 +351,11 @@ export default function Calculator2() {
                   } else {
                     if (Number(hour) < 3) {
                       setHour((hour) => hour.slice(1) + "6");
-                      setIsHour(false);
-                      setIsMinite(true);
+                    } else {
+                      setHour("06");
                     }
+                    setIsHour(false);
+                    setIsMinite(true);
                   }
                 }
                 if (isMinite) {
@@ -349,9 +371,11 @@ export default function Calculator2() {
                   } else {
                     if (Number(minite) < 6) {
                       setMinite((minite) => minite.slice(1) + "6");
-                      setIsHour(false);
-                      setIsMinite(false);
+                    } else {
+                      setMinite("06");
                     }
+                    setIsHour(false);
+                    setIsMinite(false);
                   }
                 }
               }}
@@ -380,6 +404,8 @@ export default function Calculator2() {
                       setHour((hour) => hour.slice(1) + "1");
                       setIsHour(false);
                       setIsMinite(true);
+                    } else {
+                      setHour("01");
                     }
                   }
                 }
@@ -396,6 +422,8 @@ export default function Calculator2() {
                       setMinite((minite) => minite.slice(1) + "1");
                       setIsHour(false);
                       setIsMinite(false);
+                    } else {
+                      setMinite("01");
                     }
                   }
                 }
@@ -425,6 +453,8 @@ export default function Calculator2() {
                       setHour((hour) => hour.slice(1) + "2");
                       setIsHour(false);
                       setIsMinite(true);
+                    } else {
+                      setHour("02");
                     }
                   }
                 }
@@ -441,6 +471,8 @@ export default function Calculator2() {
                       setMinite((minite) => minite.slice(1) + "2");
                       setIsHour(false);
                       setIsMinite(false);
+                    } else {
+                      setMinite("02");
                     }
                   }
                 }
@@ -470,9 +502,11 @@ export default function Calculator2() {
                   } else {
                     if (Number(hour) < 3) {
                       setHour((hour) => hour.slice(1) + "3");
-                      setIsHour(false);
-                      setIsMinite(true);
+                    } else {
+                      setHour("03");
                     }
+                    setIsHour(false);
+                    setIsMinite(true);
                   }
                 }
                 if (isMinite) {
@@ -488,6 +522,8 @@ export default function Calculator2() {
                       setMinite((minite) => minite.slice(1) + "3");
                       setIsHour(false);
                       setIsMinite(false);
+                    } else {
+                      setMinite("03");
                     }
                   }
                 }
@@ -515,9 +551,11 @@ export default function Calculator2() {
                   } else {
                     if (Number(hour) < 3) {
                       setHour((hour) => hour.slice(1) + "0");
-                      setIsHour(false);
-                      setIsMinite(true);
+                    } else {
+                      setHour("00");
                     }
+                    setIsHour(false);
+                    setIsMinite(true);
                   }
                 }
                 if (isMinite) {
@@ -531,9 +569,11 @@ export default function Calculator2() {
                   } else {
                     if (Number(minite) < 6) {
                       setMinite((minite) => minite.slice(1) + "0");
-                      setIsHour(false);
-                      setIsMinite(false);
+                    } else {
+                      setMinite("00");
                     }
+                    setIsHour(false);
+                    setIsMinite(false);
                   }
                 }
               }}
