@@ -780,26 +780,7 @@ export default function Calculator2() {
               0
             </div>
           </div>
-          <div className="flex items-center justify-center">
-            <div
-              className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-accent text-black shadow-2xl"
-              onClick={() => {
-                if (isHour) {
-                  setHour("00");
-                }
-                if (isMinite) {
-                  setMinite("00");
-                }
-                if (!isMinite && !isHour) {
-                  setHour("00");
-                  setMinite("00");
-                }
-              }}
-            >
-              C
-            </div>
-          </div>
-          <div className="flex items-center justify-center text-2xl">
+          <div className="col-start-2 row-start-4 col-end-4 flex items-center justify-center text-2xl">
             <div
               className="flex h-[60px] w-[90%] items-center justify-center rounded-md border border-white bg-neutral-700 text-black shadow-2xl"
               onClick={() => {
