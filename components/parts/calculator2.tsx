@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Button from "../templates/button";
 
 export default function Calculator2() {
   const [result, setResult] = useState("");
@@ -16,13 +17,15 @@ export default function Calculator2() {
   const [isMiniteTrue, setIsMiniteTrue] = useState(false);
   const [minite, setMinite] = useState("00");
 
+  const [miniteType, setMiniteType] = useState(1);
+
   return (
     <div
       className="absolute left-0 top-0 z-40 flex h-[100dvh] w-[100dvw] items-center justify-center bg-black/70 p-10 text-white"
       onClick={() => {}}
     >
       <div
-        className="relative h-[400px] w-[300px] rounded-md border border-secondary bg-primary p-4"
+        className="relative h-[600px] w-[300px] rounded-md border border-secondary bg-primary p-4"
         onClick={(e) => e.stopPropagation()}
       >
         <div
@@ -38,6 +41,100 @@ export default function Calculator2() {
               alt=""
             />
           </span>
+        </div>
+        <div className="flex">
+          <p className="text-accent">分刻み</p>
+        </div>
+        <div className="flex">
+          <Button
+            natural
+            className={miniteType == 1 ? "w-full" : "w-full opacity-50"}
+            onClick={() => {
+              setMiniteType(1);
+            }}
+          >
+            1
+          </Button>
+          <Button
+            natural
+            className={miniteType == 5 ? "w-full" : "w-full opacity-50"}
+            onClick={() => {
+              setMiniteType(5);
+            }}
+          >
+            5
+          </Button>
+          <Button
+            natural
+            className={miniteType == 15 ? "w-full" : "w-full opacity-50"}
+            onClick={() => {
+              setMiniteType(15);
+            }}
+          >
+            15
+          </Button>
+          <Button
+            natural
+            className={miniteType == 30 ? "w-full" : "w-full opacity-50"}
+            onClick={() => {
+              setMiniteType(30);
+            }}
+          >
+            30
+          </Button>
+        </div>
+        <div className="flex">
+          <div
+            className="flex h-[60px] w-[45%] mx-2 items-center justify-center tracking-widest rounded-md　px-3 text-4xl text-white rotate-180"
+            onClick={() => {
+              const num = Number(hour) + 1;
+              if (num > 23) {
+                setHour("00");
+              } else if (num > 9) {
+                setHour(String(num));
+              } else {
+                setHour("0" + String(num));
+              }
+            }}
+          >
+            <Image
+              src={"/assets/sort-down.svg"}
+              width={40}
+              height={40}
+              className="z-10"
+              alt=""
+            />
+          </div>
+          <div className="flex h-[60px] w-[10%] mx-2 items-center justify-center tracking-widest px-3 text-4xl text-white"></div>
+          <div
+            className="flex h-[60px] w-[45%] mx-2 items-center justify-center tracking-widest rounded-md　px-3 text-4xl text-white rotate-180"
+            onClick={() => {
+              const num = Number(minite) + miniteType;
+              if (num > 59) {
+                if (num == 60) {
+                  setMinite("00");
+                } else {
+                  if (num - 60 > 9) {
+                    setMinite(String(num - 60));
+                  } else {
+                    setMinite("0" + String(num - 60));
+                  }
+                }
+              } else if (num > 9) {
+                setMinite(String(num));
+              } else {
+                setMinite("0" + String(num));
+              }
+            }}
+          >
+            <Image
+              src={"/assets/sort-down.svg"}
+              width={40}
+              height={40}
+              className="z-10"
+              alt=""
+            />
+          </div>
         </div>
         <div className="flex">
           <div
@@ -70,6 +167,59 @@ export default function Calculator2() {
             }}
           >
             {minite}
+          </div>
+        </div>
+        <div className="flex">
+          <div
+            className="flex h-[60px] w-[45%] mx-2 items-center justify-center tracking-widest rounded-md　px-3 text-4xl text-white"
+            onClick={() => {
+              const num = Number(hour) - 1;
+              if (num < 0) {
+                setHour("23");
+              } else if (num > 9) {
+                setHour(String(num));
+              } else {
+                setHour("0" + String(num));
+              }
+            }}
+          >
+            <Image
+              src={"/assets/sort-down.svg"}
+              width={40}
+              height={40}
+              className="z-10"
+              alt=""
+            />
+          </div>
+          <div className="flex h-[60px] w-[10%] mx-2 items-center justify-center tracking-widest px-3 text-4xl text-white"></div>
+          <div
+            className="flex h-[60px] w-[45%] mx-2 items-center justify-center tracking-widest rounded-md　px-3 text-4xl text-white"
+            onClick={() => {
+              const num = Number(minite) - miniteType;
+              if (num < 0) {
+                if (num == 0) {
+                  setMinite("59");
+                } else {
+                  if (Math.abs(num) > 9) {
+                    setMinite(String(Math.abs(num)));
+                  } else {
+                    setMinite("0" + String(Math.abs(num)));
+                  }
+                }
+              } else if (num > 9) {
+                setMinite(String(num));
+              } else {
+                setMinite("0" + String(num));
+              }
+            }}
+          >
+            <Image
+              src={"/assets/sort-down.svg"}
+              width={40}
+              height={40}
+              className="z-10"
+              alt=""
+            />
           </div>
         </div>
         <div className="mt-4 grid grid-cols-3 grid-rows-4 content-center items-center justify-center gap-4 text-3xl font-bold">
