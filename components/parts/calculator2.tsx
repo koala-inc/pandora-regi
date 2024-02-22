@@ -200,7 +200,7 @@ export default function Calculator2() {
                 if (num == -1) {
                   setMinite("59");
                 } else {
-                  if (Math.abs(num) > 9) {
+                  if (60 - Math.abs(num) > 9) {
                     setMinite(String(60 - Math.abs(num)));
                   } else {
                     setMinite("0" + String(60 - Math.abs(num)));
