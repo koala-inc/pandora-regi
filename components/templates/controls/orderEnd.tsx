@@ -26,6 +26,9 @@ export default function OrderEnd() {
   purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
     total += Number(orderItem.price) * Number(orderItem.lot);
   });
+  purchaseOrder[0]?.orderCast?.map((cast: any) => {
+    total += Number(cast.price) * Number(cast.lot);
+  });
 
   const totalPay = Math.ceil(Math.floor(total * 1.3 * 1.1) / 100) * 100;
   const [discount, setDiscount] = useState(0);

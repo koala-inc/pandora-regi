@@ -1097,6 +1097,8 @@ export default function ControlOrderSet() {
                           toggle: toggle,
                           setName: setName,
                           status: status,
+                          orderItem: [],
+                          orderCast: [],
                         },
                       ]);
                     }

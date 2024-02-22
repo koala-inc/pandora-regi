@@ -294,7 +294,7 @@ function Base() {
                       price: Number(cast.split("##")[1]),
                     };
                   }),
-                  ...purchaseOrder[0]?.orderCast?.map((cast: any) => {
+                  purchaseOrder[0].orderCast && ...purchaseOrder[0].orderCast?.map((cast: any) => {
                     return {
                       title: cast.title,
                       subTitle: "",
