@@ -22,6 +22,8 @@ import useSWR, { preload } from "swr";
 import { searchBottle } from "@/gqls/query/bottle";
 import { searchMenu } from "@/gqls/query/menu";
 import { searchCast } from "@/gqls/query/cast";
+import usePurchaseOrderItemAddGlobal from "@/globalstates/purchaseOrderItemAdd";
+import { searchDesignate } from "@/gqls/query/designate";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -56,9 +58,17 @@ export default function OrderCastAdd() {
   const [addForm, setAddForm] = useState<any>({});
 
   const searchData = useSWR<any>(searchCast, fetcher);
+  const searchData2 = useSWR<any>(searchDesignate, fetcher);
 
   const [categoryActive, setCategoryActive] = useState(-2);
   const [subCategoryActive, setSubCategoryActive] = useState(-1);
+
+  const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
+    usePurchaseOrderItemAddGlobal();
+
+  const [selectDesignate, setSelectDesignate] = useState(-1);
+  const [selectDesignateSymbol, setSelectDesignateSymbol] = useState("");
+  const [selectDesignatePrice, setSelectDesignatePrice] = useState(0);
 
   let count = 0;
   let count2 = 0;
@@ -87,11 +97,38 @@ export default function OrderCastAdd() {
               <p className="text-accent">指名開始時間</p>
               <input className="h-[50px] w-[100px]" type="time" />
             </div>
-            <Button className="mr-3">同伴</Button>
-            <Button className="mr-3">指名</Button>
-            <Button className="mr-3">場内</Button>
-            <Button className="mr-3">同伴(指名)</Button>
-            <Button className="mr-3">指名(複数)</Button>
+            {searchData2?.data?.designate[0]?.store_designate[0]?.designate?.map(
+              (designate: any, index: any) => {
+                if (selectDesignate == -1 && count2 == 0) {
+                  setSelectDesignate(designate.id);
+                  setSelectDesignateSymbol(designate.designate_revision.symbol);
+                  setSelectDesignatePrice(designate.designate_revision.price);
+                }
+                count2 += 1;
+                return (
+                  <Button
+                    className={
+                      designate.id == selectDesignate
+                        ? "min-w-[5rem] mb-2"
+                        : "min-w-[5rem] mb-2 opacity-60"
+                    }
+                    key={index}
+                    natural
+                    onClick={() => {
+                      setSelectDesignate(designate.id);
+                      setSelectDesignateSymbol(
+                        designate.designate_revision.symbol
+                      );
+                      setSelectDesignatePrice(
+                        designate.designate_revision.price
+                      );
+                    }}
+                  >
+                    {designate.designate_revision.name}
+                  </Button>
+                );
+              }
+            )}
           </div>
         </ContentHeader>
         <div className="mt-[-1px] flex h-[700px] w-[calc(100vw-405px)] flex-col rounded-xl bg-primary p-4 text-white">
@@ -331,6 +368,16 @@ export default function OrderCastAdd() {
                         "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
                       }
                       key={index}
+                      onClick={() => {
+                        setPurchaseOrderItemAdd([
+                          ...purchaseOrderItemAdd,
+                          {
+                            title: cast.name,
+                            lot: 1,
+                            price: Number(selectDesignatePrice),
+                          },
+                        ]);
+                      }}
                     >
                       {cast.name}
                     </div>

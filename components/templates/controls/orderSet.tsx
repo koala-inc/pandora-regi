@@ -51,10 +51,14 @@ const defaultVariables = {
 
 export default function ControlOrderSet() {
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
-  const [order, setOrder] = useState<any>({});
   const [activeTab, setActiveTab] = useState(-1);
   const [nowDate, setNowDate] = useState(dayjs(new Date()));
   const [toggle, setToggle] = useState(false);
+  const [order, setOrder] = useState<any>({
+    startTime: nowDate
+      .minute(Math.round(nowDate.minute() / 5) * 5)
+      .format("HH:mm"),
+  });
 
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
@@ -489,10 +493,10 @@ export default function ControlOrderSet() {
                 value={order.setTime?.toLocaleString()}
                 onChange={(e) => {
                   const date = nowDate.hour(
-                    Number(order.startTime.split(":")[0])
+                    Number(order.startTime?.split(":")[0])
                   );
                   const newDate = date.minute(
-                    Number(order.startTime.split(":")[1])
+                    Number(order.startTime?.split(":")[1])
                   );
                   setOrder((order: any) => {
                     return {

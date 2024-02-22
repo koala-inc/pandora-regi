@@ -24,7 +24,7 @@ function Lists({
   }[];
 }) {
   return (
-    <ul className="hidden-scrollbar w-full overflow-y-scroll">
+    <ul className="hidden-scrollbar w-full overflow-y-scroll pr-2">
       {lists?.map((list, index) => (
         <li
           key={index}
@@ -32,9 +32,9 @@ function Lists({
         >
           <div className="w-[40%] text-left">{list.title}</div>
           <div className="w-[10%] text-left">{list.subTitle || ""}</div>
-          <div className="w-[20%] text-right">{list.lot}</div>
-          <div className="w-[30%] text-right">
-            {list.price?.toLocaleString()}円
+          <div className="w-[10%] text-right">{list.lot}</div>
+          <div className="w-[40%] text-right">
+            {(list.price * list.lot)?.toLocaleString()}円
           </div>
         </li>
       ))}
@@ -775,6 +775,27 @@ function CastAdd() {
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+  const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
+    usePurchaseOrderItemAddGlobal();
+
+  let total = 0;
+  purchaseOrder[0]?.cast?.map((cast: any) => {
+    total += Number(cast.split("##")[1]);
+  });
+  total += Number(purchaseOrder[0]?.price);
+  purchaseOrder[0]?.orderCast?.map((orderCast: any) => {
+    total += Number(orderCast.price) * Number(orderCast.lot);
+  });
+
+  const totalPay = total;
+
+  let total2 = 0;
+  purchaseOrderItemAdd.map((purchaseOrderItemAdd: any) => {
+    total2 +=
+      Number(purchaseOrderItemAdd.price) * Number(purchaseOrderItemAdd.lot);
+  });
+
+  const totalPay2 = total2 + totalPay;
 
   return (
     <>
@@ -810,40 +831,13 @@ function CastAdd() {
             <div className="text-sm text-accent">キャスト</div>
             <Line ml="ml-10" />
           </div>
-          <div className="flex h-[39.3%] max-h-[100px] min-h-[100px]">
-            <Lists
-              lists={[
-                {
-                  title: "キャストA",
-                  subTitle: "◯",
-                  lot: 1,
-                  price: 1000,
-                },
-                {
-                  title: "A",
-                  subTitle: "◯",
-                  lot: 100,
-                  price: 1000,
-                },
-                {
-                  title: "キャストA",
-                  subTitle: "◯",
-                  lot: 1,
-                  price: 1000,
-                },
-                {
-                  title: "A",
-                  subTitle: "◯",
-                  lot: 100,
-                  price: 1000,
-                },
-              ]}
-            />
+          <div className="flex text-sm px-2 max-h-[90px] min-h-[90px]">
+            <Lists lists={purchaseOrder[0]?.orderCast || []} />
           </div>
           <div className="flex w-full">
             <Line />
           </div>
-          <div className="flex w-full border border-white rounded-md my-3 px-3 py-2 pt-4">
+          <div className="flex w-full border border-white rounded-md my-2 px-3 py-2 pt-4">
             <div className="flex flex-col w-[50px]">
               <p className="h-[20px]"></p>
               <p className="h-[40px] flex items-center">小計</p>
@@ -851,11 +845,26 @@ function CastAdd() {
             </div>
             <div className="flex flex-col w-[200px] text-right">
               <p className="h-[20px] text-center">現在</p>
-              <p className="h-[40px] text-accent text-xl flex items-center justify-end">
-                0円
+              <p
+                className={
+                  totalPay > 9999999
+                    ? "h-[40px] text-accent text-[15px] flex items-center justify-end"
+                    : "h-[40px] text-accent text-xl flex items-center justify-end"
+                }
+              >
+                {Math.floor(totalPay).toLocaleString()}円
               </p>
-              <p className="h-[40px] text-accent text-xl flex items-center justify-end">
-                0円
+              <p
+                className={
+                  totalPay > 9999999
+                    ? "h-[40px] text-accent text-[15px] flex items-center justify-end"
+                    : "h-[40px] text-accent text-xl flex items-center justify-end"
+                }
+              >
+                {(
+                  Math.ceil(Math.floor(totalPay * 1.3 * 1.1) / 100) * 100
+                ).toLocaleString()}
+                円
               </p>
             </div>
             <div className="flex flex-col w-[20px] mx-2 text-right">
@@ -865,61 +874,107 @@ function CastAdd() {
             </div>
             <div className="flex flex-col w-[200px] text-right">
               <p className="h-[20px] text-center">見込み</p>
-              <p className="h-[40px] text-accent text-xl flex items-center justify-end">
-                0円
+              <p
+                className={
+                  totalPay2 > 9999999
+                    ? "h-[40px] text-accent text-[15px] flex items-center justify-end"
+                    : "h-[40px] text-accent text-xl flex items-center justify-end"
+                }
+              >
+                {Math.floor(totalPay2).toLocaleString()}円
               </p>
-              <p className="h-[40px] text-accent text-xl flex items-center justify-end">
-                0円
+              <p
+                className={
+                  totalPay2 > 9999999
+                    ? "h-[40px] text-accent text-[15px] flex items-center justify-end"
+                    : "h-[40px] text-accent text-xl flex items-center justify-end"
+                }
+              >
+                {(
+                  Math.ceil(Math.floor(totalPay2 * 1.3 * 1.1) / 100) * 100
+                ).toLocaleString()}
+                円
               </p>
             </div>
           </div>
           <div className="flex w-full">
             <Line />
           </div>
-          <div className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2">
-            <div className="flex flex-col w-[30px] text-xs">
-              <p className="text-accent h-[20px]"></p>
-              <p className="h-[30px] flex items-center">同伴</p>
-            </div>
-            <div className="flex flex-col w-[60px] text-right">
-              <p className="text-accent h-[20px]"></p>
-              <p className="h-[30px] text-accent flex items-center">作業さん</p>
-            </div>
-            <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
-              <p className="text-accent h-[20px]"></p>
-              <input
-                className="h-[30px] px-2 rounded-md text-white"
-                placeholder="個"
-              />
-            </div>
-            <div className="flex flex-col w-[80px] mr-2 text-right justify-center">
-              <p className="text-accent h-[20px]"></p>
-              <input
-                className="h-[30px] px-2 rounded-md text-white"
-                placeholder="金額"
-              />
-            </div>
-            <div className="flex flex-col w-[80px] text-right justify-center">
-              <p className="text-accent h-[20px] text-xs">指名開始時間</p>
-              <input
-                type="time"
-                className="h-[30px] px-2 rounded-md text-white"
-              />
-            </div>
+          <div className="h-[350px] overflow-scroll">
+            {purchaseOrderItemAdd?.map(
+              (purchaseOrderItemAdd: any, index: any) => (
+                <div
+                  key={index}
+                  className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2"
+                >
+                  <div className="flex flex-col w-[30px] text-xs">
+                    <p className="text-accent h-[20px]"></p>
+                    <p className="h-[30px] flex items-center">同伴</p>
+                  </div>
+                  <div className="flex flex-col w-[60px] text-right">
+                    <p className="text-accent h-[20px]"></p>
+                    <p className="h-[30px] text-accent flex items-center">
+                      {purchaseOrderItemAdd.title}
+                    </p>
+                  </div>
+                  <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
+                    <p className="text-accent h-[20px]"></p>
+                    <input
+                      className="h-[30px] px-2 rounded-md text-white"
+                      placeholder="個"
+                      defaultValue={purchaseOrderItemAdd.lot}
+                      onChange={(e) => {
+                        purchaseOrderItemAdd.lot = Number(
+                          e.target.value.replace(/[^0-9]/g, "")
+                        );
+                      }}
+                    />
+                  </div>
+                  <div className="flex flex-col w-[80px] mr-2 text-right justify-center">
+                    <p className="text-accent h-[20px]"></p>
+                    <input
+                      className="h-[30px] px-2 rounded-md text-white"
+                      placeholder="金額"
+                      defaultValue={purchaseOrderItemAdd.price?.toLocaleString()}
+                      onChange={(e) => {
+                        purchaseOrderItemAdd.price = Number(
+                          e.target.value.replace(/[^0-9]/g, "")
+                        );
+                      }}
+                    />
+                  </div>
+                  <div className="flex flex-col w-[80px] text-right justify-center">
+                    <p className="text-accent h-[20px] text-xs">指名開始時間</p>
+                    <input
+                      type="time"
+                      className="h-[30px] px-2 rounded-md text-white"
+                    />
+                  </div>
+                </div>
+              )
+            )}
           </div>
         </div>
         <div className="flex w-full">
           <Line />
         </div>
       </section>
-      <nav className="mt-4 flex w-full items-center justify-center">
-        <div className="w-[150px] flex justify-center items-center">
+      <nav className="mt-4 flex w-[80%] mx-auto items-center justify-center">
+        <div
+          className="w-[150px] flex justify-center items-center"
+          onClick={(e) => {
+            e.stopPropagation();
+            setPurchaseOrderItemAdd([]);
+            setIsControl("");
+          }}
+        >
           <Border2
+            natural
             rounded="rounded-full"
-            size="h-[42px] w-[42px] p-[8px] bg-reset"
+            size="h-[42px] w-[42px] p-[6px]"
           >
             <Image
-              src={"/assets/reset.svg"}
+              src={"/assets/arrow-left.svg"}
               width={26}
               height={26}
               className="!h-full !w-full"
@@ -927,10 +982,52 @@ function CastAdd() {
             />
           </Border2>
         </div>
+        <div className="w-[150px] flex justify-center items-center">
+          <Border2
+            rounded="rounded-full"
+            size="h-[42px] w-[42px] p-[8px] bg-reset"
+          >
+            <div
+              onClick={() => {
+                setPurchaseOrderItemAdd([]);
+              }}
+            >
+              <Image
+                src={"/assets/reset.svg"}
+                width={26}
+                height={26}
+                className="!h-full !w-full"
+                alt=""
+              />
+            </div>
+          </Border2>
+        </div>
         <div
           className="w-[150px] flex justify-center items-center"
           onClick={(e) => {
             e.stopPropagation();
+            if (purchaseOrderItemAdd.length >= 1) {
+              if (purchaseOrder[0]?.orderCast) {
+                setPurchaseOrder([
+                  {
+                    ...purchaseOrder[0],
+                    orderCast: [
+                      ...purchaseOrder[0]?.orderCast,
+                      ...purchaseOrderItemAdd,
+                    ],
+                  },
+                ]);
+              } else {
+                setPurchaseOrder([
+                  {
+                    ...purchaseOrder[0],
+                    orderCast: purchaseOrderItemAdd,
+                  },
+                ]);
+              }
+              setPurchaseOrderItemAdd([]);
+              setIsControl("");
+            }
           }}
         >
           <Border2
