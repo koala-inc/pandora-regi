@@ -19,15 +19,17 @@ export default function OrderEnd() {
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   let total = 0;
-  purchaseOrder[0].cast.map((cast: any) => {
+  purchaseOrder[0]?.cast?.map((cast: any) => {
     total += Number(cast.split("##")[1]);
   });
-  total += Number(purchaseOrder[0].price);
-  purchaseOrder[0].orderItem.map((orderItem: any) => {
-    total += Number(orderItem.price);
+  total += Number(purchaseOrder[0]?.price);
+  purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
+    total += Number(orderItem.price) * Number(orderItem.lot);
   });
 
-  const totalPay = total * 1.3 * 1.1;
+  const totalPay = Math.ceil(Math.floor(total * 1.3 * 1.1) / 100) * 100;
+  const [discount, setDiscount] = useState(0);
+  const [pay, setPay] = useState(0);
 
   const [type, setType] = useState(false);
 
@@ -65,7 +67,7 @@ export default function OrderEnd() {
                   <div className="flex flex-col w-full mr-4">
                     <div className="text-accent w-full text-left">合計金額</div>
                     <div className="w-full text-right text-2xl">
-                      {totalPay.toLocaleString()}円
+                      {(totalPay - discount).toLocaleString()}円
                     </div>
                   </div>
                   <div className="flex flex-col w-full mr-4">
@@ -74,7 +76,13 @@ export default function OrderEnd() {
                   </div>
                   <div className="flex flex-col w-full">
                     <div className="text-accent w-full text-left">値引き</div>
-                    <input className="w-full border p-[3px] rounded-md text-right" />
+                    <input
+                      className="w-full border p-[3px] rounded-md text-right"
+                      value={discount}
+                      onChange={(e) => {
+                        setDiscount(Number(e.target.value));
+                      }}
+                    />
                   </div>
                 </Border2>
                 <Border2
@@ -85,7 +93,7 @@ export default function OrderEnd() {
                 >
                   <div className="text-accent w-full text-left">残金</div>
                   <div className="w-full text-right text-2xl text-red-400">
-                    {totalPay.toLocaleString()}円
+                    {(totalPay - discount - pay).toLocaleString()}円
                   </div>
                 </Border2>
               </div>
@@ -159,9 +167,20 @@ export default function OrderEnd() {
                   </div>
                   <div className="flex flex-col w-[30rem] mr-4">
                     <div className="text-accent w-full text-left">預り金</div>
-                    <input className="w-full border p-[6px] rounded-md text-right" />
+                    <input
+                      className="w-full border p-[6px] rounded-md text-right"
+                      value={pay}
+                      onChange={(e) => {
+                        setPay(Number(e.target.value));
+                      }}
+                    />
                   </div>
-                  <div className="flex flex-col min-w-[6rem] mr-4 h-full justify-end">
+                  <div
+                    className="flex flex-col min-w-[6rem] mr-4 h-full justify-end"
+                    onClick={() => {
+                      setPay(totalPay - discount);
+                    }}
+                  >
                     <Button natural>残金</Button>
                   </div>
                   <div className="flex h-[40px] items-center">

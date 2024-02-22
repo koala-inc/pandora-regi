@@ -73,6 +73,9 @@ function Base() {
   purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
     total += Number(orderItem.price) * Number(orderItem.lot);
   });
+  purchaseOrder[0]?.orderCast?.map((cast: any) => {
+    total += Number(cast.price) * Number(cast.lot);
+  });
 
   const totalPay = total;
 
@@ -282,14 +285,24 @@ function Base() {
           <div className="flex text-sm px-2 max-h-[100px] min-h-[100px]">
             <Lists
               lists={
-                purchaseOrder[0]?.cast?.map((cast: any) => {
-                  return {
-                    title: cast.split("##")[0],
-                    subTitle: "",
-                    lot: 1,
-                    price: Number(cast.split("##")[1]),
-                  };
-                })
+                [
+                  ...purchaseOrder[0]?.cast?.map((cast: any) => {
+                    return {
+                      title: cast.split("##")[0],
+                      subTitle: "",
+                      lot: 1,
+                      price: Number(cast.split("##")[1]),
+                    };
+                  }),
+                  ...purchaseOrder[0]?.orderCast?.map((cast: any) => {
+                    return {
+                      title: cast.title,
+                      subTitle: "",
+                      lot: Number(cast.lot),
+                      price: Number(cast.price),
+                    };
+                  }),
+                ]
                 // [
                 // {
                 //   title: purchaseOrder[0]?.cast[0] || "",
@@ -518,6 +531,9 @@ function Add() {
   total += Number(purchaseOrder[0]?.price);
   purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
     total += Number(orderItem.price) * Number(orderItem.lot);
+  });
+  purchaseOrder[0]?.orderCast?.map((cast: any) => {
+    total += Number(cast.price) * Number(cast.lot);
   });
 
   const totalPay = total;
@@ -786,6 +802,9 @@ function CastAdd() {
   purchaseOrder[0]?.orderCast?.map((orderCast: any) => {
     total += Number(orderCast.price) * Number(orderCast.lot);
   });
+  purchaseOrder[0]?.orderCast?.map((cast: any) => {
+    total += Number(cast.price) * Number(cast.lot);
+  });
 
   const totalPay = total;
 
@@ -832,7 +851,26 @@ function CastAdd() {
             <Line ml="ml-10" />
           </div>
           <div className="flex text-sm px-2 max-h-[90px] min-h-[90px]">
-            <Lists lists={purchaseOrder[0]?.orderCast || []} />
+            <Lists
+              lists={[
+                ...purchaseOrder[0]?.cast?.map((cast: any) => {
+                  return {
+                    title: cast.split("##")[0],
+                    subTitle: "",
+                    lot: 1,
+                    price: Number(cast.split("##")[1]),
+                  };
+                }),
+                ...purchaseOrder[0]?.orderCast?.map((cast: any) => {
+                  return {
+                    title: cast.title,
+                    subTitle: "",
+                    lot: 1,
+                    price: Number(cast.price),
+                  };
+                }),
+              ]}
+            />
           </div>
           <div className="flex w-full">
             <Line />

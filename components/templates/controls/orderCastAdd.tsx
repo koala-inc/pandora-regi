@@ -372,7 +372,7 @@ export default function OrderCastAdd() {
                         setPurchaseOrderItemAdd([
                           ...purchaseOrderItemAdd,
                           {
-                            title: cast.name,
+                            title: selectDesignateSymbol + cast.name,
                             lot: 1,
                             price: Number(selectDesignatePrice),
                           },
