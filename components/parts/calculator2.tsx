@@ -9,9 +9,11 @@ export default function Calculator2() {
   const max = 99;
 
   const [isHour, setIsHour] = useState(false);
+  const [isHourTrue, setIsHourTrue] = useState(false);
   const [hour, setHour] = useState("00");
 
   const [isMinite, setIsMinite] = useState(false);
+  const [isMiniteTrue, setIsMiniteTrue] = useState(false);
   const [minite, setMinite] = useState("00");
 
   return (
@@ -47,6 +49,7 @@ export default function Calculator2() {
             onClick={() => {
               setIsMinite(false);
               setIsHour((isHour) => !isHour);
+              setIsMiniteTrue(true);
             }}
           >
             {hour}
@@ -63,6 +66,7 @@ export default function Calculator2() {
             onClick={() => {
               setIsHour(false);
               setIsMinite((isMinite) => !isMinite);
+              setIsHourTrue(true);
             }}
           >
             {minite}
@@ -596,11 +600,11 @@ export default function Calculator2() {
                   } else {
                     if (Number(hour) < 3) {
                       setHour((hour) => hour.slice(1) + "0");
+                      setIsHour(false);
+                      setIsMinite(true);
                     } else {
                       setHour("00");
                     }
-                    setIsHour(false);
-                    setIsMinite(true);
                   }
                 }
                 if (isMinite) {
@@ -614,11 +618,11 @@ export default function Calculator2() {
                   } else {
                     if (Number(minite) < 6) {
                       setMinite((minite) => minite.slice(1) + "0");
+                      setIsHour(false);
+                      setIsMinite(false);
                     } else {
                       setMinite("00");
                     }
-                    setIsHour(false);
-                    setIsMinite(false);
                   }
                 }
               }}
