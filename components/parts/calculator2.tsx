@@ -378,7 +378,7 @@ export default function Calculator2() {
                       setIsHour(false);
                       setIsMinite(true);
                     } else {
-                      if (Number(hour) < 3) {
+                      if (Number(hour) < 2) {
                         setHour((hour) => hour.slice(1) + "6");
                       } else {
                         setHour("06");
