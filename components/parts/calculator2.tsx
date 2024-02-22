@@ -17,7 +17,7 @@ export default function Calculator2() {
   const [isMiniteTrue, setIsMiniteTrue] = useState(false);
   const [minite, setMinite] = useState("00");
 
-  const [miniteType, setMiniteType] = useState(1);
+  const [miniteType, setMiniteType] = useState(5);
 
   return (
     <div
