@@ -13,6 +13,11 @@ import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 import { useState } from "react";
 import usePurchaseOrderItemAddGlobal from "@/globalstates/purchaseOrderItemAdd";
 
+import client from "@/connection";
+import { RequestDocument } from "graphql-request";
+import useSWR, { preload } from "swr";
+import { searchDesignate } from "@/gqls/query/designate";
+
 function Lists({
   lists,
 }: {
@@ -786,6 +791,10 @@ function Add() {
   );
 }
 
+const defaultVariables = {
+  store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
+};
+
 function CastAdd() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
@@ -813,6 +822,10 @@ function CastAdd() {
     total2 +=
       Number(purchaseOrderItemAdd.price) * Number(purchaseOrderItemAdd.lot);
   });
+
+  const fetcher = (q: RequestDocument) =>
+    client.request(q, { ...defaultVariables });
+  const searchData4 = useSWR<any>(searchDesignate, fetcher);
 
   const totalPay2 = total2 + totalPay;
 
@@ -947,12 +960,51 @@ function CastAdd() {
                 >
                   <div className="flex flex-col w-[30px] text-xs">
                     <p className="text-accent h-[20px]"></p>
-                    <p className="h-[30px] flex items-center">同伴</p>
+                    <select className="h-[30px] flex items-center">
+                      {searchData4?.data?.designate[0]?.store_designate[0]?.designate?.map(
+                        (designate: any, index: any) => {
+                          // if (selectDesignate == -1 && count2 == 0) {
+                          //   setSelectDesignate(designate.id);
+                          //   setSelectDesignateSymbol(
+                          //     designate.designate_revision.symbol
+                          //   );
+                          //   setSelectDesignatePrice(
+                          //     designate.designate_revision.price
+                          //   );
+                          // }
+                          // count2 += 1;
+                          return (
+                            <Button
+                              // className={
+                              //   designate.id == selectDesignate
+                              //     ? "min-w-[5rem] mb-2"
+                              //     : "min-w-[5rem] mb-2 opacity-60"
+                              // }
+                              key={index}
+                              natural
+                              onClick={() => {
+                                // setSelectDesignate(designate.id);
+                                // setSelectDesignateSymbol(
+                                //   designate.designate_revision.symbol
+                                // );
+                                // setSelectDesignatePrice(
+                                //   designate.designate_revision.price
+                                // );
+                              }}
+                            >
+                              <option>
+                                {designate.designate_revision.name}
+                              </option>
+                            </Button>
+                          );
+                        }
+                      )}
+                    </select>
                   </div>
                   <div className="flex flex-col w-[60px] text-right">
                     <p className="text-accent h-[20px]"></p>
                     <p className="h-[30px] text-accent flex items-center">
-                      {purchaseOrderItemAdd.title}
+                      {purchaseOrderItemAdd.title.slice(1)}
                     </p>
                   </div>
                   <div className="flex flex-col w-[40px] mx-2 text-right justify-center">

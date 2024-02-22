@@ -6,6 +6,7 @@ export default function Button({
   natural = false,
   bg,
   textXL = true,
+  text2XL = false,
 }: {
   children: any;
   onClick?: Function;
@@ -14,13 +15,18 @@ export default function Button({
   natural?: boolean;
   bg?: string;
   textXL?: boolean;
+  text2XL?: boolean;
 }) {
   const disabledCss = disabled ? "grayscale opacity-50" : "";
   const naturalText = natural ? " text-black" : " text-white";
   const naturalBg = natural
     ? " bg-natural min-h-[30px]"
     : " bg-primary min-h-[50px] min-w-[110px]";
-  const textSize = textXL ? "text-sm " : "text-xs ";
+  const textSize = text2XL
+    ? "text-2xl py-3 "
+    : textXL
+    ? "text-sm "
+    : "text-xs ";
 
   let bgColor = "";
   let bgText = "";
@@ -57,7 +63,7 @@ export default function Button({
       <div className="rounded-md border-4 border-secondary bg-secondary">
         <div
           className={
-            "text-xs flex tracking-wider leading-4 items-center justify-center rounded-md border border-black px-3 py-1 " +
+            "flex tracking-wider leading-4 items-center justify-center rounded-md border border-black px-3 py-1 " +
             textSize +
             disabledCss +
             naturalBg +

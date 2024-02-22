@@ -24,6 +24,9 @@ import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
 import { useEffect, useState } from "react";
 import OrderCastAdd from "@/components/templates/controls/orderCastAdd";
+import Lock from "@/components/parts/lock";
+import Calculator2 from "@/components/parts/calculator2";
+import Lock2 from "@/components/parts/lock2";
 
 function Control(isControl: any) {
   switch (isControl) {
@@ -102,6 +105,9 @@ export default function Home() {
       {/* {isControl == "" && <SeatMap />} */}
       {!isCard && <SeatMap />}
       {isCard && <HomeButton />}
+      {/* <Lock2 /> */}
+      <Calculator2 />
+      {/* <Calculator2 /> */}
       <OverlayNav />
     </main>
   );
