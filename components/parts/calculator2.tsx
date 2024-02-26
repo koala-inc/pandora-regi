@@ -256,7 +256,7 @@ export default function Calculator2({
                       setIsMinite(true);
                     } else {
                       if (Number(hour) < 2) {
-                        setHour((hour) => hour.slice(1) + "7");
+                        setHour((hour: any) => hour.slice(1) + "7");
                       } else {
                         setHour("07");
                       }
@@ -276,7 +276,7 @@ export default function Calculator2({
                       setIsMinite(false);
                     } else {
                       if (Number(minite) < 6) {
-                        setMinite((minite) => minite.slice(1) + "7");
+                        setMinite((minite: any) => minite.slice(1) + "7");
                       } else {
                         setMinite("07");
                       }
@@ -314,7 +314,7 @@ export default function Calculator2({
                       setIsMinite(true);
                     } else {
                       if (Number(hour) < 2) {
-                        setHour((hour) => hour.slice(1) + "8");
+                        setHour((hour: any) => hour.slice(1) + "8");
                       } else {
                         setHour("08");
                       }
@@ -334,7 +334,7 @@ export default function Calculator2({
                       setIsMinite(false);
                     } else {
                       if (Number(minite) < 6) {
-                        setMinite((minite) => minite.slice(1) + "8");
+                        setMinite((minite: any) => minite.slice(1) + "8");
                       } else {
                         setMinite("08");
                       }
@@ -372,7 +372,7 @@ export default function Calculator2({
                       setIsMinite(true);
                     } else {
                       if (Number(hour) < 2) {
-                        setHour((hour) => hour.slice(1) + "9");
+                        setHour((hour: any) => hour.slice(1) + "9");
                       } else {
                         setHour("09");
                       }
@@ -392,7 +392,7 @@ export default function Calculator2({
                       setIsMinite(false);
                     } else {
                       if (Number(minite) < 6) {
-                        setMinite((minite) => minite.slice(1) + "9");
+                        setMinite((minite: any) => minite.slice(1) + "9");
                       } else {
                         setMinite("09");
                       }
@@ -430,7 +430,7 @@ export default function Calculator2({
                       setIsMinite(true);
                     } else {
                       if (Number(hour) < 2) {
-                        setHour((hour) => hour.slice(1) + "4");
+                        setHour((hour: any) => hour.slice(1) + "4");
                       } else {
                         setHour("04");
                       }
@@ -448,7 +448,7 @@ export default function Calculator2({
                       setMinite("04");
                     } else {
                       if (Number(minite) < 6) {
-                        setMinite((minite) => minite.slice(1) + "4");
+                        setMinite((minite: any) => minite.slice(1) + "4");
                         setIsHour(false);
                         setIsMinite(false);
                       } else {
@@ -486,7 +486,7 @@ export default function Calculator2({
                       setIsMinite(true);
                     } else {
                       if (Number(hour) < 2) {
-                        setHour((hour) => hour.slice(1) + "5");
+                        setHour((hour: any) => hour.slice(1) + "5");
                       } else {
                         setHour("05");
                       }
@@ -504,7 +504,7 @@ export default function Calculator2({
                       setMinite("05");
                     } else {
                       if (Number(minite) < 6) {
-                        setMinite((minite) => minite.slice(1) + "5");
+                        setMinite((minite: any) => minite.slice(1) + "5");
                         setIsHour(false);
                         setIsMinite(false);
                       } else {
@@ -542,7 +542,7 @@ export default function Calculator2({
                       setIsMinite(true);
                     } else {
                       if (Number(hour) < 2) {
-                        setHour((hour) => hour.slice(1) + "6");
+                        setHour((hour: any) => hour.slice(1) + "6");
                       } else {
                         setHour("06");
                       }
@@ -562,7 +562,7 @@ export default function Calculator2({
                       setIsMinite(false);
                     } else {
                       if (Number(minite) < 6) {
-                        setMinite((minite) => minite.slice(1) + "6");
+                        setMinite((minite: any) => minite.slice(1) + "6");
                       } else {
                         setMinite("06");
                       }
@@ -598,7 +598,7 @@ export default function Calculator2({
                       setHour("01");
                     } else {
                       if (Number(hour) < 3) {
-                        setHour((hour) => hour.slice(1) + "1");
+                        setHour((hour: any) => hour.slice(1) + "1");
                         setIsHour(false);
                         setIsMinite(true);
                       } else {
@@ -616,7 +616,7 @@ export default function Calculator2({
                       setMinite("01");
                     } else {
                       if (Number(minite) < 6) {
-                        setMinite((minite) => minite.slice(1) + "1");
+                        setMinite((minite: any) => minite.slice(1) + "1");
                         setIsHour(false);
                         setIsMinite(false);
                       } else {
@@ -652,7 +652,7 @@ export default function Calculator2({
                       setHour("02");
                     } else {
                       if (Number(hour) < 3) {
-                        setHour((hour) => hour.slice(1) + "2");
+                        setHour((hour: any) => hour.slice(1) + "2");
                         setIsHour(false);
                         setIsMinite(true);
                       } else {
@@ -670,7 +670,7 @@ export default function Calculator2({
                       setMinite("02");
                     } else {
                       if (Number(minite) < 6) {
-                        setMinite((minite) => minite.slice(1) + "2");
+                        setMinite((minite: any) => minite.slice(1) + "2");
                         setIsHour(false);
                         setIsMinite(false);
                       } else {
@@ -708,7 +708,7 @@ export default function Calculator2({
                       setIsMinite(true);
                     } else {
                       if (Number(hour) < 3) {
-                        setHour((hour) => hour.slice(1) + "3");
+                        setHour((hour: any) => hour.slice(1) + "3");
                       } else {
                         setHour("03");
                       }
@@ -726,7 +726,7 @@ export default function Calculator2({
                       setMinite("03");
                     } else {
                       if (Number(minite) < 6) {
-                        setMinite((minite) => minite.slice(1) + "3");
+                        setMinite((minite: any) => minite.slice(1) + "3");
                         setIsHour(false);
                         setIsMinite(false);
                       } else {
@@ -758,7 +758,7 @@ export default function Calculator2({
                     setHour("00");
                   } else {
                     if (Number(hour) < 3) {
-                      setHour((hour) => hour.slice(1) + "0");
+                      setHour((hour: any) => hour.slice(1) + "0");
                       setIsHour(false);
                       setIsMinite(true);
                     } else {
@@ -776,7 +776,7 @@ export default function Calculator2({
                     setMinite("00");
                   } else {
                     if (Number(minite) < 6) {
-                      setMinite((minite) => minite.slice(1) + "0");
+                      setMinite((minite: any) => minite.slice(1) + "0");
                       setIsHour(false);
                       setIsMinite(false);
                     } else {
