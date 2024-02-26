@@ -327,6 +327,7 @@ export default function ControlOrderSet() {
                               .format("HH:mm"),
                           };
                         });
+                        setResult(event.event_revision.price);
                         setNowDate(date);
                       }}
                     >
