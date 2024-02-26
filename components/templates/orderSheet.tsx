@@ -984,7 +984,7 @@ function CastAdd() {
                   className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2"
                 >
                   <div className="flex flex-col w-[60px] text-xs">
-                    <p className="text-accent h-[20px]　text-xs">指名種別</p>
+                    <p className="text-accent h-[20px]　text-xs">種別</p>
                     <select
                       className="h-[30px] flex items-center rounded-md mr-1"
                       onChange={(e) => {
@@ -1025,13 +1025,13 @@ function CastAdd() {
                       )}
                     </select>
                   </div>
-                  <div className="flex flex-col w-[60px] text-right">
+                  <div className="flex flex-col w-[70px] text-right">
                     <p className="text-accent h-[20px]　text-xs">キャスト名</p>
                     <p className="h-[30px] text-accent flex items-center">
                       {purchaseOrderItemAdd.title.slice(1)}
                     </p>
                   </div>
-                  <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
+                  <div className="flex flex-col w-[30px] mx-2 text-right justify-center">
                     <p className="text-accent h-[20px] text-xs">数量</p>
                     <input
                       className="h-[30px] px-2 rounded-md text-white"
