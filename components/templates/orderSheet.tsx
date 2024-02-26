@@ -19,6 +19,7 @@ import client from "@/connection";
 import { RequestDocument } from "graphql-request";
 import useSWR, { preload } from "swr";
 import { searchDesignate } from "@/gqls/query/designate";
+import Calculator3 from "../parts/calculator3";
 
 function Lists({
   lists,
@@ -523,7 +524,7 @@ function Base() {
   );
 }
 
-function Add() {
+function Add({ isCalculator, setIsCalculator }: any) {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
@@ -552,6 +553,8 @@ function Add() {
   });
 
   const totalPay2 = total2 + totalPay;
+
+  // const [isCalculator, setIsCalculator] = useState(false);
 
   return (
     <>
@@ -660,43 +663,55 @@ function Add() {
             {purchaseOrderItemAdd?.map(
               (purchaseOrderItemAdd: any, index: any) => (
                 <div
-                  className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2"
+                  className="flex flex-col w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2"
                   key={index}
                 >
-                  <div className="flex flex-col w-[80px] text-xs">
-                    <p className="h-[20px] flex items-center">
-                      <Toggle6 />
-                    </p>
-                    <p className="h-[20px] flex items-center">
-                      <Toggle5 />
-                    </p>
+                  <div className="flex w-full">
+                    <div className="flex flex-col w-[80px] text-xs">
+                      <p className="h-[20px] flex items-center">
+                        <Toggle6 />
+                      </p>
+                      <p className="h-[20px] flex items-center">
+                        <Toggle5 />
+                      </p>
+                    </div>
+                    <div className="flex flex-col w-[100px] text-right">
+                      <p className="h-[40px] text-accent text-lg flex items-center">
+                        {purchaseOrderItemAdd.title}
+                      </p>
+                    </div>
+                    <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
+                      <input
+                        className="h-[30px] px-2 rounded-md text-white"
+                        placeholder="個"
+                        defaultValue={purchaseOrderItemAdd.lot}
+                        onChange={(e) => {
+                          purchaseOrderItemAdd.lot = Number(e.target.value);
+                        }}
+                      />
+                    </div>
+                    <div className="flex flex-col w-[80px] text-right justify-center">
+                      <input
+                        className="h-[30px] px-2 rounded-md text-white"
+                        placeholder="金額"
+                        defaultValue={purchaseOrderItemAdd.price?.toLocaleString()}
+                        onChange={(e) => {
+                          purchaseOrderItemAdd.price = Number(
+                            e.target.value.replace(/[^0-9]/g, "")
+                          );
+                        }}
+                      />
+                    </div>
                   </div>
-                  <div className="flex flex-col w-[100px] text-right">
-                    <p className="h-[40px] text-accent text-lg flex items-center">
-                      {purchaseOrderItemAdd.title}
-                    </p>
-                  </div>
-                  <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
-                    <input
-                      className="h-[30px] px-2 rounded-md text-white"
-                      placeholder="個"
-                      defaultValue={purchaseOrderItemAdd.lot}
-                      onChange={(e) => {
-                        purchaseOrderItemAdd.lot = Number(e.target.value);
+                  <div className="flex w-full items-center py-1">
+                    <div
+                      onClick={() => {
+                        setIsCalculator(true);
                       }}
-                    />
-                  </div>
-                  <div className="flex flex-col w-[80px] text-right justify-center">
-                    <input
-                      className="h-[30px] px-2 rounded-md text-white"
-                      placeholder="金額"
-                      defaultValue={purchaseOrderItemAdd.price?.toLocaleString()}
-                      onChange={(e) => {
-                        purchaseOrderItemAdd.price = Number(
-                          e.target.value.replace(/[^0-9]/g, "")
-                        );
-                      }}
-                    />
+                    >
+                      <Button natural>指名</Button>
+                    </div>
+                    <p className="ml-4">キャスト名</p>
                   </div>
                 </div>
               )
@@ -1153,24 +1168,31 @@ export default function OrderSheet() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
+  const [isCalculator, setIsCalculator] = useState(false);
 
   return (
-    <Card>
-      <div
-        className="flex h-full w-[340px] flex-col font-bold"
-        onClick={() => {
-          if (isHeader) setIsHeader(false);
-          if (isFooter) setIsFooter(false);
-        }}
-      >
-        {isControl == "ITEM" ? (
-          <Add />
-        ) : isControl == "CAST" ? (
-          <CastAdd />
-        ) : (
-          <Base />
-        )}
-      </div>
-    </Card>
+    <>
+      {isCalculator && <Calculator3 setIsCalculator={setIsCalculator} />}
+      <Card>
+        <div
+          className="flex h-full w-[340px] flex-col font-bold"
+          onClick={() => {
+            if (isHeader) setIsHeader(false);
+            if (isFooter) setIsFooter(false);
+          }}
+        >
+          {isControl == "ITEM" ? (
+            <Add
+              isCalculator={isCalculator}
+              setIsCalculator={setIsCalculator}
+            />
+          ) : isControl == "CAST" ? (
+            <CastAdd />
+          ) : (
+            <Base />
+          )}
+        </div>
+      </Card>
+    </>
   );
 }
