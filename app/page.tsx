@@ -106,7 +106,7 @@ export default function Home() {
       {!isCard && <SeatMap />}
       {isCard && <HomeButton />}
       {/* <Lock2 /> */}
-      <Calculator2 />
+      {/* <Calculator2 /> */}
       {/* <Calculator2 /> */}
       <OverlayNav />
     </main>
