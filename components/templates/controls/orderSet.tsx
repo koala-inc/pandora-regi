@@ -439,6 +439,7 @@ export default function ControlOrderSet() {
                           String(Number(event.event_revision.set_time))
                         );
                         setNowDate(date);
+                        setRoomResult(String(Number(activeTabRC)));
                       }}
                     >
                       {event.event_revision.name}
