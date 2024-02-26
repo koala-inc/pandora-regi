@@ -23,7 +23,7 @@ export default function Toggle({ isChecked, setIsChecked }: any) {
             }`}
           >
             <span
-              className={`flex h-full min-w-[5rem] items-center ${
+              className={`flex mt-[0.5px] h-full min-w-[5rem] items-center ${
                 isChecked ? "ml-[-38px]" : "ml-[26px]"
               }`}
             >
