@@ -24,6 +24,7 @@ import { searchMenu } from "@/gqls/query/menu";
 import { searchCast } from "@/gqls/query/cast";
 import usePurchaseOrderItemAddGlobal from "@/globalstates/purchaseOrderItemAdd";
 import { searchDesignate } from "@/gqls/query/designate";
+import dayjs from "dayjs";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -369,12 +370,16 @@ export default function OrderCastAdd() {
                       }
                       key={index}
                       onClick={() => {
+                        const nowDate = dayjs(new Date());
                         setPurchaseOrderItemAdd([
                           ...purchaseOrderItemAdd,
                           {
                             title: selectDesignateSymbol + cast.name,
                             lot: 1,
                             price: Number(selectDesignatePrice),
+                            time: nowDate
+                              .minute(Math.round(nowDate.minute() / 5) * 5)
+                              .format("HH:mm"),
                           },
                         ]);
                       }}

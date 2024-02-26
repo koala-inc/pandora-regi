@@ -971,7 +971,7 @@ function CastAdd() {
                   <div className="flex flex-col w-[60px] text-xs">
                     <p className="text-accent h-[20px]"></p>
                     <select
-                      className="h-[30px] flex items-center"
+                      className="h-[30px] flex items-center rounded-md mr-1"
                       onChange={(e) => {
                         const data = JSON.parse(e.target.value);
                         setSelectDesignate(data.id);
@@ -1026,7 +1026,7 @@ function CastAdd() {
                       }}
                     />
                   </div>
-                  <div className="flex flex-col w-[80px] mr-2 text-right justify-center">
+                  <div className="flex flex-col w-[70px] mr-2 text-right justify-center">
                     <p className="text-accent h-[20px]"></p>
                     <input
                       className="h-[30px] px-2 rounded-md text-white"
@@ -1039,11 +1039,12 @@ function CastAdd() {
                       }}
                     />
                   </div>
-                  <div className="flex flex-col w-[80px] text-right justify-center">
+                  <div className="flex flex-col w-[100px] text-right justify-center">
                     <p className="text-accent h-[20px] text-xs">指名開始時間</p>
                     <input
                       type="time"
                       className="h-[30px] px-2 rounded-md text-white"
+                      value={purchaseOrderItemAdd.time}
                     />
                   </div>
                 </div>
