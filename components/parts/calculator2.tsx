@@ -8,6 +8,7 @@ export default function Calculator2({
   result,
   setResult,
   setIsCalculator,
+  callback,
 }: any) {
   // const [result, setResult] = useState("");
   const [tax, setTax] = useState(false);
@@ -22,6 +23,7 @@ export default function Calculator2({
   const [minite, setMinite] = useState("00");
 
   const [miniteType, setMiniteType] = useState(5);
+  const [result2, setResult2] = useState("");
 
   return (
     <div
@@ -34,7 +36,10 @@ export default function Calculator2({
       >
         <div
           className="absolute right-[-15px] top-[-15px] rounded-full border-4 border-secondary"
-          onClick={() => {}}
+          onClick={() => {
+            setResult2("");
+            setIsCalculator(false);
+          }}
         >
           <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full border border-black bg-primary p-[6px]">
             <Image
@@ -791,10 +796,12 @@ export default function Calculator2({
                 if (isHour) {
                   setIsHour(false);
                   setIsMinite(true);
-                }
-                if (isMinite) {
+                } else if (isMinite) {
                   setIsHour(false);
                   setIsMinite(false);
+                } else {
+                  callback(hour, minite);
+                  setIsCalculator(false);
                 }
               }}
             >

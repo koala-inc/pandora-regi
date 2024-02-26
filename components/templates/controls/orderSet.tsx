@@ -18,6 +18,7 @@ import dayjs from "dayjs";
 import ja from "dayjs/locale/ja";
 import Calculator from "@/components/parts/calculator";
 import Calculator1 from "@/components/parts/calculator1";
+import Calculator2 from "@/components/parts/calculator2";
 
 dayjs.locale(ja);
 
@@ -206,6 +207,10 @@ export default function ControlOrderSet() {
   const [result, setResult] = useState("0");
   const [roomResult, setRoomResult] = useState("0");
   const [numResult, setNumResult] = useState("0");
+
+  const [setTimeResult, setSetTimeResult] = useState("0");
+  const [startTimeResult, setStartTimeResult] = useState("0");
+
   return (
     <>
       {isCalculator && isCalculatorSelect == 0 && (
@@ -227,6 +232,90 @@ export default function ControlOrderSet() {
           result={numResult}
           setResult={setNumResult}
           setIsCalculator={setIsCalculator}
+        />
+      )}
+      {isCalculator && isCalculatorSelect == 3 && (
+        <Calculator1
+          result={setTimeResult}
+          setResult={setSetTimeResult}
+          setIsCalculator={setIsCalculator}
+          callback={(result: any) => {
+            const date = nowDate.hour(Number(order.startTime?.split(":")[0]));
+            const newDate = date.minute(Number(order.startTime?.split(":")[1]));
+            setOrder((order: any) => {
+              return {
+                ...order,
+                setTime: Number(result.replace(/[^0-9]/g, "")),
+                endTime: newDate
+                  .add(Number(result.replace(/[^0-9]/g, "") || 0), "minute")
+                  .format("HH:mm"),
+                callTime: newDate
+                  .add(
+                    Number(result.replace(/[^0-9]/g, "") || 0) - 10,
+                    "minute"
+                  )
+                  .format("HH:mm"),
+              };
+            });
+          }}
+        />
+      )}
+      {isCalculator && isCalculatorSelect == 4 && (
+        <Calculator2
+          result={startTimeResult}
+          setResult={setStartTimeResult}
+          setIsCalculator={setIsCalculator}
+          callback={(hour: any, minite: any) => {
+            const date = nowDate.hour(Number(hour));
+            const newDate = date.minute(Number(minite));
+            setOrder((order: any) => {
+              return {
+                ...order,
+                startTime: newDate.format("HH:mm"),
+                endTime: newDate
+                  .add(Number(order.setTime || 0), "minute")
+                  .format("HH:mm"),
+                callTime: newDate
+                  .add(Number(order.setTime || 0) - 10, "minute")
+                  .format("HH:mm"),
+              };
+            });
+          }}
+        />
+      )}
+      {isCalculator && isCalculatorSelect == 5 && (
+        <Calculator2
+          result={startTimeResult}
+          setResult={setStartTimeResult}
+          setIsCalculator={setIsCalculator}
+          callback={(hour: any, minite: any) => {
+            const date = nowDate.hour(Number(hour));
+            const newDate = date.minute(Number(minite));
+            setOrder((order: any) => {
+              return {
+                ...order,
+                endTime: newDate.format("HH:mm"),
+                callTime: newDate.subtract(10, "minute").format("HH:mm"),
+              };
+            });
+          }}
+        />
+      )}
+      {isCalculator && isCalculatorSelect == 6 && (
+        <Calculator2
+          result={startTimeResult}
+          setResult={setStartTimeResult}
+          setIsCalculator={setIsCalculator}
+          callback={(hour: any, minite: any) => {
+            const date = nowDate.hour(Number(hour));
+            const newDate = date.minute(Number(minite));
+            setOrder((order: any) => {
+              return {
+                ...order,
+                callTime: newDate.format("HH:mm"),
+              };
+            });
+          }}
         />
       )}
       <motion.div
@@ -535,7 +624,9 @@ export default function ControlOrderSet() {
                 className="mr-8 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl"
                 placeholder="0"
                 maxLength={3}
-                value={order.setTime?.toLocaleString()}
+                value={Number(
+                  setTimeResult.replace(/[^0-9]/g, "")
+                )?.toLocaleString()}
                 onChange={(e) => {
                   const date = nowDate.hour(
                     Number(order.startTime?.split(":")[0])
@@ -566,6 +657,11 @@ export default function ControlOrderSet() {
                     };
                   });
                 }}
+                onClick={() => {
+                  setIsCalculatorSelect(3);
+                  setIsCalculator(true);
+                }}
+                readOnly
               />
               <p className="absolute text-xl bottom-[8px] right-[40px] opacity-60">
                 分
@@ -611,29 +707,14 @@ export default function ControlOrderSet() {
                   </span>
                 </label>
                 <input
-                  type="time"
-                  className="mr-4 h-[45px] rounded-md px-2 text-xl"
+                  type="text"
+                  className="mr-4 h-[45px] w-[80px] rounded-md px-2 text-xl"
                   value={order.startTime}
-                  onChange={(e) => {
-                    setOrder((order: any) => {
-                      const date = nowDate.hour(
-                        Number(e.target.value.split(":")[0])
-                      );
-                      const newDate = date.minute(
-                        Number(e.target.value.split(":")[1])
-                      );
-                      return {
-                        ...order,
-                        startTime: newDate.format("HH:mm"),
-                        endTime: newDate
-                          .add(Number(order.setTime || 0), "minute")
-                          .format("HH:mm"),
-                        callTime: newDate
-                          .add(Number(order.setTime || 0) - 10, "minute")
-                          .format("HH:mm"),
-                      };
-                    });
+                  onClick={() => {
+                    setIsCalculatorSelect(4);
+                    setIsCalculator(true);
                   }}
+                  readOnly
                 />
               </div>
               <p className="text-sm mr-4 mt-[50px]">〜</p>
@@ -645,26 +726,14 @@ export default function ControlOrderSet() {
                   </span>
                 </label>
                 <input
-                  type="time"
-                  className="mr-8 h-[45px] rounded-md px-2 text-xl"
+                  type="text"
+                  className="mr-8 h-[45px] w-[80px] rounded-md px-2 text-xl"
                   value={order.endTime}
-                  onChange={(e) => {
-                    setOrder((order: any) => {
-                      const date = nowDate.hour(
-                        Number(e.target.value.split(":")[0])
-                      );
-                      const newDate = date.minute(
-                        Number(e.target.value.split(":")[1])
-                      );
-                      return {
-                        ...order,
-                        endTime: newDate.format("HH:mm"),
-                        callTime: newDate
-                          .subtract(10, "minute")
-                          .format("HH:mm"),
-                      };
-                    });
+                  onClick={() => {
+                    setIsCalculatorSelect(5);
+                    setIsCalculator(true);
                   }}
+                  readOnly
                 />
               </div>
             </div>
@@ -675,21 +744,18 @@ export default function ControlOrderSet() {
               <div className="flex">
                 <Toggle isChecked={toggle} setIsChecked={setToggle} />
                 <input
-                  type="time"
+                  type="text"
                   className={
                     toggle
-                      ? "ml-4 mr-4 h-[45px] rounded-md px-2 text-xl opacity-10"
-                      : "ml-4 mr-4 h-[45px] rounded-md px-2 text-xl"
+                      ? "ml-4 mr-4 h-[45px] w-[80px] rounded-md px-2 text-xl opacity-10"
+                      : "ml-4 mr-4 h-[45px] w-[80px] rounded-md px-2 text-xl"
                   }
                   defaultValue={order.callTime}
-                  onChange={(e) => {
-                    setOrder((order: any) => {
-                      return {
-                        ...order,
-                        callTime: e.target.value,
-                      };
-                    });
+                  onClick={() => {
+                    setIsCalculatorSelect(6);
+                    setIsCalculator(true);
                   }}
+                  readOnly
                 />
               </div>
             </div>
@@ -1128,7 +1194,7 @@ export default function ControlOrderSet() {
                       alert("人数を正しく入力してください。");
                       flag1 = false;
                     }
-                    if (Number(order.setTime) <= 0 || !order.setTime) {
+                    if (Number(setTimeResult) <= 0 || !setTimeResult) {
                       alert("セット時間を正しく入力してください。");
                       flag2 = false;
                     }
