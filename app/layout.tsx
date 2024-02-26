@@ -77,11 +77,11 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: "#000",
   colorScheme: "dark",
-  width: "2560",
+  width: "device-width",
   minimumScale: 1,
   maximumScale: 1,
   userScalable: false,
-  // viewportFit: "cover",
+  viewportFit: "cover",
   interactiveWidget: "resizes-visual",
 };
 
@@ -92,7 +92,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className="relative h-full w-full">
+      <body className="block relative h-[100dvh] w-[100dvw]">
         <Background />
         {children}
         <DevTool />
