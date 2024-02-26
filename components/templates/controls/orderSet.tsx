@@ -562,6 +562,7 @@ export default function ControlOrderSet() {
                 onClick={() => {
                   setIsCalculator(true);
                 }}
+                readOnly
               />
               <p className="absolute text-xl bottom-[8px] right-[40px] opacity-60">
                 円
