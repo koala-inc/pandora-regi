@@ -17,6 +17,7 @@ import { searchDesignate } from "@/gqls/query/designate";
 import dayjs from "dayjs";
 import ja from "dayjs/locale/ja";
 import Calculator from "@/components/parts/calculator";
+import Calculator1 from "@/components/parts/calculator1";
 
 dayjs.locale(ja);
 
@@ -201,13 +202,30 @@ export default function ControlOrderSet() {
   let count2 = 0;
 
   const [isCalculator, setIsCalculator] = useState(false);
+  const [isCalculatorSelect, setIsCalculatorSelect] = useState(0);
   const [result, setResult] = useState("0");
+  const [roomResult, setRoomResult] = useState("0");
+  const [numResult, setNumResult] = useState("0");
   return (
     <>
-      {isCalculator && (
+      {isCalculator && isCalculatorSelect == 0 && (
         <Calculator
           result={result}
           setResult={setResult}
+          setIsCalculator={setIsCalculator}
+        />
+      )}
+      {isCalculator && isCalculatorSelect == 1 && (
+        <Calculator
+          result={roomResult}
+          setResult={setRoomResult}
+          setIsCalculator={setIsCalculator}
+        />
+      )}
+      {isCalculator && isCalculatorSelect == 2 && (
+        <Calculator1
+          result={numResult}
+          setResult={setNumResult}
           setIsCalculator={setIsCalculator}
         />
       )}
@@ -449,15 +467,22 @@ export default function ControlOrderSet() {
                 className="mr-4 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl"
                 placeholder="0"
                 maxLength={7}
-                value={order.roomCharge?.toLocaleString()}
-                onChange={(e) => {
-                  setOrder((order: any) => {
-                    return {
-                      ...order,
-                      roomCharge: Number(e.target.value.replace(/[^0-9]/g, "")),
-                    };
-                  });
+                // onChange={(e) => {
+                //   setOrder((order: any) => {
+                //     return {
+                //       ...order,
+                //       roomCharge: Number(e.target.value.replace(/[^0-9]/g, "")),
+                //     };
+                //   });
+                // }}
+                value={Number(
+                  roomResult.replace(/[^0-9]/g, "")
+                )?.toLocaleString()}
+                onClick={() => {
+                  setIsCalculatorSelect(1);
+                  setIsCalculator(true);
                 }}
+                readOnly
               />
               <p className="absolute text-xl bottom-[8px] right-[25px] opacity-60">
                 円
@@ -476,15 +501,23 @@ export default function ControlOrderSet() {
                 className="mr-8 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl"
                 placeholder="0"
                 maxLength={3}
-                value={order.num?.toLocaleString()}
-                onChange={(e) => {
-                  setOrder((order: any) => {
-                    return {
-                      ...order,
-                      num: Number(e.target.value.replace(/[^0-9]/g, "")),
-                    };
-                  });
+                // value={order.num?.toLocaleString()}
+                // onChange={(e) => {
+                //   setOrder((order: any) => {
+                //     return {
+                //       ...order,
+                //       num: Number(e.target.value.replace(/[^0-9]/g, "")),
+                //     };
+                //   });
+                // }}
+                value={Number(
+                  numResult.replace(/[^0-9]/g, "")
+                )?.toLocaleString()}
+                onClick={() => {
+                  setIsCalculatorSelect(2);
+                  setIsCalculator(true);
                 }}
+                readOnly
               />
               <p className="absolute text-xl bottom-[8px] right-[40px] opacity-60">
                 名
@@ -560,6 +593,7 @@ export default function ControlOrderSet() {
                 //   });
                 // }}
                 onClick={() => {
+                  setIsCalculatorSelect(0);
                   setIsCalculator(true);
                 }}
                 readOnly
@@ -1117,6 +1151,8 @@ export default function ControlOrderSet() {
                           orderItem: [],
                           orderCast: [],
                           price: Number(result.replace(/[^0-9]/g, "")),
+                          roomCharge: Number(roomResult.replace(/[^0-9]/g, "")),
+                          num: Number(numResult.replace(/[^0-9]/g, "")),
                         },
                       ]);
                     }

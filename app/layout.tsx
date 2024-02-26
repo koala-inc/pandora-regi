@@ -92,7 +92,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className="block relative h-[100dvh] w-[100dvw]">
+      <body className="relative h-full w-full">
         <Background />
         {children}
         <DevTool />
