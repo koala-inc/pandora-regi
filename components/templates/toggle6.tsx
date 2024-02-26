@@ -28,7 +28,7 @@ export default function Toggle() {
                 isChecked ? "ml-[-36px]" : "ml-[22px]"
               }`}
             >
-              {isChecked ? "ゲスト" : "レディース"}
+              {isChecked ? "送信する" : "送信しない"}
             </span>
           </span>
         </span>

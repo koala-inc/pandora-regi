@@ -2,6 +2,8 @@ import Image from "next/image";
 import Border from "./border";
 import Button from "./button";
 import Toggle from "./toggle";
+import Toggle5 from "./toggle5";
+import Toggle6 from "./toggle6";
 import Card from "@/components/templates/card";
 import Border2 from "@/components/templates/border";
 
@@ -661,11 +663,15 @@ function Add() {
                   className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2"
                   key={index}
                 >
-                  <div className="flex flex-col w-[60px] text-xs">
-                    <p className="h-[20px] flex items-center">送信する</p>
-                    <p className="h-[20px] flex items-center">ゲスト</p>
+                  <div className="flex flex-col w-[80px] text-xs">
+                    <p className="h-[20px] flex items-center">
+                      <Toggle6 />
+                    </p>
+                    <p className="h-[20px] flex items-center">
+                      <Toggle5 />
+                    </p>
                   </div>
-                  <div className="flex flex-col w-[120px] text-right">
+                  <div className="flex flex-col w-[100px] text-right">
                     <p className="h-[40px] text-accent text-lg flex items-center">
                       {purchaseOrderItemAdd.title}
                     </p>
@@ -829,6 +835,10 @@ function CastAdd() {
 
   const totalPay2 = total2 + totalPay;
 
+  const [selectDesignate, setSelectDesignate] = useState(-1);
+  const [selectDesignateSymbol, setSelectDesignateSymbol] = useState("");
+  const [selectDesignatePrice, setSelectDesignatePrice] = useState(0);
+
   return (
     <>
       <section className="flex items-center justify-around text-md mb-4">
@@ -958,9 +968,18 @@ function CastAdd() {
                   key={index}
                   className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2"
                 >
-                  <div className="flex flex-col w-[30px] text-xs">
+                  <div className="flex flex-col w-[60px] text-xs">
                     <p className="text-accent h-[20px]"></p>
-                    <select className="h-[30px] flex items-center">
+                    <select
+                      className="h-[30px] flex items-center"
+                      onChange={(e) => {
+                        const data = JSON.parse(e.target.value);
+                        setSelectDesignate(data.id);
+                        setSelectDesignateSymbol(data.symbol);
+                        setSelectDesignatePrice(data.price);
+                        purchaseOrderItemAdd.price = Number(data.price);
+                      }}
+                    >
                       {searchData4?.data?.designate[0]?.store_designate[0]?.designate?.map(
                         (designate: any, index: any) => {
                           // if (selectDesignate == -1 && count2 == 0) {
@@ -974,28 +993,15 @@ function CastAdd() {
                           // }
                           // count2 += 1;
                           return (
-                            <Button
-                              // className={
-                              //   designate.id == selectDesignate
-                              //     ? "min-w-[5rem] mb-2"
-                              //     : "min-w-[5rem] mb-2 opacity-60"
-                              // }
-                              key={index}
-                              natural
-                              onClick={() => {
-                                // setSelectDesignate(designate.id);
-                                // setSelectDesignateSymbol(
-                                //   designate.designate_revision.symbol
-                                // );
-                                // setSelectDesignatePrice(
-                                //   designate.designate_revision.price
-                                // );
-                              }}
+                            <option
+                              value={JSON.stringify({
+                                id: designate.id,
+                                symbol: designate.designate_revision.symbol,
+                                price: designate.designate_revision.price,
+                              })}
                             >
-                              <option>
-                                {designate.designate_revision.name}
-                              </option>
-                            </Button>
+                              {designate.designate_revision.name}
+                            </option>
                           );
                         }
                       )}
@@ -1012,7 +1018,7 @@ function CastAdd() {
                     <input
                       className="h-[30px] px-2 rounded-md text-white"
                       placeholder="個"
-                      defaultValue={purchaseOrderItemAdd.lot}
+                      value={purchaseOrderItemAdd.lot}
                       onChange={(e) => {
                         purchaseOrderItemAdd.lot = Number(
                           e.target.value.replace(/[^0-9]/g, "")
@@ -1025,7 +1031,7 @@ function CastAdd() {
                     <input
                       className="h-[30px] px-2 rounded-md text-white"
                       placeholder="金額"
-                      defaultValue={purchaseOrderItemAdd.price?.toLocaleString()}
+                      value={purchaseOrderItemAdd.price?.toLocaleString()}
                       onChange={(e) => {
                         purchaseOrderItemAdd.price = Number(
                           e.target.value.replace(/[^0-9]/g, "")
