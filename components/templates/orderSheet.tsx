@@ -996,6 +996,7 @@ function CastAdd() {
                           // count2 += 1;
                           return (
                             <option
+                              key={index}
                               value={JSON.stringify({
                                 id: designate.id,
                                 symbol: designate.designate_revision.symbol,
