@@ -262,7 +262,7 @@ export default function ControlOrderSet() {
       )}
       {isCalculator && isCalculatorSelect == 4 && (
         <Calculator2
-          result={startTimeResult}
+          result={order.startTime}
           setResult={setStartTimeResult}
           setIsCalculator={setIsCalculator}
           callback={(hour: any, minite: any) => {
@@ -285,7 +285,7 @@ export default function ControlOrderSet() {
       )}
       {isCalculator && isCalculatorSelect == 5 && (
         <Calculator2
-          result={startTimeResult}
+          result={order.endTime}
           setResult={setStartTimeResult}
           setIsCalculator={setIsCalculator}
           callback={(hour: any, minite: any) => {
@@ -303,7 +303,7 @@ export default function ControlOrderSet() {
       )}
       {isCalculator && isCalculatorSelect == 6 && (
         <Calculator2
-          result={startTimeResult}
+          result={order.callTime}
           setResult={setStartTimeResult}
           setIsCalculator={setIsCalculator}
           callback={(hour: any, minite: any) => {
@@ -435,6 +435,9 @@ export default function ControlOrderSet() {
                           };
                         });
                         setResult(String(Number(event.event_revision.price)));
+                        setSetTimeResult(
+                          String(Number(event.event_revision.set_time))
+                        );
                         setNowDate(date);
                       }}
                     >

@@ -16,11 +16,11 @@ export default function Calculator2({
 
   const [isHour, setIsHour] = useState(false);
   const [isHourTrue, setIsHourTrue] = useState(false);
-  const [hour, setHour] = useState("00");
+  const [hour, setHour] = useState(result ? result.split(":")[0] : "00");
 
   const [isMinite, setIsMinite] = useState(false);
   const [isMiniteTrue, setIsMiniteTrue] = useState(false);
-  const [minite, setMinite] = useState("00");
+  const [minite, setMinite] = useState(result ? result.split(":")[1] : "00");
 
   const [miniteType, setMiniteType] = useState(5);
   const [result2, setResult2] = useState("");
@@ -800,7 +800,7 @@ export default function Calculator2({
                   setIsHour(false);
                   setIsMinite(false);
                 } else {
-                  callback(hour, minite);
+                  if (callback) callback(hour, minite);
                   setIsCalculator(false);
                 }
               }}
