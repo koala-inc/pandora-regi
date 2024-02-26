@@ -68,7 +68,9 @@ export default function Calculator3({
       >
         <div
           className="absolute right-[-15px] top-[-15px] rounded-full border-4 border-secondary"
-          onClick={() => {}}
+          onClick={() => {
+            setIsCalculator(false);
+          }}
         >
           <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full border border-black bg-primary p-[6px]">
             <Image
