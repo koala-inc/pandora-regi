@@ -1124,7 +1124,7 @@ export default function ControlOrderSet() {
                     let flag2 = true;
                     let flag3 = true;
                     let flag4 = true;
-                    if (Number(order.num) <= 0 || !order.num) {
+                    if (Number(numResult) <= 0 || !order.num) {
                       alert("人数を正しく入力してください。");
                       flag1 = false;
                     }
