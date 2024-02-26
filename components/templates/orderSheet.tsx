@@ -1026,13 +1026,13 @@ function CastAdd() {
                     </select>
                   </div>
                   <div className="flex flex-col w-[60px] text-right">
-                    <p className="text-accent h-[20px]"></p>
+                    <p className="text-accent h-[20px]　text-xs">指名種別</p>
                     <p className="h-[30px] text-accent flex items-center">
                       {purchaseOrderItemAdd.title.slice(1)}
                     </p>
                   </div>
                   <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
-                    <p className="text-accent h-[20px]"></p>
+                    <p className="text-accent h-[20px] text-xs">数量</p>
                     <input
                       className="h-[30px] px-2 rounded-md text-white"
                       placeholder="個"
@@ -1045,7 +1045,7 @@ function CastAdd() {
                     />
                   </div>
                   <div className="flex flex-col w-[70px] mr-2 text-right justify-center">
-                    <p className="text-accent h-[20px]"></p>
+                    <p className="text-accent h-[20px] text-xs">単価</p>
                     <input
                       className="h-[30px] px-2 rounded-md text-white"
                       placeholder="金額"
