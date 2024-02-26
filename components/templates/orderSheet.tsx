@@ -977,6 +977,8 @@ function CastAdd() {
                         setSelectDesignate(data.id);
                         setSelectDesignateSymbol(data.symbol);
                         setSelectDesignatePrice(data.price);
+                        purchaseOrderItemAdd.title =
+                          data.symbol + purchaseOrderItemAdd.title.slice(1);
                         purchaseOrderItemAdd.price = Number(data.price);
                       }}
                     >
