@@ -4,8 +4,12 @@ import { useState } from "react";
 import Image from "next/image";
 import Button from "../templates/button";
 
-export default function Calculator2() {
-  const [result, setResult] = useState("");
+export default function Calculator2({
+  result,
+  setResult,
+  setIsCalculator,
+}: any) {
+  // const [result, setResult] = useState("");
   const [tax, setTax] = useState(false);
   const max = 99;
 

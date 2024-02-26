@@ -3,8 +3,12 @@
 import { useState } from "react";
 import Image from "next/image";
 
-export default function Calculator() {
-  const [result, setResult] = useState("");
+export default function Calculator({
+  result,
+  setResult,
+  setIsCalculator,
+}: any) {
+  // const [result, setResult] = useState("");
   const [tax, setTax] = useState(false);
   const max = 999999999;
 
@@ -19,7 +23,7 @@ export default function Calculator() {
       >
         <div
           className="absolute right-[-15px] top-[-15px] rounded-full border-4 border-secondary"
-          onClick={() => {}}
+          onClick={() => setIsCalculator(false)}
         >
           <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full border border-black bg-primary p-[6px]">
             <Image
@@ -40,7 +44,7 @@ export default function Calculator() {
               className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-natural text-black shadow-2xl"
               onClick={() => {
                 if (Number(result + "7") < max) {
-                  setResult((result) => result + "7");
+                  setResult((result: any) => result + "7");
                 }
               }}
             >
@@ -52,7 +56,7 @@ export default function Calculator() {
               className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-natural text-black shadow-2xl"
               onClick={() => {
                 if (Number(result + "8") < max) {
-                  setResult((result) => result + "8");
+                  setResult((result: any) => result + "8");
                 }
               }}
             >
@@ -64,7 +68,7 @@ export default function Calculator() {
               className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-natural text-black shadow-2xl"
               onClick={() => {
                 if (Number(result + "9") < max) {
-                  setResult((result) => result + "9");
+                  setResult((result: any) => result + "9");
                 }
               }}
             >
@@ -86,7 +90,7 @@ export default function Calculator() {
               className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-natural text-black shadow-2xl"
               onClick={() => {
                 if (Number(result + "4") < max) {
-                  setResult((result) => result + "4");
+                  setResult((result: any) => result + "4");
                 }
               }}
             >
@@ -98,7 +102,7 @@ export default function Calculator() {
               className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-natural text-black shadow-2xl"
               onClick={() => {
                 if (Number(result + "5") < max) {
-                  setResult((result) => result + "5");
+                  setResult((result: any) => result + "5");
                 }
               }}
             >
@@ -110,7 +114,7 @@ export default function Calculator() {
               className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-natural text-black shadow-2xl"
               onClick={() => {
                 if (Number(result + "6") < max) {
-                  setResult((result) => result + "6");
+                  setResult((result: any) => result + "6");
                 }
               }}
             >
@@ -132,7 +136,7 @@ export default function Calculator() {
               className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-natural text-black shadow-2xl"
               onClick={() => {
                 if (Number(result + "1") < max) {
-                  setResult((result) => result + "1");
+                  setResult((result: any) => result + "1");
                 }
               }}
             >
@@ -144,7 +148,7 @@ export default function Calculator() {
               className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-natural text-black shadow-2xl"
               onClick={() => {
                 if (Number(result + "2") < max) {
-                  setResult((result) => result + "2");
+                  setResult((result: any) => result + "2");
                 }
               }}
             >
@@ -156,7 +160,7 @@ export default function Calculator() {
               className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-natural text-black shadow-2xl"
               onClick={() => {
                 if (Number(result + "3") < max) {
-                  setResult((result) => result + "3");
+                  setResult((result: any) => result + "3");
                 }
               }}
             >
@@ -170,7 +174,7 @@ export default function Calculator() {
               onClick={() => {
                 if (Number(result) > 0) {
                   if (Number(result + "0") < max) {
-                    setResult((result) => result + "0");
+                    setResult((result: any) => result + "0");
                   }
                 }
               }}
@@ -184,7 +188,7 @@ export default function Calculator() {
               onClick={() => {
                 if (Number(result) > 0) {
                   if (Number(result + "00") < max) {
-                    setResult((result) => result + "00");
+                    setResult((result: any) => result + "00");
                   }
                 }
               }}
@@ -198,7 +202,7 @@ export default function Calculator() {
               onClick={() => {
                 if (Number(result) > 0) {
                   if (Number(result + "000") < max) {
-                    setResult((result) => result + "000");
+                    setResult((result: any) => result + "000");
                   }
                 }
               }}
@@ -207,7 +211,12 @@ export default function Calculator() {
             </div>
           </div>
           <div className="flex items-center justify-center text-2xl">
-            <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white bg-neutral-700 text-black shadow-2xl">
+            <div
+              className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white bg-neutral-700 text-black shadow-2xl"
+              onClick={() => {
+                setIsCalculator(false);
+              }}
+            >
               <Image
                 src={"/assets/enter.svg"}
                 width={40}

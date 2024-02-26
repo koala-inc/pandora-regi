@@ -16,6 +16,7 @@ import { searchEvent } from "@/gqls/query/event";
 import { searchDesignate } from "@/gqls/query/designate";
 import dayjs from "dayjs";
 import ja from "dayjs/locale/ja";
+import Calculator from "@/components/parts/calculator";
 
 dayjs.locale(ja);
 
@@ -198,8 +199,18 @@ export default function ControlOrderSet() {
 
   let count = 0;
   let count2 = 0;
+
+  const [isCalculator, setIsCalculator] = useState(false);
+  const [result, setResult] = useState("0");
   return (
     <>
+      {isCalculator && (
+        <Calculator
+          result={result}
+          setResult={setResult}
+          setIsCalculator={setIsCalculator}
+        />
+      )}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 100 }}
@@ -538,14 +549,17 @@ export default function ControlOrderSet() {
                 className="mr-8 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl"
                 placeholder="0"
                 maxLength={7}
-                value={order.price?.toLocaleString()}
-                onChange={(e) => {
-                  setOrder((order: any) => {
-                    return {
-                      ...order,
-                      price: Number(e.target.value.replace(/[^0-9]/g, "")),
-                    };
-                  });
+                value={Number(result.replace(/[^0-9]/g, ""))?.toLocaleString()}
+                // onChange={(e) => {
+                //   setOrder((order: any) => {
+                //     return {
+                //       ...order,
+                //       price: Number(e.target.value.replace(/[^0-9]/g, "")),
+                //     };
+                //   });
+                // }}
+                onClick={() => {
+                  setIsCalculator(true);
                 }}
               />
               <p className="absolute text-xl bottom-[8px] right-[40px] opacity-60">
@@ -1051,6 +1065,7 @@ export default function ControlOrderSet() {
                       roomCharge: 0,
                       cast: [],
                     });
+                    setResult("0");
                     setSelectCast([]);
                   }}
                 >
@@ -1081,7 +1096,7 @@ export default function ControlOrderSet() {
                       alert("セット時間を正しく入力してください。");
                       flag2 = false;
                     }
-                    if (Number(order.price) <= 0 || !order.price) {
+                    if (Number(result.replace(/[^0-9]/g, "")) <= 0 || !result) {
                       alert("金額を正しく入力してください。");
                       flag3 = false;
                     }
@@ -1099,6 +1114,7 @@ export default function ControlOrderSet() {
                           status: status,
                           orderItem: [],
                           orderCast: [],
+                          price: Number(result.replace(/[^0-9]/g, "")),
                         },
                       ]);
                     }
