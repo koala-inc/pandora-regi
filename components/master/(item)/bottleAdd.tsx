@@ -275,8 +275,8 @@ export default function BottleAdd() {
                           onClick={() => {
                             setUpdateForm(() => {
                               return {
-                                id: bottle.id,
                                 ...bottle.bottle_revision,
+                                id: bottle.id,
                               };
                             });
                             setUpdateModal(true);
@@ -641,7 +641,13 @@ export default function BottleAdd() {
                 onClick={() => {
                   client
                     .request(updateBottle, {
-                      ...updateForm,
+                      id: updateForm.id,
+                      name: updateForm.name,
+                      item_code: updateForm.item_code,
+                      item_category_id: updateForm.item_category_id,
+                      price: updateForm.price,
+                      cost: updateForm.cost,
+                      keep_expiration_day: updateForm.keep_expiration_day,
                       is_notice_kitchen: isChecked ? 1 : 0,
                       ...defaultVariables,
                     })
