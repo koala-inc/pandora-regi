@@ -493,8 +493,9 @@ export default function OrderAdd() {
                       };
                     });
                   }}
+                  value={updateForm?.item_category_id || 0}
                 >
-                  <option selected disabled>
+                  <option value={0} selected disabled>
                     選択してください。
                   </option>
                   {searchData2?.data?.category[0]?.store_category[0]?.category?.map(
@@ -616,7 +617,13 @@ export default function OrderAdd() {
                 onClick={() => {
                   client
                     .request(updateMenu, {
-                      ...updateForm,
+                      id: updateForm?.id,
+                      item_category_id: updateForm?.item_category_id || 0,
+                      type: updateForm?.type || 0,
+                      name: updateForm?.name || "",
+                      price: updateForm?.price || 0,
+                      cost: updateForm?.cost || 0,
+                      default_stock: updateForm?.default_stock || 0,
                       is_notice_kitchen: isChecked ? 1 : 0,
                       ...defaultVariables,
                     })
