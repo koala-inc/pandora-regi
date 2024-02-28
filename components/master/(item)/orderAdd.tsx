@@ -451,6 +451,191 @@ export default function OrderAdd() {
           </Border>
         </Modal>
       )}
+      {updateModal && (
+        <Modal setModal={setUpdateModal}>
+          <Border className="w-full" size="p-4 flex flex-col" black>
+            <p className="w-full text-left">オーダー編集</p>
+            <div className="flex w-full flex-wrap">
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  オーダー名
+                </label>
+                <input
+                  className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                  placeholder="オーダー名を入力"
+                  onChange={(e) => {
+                    setUpdateForm((updateForm: any) => {
+                      return {
+                        ...updateForm,
+                        name: e.target.value,
+                      };
+                    });
+                  }}
+                  value={updateForm?.name || ""}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  小カテゴリ
+                </label>
+                <select
+                  className="mr-2 h-[30px] w-[12rem] rounded-md px-2 text-sm"
+                  onChange={(e) => {
+                    setUpdateForm((updateForm: any) => {
+                      return {
+                        ...updateForm,
+                        item_category_id: Number(e.target.value),
+                      };
+                    });
+                  }}
+                >
+                  <option selected disabled>
+                    選択してください。
+                  </option>
+                  {searchData2?.data?.category[0]?.store_category[0]?.category?.map(
+                    (category: any, index: any) => {
+                      if (
+                        category.category_revision.parent_id != 0 &&
+                        category.category_revision.name != ""
+                      ) {
+                        return (
+                          <option
+                            key={index}
+                            value={category.category_revision.item_category_id}
+                          >
+                            {category.category_revision.name}
+                          </option>
+                        );
+                      }
+                    }
+                  )}
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  オーダー種別
+                </label>
+                <select
+                  className="mr-2 h-[30px] w-[12rem] rounded-md px-2 text-sm"
+                  onChange={(e) => {
+                    setUpdateForm((updateForm: any) => {
+                      let group_code = 0;
+                      let type = 0;
+                      switch (e.target.value) {
+                        case "ドリンク":
+                          group_code = 2;
+                          type = 1;
+                          break;
+                        case "ピッチャー":
+                          group_code = 2;
+                          type = 2;
+                          break;
+                        case "フード":
+                          group_code = 3;
+                          type = 1;
+                          break;
+                        case "割り物":
+                          group_code = 3;
+                          type = 2;
+                          break;
+                        case "サービス":
+                          group_code = 3;
+                          type = 3;
+                          break;
+                      }
+                      return {
+                        ...updateForm,
+                        group_code: group_code,
+                        type: type,
+                      };
+                    });
+                  }}
+                >
+                  <option selected disabled>
+                    選択してください。
+                  </option>
+                  {syokai.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefName}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  キッチン送信
+                </label>
+                <Toggle isChecked={isChecked} setIsChecked={setIsChecked} />
+              </div>
+              <div className="flex flex-col">
+                <label className="mt-3 text-xs font-bold text-accent">
+                  料金
+                </label>
+                <input
+                  type="text"
+                  className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                  placeholder="料金を入力"
+                  onChange={(e) => {
+                    setUpdateForm((updateForm: any) => {
+                      return {
+                        ...updateForm,
+                        price: Number(e.target.value),
+                      };
+                    });
+                  }}
+                  value={updateForm?.price || ""}
+                />
+              </div>
+
+              <div
+                className="ml-auto mr-4 flex flex-col justify-end"
+                onClick={() => {
+                  client
+                    .request(createMenu, {
+                      ...updateForm,
+                      is_notice_kitchen: isChecked ? 1 : 0,
+                      ...defaultVariables,
+                    })
+                    .then(() => {
+                      setUpdateForm(() => {});
+                      setSearchForm(() => {});
+                      searchData
+                        .mutate(
+                          () =>
+                            client.request(searchMenu, {
+                              ...defaultVariables,
+                            }),
+                          {
+                            populateCache: true,
+                            revalidate: false,
+                          }
+                        )
+                        .then(() => {
+                          setAddModal(false);
+                        });
+                    });
+                }}
+              >
+                <Border2
+                  complate
+                  rounded="rounded-full"
+                  size="h-[32px] w-[32px] p-[4px]"
+                >
+                  <Image
+                    src={"/assets/complate.svg"}
+                    width={26}
+                    height={26}
+                    className="!h-full !w-full"
+                    alt=""
+                  />
+                </Border2>
+              </div>
+            </div>
+          </Border>
+        </Modal>
+      )}
     </>
   );
 }
