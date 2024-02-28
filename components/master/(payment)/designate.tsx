@@ -55,7 +55,7 @@ export default function Designate() {
           duration: 0.15,
           delay: 0.15,
         }}
-        className="absolute left-[210px] top-1/2 z-0 h-[98dvh] w-[740px] -translate-y-1/2"
+        className="absolute left-[210px] top-1/2 z-0 h-[98dvh] w-[850px] -translate-y-1/2"
       >
         <Border2 size="h-full min-h-[calc(98dvh-10px)] max-h-[calc(98dvh-10px)] overflow-scroll w-full px-4 py-4 flex flex-col !justify-start !items-start">
           <div className="flex max-w-full flex-wrap overflow-scroll">
@@ -178,6 +178,17 @@ export default function Designate() {
                         />
                         <p className="absolute bottom-[2.5px] right-[7px] opacity-60">
                           円
+                        </p>
+                      </div>
+                      <div className="relative flex flex-col mr-3">
+                        <p className="text-accent">延長時間</p>
+                        <input
+                          type="text"
+                          className="h-[30px] w-[6rem] rounded-md px-2 text-right pr-7 text-sm"
+                          placeholder="0"
+                        />
+                        <p className="absolute bottom-[2.5px] right-[7px] opacity-60">
+                          分
                         </p>
                       </div>
                       <div className="relative flex flex-col mr-3">
@@ -341,7 +352,7 @@ export default function Designate() {
               }
             )}
             <div
-              className="mt-8 mb-5 ml-[320px] flex"
+              className="mt-8 mb-5 ml-[370px] flex"
               onClick={() => {
                 client
                   .request(createDesignate, {

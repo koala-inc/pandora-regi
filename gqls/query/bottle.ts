@@ -8,6 +8,7 @@ const searchBottle = gql`
     $id: [Int]
     $item_code: [Int]
     $item_category_id: [Int]
+    $type: Int
     $name: String
     $price_from: Int
     $price_to: Int
@@ -21,6 +22,7 @@ const searchBottle = gql`
       id: $id
       item_code: $item_code
       item_category_id: $item_category_id
+      type: $type
       name: $name
       price_from: $price_from
       price_to: $price_to

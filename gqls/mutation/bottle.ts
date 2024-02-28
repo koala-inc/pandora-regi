@@ -9,6 +9,7 @@ const createBottle = gql`
     $name: String!
     $price: Int
     $cost: Int
+    $type: Int
     $default_stock: Int
     $display: Int
     $point: Int
@@ -23,6 +24,7 @@ const createBottle = gql`
         name: $name
         price: $price
         cost: $cost
+        type: $type
         default_stock: $default_stock
         display: $display
         point: $point
@@ -52,6 +54,7 @@ const updateBottle = gql`
     $item_category_id: Int
     $name: String
     $price: Int
+    $type: Int
     $cost: Int
     $default_stock: Int
     $display: Int
@@ -67,6 +70,7 @@ const updateBottle = gql`
         item_category_id: $item_category_id
         name: $name
         price: $price
+        type: $type
         cost: $cost
         default_stock: $default_stock
         display: $display
