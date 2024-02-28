@@ -10,7 +10,7 @@ import client from "@/connection";
 import { searchCategory } from "@/gqls/query/category";
 import useSWR, { preload } from "swr";
 import { searchMenu } from "@/gqls/query/menu";
-import { createMenu } from "@/gqls/mutation/menu";
+import { createMenu, updateMenu } from "@/gqls/mutation/menu";
 
 const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
@@ -237,7 +237,12 @@ export default function OrderAdd() {
                         <button
                           className="btn btn-ghost btn-xs"
                           onClick={() => {
-                            setUpdateForm(() => menu);
+                            setUpdateForm(() => {
+                              return {
+                                ...menu.menu_revision,
+                                id: menu.id,
+                              };
+                            });
                             setUpdateModal(true);
                           }}
                         >
@@ -550,6 +555,23 @@ export default function OrderAdd() {
                       };
                     });
                   }}
+                  value={
+                    updateForm?.group_code == 2
+                      ? updateForm?.type == 1
+                        ? "ドリンク"
+                        : updateForm?.type == 2
+                        ? "ピッチャー"
+                        : ""
+                      : updateForm?.group_code == 3
+                      ? updateForm?.type == 1
+                        ? "フード"
+                        : updateForm?.type == 2
+                        ? "割り物"
+                        : updateForm?.type == 3
+                        ? "サービス"
+                        : ""
+                      : ""
+                  }
                 >
                   <option selected disabled>
                     選択してください。
@@ -593,7 +615,7 @@ export default function OrderAdd() {
                 className="ml-auto mr-4 flex flex-col justify-end"
                 onClick={() => {
                   client
-                    .request(createMenu, {
+                    .request(updateMenu, {
                       ...updateForm,
                       is_notice_kitchen: isChecked ? 1 : 0,
                       ...defaultVariables,
@@ -613,7 +635,7 @@ export default function OrderAdd() {
                           }
                         )
                         .then(() => {
-                          setAddModal(false);
+                          setUpdateModal(false);
                         });
                     });
                 }}
