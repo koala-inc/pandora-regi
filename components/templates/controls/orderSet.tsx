@@ -592,7 +592,7 @@ export default function ControlOrderSet() {
               </label>
               <input
                 type="text"
-                className="mr-8 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl"
+                className="mr-8 h-[45px] w-[6rem] text-right rounded-md px-2 pr-8 text-xl"
                 placeholder="0"
                 maxLength={3}
                 // value={order.num?.toLocaleString()}
@@ -622,7 +622,7 @@ export default function ControlOrderSet() {
                 セット名
               </label>
               <select
-                className="mr-8 h-[45px] w-[12rem] text-center rounded-md px-2 text-xl"
+                className="mr-8 h-[45px] w-[10rem] text-center rounded-md px-1 text-xl"
                 value={setName}
                 onChange={(e) => {
                   {
@@ -692,7 +692,7 @@ export default function ControlOrderSet() {
               </label>
               <input
                 type="text"
-                className="mr-8 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl"
+                className="mr-8 h-[45px] w-[7rem] text-right rounded-md px-2 pr-8 text-xl"
                 placeholder="0"
                 maxLength={3}
                 value={Number(
