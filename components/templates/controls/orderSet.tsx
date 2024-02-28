@@ -619,6 +619,72 @@ export default function ControlOrderSet() {
             </div>
             <div className="relative flex flex-col">
               <label className="mt-3 mb-2 text-xs font-bold text-accent">
+                セット名
+              </label>
+              <select
+                className="mr-8 h-[45px] w-[12rem] text-center rounded-md px-2 text-xl"
+                value={setName}
+                onChange={(e) => {
+                  {
+                    searchData3?.data?.event[0]?.store_event[0]?.event?.map(
+                      (event: any, index: any) => {
+                        if (event.event_revision.name == e.target.value) {
+                          setSetName(event.event_revision.name);
+                          if (event.event_revision.is_information_center == 1) {
+                            setStatus("案内所");
+                          } else {
+                            setStatus("なし");
+                          }
+                          const date = dayjs(new Date()).minute(
+                            Math.round(nowDate.minute() / 5) * 5
+                          );
+                          setOrder((order: any) => {
+                            return {
+                              ...order,
+                              setTime: Number(event.event_revision.set_time),
+                              price: Number(event.event_revision.price),
+                              roomCharge: Number(activeTabRC),
+                              startTime: date.format("HH:mm"),
+                              endTime: date
+                                .add(
+                                  Number(event.event_revision.set_time),
+                                  "minute"
+                                )
+                                .format("HH:mm"),
+                              callTime: date
+                                .add(
+                                  Number(event.event_revision.set_time) - 10,
+                                  "minute"
+                                )
+                                .format("HH:mm"),
+                            };
+                          });
+                          setResult(String(Number(event.event_revision.price)));
+                          setSetTimeResult(
+                            String(Number(event.event_revision.set_time))
+                          );
+                          setNowDate(date);
+                          setRoomResult(String(Number(activeTabRC)));
+                        }
+                      }
+                    );
+                  }
+                }}
+              >
+                <option selected={setName == ""}>選択してください。</option>
+                {searchData3?.data?.event[0]?.store_event[0]?.event?.map(
+                  (event: any, index: any) => {
+                    return (
+                      <option key={index} value={event.event_revision.name}>
+                        {event.event_revision.name}
+                      </option>
+                    );
+                  }
+                )}
+              </select>
+            </div>
+            <div className="relative flex flex-col">
+              <label className="mt-3 mb-2 text-xs font-bold text-accent">
                 セット時間　
                 <span className="bg-red-700 text-white px-[5px] py-[3px] text-xs rounded-md">
                   必須
@@ -755,7 +821,7 @@ export default function ControlOrderSet() {
                       ? "ml-4 mr-4 h-[45px] w-[80px] rounded-md px-2 text-xl opacity-10"
                       : "ml-4 mr-4 h-[45px] w-[80px] rounded-md px-2 text-xl"
                   }
-                  defaultValue={order.callTime}
+                  value={order.callTime}
                   onClick={() => {
                     setIsCalculatorSelect(6);
                     setIsCalculator(true);
@@ -768,7 +834,7 @@ export default function ControlOrderSet() {
           <div className="w-full mb-6 flex justify-center mt-[-30px] ml-[20px] opacity-50">
             <Line />
           </div>
-          <div className="flex w-full justify-around px-2">
+          <div className="flex w-full justify-around">
             <div className="flex flex-col">
               <p className="mb-1 text-xs font-bold text-accent">指名種</p>
               <div className="flex h-[235px] flex-col overflow-scroll rounded-md border border-white bg-black p-4">
@@ -810,7 +876,7 @@ export default function ControlOrderSet() {
                 )}
               </div>
             </div>
-            <div className="mx-4 flex flex-col">
+            <div className="flex flex-col">
               <p className="mb-1 text-xs font-bold text-accent">キャスト検索</p>
               <div className="mt-4 flex w-[300px]">
                 <Button
@@ -1057,7 +1123,7 @@ export default function ControlOrderSet() {
                 </div>
               </div>
             </div>
-            <div className="mx-2 flex flex-col">
+            <div className="flex flex-col">
               <p className="mb-1 text-xs font-bold text-accent">キャスト検索</p>
               <div className="flex max-h-[235px] min-h-[235px] w-[260px] flex-wrap justify-start items-start overflow-scroll rounded-md border border-white bg-black p-2">
                 {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
@@ -1107,7 +1173,7 @@ export default function ControlOrderSet() {
                 <div className="opacity-0 m-2 flex h-[40px] w-[105px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider"></div>
               </div>
             </div>
-            <div className="mx-4 flex flex-col">
+            <div className="flex flex-col">
               <p className="mb-1 text-xs font-bold text-accent">選択キャスト</p>
               <div className="flex max-h-[200px] min-h-[200px] w-[350px] flex-col justify-start overflow-scroll rounded-md border border-white bg-black p-1">
                 <div className="mt-1 flex px-2 text-xs text-accent">
@@ -1166,6 +1232,9 @@ export default function ControlOrderSet() {
                   className="mr-4"
                   onClick={() => {
                     setOrder({
+                      startTime: "",
+                      endTime: "",
+                      callTime: "",
                       num: 0,
                       setTime: 0,
                       price: 0,
@@ -1174,6 +1243,11 @@ export default function ControlOrderSet() {
                     });
                     setResult("0");
                     setSelectCast([]);
+                    setSetTimeResult("0");
+                    setNumResult("0");
+                    setRoomResult("0");
+                    setSetName("");
+                    setStatus("なし");
                   }}
                 >
                   <Border
