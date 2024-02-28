@@ -61,6 +61,7 @@ export default function ControlOrderSet() {
     startTime: nowDate
       .minute(Math.round(nowDate.minute() / 5) * 5)
       .format("HH:mm"),
+    cast: [],
   });
 
   const fetcher = (q: RequestDocument) =>
