@@ -68,13 +68,28 @@ export default function OrderSheetSet() {
         //   if (isControl != "") setIsControl("");
         // }}
       >
-        <section className="flex flex-1 flex-col text-sm">
+        <section className="flex flex-1 flex-col text-sm max-h-[700px] p-1 py-3 overflow-scroll">
           {isPurchaseOrder &&
             purchaseOrder.map((order: any, index: any) => (
               <div
                 key={index}
-                className="my-1 flex flex-wrap border border-white bg-black p-3"
+                className="relative my-1 mb-6 mx-[auto] w-[95%] flex flex-wrap border border-white bg-black p-3"
               >
+                <Border2
+                  className="absolute right-[-15px] top-[-15px]"
+                  rounded="rounded-full"
+                  size="h-[28px] w-[28px] p-[6px]"
+                >
+                  <div onClick={() => {}}>
+                    <Image
+                      src={"/assets/close.svg"}
+                      width={26}
+                      height={26}
+                      className="!h-full !w-full"
+                      alt=""
+                    />
+                  </div>
+                </Border2>
                 <div className="mx-2 flex flex-col">
                   <p>A1</p>
                 </div>

@@ -238,7 +238,7 @@ function Base() {
               lists={[
                 {
                   title: purchaseOrder[0]?.setName,
-                  lot: 1,
+                  lot: purchaseOrder[0]?.num,
                   price: purchaseOrder[0]?.price,
                 },
                 // {
