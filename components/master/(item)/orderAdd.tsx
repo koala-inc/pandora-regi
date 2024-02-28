@@ -88,13 +88,34 @@ export default function OrderAdd() {
               <input
                 className="mr-2 h-[30px] w-[8rem] rounded-md px-2 text-sm"
                 placeholder="オーダー名を入力"
+                value={searchForm?.name || ""}
+                onChange={(e) => {
+                  setSearchForm((searchForm: any) => {
+                    return {
+                      ...searchForm,
+                      name: e.target.value,
+                    };
+                  });
+                }}
               />
             </div>
             <div className="flex flex-col">
               <label className="mt-3 text-xs font-bold text-accent">
                 小カテゴリ
               </label>
-              <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
+              <select
+                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                value={searchForm?.item_category_id || 0}
+                onChange={(e) => {
+                  setSearchForm((searchForm: any) => {
+                    return {
+                      ...searchForm,
+                      item_category_id: Number(e.target.value),
+                    };
+                  });
+                }}
+              >
+                <option value={0}>選択してください。</option>
                 {searchData2?.data?.category[0]?.store_category[0]?.category?.map(
                   (category: any, index: any) => {
                     if (
@@ -118,17 +139,81 @@ export default function OrderAdd() {
               <label className="mt-3 text-xs font-bold text-accent">
                 オーダー種別
               </label>
-              <select className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm">
+              <select
+                className="mr-2 h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                value={
+                  searchForm?.group_code == 2 && searchForm?.type == 1
+                    ? "ドリンク"
+                    : searchForm?.group_code == 2 && searchForm?.type == 2
+                    ? "ピッチャー"
+                    : searchForm?.group_code == 3 && searchForm?.type == 1
+                    ? "フード"
+                    : searchForm?.group_code == 3 && searchForm?.type == 2
+                    ? "割り物"
+                    : searchForm?.group_code == 3 && searchForm?.type == 3
+                    ? "サービス"
+                    : 0
+                }
+                onChange={(e) => {
+                  setSearchForm((searchForm: any) => {
+                    let group_code = 0;
+                    let type = 0;
+                    switch (e.target.value) {
+                      case "ドリンク":
+                        group_code = 2;
+                        type = 1;
+                        break;
+                      case "ピッチャー":
+                        group_code = 2;
+                        type = 2;
+                        break;
+                      case "フード":
+                        group_code = 3;
+                        type = 1;
+                        break;
+                      case "割り物":
+                        group_code = 3;
+                        type = 2;
+                        break;
+                      case "サービス":
+                        group_code = 3;
+                        type = 3;
+                        break;
+                    }
+                    return {
+                      ...searchForm,
+                      group_code: group_code,
+                      type: type,
+                    };
+                  });
+                }}
+              >
+                <option value={0}>選択してください。</option>
                 {syokai.map((pref) => {
                   return (
-                    <option key={pref.prefCode} value={pref.prefCode}>
+                    <option key={pref.prefCode} value={pref.prefName}>
                       {pref.prefName}
                     </option>
                   );
                 })}
               </select>
             </div>
-            <div className="ml-auto mr-4 flex flex-col justify-end">
+            <div
+              className="ml-auto mr-4 flex flex-col justify-end"
+              onClick={() => {
+                searchData.mutate(
+                  () =>
+                    client.request(searchMenu, {
+                      ...searchForm,
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
+            >
               <Border2
                 rounded="rounded-full"
                 size="h-[32px] w-[32px] p-[4px] bg-search"
@@ -142,7 +227,22 @@ export default function OrderAdd() {
                 />
               </Border2>
             </div>
-            <div className="mr-4 flex flex-col justify-end">
+            <div
+              className="mr-4 flex flex-col justify-end"
+              onClick={() => {
+                setSearchForm({});
+                searchData.mutate(
+                  () =>
+                    client.request(searchMenu, {
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              }}
+            >
               <Border2
                 rounded="rounded-full"
                 size="h-[32px] w-[32px] p-[4px] bg-reset"
@@ -179,7 +279,7 @@ export default function OrderAdd() {
               </tr>
             </thead>
           </table>
-          <table className="table table-xs mt-2 min-h-[500px]">
+          <table className="table table-xs mt-2">
             {/* head */}
             <thead>
               <tr className="text-accent">
