@@ -191,7 +191,7 @@ export default function OrderItemAdd() {
                   return (
                     <div
                       className={
-                        "mx-auto flex h-[75px] w-[130px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+                        "mx-auto flex h-[75px] w-[130px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#416d6d] p-2 text-center text-base leading-5 tracking-widest"
                       }
                       key={index}
                       onClick={() => {
@@ -217,7 +217,7 @@ export default function OrderItemAdd() {
                   return (
                     <div
                       className={
-                        "mx-auto flex h-[75px] w-[130px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+                        "mx-auto flex h-[75px] w-[130px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#416d6d] p-2 text-center text-base leading-5 tracking-widest"
                       }
                       key={index}
                       onClick={() => {
