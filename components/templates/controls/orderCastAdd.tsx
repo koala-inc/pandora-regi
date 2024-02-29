@@ -410,7 +410,7 @@ export default function OrderCastAdd() {
               </Button>
             </div>
           </div>
-          <div className="grid w-full grid-cols-8 grid-rows-5 content-start items-center justify-center rounded-md border border-white bg-black p-4 min-h-[580px]">
+          <div className="grid w-full grid-cols-7 grid-rows-5 content-start items-center justify-center rounded-md border border-white bg-black p-4 min-h-[580px]">
             {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
               (cast: any, index: any) => {
                 if (cast.leaving_date == null && cast.cast_code != 0) {

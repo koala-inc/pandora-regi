@@ -114,7 +114,7 @@ export default function OrderSet() {
         </a> */}
         </div>
         <div className="mt-[-1px] flex h-[590px] w-[calc(100vw-405px)] rounded-b-xl rounded-r-xl bg-primary p-4 text-white">
-          <div className="grid w-full grid-cols-8 grid-rows-5 content-start items-center justify-center rounded-md border border-white bg-black p-4">
+          <div className="grid w-full grid-cols-7 grid-rows-5 content-start items-center justify-center rounded-md border border-white bg-black p-4">
             {searchData2?.data?.bottle[0]?.store_bottle[0]?.bottle?.map(
               (bottle: any, index: any) => {
                 if (
