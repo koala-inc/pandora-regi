@@ -725,6 +725,7 @@ export default function OrderAdd() {
                       cost: updateForm?.cost || 0,
                       default_stock: updateForm?.default_stock || 0,
                       is_notice_kitchen: isChecked ? 1 : 0,
+                      group_code: updateForm?.group_code || 0,
                       ...defaultVariables,
                     })
                     .then(() => {
