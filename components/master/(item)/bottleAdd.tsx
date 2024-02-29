@@ -10,7 +10,11 @@ import { RequestDocument } from "graphql-request";
 import client from "@/connection";
 import { searchCategory } from "@/gqls/query/category";
 import useSWR, { preload } from "swr";
-import { createBottle, updateBottle } from "@/gqls/mutation/bottle";
+import {
+  createBottle,
+  deleteBottle,
+  updateBottle,
+} from "@/gqls/mutation/bottle";
 import { searchBottle } from "@/gqls/query/bottle";
 
 const defaultVariables = {
@@ -348,6 +352,30 @@ export default function BottleAdd() {
                           }}
                         >
                           編集
+                        </button>
+                        <button
+                          className="btn btn-ghost btn-xs"
+                          onClick={() => {
+                            client
+                              .request(deleteBottle, {
+                                id: bottle.id,
+                                ...defaultVariables,
+                              })
+                              .then(() => {
+                                searchData.mutate(
+                                  () =>
+                                    client.request(searchBottle, {
+                                      ...defaultVariables,
+                                    }),
+                                  {
+                                    populateCache: true,
+                                    revalidate: false,
+                                  }
+                                );
+                              });
+                          }}
+                        >
+                          削除
                         </button>
                       </th>
                     </tr>
