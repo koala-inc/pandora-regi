@@ -182,7 +182,7 @@ export default function OrderItemAdd() {
         </a> */}
         </div>
         <div className="mt-[-1px] flex h-[590px] w-[calc(100vw-405px)] rounded-b-xl rounded-r-xl bg-primary p-4 text-white">
-          <div className="grid w-full grid-cols-10 grid-rows-7 content-start items-center justify-center rounded-md border border-white bg-black p-4">
+          <div className="grid w-full grid-cols-8 grid-rows-5 content-start items-center justify-center rounded-md border border-white bg-black p-4">
             {searchData2?.data?.bottle[0]?.store_bottle[0]?.bottle?.map(
               (bottle: any, index: any) => {
                 if (
@@ -191,7 +191,7 @@ export default function OrderItemAdd() {
                   return (
                     <div
                       className={
-                        "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+                        "mx-auto flex h-[75px] w-[130px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
                       }
                       key={index}
                       onClick={() => {
@@ -217,7 +217,7 @@ export default function OrderItemAdd() {
                   return (
                     <div
                       className={
-                        "mx-auto flex h-[50px] w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+                        "mx-auto flex h-[75px] w-[130px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
                       }
                       key={index}
                       onClick={() => {
