@@ -63,7 +63,7 @@ export default function Calculator3({
       onClick={() => {}}
     >
       <div
-        className="relative h-[690px] w-[470px] rounded-md border border-secondary bg-primary p-4"
+        className="relative h-[750px] w-[470px] rounded-md border border-secondary bg-primary p-4"
         onClick={(e) => e.stopPropagation()}
       >
         <div
@@ -82,8 +82,51 @@ export default function Calculator3({
             />
           </span>
         </div>
-        <div className="m-3 h-[50px] rounded-md text-black bg-white border-black border flex justify-end items-center">
+        <div className="m-3 h-[50px] rounded-md text-white bg-black flex justify-end items-center">
           <p className="pr-3">{castNames}</p>
+        </div>
+        <div className="my-3 flex justify-around">
+          <Button
+            className="min-w-[6rem]"
+            natural
+            onClick={() => {
+              searchData.mutate(
+                () =>
+                  client.request(searchCast, {
+                    section: 1,
+                    ...defaultVariables,
+                  }),
+                {
+                  populateCache: true,
+                  revalidate: false,
+                }
+              );
+            }}
+          >
+            在籍
+          </Button>
+          <Button
+            className="min-w-[6rem]"
+            natural
+            onClick={() => {
+              searchData.mutate(
+                () =>
+                  client.request(searchCast, {
+                    section: 2,
+                    ...defaultVariables,
+                  }),
+                {
+                  populateCache: true,
+                  revalidate: false,
+                }
+              );
+            }}
+          >
+            体入/ヘルプ
+          </Button>
+          <Button className="min-w-[6rem]" natural>
+            他店ヘルプ
+          </Button>
         </div>
         <div className="my-4 flex w-full">
           <Line />
@@ -306,7 +349,7 @@ export default function Calculator3({
                       {cast.cast_code != 0 && (
                         <div
                           className={
-                            "mx-1 my-2 flex w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 leading-4 tracking-wider " +
+                            "mx-1 my-2 flex w-[100px] h-[56px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 leading-4 tracking-wider " +
                             size
                           }
                           onClick={() => {
