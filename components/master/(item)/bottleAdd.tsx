@@ -501,6 +501,9 @@ export default function BottleAdd() {
                     });
                   }}
                 >
+                  <option value={0} selected>
+                    選択してください。
+                  </option>
                   {kikan.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefName}>

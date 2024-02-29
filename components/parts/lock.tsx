@@ -16,7 +16,9 @@ export default function Lock() {
   return (
     <div
       className="absolute left-0 top-0 z-40 flex h-[100dvh] w-[100dvw] items-center justify-center bg-black/70 p-10 text-white"
-      onClick={() => {}}
+      onClick={() => {
+        setIsLock(0);
+      }}
     >
       <div
         className="h-[370px] w-[560px] flex justify-center items-center rounded-md border border-secondary bg-primary"

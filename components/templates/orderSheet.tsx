@@ -1010,6 +1010,11 @@ function CastAdd() {
                           data.symbol + purchaseOrderItemAdd.title.slice(1);
                         purchaseOrderItemAdd.price = Number(data.price);
                       }}
+                      defaultValue={JSON.stringify({
+                        id: purchaseOrderItemAdd.id,
+                        symbol: purchaseOrderItemAdd.symbol,
+                        price: purchaseOrderItemAdd.price,
+                      })}
                     >
                       {searchData4?.data?.designate[0]?.store_designate[0]?.designate?.map(
                         (designate: any, index: any) => {

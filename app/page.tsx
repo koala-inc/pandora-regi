@@ -87,7 +87,7 @@ export default function Home() {
     <main
       className="relative h-full w-full"
       onClick={() => {
-        if (isCard && isControl == "" && !isPurchaseOrder) {
+        if (isCard && isControl == "" && !isPurchaseOrder && isLock == 0) {
           setIsCard(false);
         }
       }}
