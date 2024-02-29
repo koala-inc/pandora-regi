@@ -27,6 +27,7 @@ import OrderCastAdd from "@/components/templates/controls/orderCastAdd";
 import Lock from "@/components/parts/lock";
 import Calculator2 from "@/components/parts/calculator2";
 import Lock2 from "@/components/parts/lock2";
+import useIsLockGlobal from "@/globalstates/isLock";
 
 function Control(isControl: any) {
   switch (isControl) {
@@ -72,6 +73,7 @@ export default function Home() {
   const [isFooter] = useIsFooterGlobal();
   const [isCard, setIsCard] = useIsCardGlobal();
   const [isControl] = useIsControlGlobal();
+  const [isLock] = useIsLockGlobal();
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
   const [datetime, setDatetime] = useState(new Date());
 
@@ -91,6 +93,7 @@ export default function Home() {
       }}
     >
       <AnimatePresence>
+        {isLock == 3 && <Lock2 />}
         {!isCard && <SeatMap />}
         {isHeader && !isCard && <Header datetime={datetime} />}
         {isFooter && !isCard && <Footer />}

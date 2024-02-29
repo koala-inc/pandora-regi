@@ -3,6 +3,7 @@ import { useLongPress } from "use-long-press";
 import useIsCardGlobal from "@/globalstates/isCard";
 import useIsControlGlobal from "@/globalstates/isControl";
 import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
+import useIsLockGlobal from "@/globalstates/isLock";
 
 export default function Seat({
   children,
@@ -22,8 +23,14 @@ export default function Seat({
   });
 
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
+  const [isLock, setIsLock] = useIsLockGlobal();
 
-  const bg = isPurchaseOrder ? " bg-natural" : " bg-blue-200 opacity-90";
+  const bg =
+    isLock > 1
+      ? " bg-green-200 opacity-90"
+      : isPurchaseOrder
+      ? " bg-natural"
+      : " bg-blue-200 opacity-90";
 
   // 指名は0.5rem
   // 入退店は0.8rem
@@ -35,8 +42,12 @@ export default function Seat({
         bg
       }
       onClick={() => {
-        setIsCard(true);
-        if (isControl != "") setIsControl("");
+        if (isLock < 2) {
+          setIsCard(true);
+          if (isControl != "") setIsControl("");
+        } else if (isLock == 2) {
+          setIsLock(3);
+        }
       }}
       {...editMode(id)}
     >

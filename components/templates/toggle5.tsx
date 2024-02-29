@@ -16,16 +16,16 @@ export default function Toggle() {
           onChange={handleCheckboxChange}
         />
         <span
-          className={`flex h-[22px] w-[70.5px] items-center overflow-hidden rounded-full border border-white p-[1.5px] duration-300`}
+          className={`flex h-[44px] w-[122px] items-center overflow-hidden rounded-full border border-white p-[1.5px] duration-300`}
         >
           <span
-            className={`h-[18px] w-[18px] rounded-full bg-[#2dc7f9] text-white duration-300 ${
-              isChecked ? "translate-x-12" : ""
+            className={`h-[36px] w-[36px] rounded-full bg-[#2dc7f9] text-white duration-300 ${
+              isChecked ? "translate-x-20" : ""
             }`}
           >
             <span
-              className={`flex h-full min-w-[5rem] items-center text-[8px] ${
-                isChecked ? "ml-[-36px]" : "ml-[22px]"
+              className={`flex h-full min-w-[5rem] items-center text-[14px] ${
+                isChecked ? "ml-[-50px]" : "ml-[40px]"
               }`}
             >
               {isChecked ? "ゲスト" : "レディース"}

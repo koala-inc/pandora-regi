@@ -20,6 +20,8 @@ import { RequestDocument } from "graphql-request";
 import useSWR, { preload } from "swr";
 import { searchDesignate } from "@/gqls/query/designate";
 import Calculator3 from "../parts/calculator3";
+import useIsLockGlobal from "@/globalstates/isLock";
+import Lock from "../parts/lock";
 
 function Lists({
   lists,
@@ -38,8 +40,8 @@ function Lists({
           key={index}
           className="mb-1 flex w-full items-center justify-between"
         >
-          <div className="w-[40%] text-left">{list.title}</div>
-          <div className="w-[10%] text-left">{list.subTitle || ""}</div>
+          <div className="w-[50%] text-left">{list.title.slice(0, 9)}</div>
+          {/* <div className="w-[10%] text-left">{list.subTitle || ""}</div> */}
           <div className="w-[10%] text-right">{list.lot}</div>
           <div className="w-[40%] text-right">
             {(list.price * list.lot)?.toLocaleString()}円
@@ -72,6 +74,7 @@ function Base() {
   const [isControl, setIsControl] = useIsControlGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [toggle, setToggle] = useState(purchaseOrder[0]?.toggle || false);
+  const [isLock, setIsLock] = useIsLockGlobal();
 
   let total = 0;
   purchaseOrder[0]?.cast?.map((cast: any) => {
@@ -512,7 +515,7 @@ function Base() {
         <div
           onClick={(e) => {
             e.stopPropagation();
-            setIsControl("APPROX");
+            setIsLock(1);
           }}
         >
           <Button className="min-w-[8rem]" natural>
@@ -667,22 +670,14 @@ function Add({ isCalculator, setIsCalculator }: any) {
                   key={index}
                 >
                   <div className="flex w-full">
-                    <div className="flex flex-col w-[80px] text-xs">
-                      <p className="h-[20px] flex items-center">
-                        <Toggle6 />
-                      </p>
-                      <p className="h-[20px] flex items-center">
-                        <Toggle5 />
-                      </p>
-                    </div>
-                    <div className="flex flex-col w-[100px] text-right">
-                      <p className="h-[40px] text-accent text-lg flex items-center">
+                    <div className="flex flex-col w-[200px] text-left">
+                      <p className="h-[40px] my-2 text-accent text-base leading-5 flex items-center text-left">
                         {purchaseOrderItemAdd.title}
                       </p>
                     </div>
-                    <div className="flex flex-col w-[40px] mx-2 text-right justify-center">
+                    <div className="flex flex-col w-[32px] mx-2 text-right justify-center">
                       <input
-                        className="h-[30px] px-2 rounded-md text-white"
+                        className="h-[40px] px-2 rounded-md text-white text-center"
                         placeholder="個"
                         defaultValue={purchaseOrderItemAdd.lot}
                         onChange={(e) => {
@@ -690,9 +685,9 @@ function Add({ isCalculator, setIsCalculator }: any) {
                         }}
                       />
                     </div>
-                    <div className="flex flex-col w-[80px] text-right justify-center">
+                    <div className="relative flex flex-col w-[110px] text-right justify-center">
                       <input
-                        className="h-[30px] px-2 rounded-md text-white"
+                        className="h-[40px] text-xs my-2 px-2 pr-[20px] rounded-md text-white text-right"
                         placeholder="金額"
                         defaultValue={purchaseOrderItemAdd.price?.toLocaleString()}
                         onChange={(e) => {
@@ -701,17 +696,36 @@ function Add({ isCalculator, setIsCalculator }: any) {
                           );
                         }}
                       />
+                      <p className="absolute top-[20px] right-[7px] opacity-60">
+                        円
+                      </p>
                     </div>
                   </div>
-                  <div className="flex w-full items-center py-1">
+                  <div className="mb-1 flex w-full h-full items-center">
                     <div
                       onClick={() => {
                         setIsCalculator(true);
                       }}
+                      className="mr-5"
                     >
-                      <Button natural>指名</Button>
+                      <Border
+                        rounded="rounded-full"
+                        stroke="lg"
+                        size="h-[32px] w-[32px] p-[6px]"
+                      >
+                        <Image
+                          src={"/assets/add-cast.svg"}
+                          width={36}
+                          height={36}
+                          alt=""
+                          className="!w-full !h-full"
+                        />
+                      </Border>
                     </div>
-                    <p className="ml-4">キャスト名</p>
+                    <div className="mr-3">
+                      <Toggle5 />
+                    </div>
+                    <Toggle6 />
                   </div>
                 </div>
               )
@@ -1169,9 +1183,11 @@ export default function OrderSheet() {
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
   const [isCalculator, setIsCalculator] = useState(false);
+  const [isLock, setIsLock] = useIsLockGlobal();
 
   return (
     <>
+      {isLock == 1 && <Lock />}
       {isCalculator && <Calculator3 setIsCalculator={setIsCalculator} />}
       <Card>
         <div
