@@ -671,7 +671,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                 >
                   <div className="flex w-full">
                     <div className="flex flex-col w-[200px] text-left">
-                      <p className="h-[40px] my-2 text-accent text-base leading-5 flex items-center text-left">
+                      <p className="h-[40px] my-2 text-white text-base leading-5 flex items-center text-left">
                         {purchaseOrderItemAdd.title}
                       </p>
                     </div>
@@ -995,94 +995,96 @@ function CastAdd() {
               (purchaseOrderItemAdd: any, index: any) => (
                 <div
                   key={index}
-                  className="flex w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2"
+                  className="flex flex-col w-full border border-white justify-start rounded-md bg-black my-3 px-3 py-2"
                 >
-                  <div className="flex flex-col w-[60px] text-xs">
-                    <p className="text-accent h-[20px]　text-xs">種別</p>
-                    <select
-                      className="h-[30px] flex items-center rounded-md mr-1"
-                      onChange={(e) => {
-                        const data = JSON.parse(e.target.value);
-                        setSelectDesignate(data.id);
-                        setSelectDesignateSymbol(data.symbol);
-                        setSelectDesignatePrice(data.price);
-                        purchaseOrderItemAdd.title =
-                          data.symbol + purchaseOrderItemAdd.title.slice(1);
-                        purchaseOrderItemAdd.price = Number(data.price);
-                      }}
-                      defaultValue={JSON.stringify({
-                        id: purchaseOrderItemAdd.id,
-                        symbol: purchaseOrderItemAdd.symbol,
-                        price: purchaseOrderItemAdd.price,
-                      })}
-                    >
-                      {searchData4?.data?.designate[0]?.store_designate[0]?.designate?.map(
-                        (designate: any, index: any) => {
-                          // if (selectDesignate == -1 && count2 == 0) {
-                          //   setSelectDesignate(designate.id);
-                          //   setSelectDesignateSymbol(
-                          //     designate.designate_revision.symbol
-                          //   );
-                          //   setSelectDesignatePrice(
-                          //     designate.designate_revision.price
-                          //   );
-                          // }
-                          // count2 += 1;
-                          return (
-                            <option
-                              key={index}
-                              value={JSON.stringify({
-                                id: designate.id,
-                                symbol: designate.designate_revision.symbol,
-                                price: designate.designate_revision.price,
-                              })}
-                            >
-                              {designate.designate_revision.name}
-                            </option>
+                  <div className="flex mb-2">
+                    <div className="flex flex-col w-[145px] text-left">
+                      <p className="text-accent h-[20px]　text-xs">
+                        キャスト名
+                      </p>
+                      <div className="h-[44px] text-white text-base justify-start leading-[40px] align-middle flex items-center">
+                        {purchaseOrderItemAdd.title.slice(1)}
+                      </div>
+                    </div>
+                    <div className="flex flex-col w-[32px] mx-2 text-center justify-center">
+                      <p className="text-accent h-[20px] text-xs">数量</p>
+                      <input
+                        className="h-[40px] px-2 rounded-md text-center text-white"
+                        placeholder="個"
+                        value={purchaseOrderItemAdd.lot}
+                        onChange={(e) => {
+                          purchaseOrderItemAdd.lot = Number(
+                            e.target.value.replace(/[^0-9]/g, "")
                           );
-                        }
-                      )}
-                    </select>
+                        }}
+                      />
+                    </div>
+                    <div className="relative flex flex-col w-[100px] text-right justify-center">
+                      <p className="text-accent h-[20px] text-xs">単価</p>
+                      <input
+                        className="h-[40px] px-2 pr-[24px] rounded-md text-right text-white"
+                        placeholder="金額"
+                        value={purchaseOrderItemAdd.price?.toLocaleString()}
+                        onChange={(e) => {
+                          purchaseOrderItemAdd.price = Number(
+                            e.target.value.replace(/[^0-9]/g, "")
+                          );
+                        }}
+                      />
+                      <p className="absolute bottom-[12px] right-[7px] opacity-60">
+                        円
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex flex-col w-[70px] text-right">
-                    <p className="text-accent h-[20px]　text-xs">キャスト名</p>
-                    <p className="h-[30px] text-accent flex items-center">
-                      {purchaseOrderItemAdd.title.slice(1)}
-                    </p>
-                  </div>
-                  <div className="flex flex-col w-[30px] mx-2 text-right justify-center">
-                    <p className="text-accent h-[20px] text-xs">数量</p>
-                    <input
-                      className="h-[30px] px-2 rounded-md text-white"
-                      placeholder="個"
-                      value={purchaseOrderItemAdd.lot}
-                      onChange={(e) => {
-                        purchaseOrderItemAdd.lot = Number(
-                          e.target.value.replace(/[^0-9]/g, "")
-                        );
-                      }}
-                    />
-                  </div>
-                  <div className="flex flex-col w-[70px] mr-2 text-right justify-center">
-                    <p className="text-accent h-[20px] text-xs">単価</p>
-                    <input
-                      className="h-[30px] px-2 rounded-md text-white"
-                      placeholder="金額"
-                      value={purchaseOrderItemAdd.price?.toLocaleString()}
-                      onChange={(e) => {
-                        purchaseOrderItemAdd.price = Number(
-                          e.target.value.replace(/[^0-9]/g, "")
-                        );
-                      }}
-                    />
-                  </div>
-                  <div className="flex flex-col w-[100px] text-right justify-center">
-                    <p className="text-accent h-[20px] text-xs">指名開始時間</p>
-                    <input
-                      type="time"
-                      className="h-[30px] px-2 rounded-md text-white"
-                      value={purchaseOrderItemAdd.time}
-                    />
+                  <Line />
+                  <div className="mt-2 flex">
+                    <div className="flex flex-col w-[100px] text-xs mr-[53px]">
+                      <p className="text-accent h-[20px] text-xs">種別</p>
+                      <select
+                        className="h-[44px] flex items-center rounded-md mr-1"
+                        onChange={(e) => {
+                          const data = JSON.parse(e.target.value);
+                          setSelectDesignate(data.id);
+                          setSelectDesignateSymbol(data.symbol);
+                          setSelectDesignatePrice(data.price);
+                          purchaseOrderItemAdd.title =
+                            data.symbol + purchaseOrderItemAdd.title.slice(1);
+                          purchaseOrderItemAdd.price = Number(data.price);
+                        }}
+                        defaultValue={JSON.stringify({
+                          id: purchaseOrderItemAdd.id,
+                          symbol: purchaseOrderItemAdd.symbol,
+                          price: purchaseOrderItemAdd.price,
+                        })}
+                      >
+                        {searchData4?.data?.designate[0]?.store_designate[0]?.designate?.map(
+                          (designate: any, index: any) => {
+                            return (
+                              <option
+                                key={index}
+                                value={JSON.stringify({
+                                  id: designate.id,
+                                  symbol: designate.designate_revision.symbol,
+                                  price: designate.designate_revision.price,
+                                })}
+                              >
+                                {designate.designate_revision.name}
+                              </option>
+                            );
+                          }
+                        )}
+                      </select>
+                    </div>
+                    <div className="flex flex-col w-[100px] text-left">
+                      <p className="text-accent h-[20px] text-xs">
+                        指名開始時間
+                      </p>
+                      <input
+                        type="time"
+                        className="h-[44px] px-2 rounded-md text-white"
+                        value={purchaseOrderItemAdd.time}
+                      />
+                    </div>
                   </div>
                 </div>
               )

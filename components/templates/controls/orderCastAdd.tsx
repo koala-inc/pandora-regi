@@ -70,6 +70,7 @@ export default function OrderCastAdd() {
   const [selectDesignate, setSelectDesignate] = useState(-1);
   const [selectDesignateSymbol, setSelectDesignateSymbol] = useState("");
   const [selectDesignatePrice, setSelectDesignatePrice] = useState(0);
+  const [searchType, setSearchType] = useState("全て");
 
   let count = 0;
   let count2 = 0;
@@ -94,28 +95,16 @@ export default function OrderCastAdd() {
       >
         <ContentHeader>
           <div className="w-full flex justify-start items-center">
-            <div className="w-full flex flex-col">
+            <div className="w-[150px] flex flex-col">
               <p className="text-accent">指名開始時間</p>
               <input className="h-[50px] w-[100px]" type="time" />
             </div>
-            {searchData2?.data?.designate[0]?.store_designate[0]?.designate?.map(
-              (designate: any, index: any) => {
-                if (selectDesignate == -1 && count2 == 0) {
-                  setSelectDesignate(designate.id);
-                  setSelectDesignateSymbol(designate.designate_revision.symbol);
-                  setSelectDesignatePrice(designate.designate_revision.price);
-                }
-                count2 += 1;
-                return (
-                  <Button
-                    className={
-                      designate.id == selectDesignate
-                        ? "min-w-[5rem] mb-2"
-                        : "min-w-[5rem] mb-2 opacity-60"
-                    }
-                    key={index}
-                    natural
-                    onClick={() => {
+            <div className="w-full flex flex-col">
+              <p className="text-accent">指名種別</p>
+              <div className="flex">
+                {searchData2?.data?.designate[0]?.store_designate[0]?.designate?.map(
+                  (designate: any, index: any) => {
+                    if (selectDesignate == -1 && count2 == 0) {
                       setSelectDesignate(designate.id);
                       setSelectDesignateSymbol(
                         designate.designate_revision.symbol
@@ -123,19 +112,76 @@ export default function OrderCastAdd() {
                       setSelectDesignatePrice(
                         designate.designate_revision.price
                       );
-                    }}
-                  >
-                    {designate.designate_revision.name}
-                  </Button>
-                );
-              }
-            )}
+                    }
+                    count2 += 1;
+                    return (
+                      <Button
+                        className={
+                          designate.id == selectDesignate
+                            ? "min-w-[7rem] mb-2 mr-2"
+                            : "min-w-[7rem] mb-2 mr-2 opacity-60"
+                        }
+                        key={index}
+                        natural
+                        textXL
+                        onClick={() => {
+                          setSelectDesignate(designate.id);
+                          setSelectDesignateSymbol(
+                            designate.designate_revision.symbol
+                          );
+                          setSelectDesignatePrice(
+                            designate.designate_revision.price
+                          );
+                        }}
+                      >
+                        {designate.designate_revision.name}
+                      </Button>
+                    );
+                  }
+                )}
+              </div>
+            </div>
           </div>
         </ContentHeader>
         <div className="mt-[-1px] flex h-[700px] w-[calc(100vw-405px)] flex-col rounded-xl bg-primary p-4 text-white">
           <div className="w-full flex justify-center mb-3">
-            <div className="flex justify-around items-center w-[300px] mr-2 border border-white bg-black p-3 rounded-md text-white">
-              出勤
+            <div className="flex justify-around items-center w-[200px] mr-2 border border-white bg-black p-3 rounded-md text-white">
+              <Button
+                className={
+                  searchType != "出勤"
+                    ? "min-w-[5rem] opacity-50"
+                    : "min-w-[5rem]"
+                }
+                natural
+                onClick={() => {
+                  setSearchType("出勤");
+                }}
+              >
+                出勤
+              </Button>
+              <Button
+                className={
+                  searchType != "全て"
+                    ? "ml-3 min-w-[5rem] opacity-50"
+                    : "ml-3 min-w-[5rem]"
+                }
+                natural
+                onClick={() => {
+                  setSearchType("全て");
+                  searchData.mutate(
+                    () =>
+                      client.request(searchCast, {
+                        ...defaultVariables,
+                      }),
+                    {
+                      populateCache: true,
+                      revalidate: false,
+                    }
+                  );
+                }}
+              >
+                全て
+              </Button>
             </div>
             <div className="flex justify-around w-[800px] border border-white bg-black p-3 rounded-md">
               <div
@@ -358,6 +404,11 @@ export default function OrderCastAdd() {
                 わ
               </div>
             </div>
+            <div className="flex justify-around items-center w-[200px] ml-2 border border-white bg-black p-3 rounded-md text-white">
+              <Button className={"min-w-[5rem]"} natural>
+                伝票内指名編集
+              </Button>
+            </div>
           </div>
           <div className="grid w-full grid-cols-10 grid-rows-7 content-start items-center justify-center rounded-md border border-white bg-black p-4 min-h-[580px]">
             {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
@@ -374,6 +425,8 @@ export default function OrderCastAdd() {
                         setPurchaseOrderItemAdd([
                           ...purchaseOrderItemAdd,
                           {
+                            id: selectDesignate,
+                            symbol: selectDesignateSymbol,
                             title: selectDesignateSymbol + cast.name,
                             lot: 1,
                             price: Number(selectDesignatePrice),
