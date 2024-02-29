@@ -70,7 +70,7 @@ function Control(isControl: any) {
 export default function Home() {
   const [isHeader] = useIsHeaderGlobal();
   const [isFooter] = useIsFooterGlobal();
-  const [isCard] = useIsCardGlobal();
+  const [isCard, setIsCard] = useIsCardGlobal();
   const [isControl] = useIsControlGlobal();
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
   const [datetime, setDatetime] = useState(new Date());
@@ -82,8 +82,16 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative h-full w-full">
+    <main
+      className="relative h-full w-full"
+      onClick={() => {
+        if (isCard && isControl == "") {
+          setIsCard(false);
+        }
+      }}
+    >
       <AnimatePresence>
+        {!isCard && <SeatMap />}
         {isHeader && !isCard && <Header datetime={datetime} />}
         {isFooter && !isCard && <Footer />}
         {isCard && (
@@ -92,23 +100,20 @@ export default function Home() {
               <>
                 <OrderSheetSet />
                 <OrderSet />
+                <HomeButton />
               </>
             ) : (
               <>
                 <OrderSheet />
                 {Control(isControl)}
+                {isControl != "" && <HomeButton />}
               </>
             )}
           </>
         )}
       </AnimatePresence>
-      {/* {isControl == "" && <SeatMap />} */}
-      {!isCard && <SeatMap />}
-      {isCard && <HomeButton />}
-      {/* <Lock2 /> */}
-      {/* <Calculator2 /> */}
-      {/* <Calculator2 /> */}
-      <OverlayNav />
+
+      {!isCard && <OverlayNav />}
     </main>
   );
 }

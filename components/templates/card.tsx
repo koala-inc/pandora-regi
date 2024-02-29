@@ -25,7 +25,8 @@ export default function Card({ children }: { children: any }) {
         exit={{ left: -360 }}
         transition={{ ease: "easeInOut", bounce: 0, duration: 0.15 }}
         className="absolute left-[15px] top-1/2 z-20 -translate-y-1/2"
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           if (isHeader) setIsHeader(false);
           if (isFooter) setIsFooter(false);
         }}

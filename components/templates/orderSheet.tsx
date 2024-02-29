@@ -77,7 +77,7 @@ function Base() {
   purchaseOrder[0]?.cast?.map((cast: any) => {
     total += Number(cast.split("##")[1]);
   });
-  total += Number(purchaseOrder[0]?.price);
+  total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
   purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
     total += Number(orderItem.price) * Number(orderItem.lot);
   });
@@ -536,7 +536,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
   purchaseOrder[0]?.cast?.map((cast: any) => {
     total += Number(cast.split("##")[1]);
   });
-  total += Number(purchaseOrder[0]?.price);
+  total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
   purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
     total += Number(orderItem.price) * Number(orderItem.lot);
   });
@@ -828,7 +828,7 @@ function CastAdd() {
   purchaseOrder[0]?.cast?.map((cast: any) => {
     total += Number(cast.split("##")[1]);
   });
-  total += Number(purchaseOrder[0]?.price);
+  total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
   purchaseOrder[0]?.orderCast?.map((orderCast: any) => {
     total += Number(orderCast.price) * Number(orderCast.lot);
   });
