@@ -347,7 +347,9 @@ export default function BottleAdd() {
                             });
                             setUpdateModal(true);
                             setIsChecked(
-                              bottle.bottle_revision.is_notice_kitchen
+                              bottle.bottle_revision.is_notice_kitchen == 1
+                                ? true
+                                : false
                             );
                           }}
                         >

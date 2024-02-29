@@ -343,6 +343,11 @@ export default function OrderAdd() {
                                 id: menu.id,
                               };
                             });
+                            setIsChecked(
+                              menu.menu_revision.is_notice_kitchen == 1
+                                ? true
+                                : false
+                            );
                             setUpdateModal(true);
                           }}
                         >

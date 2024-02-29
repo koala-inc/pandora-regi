@@ -93,7 +93,6 @@ export default function Calculator3({
               searchData.mutate(
                 () =>
                   client.request(searchCast, {
-                    section: 1,
                     ...defaultVariables,
                   }),
                 {
@@ -103,29 +102,10 @@ export default function Calculator3({
               );
             }}
           >
-            在籍
+            全て
           </Button>
-          <Button
-            className="min-w-[6rem]"
-            natural
-            onClick={() => {
-              searchData.mutate(
-                () =>
-                  client.request(searchCast, {
-                    section: 2,
-                    ...defaultVariables,
-                  }),
-                {
-                  populateCache: true,
-                  revalidate: false,
-                }
-              );
-            }}
-          >
-            体入/ヘルプ
-          </Button>
-          <Button className="min-w-[6rem]" natural>
-            他店ヘルプ
+          <Button className="min-w-[6rem]" natural onClick={() => {}}>
+            出勤
           </Button>
         </div>
         <div className="my-4 flex w-full">
