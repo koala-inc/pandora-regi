@@ -9,7 +9,7 @@ import useSWR, { preload } from "swr";
 import client from "@/connection";
 import { RequestDocument } from "graphql-request";
 import { searchStaff } from "@/gqls/query/staff";
-import { createStaff, updateStaff } from "@/gqls/mutation/staff";
+import { createStaff, deleteStaff, updateStaff } from "@/gqls/mutation/staff";
 
 const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
@@ -475,7 +475,7 @@ export default function StaffList() {
                                 <td>{staff.name}</td>
                                 <td>{staff.entry_date}</td>
                                 <td>{staff.leaving_date}</td>
-                                <th>
+                                <th className="flex">
                                   <button
                                     className="btn btn-ghost btn-xs"
                                     onClick={() => {
@@ -484,6 +484,30 @@ export default function StaffList() {
                                     }}
                                   >
                                     編集
+                                  </button>
+                                  <button
+                                    className="btn btn-ghost btn-xs"
+                                    onClick={() => {
+                                      client
+                                        .request(deleteStaff, {
+                                          id: staff.id,
+                                          ...defaultVariables,
+                                        })
+                                        .then(() => {
+                                          searchData.mutate(
+                                            () =>
+                                              client.request(searchStaff, {
+                                                ...defaultVariables,
+                                              }),
+                                            {
+                                              populateCache: true,
+                                              revalidate: false,
+                                            }
+                                          );
+                                        });
+                                    }}
+                                  >
+                                    削除
                                   </button>
                                 </th>
                               </tr>
@@ -533,7 +557,7 @@ export default function StaffList() {
                               <td>{staff.name}</td>
                               <td>{staff.entry_date}</td>
                               <td>{staff.leaving_date}</td>
-                              <th>
+                              <th className="flex">
                                 <button
                                   className="btn btn-ghost btn-xs"
                                   onClick={() => {
@@ -542,6 +566,30 @@ export default function StaffList() {
                                   }}
                                 >
                                   編集
+                                </button>
+                                <button
+                                  className="btn btn-ghost btn-xs"
+                                  onClick={() => {
+                                    client
+                                      .request(deleteStaff, {
+                                        id: staff.id,
+                                        ...defaultVariables,
+                                      })
+                                      .then(() => {
+                                        searchData.mutate(
+                                          () =>
+                                            client.request(searchStaff, {
+                                              ...defaultVariables,
+                                            }),
+                                          {
+                                            populateCache: true,
+                                            revalidate: false,
+                                          }
+                                        );
+                                      });
+                                  }}
+                                >
+                                  削除
                                 </button>
                               </th>
                             </tr>

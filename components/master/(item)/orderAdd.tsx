@@ -10,7 +10,7 @@ import client from "@/connection";
 import { searchCategory } from "@/gqls/query/category";
 import useSWR, { preload } from "swr";
 import { searchMenu } from "@/gqls/query/menu";
-import { createMenu, updateMenu } from "@/gqls/mutation/menu";
+import { createMenu, deleteMenu, updateMenu } from "@/gqls/mutation/menu";
 
 const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
@@ -333,7 +333,7 @@ export default function OrderAdd() {
                         {menu.menu_revision.is_notice_kitchen ? "有効" : "無効"}
                       </th>
                       <th>{menu.menu_revision.price?.toLocaleString()}円</th>
-                      <th>
+                      <th className="flex">
                         <button
                           className="btn btn-ghost btn-xs"
                           onClick={() => {
@@ -347,6 +347,30 @@ export default function OrderAdd() {
                           }}
                         >
                           編集
+                        </button>
+                        <button
+                          className="btn btn-ghost btn-xs"
+                          onClick={() => {
+                            client
+                              .request(deleteMenu, {
+                                id: menu.id,
+                                ...defaultVariables,
+                              })
+                              .then(() => {
+                                searchData.mutate(
+                                  () =>
+                                    client.request(searchMenu, {
+                                      ...defaultVariables,
+                                    }),
+                                  {
+                                    populateCache: true,
+                                    revalidate: false,
+                                  }
+                                );
+                              });
+                          }}
+                        >
+                          削除
                         </button>
                       </th>
                     </tr>

@@ -7,6 +7,7 @@ export {
   updateCast,
   updateSalaryCast,
   updateAttendanceManagementCast,
+  deleteCast,
 };
 
 const createCast = gql`
@@ -208,6 +209,14 @@ const updateAttendanceManagementCast = gql`
         is_leaving_work_cancel: $is_leaving_work_cancel
       }
     ) {
+      __typename
+    }
+  }
+`;
+
+const deleteCast = gql`
+  mutation ($store_code: Int!, $id: Int!) {
+    deleteCast(input: { store_code: $store_code, id: $id }) {
       __typename
     }
   }

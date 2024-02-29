@@ -13,7 +13,7 @@ import { searchCast } from "@/gqls/query/cast";
 import useSWR, { preload } from "swr";
 import client from "@/connection";
 import { RequestDocument } from "graphql-request";
-import { createCast, updateCast } from "@/gqls/mutation/cast";
+import { createCast, deleteCast, updateCast } from "@/gqls/mutation/cast";
 import { useHotkeys } from "react-hotkeys-hook";
 
 const defaultVariables = {
@@ -532,7 +532,7 @@ export default function CastList() {
                                   <td>{0}円</td>
                                   <td>{cast.entry_date}</td>
                                   <td>{cast.leaving_date}</td>
-                                  <th>
+                                  <th className="flex">
                                     <button
                                       className="btn btn-ghost btn-xs"
                                       onClick={() => {
@@ -541,6 +541,30 @@ export default function CastList() {
                                       }}
                                     >
                                       編集
+                                    </button>
+                                    <button
+                                      className="btn btn-ghost btn-xs"
+                                      onClick={() => {
+                                        client
+                                          .request(deleteCast, {
+                                            id: cast.id,
+                                            ...defaultVariables,
+                                          })
+                                          .then(() => {
+                                            searchData.mutate(
+                                              () =>
+                                                client.request(searchCast, {
+                                                  ...defaultVariables,
+                                                }),
+                                              {
+                                                populateCache: true,
+                                                revalidate: false,
+                                              }
+                                            );
+                                          });
+                                      }}
+                                    >
+                                      削除
                                     </button>
                                   </th>
                                 </tr>
@@ -589,7 +613,7 @@ export default function CastList() {
                                 <td>{0}円</td>
                                 <td>{cast.entry_date}</td>
                                 <td>{cast.leaving_date}</td>
-                                <th>
+                                <th className="flex">
                                   <button
                                     className="btn btn-ghost btn-xs"
                                     onClick={() => {
@@ -598,6 +622,30 @@ export default function CastList() {
                                     }}
                                   >
                                     編集
+                                  </button>
+                                  <button
+                                    className="btn btn-ghost btn-xs"
+                                    onClick={() => {
+                                      client
+                                        .request(deleteCast, {
+                                          id: cast.id,
+                                          ...defaultVariables,
+                                        })
+                                        .then(() => {
+                                          searchData.mutate(
+                                            () =>
+                                              client.request(searchCast, {
+                                                ...defaultVariables,
+                                              }),
+                                            {
+                                              populateCache: true,
+                                              revalidate: false,
+                                            }
+                                          );
+                                        });
+                                    }}
+                                  >
+                                    削除
                                   </button>
                                 </th>
                               </tr>

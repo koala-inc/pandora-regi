@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 
-export { createMenu, updateMenu };
+export { createMenu, updateMenu, deleteMenu };
 
 const createMenu = gql`
   mutation (
@@ -70,6 +70,14 @@ const updateMenu = gql`
       menu {
         __typename
       }
+    }
+  }
+`;
+
+const deleteMenu = gql`
+  mutation ($store_code: Int!, $id: Int!) {
+    deleteMenu(input: { store_code: $store_code, id: $id }) {
+      __typename
     }
   }
 `;

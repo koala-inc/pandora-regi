@@ -7,6 +7,7 @@ export {
   updateSalaryStaff,
   createAttendanceManagementStaff,
   updateAttendanceManagementStaff,
+  deleteStaff,
 };
 
 const createStaff = gql`
@@ -196,6 +197,14 @@ const updateAttendanceManagementStaff = gql`
         is_leaving_work_cancel: $is_leaving_work_cancel
       }
     ) {
+      __typename
+    }
+  }
+`;
+
+const deleteStaff = gql`
+  mutation ($store_code: Int!, $id: Int!) {
+    deleteStaff(input: { store_code: $store_code, id: $id }) {
       __typename
     }
   }
