@@ -335,7 +335,7 @@ export default function BottleAdd() {
                       <th>
                         {bottle.bottle_revision.keep_expiration_day || 0}日
                       </th>
-                      <th>
+                      <th className="flex">
                         <button
                           className="btn btn-ghost btn-xs"
                           onClick={() => {
