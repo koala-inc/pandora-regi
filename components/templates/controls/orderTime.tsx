@@ -163,28 +163,24 @@ export default function OrderTime() {
                         className="mt-[8px] h-[20px] w-[20px]"
                       />
                     </th>
+                    <th className="w-[150px] text-left text-accent">
+                      セット内容
+                    </th>
+                    <th className="w-[60px] text-center text-accent">
+                      セット時間
+                    </th>
+                    <th className="w-[100px] text-center text-accent">料金</th>
+                    <th className="w-[180px] text-left text-thirdary-accent">
+                      区分
+                    </th>
                     <th className="w-[80px] text-center text-accent">
                       開始時間
                     </th>
                     <th className="w-[80px] text-center text-accent">
                       退店時間
                     </th>
-                    <th className="w-[20px] text-center text-accent">
-                      延長本数
-                    </th>
-                    <th className="min-w-[6.65em] text-left text-accent">
-                      セット内容
-                    </th>
-                    <th className="min-w-[6em] text-center text-accent">
-                      セット時間
-                    </th>
-                    <th className="min-w-[6em] text-center text-accent">
-                      料金
-                    </th>
-                    <th className="min-w-[10.5em] text-left text-thirdary-accent">
-                      区分
-                    </th>
-                    <th className="min-w-[6em] text-center text-secondary-accent">
+                    <th className="w-[20px] text-center text-accent">延長数</th>
+                    <th className="w-[130px] text-center text-secondary-accent">
                       延長
                     </th>
                     <th className="min-w-[3.65em] text-center text-accent">
@@ -210,11 +206,47 @@ export default function OrderTime() {
                                       className="mt-[8px] h-[20px] w-[20px]"
                                     />
                                   </th>
+                                  <th className="w-[150px] text-left text-base">
+                                    メイン6000
+                                  </th>
+                                  <th className="relative w-[60px] text-center text-lg">
+                                    <input
+                                      type="text"
+                                      className="h-[45px] w-[60px] text-right rounded-md px-1 pr-[29px] text-base"
+                                      value={"60"}
+                                      onClick={() => {
+                                        setIsCalculatorSelect(5);
+                                        setIsCalculator(true);
+                                      }}
+                                      readOnly
+                                    />
+                                    <p className="absolute bottom-[26.5px] right-[21px] opacity-60">
+                                      分
+                                    </p>
+                                  </th>
+                                  <th className="relative w-[100px] text-center text-lg">
+                                    <input
+                                      type="text"
+                                      className="h-[45px] w-[100px] text-right rounded-md px-2 pr-[30px] text-base"
+                                      value={"99,999"}
+                                      onClick={() => {
+                                        setIsCalculatorSelect(5);
+                                        setIsCalculator(true);
+                                      }}
+                                      readOnly
+                                    />
+                                    <p className="absolute bottom-[26.5px] right-[24px] opacity-60">
+                                      円
+                                    </p>
+                                  </th>
+                                  <th className="w-[180px] text-left text-base">
+                                    案内所　案内所１
+                                  </th>
                                   <th className="w-[80px] text-center text-lg">
                                     <input
                                       type="text"
-                                      className="h-[45px] w-[80px] rounded-md px-2 text-xl"
-                                      value={setTimeResult}
+                                      className="h-[45px] w-[70px] text-center rounded-md px-2 text-base"
+                                      value={"00:00"}
                                       onClick={() => {
                                         setIsCalculatorSelect(4);
                                         setIsCalculator(true);
@@ -225,8 +257,8 @@ export default function OrderTime() {
                                   <th className="w-[80px] text-center text-lg">
                                     <input
                                       type="text"
-                                      className="h-[45px] w-[80px] rounded-md px-2 text-xl"
-                                      value={""}
+                                      className="h-[45px] w-[70px] text-center rounded-md px-2 text-base"
+                                      value={"00:00"}
                                       onClick={() => {
                                         setIsCalculatorSelect(5);
                                         setIsCalculator(true);
@@ -234,49 +266,37 @@ export default function OrderTime() {
                                       readOnly
                                     />
                                   </th>
-                                  <th className="w-[20px] text-center">1</th>
-                                  <th className="min-w-[8em] text-left text-lg">
-                                    メイン6000
+                                  <th className="w-[20px] text-center text-base">
+                                    1
                                   </th>
-                                  <th className="w-[80px] text-center text-lg opacity-60">
-                                    <input
-                                      type="text"
-                                      className="h-[45px] w-[80px] rounded-md px-2 text-xl"
-                                      value={""}
-                                      onClick={() => {
-                                        setIsCalculatorSelect(5);
-                                        setIsCalculator(true);
-                                      }}
-                                      readOnly
-                                    />
+                                  <th className="w-[130px] text-center items-center h-[80px] flex text-base">
+                                    <Border
+                                      className="mr-1"
+                                      size="px-2 text-red-700"
+                                      natural
+                                      stroke="md"
+                                    >
+                                      -30
+                                    </Border>
+                                    <Border
+                                      size="px-2 text-blue-700"
+                                      natural
+                                      stroke="md"
+                                    >
+                                      +30
+                                    </Border>
                                   </th>
-                                  <th className="w-[80px] text-center text-lg opacity-60">
-                                    <input
-                                      type="text"
-                                      className="h-[45px] w-[80px] rounded-md px-2 text-xl"
-                                      value={""}
-                                      onClick={() => {
-                                        setIsCalculatorSelect(5);
-                                        setIsCalculator(true);
-                                      }}
-                                      readOnly
-                                    />
-                                  </th>
-                                  <th className="min-w-[10.5em] text-left text-lg">
-                                    案内所　案内所１
-                                  </th>
-                                  <th className="min-w-[3.5em] text-center items-center h-[80px] flex text-lg">
-                                    <Button natural>+30</Button>
-                                    <Button natural>-30</Button>
-                                  </th>
-                                  <th className="w-[100px] text-center text-lg">
+                                  <th className="w-[100px] text-center text-base">
                                     <Button natural>在店</Button>
                                   </th>
-                                  <th className="min-w-[4em] text-center text-lg">
-                                    <input
-                                      type="checkbox"
-                                      className="mt-[8px] h-[20px] w-[20px]"
-                                    />
+                                  <th className="w-[20px] text-center text-base">
+                                    <Border
+                                      size="px-2 text-red-700"
+                                      natural
+                                      stroke="md"
+                                    >
+                                      X
+                                    </Border>
                                   </th>
                                 </tr>
                               );
