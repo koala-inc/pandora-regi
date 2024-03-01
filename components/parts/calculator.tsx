@@ -221,7 +221,7 @@ export default function Calculator({
             <div
               className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white bg-neutral-700 text-black shadow-2xl"
               onClick={() => {
-                setResult(result2);
+                setResult(tax ? result2 + "##" : result2);
                 setIsCalculator(false);
               }}
             >

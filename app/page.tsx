@@ -28,6 +28,7 @@ import Lock from "@/components/parts/lock";
 import Calculator2 from "@/components/parts/calculator2";
 import Lock2 from "@/components/parts/lock2";
 import useIsLockGlobal from "@/globalstates/isLock";
+import OrderTime from "@/components/templates/controls/orderTime";
 
 function Control(isControl: any) {
   switch (isControl) {
@@ -40,11 +41,7 @@ function Control(isControl: any) {
       );
     case "TIME":
       // セット時間の管理コンポーネント
-      return (
-        <div className="absolute right-[15px] top-1/2 flex w-full max-w-[calc(100%-420px)] items-center justify-center bg-primary text-white">
-          セット時間管理コンポーネント
-        </div>
-      );
+      return <OrderTime />;
     case "SET":
       // 合流コンポーネント
       return <OrderSet />;

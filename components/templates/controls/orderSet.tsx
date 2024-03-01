@@ -402,7 +402,7 @@ export default function ControlOrderSet() {
                     <div
                       key={index}
                       className={
-                        "mr-2 flex h-[50px] min-w-[100px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] p-2 text-center text-base leading-4 tracking-wider"
+                        "mr-2 flex h-[50px] w-[130px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#416d6d] p-2 text-center text-base leading-5 tracking-widest"
                       }
                       onClick={() => {
                         setSetName(event.event_revision.name);
@@ -766,7 +766,7 @@ export default function ControlOrderSet() {
                 readOnly
               />
               <p className="absolute text-xl bottom-[8px] right-[40px] opacity-60">
-                円
+                {result.includes("##") ? "込" : "円"}
               </p>
             </div>
             <div className="flex">
@@ -1134,7 +1134,7 @@ export default function ControlOrderSet() {
                         <div key={index}>
                           <div
                             className={
-                              "m-2 flex h-[40px] w-[105px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider " +
+                              "m-2 flex h-[40px] w-[105px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#416d6d] tracking-widest px-1 py-2 leading-5 " +
                               size
                             }
                             onClick={() => {
