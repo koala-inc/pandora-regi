@@ -169,7 +169,7 @@ export default function OrderTime() {
                     <th className="w-[60px] text-center text-accent">
                       セット時間
                     </th>
-                    <th className="w-[100px] text-center text-accent">料金</th>
+                    <th className="w-[103px] text-center text-accent">料金</th>
                     <th className="w-[180px] text-left text-thirdary-accent">
                       区分
                     </th>
@@ -209,7 +209,7 @@ export default function OrderTime() {
                                   <th className="w-[150px] text-left text-base">
                                     メイン6000
                                   </th>
-                                  <th className="relative w-[60px] text-center text-lg">
+                                  <th className="relative w-[60px] text-left text-lg">
                                     <input
                                       type="text"
                                       className="h-[45px] w-[60px] text-right rounded-md px-1 pr-[29px] text-base"
@@ -220,14 +220,14 @@ export default function OrderTime() {
                                       }}
                                       readOnly
                                     />
-                                    <p className="absolute bottom-[26.5px] right-[21px] opacity-60">
+                                    <p className="absolute bottom-[26.5px] left-[43px] opacity-60">
                                       分
                                     </p>
                                   </th>
-                                  <th className="relative w-[100px] text-center text-lg">
+                                  <th className="relative w-[103px] text-left text-lg">
                                     <input
                                       type="text"
-                                      className="h-[45px] w-[100px] text-right rounded-md px-2 pr-[30px] text-base"
+                                      className="h-[45px] w-[103px] text-right rounded-md px-2 pr-[32px] text-base"
                                       value={"99,999"}
                                       onClick={() => {
                                         setIsCalculatorSelect(5);
@@ -235,7 +235,7 @@ export default function OrderTime() {
                                       }}
                                       readOnly
                                     />
-                                    <p className="absolute bottom-[26.5px] right-[24px] opacity-60">
+                                    <p className="absolute bottom-[26.5px] left-[83px] opacity-60">
                                       円
                                     </p>
                                   </th>
@@ -286,8 +286,10 @@ export default function OrderTime() {
                                       +30
                                     </Border>
                                   </th>
-                                  <th className="w-[100px] text-center text-base">
-                                    <Button natural>在店</Button>
+                                  <th className="w-[80px] text-center text-base">
+                                    <Border natural stroke="md">
+                                      在店
+                                    </Border>
                                   </th>
                                   <th className="w-[20px] text-center text-base">
                                     <Border
