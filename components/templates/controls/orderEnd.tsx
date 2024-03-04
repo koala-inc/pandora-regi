@@ -36,15 +36,13 @@ export default function OrderEnd() {
   const totalPay =
     Math.ceil(
       Math.floor(
-        purchaseOrder[0]?.priceTax
-          ? purchaseOrder[0]?.roomTax
-            ? (total - purchaseOrder[0]?.price - purchaseOrder[0]?.roomCharge) *
-                1.3 *
-                1.1 +
-              purchaseOrder[0]?.price
-            : (total - purchaseOrder[0]?.price) * 1.3 * 1.1 +
-              purchaseOrder[0]?.price
-          : total * 1.3 * 1.1
+        (total -
+          (purchaseOrder[0]?.priceTax ? purchaseOrder[0]?.price : 0) -
+          (purchaseOrder[0]?.roomTax ? purchaseOrder[0]?.roomCharge : 0)) *
+          1.3 *
+          1.1 +
+          (purchaseOrder[0]?.priceTax ? purchaseOrder[0]?.price : 0) +
+          (purchaseOrder[0]?.roomTax ? purchaseOrder[0]?.roomCharge : 0)
       ) / 100
     ) * 100;
   const [discount, setDiscount] = useState(0);
