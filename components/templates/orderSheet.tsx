@@ -31,6 +31,7 @@ function Lists({
     subTitle?: string;
     lot: number;
     price: number;
+    tax?: boolean;
   }[];
 }) {
   return (
@@ -44,7 +45,8 @@ function Lists({
           {/* <div className="w-[10%] text-left">{list.subTitle || ""}</div> */}
           <div className="w-[10%] text-right">{list.lot}</div>
           <div className="w-[40%] text-right">
-            {(list.price * list.lot)?.toLocaleString()}円
+            {(list.price * list.lot)?.toLocaleString()}
+            {list.tax ? "込" : "円"}
           </div>
         </li>
       ))}
@@ -243,6 +245,7 @@ function Base() {
                   title: purchaseOrder[0]?.setName,
                   lot: purchaseOrder[0]?.num,
                   price: purchaseOrder[0]?.price,
+                  tax: purchaseOrder[0]?.priceTax,
                 },
                 // {
                 //   title: "メイン",
@@ -470,17 +473,38 @@ function Base() {
             </div>
             <div className="mt-1 flex text-sm w-full items-center justify-between">
               <div>サービス</div>
-              <div>{Math.floor(totalPay * 0.3).toLocaleString()}円</div>
+              <div>
+                {Math.floor(
+                  purchaseOrder[0]?.priceTax
+                    ? (totalPay - purchaseOrder[0]?.price) * 0.3
+                    : totalPay * 0.3
+                ).toLocaleString()}
+                円
+              </div>
             </div>
             <div className="mt-1 flex text-sm w-full items-center justify-between">
               <div>税</div>
-              <div>{Math.floor(totalPay * 1.3 * 0.1).toLocaleString()}円</div>
+              <div>
+                {Math.floor(
+                  purchaseOrder[0]?.priceTax
+                    ? (totalPay - purchaseOrder[0]?.price) * 1.3 * 0.1
+                    : totalPay * 1.3 * 0.1
+                ).toLocaleString()}
+                円
+              </div>
             </div>
             <div className="mt-2 flex w-full items-center justify-between text-2xl text-accent">
               <div>合計</div>
               <div className="flex-1 text-right">
                 {(
-                  Math.ceil(Math.floor(totalPay * 1.3 * 1.1) / 100) * 100
+                  Math.ceil(
+                    Math.floor(
+                      purchaseOrder[0]?.priceTax
+                        ? (totalPay - purchaseOrder[0]?.price) * 1.3 * 1.1 +
+                            purchaseOrder[0]?.price
+                        : totalPay * 1.3 * 1.1
+                    ) / 100
+                  ) * 100
                 ).toLocaleString()}
                 円
               </div>
@@ -653,7 +677,14 @@ function Add({ isCalculator, setIsCalculator }: any) {
                 }
               >
                 {(
-                  Math.ceil(Math.floor(totalPay2 * 1.3 * 1.1) / 100) * 100
+                  Math.ceil(
+                    Math.floor(
+                      purchaseOrder[0]?.priceTax
+                        ? (totalPay - purchaseOrder[0]?.price) * 1.3 * 1.1 +
+                            purchaseOrder[0]?.price
+                        : totalPay * 1.3 * 1.1
+                    ) / 100
+                  ) * 100
                 ).toLocaleString()}
                 円
               </p>
@@ -981,7 +1012,14 @@ function CastAdd() {
                 }
               >
                 {(
-                  Math.ceil(Math.floor(totalPay2 * 1.3 * 1.1) / 100) * 100
+                  Math.ceil(
+                    Math.floor(
+                      purchaseOrder[0]?.priceTax
+                        ? (totalPay - purchaseOrder[0]?.price) * 1.3 * 1.1 +
+                            purchaseOrder[0]?.price
+                        : totalPay * 1.3 * 1.1
+                    ) / 100
+                  ) * 100
                 ).toLocaleString()}
                 円
               </p>

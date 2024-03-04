@@ -184,7 +184,9 @@ export default function Calculator1({
             <div
               className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white bg-neutral-700 text-black shadow-2xl"
               onClick={() => {
-                setResult(result2);
+                if (result2 != "") {
+                  setResult(result2);
+                }
                 if (callback) callback(result2);
                 setIsCalculator(false);
               }}

@@ -1296,6 +1296,7 @@ export default function ControlOrderSet() {
                           orderItem: [],
                           orderCast: [],
                           price: Number(result.replace(/[^0-9]/g, "")),
+                          priceTax: result.includes("##"),
                           roomCharge: Number(roomResult.replace(/[^0-9]/g, "")),
                           num: Number(numResult.replace(/[^0-9]/g, "")),
                         },

@@ -119,7 +119,8 @@ export default function OrderSheetSet() {
                   <p className="text-accent">セット内容</p>
                   <p>
                     {order.setTime}分　{order.startTime}~{order.endTime}　
-                    {order.price?.toLocaleString()}円
+                    {order.price?.toLocaleString()}
+                    {order.priceTax ? "込" : "円"}
                   </p>
                 </div>{" "}
               </div>

@@ -320,8 +320,9 @@ export default function OrderTime() {
                             "minute"
                           )
                         ) -
+                          Number(purchaseOrder[0]?.setTime) -
                           1) /
-                          Number(purchaseOrder[0]?.setTime)
+                          30
                       )}
                     </th>
                     <th className="w-[130px] text-center items-center h-[80px] flex text-base">

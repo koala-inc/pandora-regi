@@ -10,7 +10,7 @@ export default function Calculator({
   select,
 }: any) {
   const [result2, setResult2] = useState("");
-  const [tax, setTax] = useState(false);
+  const [tax, setTax] = useState(result.includes("##") ? true : false);
   const max = 999999999;
 
   return (
@@ -40,8 +40,8 @@ export default function Calculator({
           </span>
         </div>
         <div className="flex h-[60px] w-full items-center justify-end rounded-md bg-neutral-900 px-3 text-4xl text-white">
-          {Number(result) != 0 && Number(result2) == 0
-            ? Number(result).toLocaleString()
+          {result.replace("##", "") != "" && result2 == ""
+            ? Number(result.replace("##", "")).toLocaleString()
             : Number(result2).toLocaleString()}
           {tax ? "込" : "円"}
         </div>
@@ -132,7 +132,7 @@ export default function Calculator({
             <div
               className="flex h-[138px] w-[60px] items-center justify-center rounded-md border border-white bg-accent text-black shadow-2xl"
               onClick={() => {
-                setResult2("");
+                setResult2("0");
               }}
             >
               C
@@ -179,7 +179,7 @@ export default function Calculator({
             <div
               className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-natural text-black shadow-2xl"
               onClick={() => {
-                if (Number(result2) > 0) {
+                if (Number(result2) > 0 || result2 == "") {
                   if (Number(result2 + "0") < max) {
                     setResult2((result: any) => result + "0");
                   }
@@ -221,7 +221,11 @@ export default function Calculator({
             <div
               className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white bg-neutral-700 text-black shadow-2xl"
               onClick={() => {
-                setResult(tax ? result2 + "##" : result2);
+                if (result2 != "") {
+                  setResult(tax ? result2 + "##" : result2.replace("##", ""));
+                } else {
+                  setResult(tax ? result + "##" : result.replace("##", ""));
+                }
                 setIsCalculator(false);
               }}
             >
