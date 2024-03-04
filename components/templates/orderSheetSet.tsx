@@ -112,7 +112,10 @@ export default function OrderSheetSet() {
                 </div>
                 <div className="mx-2 flex flex-col mt-2">
                   <p className="text-accent">ルームチャージ</p>
-                  <p className="">{order.roomCharge?.toLocaleString()}円</p>
+                  <p className="">
+                    {order.roomCharge?.toLocaleString()}
+                    {order.roomTax ? "込" : "円"}
+                  </p>
                 </div>
                 <hr className="w-full opacity-0" />
                 <div className="mx-2 flex flex-col mt-2">

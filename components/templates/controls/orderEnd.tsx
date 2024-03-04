@@ -25,6 +25,7 @@ export default function OrderEnd() {
     total += Number(cast.split("##")[1]);
   });
   total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
+  total += Number(purchaseOrder[0]?.roomCharge);
   purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
     total += Number(orderItem.price) * Number(orderItem.lot);
   });
@@ -36,7 +37,12 @@ export default function OrderEnd() {
     Math.ceil(
       Math.floor(
         purchaseOrder[0]?.priceTax
-          ? (total - purchaseOrder[0]?.price) * 1.3 * 1.1 +
+          ? purchaseOrder[0]?.roomTax
+            ? (total - purchaseOrder[0]?.price - purchaseOrder[0]?.roomCharge) *
+                1.3 *
+                1.1 +
+              purchaseOrder[0]?.price
+            : (total - purchaseOrder[0]?.price) * 1.3 * 1.1 +
               purchaseOrder[0]?.price
           : total * 1.3 * 1.1
       ) / 100

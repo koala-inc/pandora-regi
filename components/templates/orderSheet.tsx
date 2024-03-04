@@ -83,6 +83,7 @@ function Base() {
     total += Number(cast.split("##")[1]);
   });
   total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
+  total += Number(purchaseOrder[0]?.roomCharge);
   purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
     total += Number(orderItem.price) * Number(orderItem.lot);
   });
@@ -240,13 +241,30 @@ function Base() {
           </div>
           <div className="flex text-sm px-2 h-[120px] max-h-[100px] min-h-[100px]">
             <Lists
-              lists={[
-                {
-                  title: purchaseOrder[0]?.setName,
-                  lot: purchaseOrder[0]?.num,
-                  price: purchaseOrder[0]?.price,
-                  tax: purchaseOrder[0]?.priceTax,
-                },
+              lists={
+                purchaseOrder[0]?.roomCharge
+                  ? [
+                      {
+                        title: purchaseOrder[0]?.setName,
+                        lot: purchaseOrder[0]?.num,
+                        price: purchaseOrder[0]?.price,
+                        tax: purchaseOrder[0]?.priceTax,
+                      },
+                      {
+                        title: "ルームチャージ",
+                        lot: 1,
+                        price: purchaseOrder[0]?.roomCharge,
+                        tax: purchaseOrder[0]?.roomTax,
+                      },
+                    ]
+                  : [
+                      {
+                        title: purchaseOrder[0]?.setName,
+                        lot: purchaseOrder[0]?.num,
+                        price: purchaseOrder[0]?.price,
+                        tax: purchaseOrder[0]?.priceTax,
+                      },
+                    ]
                 // {
                 //   title: "メイン",
                 //   lot: 1,
@@ -267,7 +285,7 @@ function Base() {
                 //   lot: 1,
                 //   price: 1000,
                 // },
-              ]}
+              }
             />
             <div
               className="my-auto flex w-[60px] h-full flex-col items-center justify-center pl-3"
@@ -476,7 +494,12 @@ function Base() {
               <div>
                 {Math.floor(
                   purchaseOrder[0]?.priceTax
-                    ? (totalPay - purchaseOrder[0]?.price) * 0.3
+                    ? purchaseOrder[0]?.roomTax
+                      ? (totalPay -
+                          purchaseOrder[0]?.price -
+                          purchaseOrder[0]?.roomCharge) *
+                        0.3
+                      : (totalPay - purchaseOrder[0]?.price) * 0.3
                     : totalPay * 0.3
                 ).toLocaleString()}
                 円
@@ -487,7 +510,13 @@ function Base() {
               <div>
                 {Math.floor(
                   purchaseOrder[0]?.priceTax
-                    ? (totalPay - purchaseOrder[0]?.price) * 1.3 * 0.1
+                    ? purchaseOrder[0]?.roomTax
+                      ? (totalPay -
+                          purchaseOrder[0]?.price -
+                          purchaseOrder[0]?.roomCharge) *
+                        1.3 *
+                        0.1
+                      : (totalPay - purchaseOrder[0]?.price) * 1.3 * 0.1
                     : totalPay * 1.3 * 0.1
                 ).toLocaleString()}
                 円
@@ -500,7 +529,14 @@ function Base() {
                   Math.ceil(
                     Math.floor(
                       purchaseOrder[0]?.priceTax
-                        ? (totalPay - purchaseOrder[0]?.price) * 1.3 * 1.1 +
+                        ? purchaseOrder[0]?.roomTax
+                          ? (totalPay -
+                              purchaseOrder[0]?.price -
+                              purchaseOrder[0]?.roomCharge) *
+                              1.3 *
+                              1.1 +
+                            purchaseOrder[0]?.price
+                          : (totalPay - purchaseOrder[0]?.price) * 1.3 * 1.1 +
                             purchaseOrder[0]?.price
                         : totalPay * 1.3 * 1.1
                     ) / 100
@@ -564,6 +600,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
     total += Number(cast.split("##")[1]);
   });
   total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
+  total += Number(purchaseOrder[0]?.roomCharge);
   purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
     total += Number(orderItem.price) * Number(orderItem.lot);
   });
@@ -648,7 +685,21 @@ function Add({ isCalculator, setIsCalculator }: any) {
                 }
               >
                 {(
-                  Math.ceil(Math.floor(totalPay * 1.3 * 1.1) / 100) * 100
+                  Math.ceil(
+                    Math.floor(
+                      purchaseOrder[0]?.priceTax
+                        ? purchaseOrder[0]?.roomTax
+                          ? (totalPay -
+                              purchaseOrder[0]?.price -
+                              purchaseOrder[0]?.roomCharge) *
+                              1.3 *
+                              1.1 +
+                            purchaseOrder[0]?.price
+                          : (totalPay - purchaseOrder[0]?.price) * 1.3 * 1.1 +
+                            purchaseOrder[0]?.price
+                        : totalPay * 1.3 * 1.1
+                    ) / 100
+                  ) * 100
                 ).toLocaleString()}
                 円
               </p>
@@ -680,9 +731,16 @@ function Add({ isCalculator, setIsCalculator }: any) {
                   Math.ceil(
                     Math.floor(
                       purchaseOrder[0]?.priceTax
-                        ? (totalPay - purchaseOrder[0]?.price) * 1.3 * 1.1 +
+                        ? purchaseOrder[0]?.roomTax
+                          ? (totalPay2 -
+                              purchaseOrder[0]?.price -
+                              purchaseOrder[0]?.roomCharge) *
+                              1.3 *
+                              1.1 +
                             purchaseOrder[0]?.price
-                        : totalPay * 1.3 * 1.1
+                          : (totalPay2 - purchaseOrder[0]?.price) * 1.3 * 1.1 +
+                            purchaseOrder[0]?.price
+                        : totalPay2 * 1.3 * 1.1
                     ) / 100
                   ) * 100
                 ).toLocaleString()}
@@ -874,6 +932,7 @@ function CastAdd() {
     total += Number(cast.split("##")[1]);
   });
   total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
+  total += Number(purchaseOrder[0]?.roomCharge);
   purchaseOrder[0]?.orderCast?.map((orderCast: any) => {
     total += Number(orderCast.price) * Number(orderCast.lot);
   });
@@ -983,7 +1042,21 @@ function CastAdd() {
                 }
               >
                 {(
-                  Math.ceil(Math.floor(totalPay * 1.3 * 1.1) / 100) * 100
+                  Math.ceil(
+                    Math.floor(
+                      purchaseOrder[0]?.priceTax
+                        ? purchaseOrder[0]?.roomTax
+                          ? (totalPay -
+                              purchaseOrder[0]?.price -
+                              purchaseOrder[0]?.roomCharge) *
+                              1.3 *
+                              1.1 +
+                            purchaseOrder[0]?.price
+                          : (totalPay - purchaseOrder[0]?.price) * 1.3 * 1.1 +
+                            purchaseOrder[0]?.price
+                        : totalPay * 1.3 * 1.1
+                    ) / 100
+                  ) * 100
                 ).toLocaleString()}
                 円
               </p>
@@ -1015,9 +1088,16 @@ function CastAdd() {
                   Math.ceil(
                     Math.floor(
                       purchaseOrder[0]?.priceTax
-                        ? (totalPay - purchaseOrder[0]?.price) * 1.3 * 1.1 +
+                        ? purchaseOrder[0]?.roomTax
+                          ? (totalPay2 -
+                              purchaseOrder[0]?.price -
+                              purchaseOrder[0]?.roomCharge) *
+                              1.3 *
+                              1.1 +
                             purchaseOrder[0]?.price
-                        : totalPay * 1.3 * 1.1
+                          : (totalPay2 - purchaseOrder[0]?.price) * 1.3 * 1.1 +
+                            purchaseOrder[0]?.price
+                        : totalPay2 * 1.3 * 1.1
                     ) / 100
                   ) * 100
                 ).toLocaleString()}

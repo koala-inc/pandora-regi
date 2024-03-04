@@ -579,7 +579,7 @@ export default function ControlOrderSet() {
                 readOnly
               />
               <p className="absolute text-xl bottom-[8px] right-[25px] opacity-60">
-                円
+                {roomResult.includes("##") ? "込" : "円"}
               </p>
             </div>
             <hr className="w-full opacity-0" />
@@ -1298,6 +1298,7 @@ export default function ControlOrderSet() {
                           price: Number(result.replace(/[^0-9]/g, "")),
                           priceTax: result.includes("##"),
                           roomCharge: Number(roomResult.replace(/[^0-9]/g, "")),
+                          roomTax: roomResult.includes("##"),
                           num: Number(numResult.replace(/[^0-9]/g, "")),
                         },
                       ]);
