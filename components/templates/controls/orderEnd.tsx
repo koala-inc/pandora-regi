@@ -58,7 +58,7 @@ export default function OrderEnd() {
   return (
     <>
       {isCalculator && isCalculatorSelect == 0 && (
-        <Calculator
+        <Calculator1
           result={discount}
           setResult={setDiscount}
           setIsCalculator={setIsCalculator}
