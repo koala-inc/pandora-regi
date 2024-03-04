@@ -12,6 +12,7 @@ import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
 import { useState } from "react";
 import Calculator1 from "@/components/parts/calculator1";
 import Calculator from "@/components/parts/calculator";
+import Calculator4 from "@/components/parts/calculator4";
 
 export default function OrderEnd() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
@@ -58,7 +59,7 @@ export default function OrderEnd() {
   return (
     <>
       {isCalculator && isCalculatorSelect == 0 && (
-        <Calculator1
+        <Calculator4
           result={discount}
           setResult={setDiscount}
           setIsCalculator={setIsCalculator}
