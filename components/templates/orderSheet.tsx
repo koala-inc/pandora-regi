@@ -25,6 +25,7 @@ import Lock from "../parts/lock";
 import Calculator1 from "../parts/calculator1";
 import Calculator5 from "../parts/calculator5";
 import Calculator6 from "../parts/calculator6";
+import Calculator7 from "../parts/calculator7";
 
 function Lists({
   lists,
@@ -1250,14 +1251,18 @@ function CastAdd() {
                         )}
                       </select>
                     </div>
-                    <div className="flex flex-col w-[100px] text-left">
+                    <div className="flex flex-col w-[80px] text-left">
                       <p className="text-accent h-[20px] text-xs">
                         指名開始時間
                       </p>
                       <input
-                        type="time"
-                        className="h-[44px] px-2 rounded-md text-base text-white"
+                        type="text"
+                        className="h-[44px] px-2 rounded-md text-base text-center text-white"
                         value={purchaseOrderItemAdd.time}
+                        onClick={() => {
+                          purchaseOrderItemAdd.isTimeCalculator = true;
+                        }}
+                        readOnly
                       />
                     </div>
                   </div>
@@ -1378,6 +1383,16 @@ export default function OrderSheet() {
           return <Calculator5 key={index} result={purchaseOrderItemAdd} />;
         } else if (purchaseOrderItemAdd.isNumCalculator) {
           return <Calculator6 key={index} result={purchaseOrderItemAdd} />;
+        } else if (purchaseOrderItemAdd.isTimeCalculator) {
+          return (
+            <Calculator7
+              key={index}
+              result={purchaseOrderItemAdd}
+              callback={(hour: any, minite: any) => {
+                purchaseOrderItemAdd.time = hour + ":" + minite;
+              }}
+            />
+          );
         }
       })}
       <Card>
