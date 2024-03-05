@@ -201,6 +201,8 @@ export default function OrderItemAdd() {
                             title: bottle.bottle_revision.name,
                             lot: 1,
                             price: bottle.bottle_revision.price,
+                            isCalculator: false,
+                            isTax: false,
                           },
                         ]);
                       }}
@@ -227,6 +229,8 @@ export default function OrderItemAdd() {
                             title: menu.menu_revision.name,
                             lot: 1,
                             price: menu.menu_revision.price,
+                            isCalculator: false,
+                            isTax: false,
                           },
                         ]);
                       }}

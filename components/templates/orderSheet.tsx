@@ -22,6 +22,8 @@ import { searchDesignate } from "@/gqls/query/designate";
 import Calculator3 from "../parts/calculator3";
 import useIsLockGlobal from "@/globalstates/isLock";
 import Lock from "../parts/lock";
+import Calculator1 from "../parts/calculator1";
+import Calculator5 from "../parts/calculator5";
 
 function Lists({
   lists,
@@ -31,7 +33,7 @@ function Lists({
     subTitle?: string;
     lot: number;
     price: number;
-    tax?: boolean;
+    isTax?: boolean;
   }[];
 }) {
   return (
@@ -46,7 +48,7 @@ function Lists({
           <div className="w-[10%] text-right">{list.lot}</div>
           <div className="w-[40%] text-right">
             {(list.price * list.lot)?.toLocaleString()}
-            {list.tax ? "込" : "円"}
+            {list.isTax ? "込" : "円"}
           </div>
         </li>
       ))}
@@ -79,16 +81,25 @@ function Base() {
   const [isLock, setIsLock] = useIsLockGlobal();
 
   let total = 0;
+  let taxNoTotal = 0;
   purchaseOrder[0]?.cast?.map((cast: any) => {
     total += Number(cast.split("##")[1]);
   });
   total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
   total += Number(purchaseOrder[0]?.roomCharge);
   purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
-    total += Number(orderItem.price) * Number(orderItem.lot);
+    if (!orderItem.isTax) {
+      total += Number(orderItem.price) * Number(orderItem.lot);
+    } else {
+      taxNoTotal += Number(orderItem.price) * Number(orderItem.lot);
+    }
   });
   purchaseOrder[0]?.orderCast?.map((cast: any) => {
-    total += Number(cast.price) * Number(cast.lot);
+    if (!cast.isTax) {
+      total += Number(cast.price) * Number(cast.lot);
+    } else {
+      taxNoTotal += Number(cast.price) * Number(cast.lot);
+    }
   });
 
   const totalPay = total;
@@ -248,13 +259,13 @@ function Base() {
                         title: purchaseOrder[0]?.setName,
                         lot: purchaseOrder[0]?.num,
                         price: purchaseOrder[0]?.price,
-                        tax: purchaseOrder[0]?.priceTax,
+                        isTax: purchaseOrder[0]?.priceTax,
                       },
                       {
                         title: "ルームチャージ",
                         lot: 1,
                         price: purchaseOrder[0]?.roomCharge,
-                        tax: purchaseOrder[0]?.roomTax,
+                        isTax: purchaseOrder[0]?.roomTax,
                       },
                     ]
                   : [
@@ -262,7 +273,7 @@ function Base() {
                         title: purchaseOrder[0]?.setName,
                         lot: purchaseOrder[0]?.num,
                         price: purchaseOrder[0]?.price,
-                        tax: purchaseOrder[0]?.priceTax,
+                        isTax: purchaseOrder[0]?.priceTax,
                       },
                     ]
                 // {
@@ -487,7 +498,7 @@ function Base() {
           <div className="w-full">
             <div className="mt-3 flex text-sm w-full items-center justify-between">
               <div>小計</div>
-              <div>{Math.floor(totalPay).toLocaleString()}円</div>
+              <div>{Math.floor(totalPay + taxNoTotal).toLocaleString()}円</div>
             </div>
             <div className="mt-1 flex text-sm w-full items-center justify-between">
               <div>サービス</div>
@@ -545,7 +556,8 @@ function Base() {
                           : 0) +
                         (purchaseOrder[0]?.roomTax
                           ? purchaseOrder[0]?.roomCharge
-                          : 0)
+                          : 0) +
+                        taxNoTotal
                     ) / 100
                   ) * 100
                 ).toLocaleString()}
@@ -775,33 +787,40 @@ function Add({ isCalculator, setIsCalculator }: any) {
                 >
                   <div className="flex w-full">
                     <div className="flex flex-col w-[200px] text-left">
-                      <p className="h-[40px] my-2 text-white text-base leading-5 flex items-center text-left">
+                      <p className="text-accent h-[20px] text-xs">オーダー名</p>
+                      <p className="h-[40px] mb-2 text-white text-base leading-5 flex items-center text-left">
                         {purchaseOrderItemAdd.title}
                       </p>
                     </div>
-                    <div className="flex flex-col w-[32px] mx-2 text-right justify-center">
+                    <div className="flex flex-col w-[32px] mx-2 text-left">
+                      <p className="text-accent h-[20px] text-xs">数量</p>
                       <input
                         className="h-[40px] px-2 rounded-md text-white text-center"
                         placeholder="個"
-                        defaultValue={purchaseOrderItemAdd.lot}
+                        value={purchaseOrderItemAdd.lot}
                         onChange={(e) => {
                           purchaseOrderItemAdd.lot = Number(e.target.value);
                         }}
                       />
                     </div>
-                    <div className="relative flex flex-col w-[110px] text-right justify-center">
+                    <div className="relative flex flex-col w-[110px] text-left">
+                      <p className="text-accent h-[20px] text-xs">金額</p>
                       <input
-                        className="h-[40px] text-xs my-2 px-2 pr-[20px] rounded-md text-white text-right"
+                        className="h-[40px] mb-2 text-xs px-2 pr-[22px] rounded-md text-white text-right"
                         placeholder="金額"
-                        defaultValue={purchaseOrderItemAdd.price?.toLocaleString()}
-                        onChange={(e) => {
-                          purchaseOrderItemAdd.price = Number(
-                            e.target.value.replace(/[^0-9]/g, "")
-                          );
+                        value={purchaseOrderItemAdd.price?.toLocaleString()}
+                        onClick={() => {
+                          purchaseOrderItemAdd.isCalculator = true;
                         }}
+                        // onChange={(e) => {
+                        //   purchaseOrderItemAdd.price = Number(
+                        //     e.target.value.replace(/[^0-9]/g, "")
+                        //   );
+                        // }}
+                        readOnly
                       />
-                      <p className="absolute top-[20px] right-[7px] opacity-60">
-                        円
+                      <p className="absolute bottom-[20px] right-[7px] opacity-60">
+                        {purchaseOrderItemAdd.isTax ? "込" : "円"}
                       </p>
                     </div>
                   </div>
@@ -1140,14 +1159,12 @@ function CastAdd() {
                 >
                   <div className="flex mb-2">
                     <div className="flex flex-col w-[145px] text-left">
-                      <p className="text-accent h-[20px]　text-xs">
-                        キャスト名
-                      </p>
+                      <p className="text-accent h-[20px] text-xs">キャスト名</p>
                       <div className="h-[44px] text-white text-base justify-start leading-[40px] align-middle flex items-center">
                         {purchaseOrderItemAdd.title.slice(1)}
                       </div>
                     </div>
-                    <div className="flex flex-col w-[40px] mx-2 text-center justify-center">
+                    <div className="flex flex-col w-[40px] mx-2 text-left justify-center">
                       <p className="text-accent h-[20px] text-xs">数量</p>
                       <input
                         className="h-[40px] px-2 text-base rounded-md text-center text-white"
@@ -1160,7 +1177,7 @@ function CastAdd() {
                         }}
                       />
                     </div>
-                    <div className="relative flex flex-col w-[110px] text-right justify-center">
+                    <div className="relative flex flex-col w-[110px] text-left justify-center">
                       <p className="text-accent h-[20px] text-xs">単価</p>
                       <input
                         className="h-[40px] px-2 text-base  pr-[24px] rounded-md text-right text-white"
@@ -1332,11 +1349,18 @@ export default function OrderSheet() {
   const [isControl, setIsControl] = useIsControlGlobal();
   const [isCalculator, setIsCalculator] = useState(false);
   const [isLock, setIsLock] = useIsLockGlobal();
+  const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
+    usePurchaseOrderItemAddGlobal();
 
   return (
     <>
       {isLock == 1 && <Lock />}
       {isCalculator && <Calculator3 setIsCalculator={setIsCalculator} />}
+      {purchaseOrderItemAdd?.map((purchaseOrderItemAdd: any, index: any) => {
+        if (purchaseOrderItemAdd.isCalculator) {
+          return <Calculator5 key={index} result={purchaseOrderItemAdd} />;
+        }
+      })}
       <Card>
         <div
           className="flex h-full w-[340px] flex-col font-bold"
