@@ -791,16 +791,8 @@ export default function Calculator7({ result, callback }: any) {
             <div
               className="flex h-[60px] w-[90%] items-center justify-center rounded-md border border-white bg-neutral-700 text-black shadow-2xl"
               onClick={() => {
-                if (isHour) {
-                  setIsHour(false);
-                  setIsMinite(true);
-                } else if (isMinite) {
-                  setIsHour(false);
-                  setIsMinite(false);
-                } else {
-                  if (callback) callback(hour, minite);
-                  result.isTimeCalculator = false;
-                }
+                if (callback) callback(hour, minite);
+                result.isTimeCalculator = false;
               }}
             >
               <Image
