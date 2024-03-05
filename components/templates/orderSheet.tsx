@@ -1212,9 +1212,8 @@ function CastAdd() {
                       </p>
                     </div>
                   </div>
-                  <Line />
-                  <div className="mt-2 flex">
-                    <div className="flex flex-col w-[100px] text-xs mr-[53px]">
+                  <div className="mb-1 flex justify-end">
+                    <div className="flex flex-col w-[88px] text-xs mr-1">
                       <p className="text-accent h-[20px] text-xs">種別</p>
                       <select
                         className="h-[44px] flex items-center text-base rounded-md mr-1"
@@ -1251,7 +1250,7 @@ function CastAdd() {
                         )}
                       </select>
                     </div>
-                    <div className="flex flex-col w-[80px] text-left">
+                    <div className="flex flex-col w-[70px] text-left">
                       <p className="text-accent h-[20px] text-xs">
                         指名開始時間
                       </p>

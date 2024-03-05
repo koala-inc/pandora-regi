@@ -25,6 +25,7 @@ import { searchCast } from "@/gqls/query/cast";
 import usePurchaseOrderItemAddGlobal from "@/globalstates/purchaseOrderItemAdd";
 import { searchDesignate } from "@/gqls/query/designate";
 import dayjs from "dayjs";
+import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -66,6 +67,7 @@ export default function OrderCastAdd() {
 
   const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
     usePurchaseOrderItemAddGlobal();
+  const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
 
   const [selectDesignate, setSelectDesignate] = useState(-1);
   const [selectDesignateSymbol, setSelectDesignateSymbol] = useState("");
@@ -95,10 +97,6 @@ export default function OrderCastAdd() {
       >
         <ContentHeader>
           <div className="w-full flex justify-start items-center">
-            <div className="w-[150px] flex flex-col">
-              <p className="text-accent">指名開始時間</p>
-              <input className="h-[50px] w-[100px]" type="time" />
-            </div>
             <div className="w-full flex flex-col">
               <p className="text-accent">指名種別</p>
               <div className="flex">
