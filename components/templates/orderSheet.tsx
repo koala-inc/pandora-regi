@@ -1147,10 +1147,10 @@ function CastAdd() {
                         {purchaseOrderItemAdd.title.slice(1)}
                       </div>
                     </div>
-                    <div className="flex flex-col w-[32px] mx-2 text-center justify-center">
+                    <div className="flex flex-col w-[40px] mx-2 text-center justify-center">
                       <p className="text-accent h-[20px] text-xs">数量</p>
                       <input
-                        className="h-[40px] px-2 rounded-md text-center text-white"
+                        className="h-[40px] px-2 text-base rounded-md text-center text-white"
                         placeholder="個"
                         value={purchaseOrderItemAdd.lot}
                         onChange={(e) => {
@@ -1160,10 +1160,10 @@ function CastAdd() {
                         }}
                       />
                     </div>
-                    <div className="relative flex flex-col w-[100px] text-right justify-center">
+                    <div className="relative flex flex-col w-[110px] text-right justify-center">
                       <p className="text-accent h-[20px] text-xs">単価</p>
                       <input
-                        className="h-[40px] px-2 pr-[24px] rounded-md text-right text-white"
+                        className="h-[40px] px-2 text-base  pr-[24px] rounded-md text-right text-white"
                         placeholder="金額"
                         value={purchaseOrderItemAdd.price?.toLocaleString()}
                         onChange={(e) => {

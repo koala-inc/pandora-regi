@@ -622,7 +622,7 @@ export default function ControlOrderSet() {
                 セット名
               </label>
               <select
-                className="mr-8 h-[45px] w-[10rem] text-center rounded-md px-1 text-xl"
+                className="mr-8 h-[45px] w-[10rem] text-left rounded-md px-1 text-base"
                 value={setName}
                 onChange={(e) => {
                   {

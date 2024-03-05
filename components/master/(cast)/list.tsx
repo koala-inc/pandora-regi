@@ -586,8 +586,8 @@ export default function CastList() {
                                   >
                                     <td>{cast.birthday}</td>
                                     <td>{cast.address}</td>
-                                    <td>{cast.remarks}</td>
                                     <td>{cast.phone_number}</td>
+                                    <td>{cast.remarks}</td>
                                     <td>-</td>
                                     <td>-</td>
                                   </tr>
