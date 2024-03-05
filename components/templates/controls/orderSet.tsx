@@ -457,7 +457,7 @@ export default function ControlOrderSet() {
               </label>
               <div className="flex">
                 <select
-                  className="mr-1 h-[45px] w-[7rem] rounded-md px-2 text-xl"
+                  className="mr-1 h-[45px] w-[9rem] rounded-md px-2 text-xl"
                   value={status}
                   onChange={(e) => {
                     setStatus(e.target.value);

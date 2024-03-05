@@ -24,6 +24,7 @@ import useIsLockGlobal from "@/globalstates/isLock";
 import Lock from "../parts/lock";
 import Calculator1 from "../parts/calculator1";
 import Calculator5 from "../parts/calculator5";
+import Calculator6 from "../parts/calculator6";
 
 function Lists({
   lists,
@@ -335,6 +336,7 @@ function Base() {
                       subTitle: "",
                       lot: 1,
                       price: Number(cast.split("##")[1]),
+                      isTax: cast.isTax,
                     };
                   }),
                   ...purchaseOrder[0].orderCast?.map((cast: any) => {
@@ -343,6 +345,7 @@ function Base() {
                       subTitle: "",
                       lot: Number(cast.lot),
                       price: Number(cast.price),
+                      isTax: cast.isTax,
                     };
                   }),
                 ]
@@ -798,9 +801,13 @@ function Add({ isCalculator, setIsCalculator }: any) {
                         className="h-[40px] px-2 rounded-md text-white text-center"
                         placeholder="個"
                         value={purchaseOrderItemAdd.lot}
-                        onChange={(e) => {
-                          purchaseOrderItemAdd.lot = Number(e.target.value);
+                        // onChange={(e) => {
+                        //   purchaseOrderItemAdd.lot = Number(e.target.value);
+                        // }}
+                        onClick={() => {
+                          purchaseOrderItemAdd.isNumCalculator = true;
                         }}
+                        readOnly
                       />
                     </div>
                     <div className="relative flex flex-col w-[110px] text-left">
@@ -1035,6 +1042,7 @@ function CastAdd() {
                     subTitle: "",
                     lot: 1,
                     price: Number(cast.split("##")[1]),
+                    isTax: cast.isTax,
                   };
                 }),
                 ...purchaseOrder[0]?.orderCast?.map((cast: any) => {
@@ -1043,6 +1051,7 @@ function CastAdd() {
                     subTitle: "",
                     lot: 1,
                     price: Number(cast.price),
+                    isTax: cast.isTax,
                   };
                 }),
               ]}
@@ -1170,11 +1179,15 @@ function CastAdd() {
                         className="h-[40px] px-2 text-base rounded-md text-center text-white"
                         placeholder="個"
                         value={purchaseOrderItemAdd.lot}
-                        onChange={(e) => {
-                          purchaseOrderItemAdd.lot = Number(
-                            e.target.value.replace(/[^0-9]/g, "")
-                          );
+                        // onChange={(e) => {
+                        //   purchaseOrderItemAdd.lot = Number(
+                        //     e.target.value.replace(/[^0-9]/g, "")
+                        //   );
+                        // }}
+                        onClick={() => {
+                          purchaseOrderItemAdd.isNumCalculator = true;
                         }}
+                        readOnly
                       />
                     </div>
                     <div className="relative flex flex-col w-[110px] text-left justify-center">
@@ -1183,14 +1196,18 @@ function CastAdd() {
                         className="h-[40px] px-2 text-base  pr-[24px] rounded-md text-right text-white"
                         placeholder="金額"
                         value={purchaseOrderItemAdd.price?.toLocaleString()}
-                        onChange={(e) => {
-                          purchaseOrderItemAdd.price = Number(
-                            e.target.value.replace(/[^0-9]/g, "")
-                          );
+                        // onChange={(e) => {
+                        //   purchaseOrderItemAdd.price = Number(
+                        //     e.target.value.replace(/[^0-9]/g, "")
+                        //   );
+                        // }}
+                        onClick={() => {
+                          purchaseOrderItemAdd.isCalculator = true;
                         }}
+                        readOnly
                       />
                       <p className="absolute bottom-[12px] right-[7px] opacity-60">
-                        円
+                        {purchaseOrderItemAdd.isTax ? "込" : "円"}
                       </p>
                     </div>
                   </div>
@@ -1359,6 +1376,8 @@ export default function OrderSheet() {
       {purchaseOrderItemAdd?.map((purchaseOrderItemAdd: any, index: any) => {
         if (purchaseOrderItemAdd.isCalculator) {
           return <Calculator5 key={index} result={purchaseOrderItemAdd} />;
+        } else if (purchaseOrderItemAdd.isNumCalculator) {
+          return <Calculator6 key={index} result={purchaseOrderItemAdd} />;
         }
       })}
       <Card>

@@ -231,6 +231,7 @@ export default function OrderItemAdd() {
                             price: menu.menu_revision.price,
                             isCalculator: false,
                             isTax: false,
+                            isNumCalculator: false,
                           },
                         ]);
                       }}

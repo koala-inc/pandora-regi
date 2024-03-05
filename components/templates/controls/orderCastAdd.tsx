@@ -435,6 +435,7 @@ export default function OrderCastAdd() {
                               .format("HH:mm"),
                             isCalculator: false,
                             isTax: false,
+                            isNumCalculator: false,
                           },
                         ]);
                       }}
