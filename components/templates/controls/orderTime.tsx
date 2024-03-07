@@ -24,14 +24,14 @@ import ja from "dayjs/locale/ja";
 
 function ContentHeader({ children }: { children: any }) {
   return (
-    <SubBorder size="mt-[0px] h-[125px] w-[90%] px-4 py-2">
+    <SubBorder size="mt-[0px] h-[100px] w-[90%] px-4 py-2">
       {children}
     </SubBorder>
   );
 }
 
 function Content({ children }: { children: any }) {
-  return <Border size="h-[680px] w-full px-4 py-2">{children}</Border>;
+  return <Border size="h-[690px] w-full px-4 py-2">{children}</Border>;
 }
 
 const defaultVariables = {
@@ -153,15 +153,26 @@ export default function OrderTime() {
                   </label>
                   <div className="flex my-auto">
                     <Border
-                      className="mr-1"
-                      size="px-2 text-red-700"
+                      className="mr-1 w-[3.8rem]"
+                      size="px-2 text-red-700 flex justify-center items-center align-middle"
                       natural
                       stroke="md"
                     >
-                      -30
+                      <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
+                        -
+                      </div>
+                      <span>30</span>
                     </Border>
-                    <Border size="px-2 text-blue-700" natural stroke="md">
-                      +30
+                    <Border
+                      className="w-[3.8rem]"
+                      size="px-2 text-blue-700 flex justify-center items-center align-middle"
+                      natural
+                      stroke="md"
+                    >
+                      <div className="flex justify-center items-center h-full mt-[-3px]">
+                        +
+                      </div>
+                      <span>30</span>
                     </Border>
                   </div>
                 </div>
@@ -195,7 +206,7 @@ export default function OrderTime() {
         <div className="">
           <Content>
             <Border
-              className="my-2 h-[90%] w-full"
+              className="my-2 h-[98%] w-full"
               rounded="border-white rounded-md h-[100%] !border-[1px]"
               size="p-4 !items-start min-h-full max-h-full overflow-scroll"
               black
@@ -213,27 +224,23 @@ export default function OrderTime() {
                     <th className="w-[150px] text-left text-accent">
                       セット内容
                     </th>
-                    <th className="w-[60px] text-center text-accent">
+                    <th className="w-[60px] text-left text-accent">
                       セット時間
                     </th>
-                    <th className="w-[103px] text-center text-accent">料金</th>
-                    <th className="w-[180px] text-left text-thirdary-accent">
-                      区分
-                    </th>
+                    <th className="w-[103px] text-left text-accent">料金</th>
+                    <th className="w-[180px] text-left text-accent">区分</th>
                     <th className="w-[80px] text-center text-accent">
                       開始時間
                     </th>
                     <th className="w-[80px] text-center text-accent">
                       退店時間
                     </th>
-                    <th className="w-[20px] text-center text-accent">延長数</th>
-                    <th className="w-[130px] text-center text-secondary-accent">
-                      延長
+                    <th className="w-[20px] text-left text-accent">延長数</th>
+                    <th className="w-[130px] text-center text-accent">延長</th>
+                    <th className="min-w-[3.65em] text-left text-accent">
+                      在店/退店
                     </th>
-                    <th className="min-w-[3.65em] text-center text-accent">
-                      時間ロック
-                    </th>
-                    <th>削除</th>
+                    <th className="pl-[12px] text-left text-accent">削除</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -323,7 +330,27 @@ export default function OrderTime() {
                           Number(purchaseOrder[0]?.setTime) -
                           1) /
                           30
-                      )}
+                      ) > 0
+                        ? Math.floor(
+                            (Number(
+                              dayjs(
+                                date(
+                                  purchaseOrder[0]?.endTime.split(":")[0],
+                                  purchaseOrder[0]?.endTime.split(":")[1]
+                                )
+                              ).diff(
+                                date(
+                                  purchaseOrder[0]?.startTime.split(":")[0],
+                                  purchaseOrder[0]?.startTime.split(":")[1]
+                                ),
+                                "minute"
+                              )
+                            ) -
+                              Number(purchaseOrder[0]?.setTime) -
+                              1) /
+                              30
+                          )
+                        : 0}
                     </th>
                     <th className="w-[130px] text-center items-center h-[80px] flex text-base">
                       <div
@@ -339,12 +366,15 @@ export default function OrderTime() {
                         }}
                       >
                         <Border
-                          className="mr-1"
-                          size="px-2 text-red-700"
+                          className="mr-1 w-[3.8rem]"
+                          size="px-2 text-red-700 flex justify-center items-center align-middle"
                           natural
                           stroke="md"
                         >
-                          -30
+                          <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
+                            -
+                          </div>
+                          <span>30</span>
                         </Border>
                       </div>
                       <div
@@ -359,20 +389,41 @@ export default function OrderTime() {
                             .format("HH:mm");
                         }}
                       >
-                        <Border size="px-2 text-blue-700" natural stroke="md">
-                          +30
+                        <Border
+                          className="w-[3.8rem]"
+                          size="px-2 text-blue-700 flex justify-center items-center align-middle"
+                          natural
+                          stroke="md"
+                        >
+                          <div className="flex justify-center items-center h-full mt-[-3px]">
+                            +
+                          </div>
+                          <span>30</span>
                         </Border>
                       </div>
                     </th>
                     <th className="w-[80px] text-center text-base">
                       <Border natural stroke="md">
-                        在店
+                        <p className="text-red-700">退店</p>
                       </Border>
                     </th>
                     <th className="w-[20px] text-center text-base">
-                      <Border size="px-2 text-red-700" natural stroke="md">
-                        X
-                      </Border>
+                      <div className="flex">
+                        <Border2
+                          rounded="rounded-full"
+                          size="h-[28px] w-[28px] p-[6px]"
+                        >
+                          <div>
+                            <Image
+                              src={"/assets/close.svg"}
+                              width={26}
+                              height={26}
+                              className="!h-full !w-full"
+                              alt=""
+                            />
+                          </div>
+                        </Border2>
+                      </div>
                     </th>
                   </tr>
                 </tbody>

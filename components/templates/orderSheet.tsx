@@ -139,15 +139,26 @@ function Base() {
 
           <div className="mt-6 flex items-center justify-center">
             <Border
-              className="mr-1"
-              size="px-2 text-red-700"
+              className="mr-1 w-[3.8rem]"
+              size="px-2 text-red-700 flex justify-center items-center align-middle"
               natural
               stroke="md"
             >
-              -30
+              <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
+                -
+              </div>
+              <span>30</span>
             </Border>
-            <Border size="px-2 text-blue-700" natural stroke="md">
-              +30
+            <Border
+              className="w-[3.8rem]"
+              size="px-2 text-blue-700 flex justify-center items-center align-middle"
+              natural
+              stroke="md"
+            >
+              <div className="flex justify-center items-center h-full mt-[-3px]">
+                +
+              </div>
+              <span>30</span>
             </Border>
           </div>
         </div>
@@ -1170,49 +1181,12 @@ function CastAdd() {
                   <div className="flex mb-2">
                     <div className="flex flex-col w-[145px] text-left">
                       <p className="text-accent h-[20px] text-xs">キャスト名</p>
-                      <div className="h-[44px] text-white text-base justify-start leading-[40px] align-middle flex items-center">
+                      <div className="h-[20px] text-white text-base justify-start leading-[40px] align-middle flex items-center">
                         {purchaseOrderItemAdd.title.slice(1)}
                       </div>
                     </div>
-                    <div className="flex flex-col w-[40px] mx-2 text-left justify-center">
-                      <p className="text-accent h-[20px] text-xs">数量</p>
-                      <input
-                        className="h-[40px] px-2 text-base rounded-md text-center text-white"
-                        placeholder="個"
-                        value={purchaseOrderItemAdd.lot}
-                        // onChange={(e) => {
-                        //   purchaseOrderItemAdd.lot = Number(
-                        //     e.target.value.replace(/[^0-9]/g, "")
-                        //   );
-                        // }}
-                        onClick={() => {
-                          purchaseOrderItemAdd.isNumCalculator = true;
-                        }}
-                        readOnly
-                      />
-                    </div>
-                    <div className="relative flex flex-col w-[110px] text-left justify-center">
-                      <p className="text-accent h-[20px] text-xs">単価</p>
-                      <input
-                        className="h-[40px] px-2 text-base  pr-[24px] rounded-md text-right text-white"
-                        placeholder="金額"
-                        value={purchaseOrderItemAdd.price?.toLocaleString()}
-                        // onChange={(e) => {
-                        //   purchaseOrderItemAdd.price = Number(
-                        //     e.target.value.replace(/[^0-9]/g, "")
-                        //   );
-                        // }}
-                        onClick={() => {
-                          purchaseOrderItemAdd.isCalculator = true;
-                        }}
-                        readOnly
-                      />
-                      <p className="absolute bottom-[12px] right-[7px] opacity-60">
-                        {purchaseOrderItemAdd.isTax ? "込" : "円"}
-                      </p>
-                    </div>
                   </div>
-                  <div className="mb-1 flex justify-end">
+                  <div className="mb-1 flex">
                     <div className="flex flex-col w-[88px] text-xs mr-1">
                       <p className="text-accent h-[20px] text-xs">種別</p>
                       <select
@@ -1249,6 +1223,43 @@ function CastAdd() {
                           }
                         )}
                       </select>
+                    </div>
+                    <div className="flex flex-col w-[40px] mr-2 text-left justify-center">
+                      <p className="text-accent h-[20px] text-xs">数量</p>
+                      <input
+                        className="h-[44px] px-2 text-base rounded-md text-center text-white"
+                        placeholder="個"
+                        value={purchaseOrderItemAdd.lot}
+                        // onChange={(e) => {
+                        //   purchaseOrderItemAdd.lot = Number(
+                        //     e.target.value.replace(/[^0-9]/g, "")
+                        //   );
+                        // }}
+                        onClick={() => {
+                          purchaseOrderItemAdd.isNumCalculator = true;
+                        }}
+                        readOnly
+                      />
+                    </div>
+                    <div className="relative flex flex-col w-[110px] text-left justify-center mr-2">
+                      <p className="text-accent h-[20px] text-xs">単価</p>
+                      <input
+                        className="h-[44px] px-2 text-base  pr-[24px] rounded-md text-right text-white"
+                        placeholder="金額"
+                        value={purchaseOrderItemAdd.price?.toLocaleString()}
+                        // onChange={(e) => {
+                        //   purchaseOrderItemAdd.price = Number(
+                        //     e.target.value.replace(/[^0-9]/g, "")
+                        //   );
+                        // }}
+                        onClick={() => {
+                          purchaseOrderItemAdd.isCalculator = true;
+                        }}
+                        readOnly
+                      />
+                      <p className="absolute bottom-[12px] right-[7px] opacity-60">
+                        {purchaseOrderItemAdd.isTax ? "込" : "円"}
+                      </p>
                     </div>
                     <div className="flex flex-col w-[70px] text-left">
                       <p className="text-accent h-[20px] text-xs">
