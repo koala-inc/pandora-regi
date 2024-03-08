@@ -27,6 +27,9 @@ export default function OrderEnd() {
   });
   total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
   total += Number(purchaseOrder[0]?.roomCharge);
+  total +=
+    Number(purchaseOrder[0].extensionPrice) *
+    Number(purchaseOrder[0].orderExtension);
   purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
     total += Number(orderItem.price) * Number(orderItem.lot);
   });

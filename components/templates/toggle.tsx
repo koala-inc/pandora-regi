@@ -1,8 +1,24 @@
+import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 import { useState } from "react";
+import dayjs from "dayjs";
+import ja from "dayjs/locale/ja";
 
 export default function Toggle({ isChecked, setIsChecked }: any) {
+  const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+  const [nowDate, setNowDate] = useState(dayjs(new Date()));
+
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
+    if (purchaseOrder[0].callToggle != undefined) {
+      purchaseOrder[0].callToggle = !isChecked;
+      const date = nowDate.hour(Number(purchaseOrder[0].endTime.split(":")[0]));
+      const newDate = date.minute(
+        Number(purchaseOrder[0].endTime.split(":")[1])
+      );
+      purchaseOrder[0].callTime = newDate
+        .subtract(10, "minute")
+        .format("HH:mm");
+    }
   };
 
   return (

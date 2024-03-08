@@ -21,6 +21,8 @@ import Calculator2 from "@/components/parts/calculator2";
 import Toggle from "../toggle";
 import dayjs from "dayjs";
 import ja from "dayjs/locale/ja";
+import Calculator7 from "@/components/parts/calculator7";
+import Calculator8 from "@/components/parts/calculator8";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -87,13 +89,98 @@ export default function OrderTime() {
     return b;
   };
 
+  const checker = () =>
+    Math.floor(
+      (Number(
+        dayjs(
+          date(
+            purchaseOrder[0]?.endTime.split(":")[0],
+            purchaseOrder[0]?.endTime.split(":")[1]
+          )
+        ).diff(
+          date(
+            purchaseOrder[0]?.startTime.split(":")[0],
+            purchaseOrder[0]?.startTime.split(":")[1]
+          ),
+          "minute"
+        )
+      ) -
+        Number(purchaseOrder[0]?.setTime) -
+        1) /
+        30
+    ) > 0
+      ? Math.floor(
+          (Number(
+            dayjs(
+              date(
+                purchaseOrder[0]?.endTime.split(":")[0],
+                purchaseOrder[0]?.endTime.split(":")[1]
+              )
+            ).diff(
+              date(
+                purchaseOrder[0]?.startTime.split(":")[0],
+                purchaseOrder[0]?.startTime.split(":")[1]
+              ),
+              "minute"
+            )
+          ) -
+            Number(purchaseOrder[0]?.setTime) -
+            1) /
+            30
+        )
+      : 0;
+
   return (
     <>
-      {isCalculator && isCalculatorSelect == 4 && (
-        <Calculator2
-          result={setTimeResult}
-          setResult={setSetTimeResult}
-          setIsCalculator={setIsCalculator}
+      {purchaseOrder[0].isTimeCalculator && isCalculatorSelect == 1 && (
+        <Calculator8
+          result={purchaseOrder[0]}
+          time={purchaseOrder[0].callTime}
+          callback={(hour: any, minite: any) => {
+            purchaseOrder[0].callTime = hour + ":" + minite;
+          }}
+        />
+      )}
+      {purchaseOrder[0].isTimeCalculator && isCalculatorSelect == 2 && (
+        <Calculator8
+          result={purchaseOrder[0]}
+          time={purchaseOrder[0].mainStartTime}
+          callback={(hour: any, minite: any) => {
+            purchaseOrder[0].mainStartTime = hour + ":" + minite;
+            purchaseOrder[0].startTime = purchaseOrder[0].mainStartTime;
+            purchaseOrder[0].orderExtension = checker();
+          }}
+        />
+      )}
+      {purchaseOrder[0].isTimeCalculator && isCalculatorSelect == 3 && (
+        <Calculator8
+          result={purchaseOrder[0]}
+          time={purchaseOrder[0].mainEndTime}
+          callback={(hour: any, minite: any) => {
+            purchaseOrder[0].mainEndTime = hour + ":" + minite;
+            purchaseOrder[0].endTime = purchaseOrder[0].mainEndTime;
+            purchaseOrder[0].orderExtension = checker();
+          }}
+        />
+      )}
+      {purchaseOrder[0].isTimeCalculator && isCalculatorSelect == 4 && (
+        <Calculator8
+          result={purchaseOrder[0]}
+          time={purchaseOrder[0].startTime}
+          callback={(hour: any, minite: any) => {
+            purchaseOrder[0].startTime = hour + ":" + minite;
+            purchaseOrder[0].orderExtension = checker();
+          }}
+        />
+      )}
+      {purchaseOrder[0].isTimeCalculator && isCalculatorSelect == 5 && (
+        <Calculator8
+          result={purchaseOrder[0]}
+          time={purchaseOrder[0].endTime}
+          callback={(hour: any, minite: any) => {
+            purchaseOrder[0].endTime = hour + ":" + minite;
+            purchaseOrder[0].orderExtension = checker();
+          }}
         />
       )}
       <motion.div
@@ -122,11 +209,12 @@ export default function OrderTime() {
                   </label>
                   <input
                     type="text"
-                    className="mr-4 h-[45px] w-[80px] rounded-md px-2 text-xl"
-                    value={purchaseOrder[0]?.startTime}
+                    className="mr-4 h-[45px] w-[80px] rounded-md px-2 text-xl text-center"
+                    value={purchaseOrder[0]?.mainStartTime}
                     onClick={() => {
-                      setIsCalculatorSelect(4);
-                      setIsCalculator(true);
+                      setIsCalculatorSelect(2);
+                      // setIsCalculator(true);
+                      purchaseOrder[0].isTimeCalculator = true;
                     }}
                     readOnly
                   />
@@ -138,67 +226,107 @@ export default function OrderTime() {
                   </label>
                   <input
                     type="text"
-                    className="mr-8 h-[45px] w-[80px] rounded-md px-2 text-xl"
-                    value={purchaseOrder[0]?.endTime}
+                    className="mr-8 h-[45px] w-[80px] rounded-md px-2 text-xl text-center"
+                    value={purchaseOrder[0]?.mainEndTime}
                     onClick={() => {
-                      setIsCalculatorSelect(5);
-                      setIsCalculator(true);
+                      setIsCalculatorSelect(3);
+                      // setIsCalculator(true);
+                      purchaseOrder[0].isTimeCalculator = true;
                     }}
                     readOnly
                   />
                 </div>
-                <div className="flex flex-col mr-6">
+                {/* <div className="flex flex-col mr-6">
                   <label className="mt-3 mb-2 text-xs font-bold text-accent">
                     延長
                   </label>
                   <div className="flex my-auto">
-                    <Border
-                      className="mr-1 w-[3.8rem]"
-                      size="px-2 text-red-700 flex justify-center items-center align-middle"
-                      natural
-                      stroke="md"
+                    <div
+                      onClick={() => {
+                        purchaseOrder[0].mainEndTime = dayjs(
+                          date(
+                            purchaseOrder[0]?.mainEndTime.split(":")[0],
+                            purchaseOrder[0]?.mainEndTime.split(":")[1]
+                          )
+                        )
+                          .subtract(30, "minute")
+                          .format("HH:mm");
+                        purchaseOrder[0].endTime = purchaseOrder[0].mainEndTime;
+                        purchaseOrder[0].orderExtension = checker();
+                      }}
                     >
-                      <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
-                        -
-                      </div>
-                      <span>30</span>
-                    </Border>
-                    <Border
-                      className="w-[3.8rem]"
-                      size="px-2 text-blue-700 flex justify-center items-center align-middle"
-                      natural
-                      stroke="md"
+                      <Border
+                        className="mr-1 w-[3.8rem]"
+                        size="px-2 text-red-700 flex justify-center items-center align-middle"
+                        natural
+                        stroke="md"
+                      >
+                        <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
+                          -
+                        </div>
+                        <span>30</span>
+                      </Border>
+                    </div>
+                    <div
+                      onClick={() => {
+                        purchaseOrder[0].mainEndTime = dayjs(
+                          date(
+                            purchaseOrder[0]?.mainEndTime.split(":")[0],
+                            purchaseOrder[0]?.mainEndTime.split(":")[1]
+                          )
+                        )
+                          .add(30, "minute")
+                          .format("HH:mm");
+                        purchaseOrder[0].endTime = purchaseOrder[0].mainEndTime;
+                        purchaseOrder[0].orderExtension = checker();
+                      }}
                     >
-                      <div className="flex justify-center items-center h-full mt-[-3px]">
-                        +
-                      </div>
-                      <span>30</span>
-                    </Border>
+                      <Border
+                        className="w-[3.8rem]"
+                        size="px-2 text-blue-700 flex justify-center items-center align-middle"
+                        natural
+                        stroke="md"
+                      >
+                        <div className="flex justify-center items-center h-full mt-[-3px]">
+                          +
+                        </div>
+                        <span>30</span>
+                      </Border>
+                    </div>
                   </div>
-                </div>
-                <div className="flex flex-col">
+                </div> */}
+                {/* <div className="flex flex-col">
                   <label className="mt-3 mb-2 text-xs font-bold text-accent">
                     コール時間
                   </label>
-                  <input
-                    type="text"
-                    className="mr-8 h-[45px] w-[80px] rounded-md px-2 text-xl"
-                    value={purchaseOrder[0]?.callTime}
-                    onClick={() => {
-                      setIsCalculatorSelect(5);
-                      setIsCalculator(true);
-                    }}
-                    readOnly
-                  />
-                </div>
-                <div className="flex flex-col">
+                  {!purchaseOrder[0].callToggle ? (
+                    <input
+                      type="text"
+                      className="mr-8 h-[45px] w-[80px] rounded-md px-2 text-xl text-center"
+                      value={purchaseOrder[0]?.callTime}
+                      onClick={() => {
+                        setIsCalculatorSelect(1);
+                        purchaseOrder[0].isTimeCalculator = true;
+                      }}
+                      readOnly
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      className="mr-8 h-[45px] w-[80px] rounded-md px-2 text-xl text-center"
+                      value={"-"}
+                      readOnly
+                    />
+                  )}
+                </div> */}
+                {/* <div className="flex flex-col">
                   <label className="mt-3 mb-2 text-xs font-bold text-accent">
                     {"　"}
                   </label>
                   <div className="flex my-auto">
                     <Toggle isChecked={toggle} setIsChecked={setToggle} />
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </ContentHeader>
@@ -221,14 +349,14 @@ export default function OrderTime() {
                         className="mt-[8px] h-[20px] w-[20px]"
                       />
                     </th>
-                    <th className="w-[150px] text-left text-accent">
+                    <th className="w-[120px] text-left text-accent">
                       セット内容
                     </th>
                     <th className="w-[60px] text-left text-accent">
                       セット時間
                     </th>
                     <th className="w-[103px] text-left text-accent">料金</th>
-                    <th className="w-[180px] text-left text-accent">区分</th>
+                    <th className="w-[210px] text-left text-accent">区分</th>
                     <th className="w-[80px] text-center text-accent">
                       開始時間
                     </th>
@@ -251,13 +379,15 @@ export default function OrderTime() {
                         className="mt-[8px] h-[20px] w-[20px]"
                       />
                     </th>
-                    <th className="w-[150px] text-left text-base">
-                      {purchaseOrder[0]?.setName}
+                    <th className="w-[120px] text-left text-sm">
+                      <select className="h-[40px] w-[120px] rounded-md text-left px-1 text-sm">
+                        <option>{purchaseOrder[0]?.setName}</option>
+                      </select>
                     </th>
                     <th className="relative w-[60px] text-left text-lg">
                       <input
                         type="text"
-                        className="h-[45px] w-[60px] text-right rounded-md px-1 pr-[29px] text-base"
+                        className="h-[40px] w-[60px] text-right rounded-md px-1 pr-[27px] text-sm"
                         value={purchaseOrder[0]?.setTime}
                         onClick={() => {
                           setIsCalculatorSelect(5);
@@ -265,14 +395,14 @@ export default function OrderTime() {
                         }}
                         readOnly
                       />
-                      <p className="absolute bottom-[26.5px] left-[43px] opacity-60">
+                      <p className="absolute bottom-[30.5px] text-sm left-[46px] opacity-60">
                         分
                       </p>
                     </th>
                     <th className="relative w-[103px] text-left text-lg">
                       <input
                         type="text"
-                        className="h-[45px] w-[103px] text-right rounded-md px-2 pr-[32px] text-base"
+                        className="h-[40px] w-[103px] text-right rounded-md px-2 pr-[26px] text-sm"
                         value={purchaseOrder[0]?.price}
                         onClick={() => {
                           setIsCalculatorSelect(5);
@@ -280,21 +410,26 @@ export default function OrderTime() {
                         }}
                         readOnly
                       />
-                      <p className="absolute bottom-[26.5px] left-[83px] opacity-60">
+                      <p className="absolute bottom-[30.5px] text-sm left-[90px] opacity-60">
                         円
                       </p>
                     </th>
-                    <th className="w-[180px] text-left text-base">
-                      案内所　案内所１
+                    <th className="w-[210px] flex text-left text-sm">
+                      <select className="h-[40px] w-[90px] rounded-md text-left px-1 text-sm mr-2">
+                        <option>案内所</option>
+                      </select>
+                      <select className="h-[40px] w-[120px] rounded-md text-left px-1 text-sm">
+                        <option>案内所１</option>
+                      </select>
                     </th>
                     <th className="w-[80px] text-center text-lg">
                       <input
                         type="text"
-                        className="h-[45px] w-[70px] text-center rounded-md px-2 text-base"
+                        className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
                         value={purchaseOrder[0]?.startTime}
                         onClick={() => {
                           setIsCalculatorSelect(4);
-                          setIsCalculator(true);
+                          purchaseOrder[0].isTimeCalculator = true;
                         }}
                         readOnly
                       />
@@ -302,16 +437,16 @@ export default function OrderTime() {
                     <th className="w-[80px] text-center text-lg">
                       <input
                         type="text"
-                        className="h-[45px] w-[70px] text-center rounded-md px-2 text-base"
+                        className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
                         value={purchaseOrder[0]?.endTime}
                         onClick={() => {
                           setIsCalculatorSelect(5);
-                          setIsCalculator(true);
+                          purchaseOrder[0].isTimeCalculator = true;
                         }}
                         readOnly
                       />
                     </th>
-                    <th className="w-[20px] text-center text-base">
+                    <th className="w-[20px] text-center text-sm">
                       {Math.floor(
                         (Number(
                           dayjs(
@@ -352,7 +487,7 @@ export default function OrderTime() {
                           )
                         : 0}
                     </th>
-                    <th className="w-[130px] text-center items-center h-[80px] flex text-base">
+                    <th className="w-[130px] text-center items-center h-[80px] flex text-sm">
                       <div
                         onClick={() => {
                           purchaseOrder[0].endTime = dayjs(
@@ -363,6 +498,7 @@ export default function OrderTime() {
                           )
                             .subtract(30, "minute")
                             .format("HH:mm");
+                          purchaseOrder[0].orderExtension = checker();
                         }}
                       >
                         <Border
@@ -387,6 +523,7 @@ export default function OrderTime() {
                           )
                             .add(30, "minute")
                             .format("HH:mm");
+                          purchaseOrder[0].orderExtension = checker();
                         }}
                       >
                         <Border
@@ -402,12 +539,12 @@ export default function OrderTime() {
                         </Border>
                       </div>
                     </th>
-                    <th className="w-[80px] text-center text-base">
+                    <th className="w-[80px] text-center text-sm">
                       <Border natural stroke="md">
                         <p className="text-red-700">退店</p>
                       </Border>
                     </th>
-                    <th className="w-[20px] text-center text-base">
+                    <th className="w-[20px] text-center text-sm">
                       <div className="flex">
                         <Border2
                           rounded="rounded-full"

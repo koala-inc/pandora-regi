@@ -27,6 +27,11 @@ import Calculator5 from "../parts/calculator5";
 import Calculator6 from "../parts/calculator6";
 import Calculator7 from "../parts/calculator7";
 
+import dayjs from "dayjs";
+import ja from "dayjs/locale/ja";
+import Calculator8 from "../parts/calculator8";
+import Calculator9 from "../parts/calculator9";
+
 function Lists({
   lists,
 }: {
@@ -89,6 +94,9 @@ function Base() {
   });
   total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
   total += Number(purchaseOrder[0]?.roomCharge);
+  total +=
+    Number(purchaseOrder[0].extensionPrice) *
+    Number(purchaseOrder[0].orderExtension);
   purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
     if (!orderItem.isTax) {
       total += Number(orderItem.price) * Number(orderItem.lot);
@@ -106,6 +114,55 @@ function Base() {
 
   const totalPay = total;
 
+  const [nowDate, setNowDate] = useState(dayjs(new Date()));
+
+  const date = (hour: any, minite: any) => {
+    const a = nowDate.hour(Number(hour));
+    const b = a.minute(Number(minite));
+    return b;
+  };
+
+  const checker = () =>
+    Math.floor(
+      (Number(
+        dayjs(
+          date(
+            purchaseOrder[0]?.endTime.split(":")[0],
+            purchaseOrder[0]?.endTime.split(":")[1]
+          )
+        ).diff(
+          date(
+            purchaseOrder[0]?.startTime.split(":")[0],
+            purchaseOrder[0]?.startTime.split(":")[1]
+          ),
+          "minute"
+        )
+      ) -
+        Number(purchaseOrder[0]?.setTime) -
+        1) /
+        30
+    ) > 0
+      ? Math.floor(
+          (Number(
+            dayjs(
+              date(
+                purchaseOrder[0]?.endTime.split(":")[0],
+                purchaseOrder[0]?.endTime.split(":")[1]
+              )
+            ).diff(
+              date(
+                purchaseOrder[0]?.startTime.split(":")[0],
+                purchaseOrder[0]?.startTime.split(":")[1]
+              ),
+              "minute"
+            )
+          ) -
+            Number(purchaseOrder[0]?.setTime) -
+            1) /
+            30
+        )
+      : 0;
+
   return (
     <>
       <section className="flex items-center justify-around text-md">
@@ -118,7 +175,12 @@ function Base() {
             <p className="text-[0.8rem] text-accent">人数</p>
             <p>{purchaseOrder[0]?.num}名</p>
           </div>
-          <div className="mt-3 flex min-w-[4em] flex-col items-center justify-center">
+          <div
+            className="mt-3 flex min-w-[4em] flex-col items-center justify-center"
+            onClick={() => {
+              purchaseOrder[0].isCallTimeCalculator = true;
+            }}
+          >
             <p className="text-[0.8rem] text-accent">コール時間</p>
             <p>{toggle ? "-" : purchaseOrder[0]?.callTime}</p>
           </div>
@@ -133,33 +195,63 @@ function Base() {
           >
             <p className="text-[0.8rem] text-accent">時間</p>
             <p>
-              {purchaseOrder[0]?.startTime}~{purchaseOrder[0]?.endTime}
+              {purchaseOrder[0]?.mainStartTime}~{purchaseOrder[0]?.mainEndTime}
             </p>
           </div>
 
           <div className="mt-6 flex items-center justify-center">
-            <Border
-              className="mr-1 w-[3.8rem]"
-              size="px-2 text-red-700 flex justify-center items-center align-middle"
-              natural
-              stroke="md"
+            <div
+              onClick={() => {
+                purchaseOrder[0].mainEndTime = dayjs(
+                  date(
+                    purchaseOrder[0]?.mainEndTime.split(":")[0],
+                    purchaseOrder[0]?.mainEndTime.split(":")[1]
+                  )
+                )
+                  .subtract(30, "minute")
+                  .format("HH:mm");
+                purchaseOrder[0].endTime = purchaseOrder[0].mainEndTime;
+                purchaseOrder[0].orderExtension = checker();
+              }}
             >
-              <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
-                -
-              </div>
-              <span>30</span>
-            </Border>
-            <Border
-              className="w-[3.8rem]"
-              size="px-2 text-blue-700 flex justify-center items-center align-middle"
-              natural
-              stroke="md"
+              <Border
+                className="mr-1 w-[3.8rem]"
+                size="px-2 text-red-700 flex justify-center items-center align-middle"
+                natural
+                stroke="md"
+              >
+                <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
+                  -
+                </div>
+                <span>30</span>
+              </Border>
+            </div>
+            <div
+              onClick={() => {
+                purchaseOrder[0].mainEndTime = dayjs(
+                  date(
+                    purchaseOrder[0]?.mainEndTime.split(":")[0],
+                    purchaseOrder[0]?.mainEndTime.split(":")[1]
+                  )
+                )
+                  .add(30, "minute")
+                  .format("HH:mm");
+                purchaseOrder[0].endTime = purchaseOrder[0].mainEndTime;
+                purchaseOrder[0].orderExtension = checker();
+              }}
             >
-              <div className="flex justify-center items-center h-full mt-[-3px]">
-                +
-              </div>
-              <span>30</span>
-            </Border>
+              <Border
+                className="w-[3.8rem]"
+                size="px-2 text-blue-700 flex justify-center items-center align-middle"
+                natural
+                stroke="md"
+              >
+                <div className="flex justify-center items-center h-full mt-[-3px]">
+                  +
+                </div>
+                <span>30</span>
+              </Border>
+            </div>
           </div>
         </div>
       </section>
@@ -267,6 +359,42 @@ function Base() {
             <Lists
               lists={
                 purchaseOrder[0]?.roomCharge
+                  ? Number(purchaseOrder[0].orderExtension) > 0
+                    ? [
+                        {
+                          title: purchaseOrder[0]?.setName,
+                          lot: purchaseOrder[0]?.num,
+                          price: purchaseOrder[0]?.price,
+                          isTax: purchaseOrder[0]?.priceTax,
+                        },
+                        {
+                          title: "ルームチャージ",
+                          lot: 1,
+                          price: purchaseOrder[0]?.roomCharge,
+                          isTax: purchaseOrder[0]?.roomTax,
+                        },
+                        {
+                          title: "延長時間",
+                          lot: Number(purchaseOrder[0].orderExtension),
+                          price: Number(purchaseOrder[0].extensionPrice),
+                          isTax: false,
+                        },
+                      ]
+                    : [
+                        {
+                          title: purchaseOrder[0]?.setName,
+                          lot: purchaseOrder[0]?.num,
+                          price: purchaseOrder[0]?.price,
+                          isTax: purchaseOrder[0]?.priceTax,
+                        },
+                        {
+                          title: "ルームチャージ",
+                          lot: 1,
+                          price: purchaseOrder[0]?.roomCharge,
+                          isTax: purchaseOrder[0]?.roomTax,
+                        },
+                      ]
+                  : Number(purchaseOrder[0].orderExtension) > 0
                   ? [
                       {
                         title: purchaseOrder[0]?.setName,
@@ -275,10 +403,10 @@ function Base() {
                         isTax: purchaseOrder[0]?.priceTax,
                       },
                       {
-                        title: "ルームチャージ",
-                        lot: 1,
-                        price: purchaseOrder[0]?.roomCharge,
-                        isTax: purchaseOrder[0]?.roomTax,
+                        title: "延長時間",
+                        lot: Number(purchaseOrder[0].orderExtension),
+                        price: Number(purchaseOrder[0].extensionPrice),
+                        isTax: false,
                       },
                     ]
                   : [
@@ -635,6 +763,9 @@ function Add({ isCalculator, setIsCalculator }: any) {
   });
   total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
   total += Number(purchaseOrder[0]?.roomCharge);
+  total +=
+    Number(purchaseOrder[0].extensionPrice) *
+    Number(purchaseOrder[0].orderExtension);
   purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
     total += Number(orderItem.price) * Number(orderItem.lot);
   });
@@ -676,7 +807,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
           >
             <p className="text-[0.8rem] text-accent">時間</p>
             <p>
-              {purchaseOrder[0]?.startTime || "00:00"}~
+              {purchaseOrder[0]?.StartTime || "00:00"}~
               {purchaseOrder[0]?.endTime || "00:00"}
             </p>
           </div>
@@ -986,6 +1117,9 @@ function CastAdd() {
   });
   total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
   total += Number(purchaseOrder[0]?.roomCharge);
+  total +=
+    Number(purchaseOrder[0].extensionPrice) *
+    Number(purchaseOrder[0].orderExtension);
   purchaseOrder[0]?.orderCast?.map((orderCast: any) => {
     total += Number(orderCast.price) * Number(orderCast.lot);
   });
@@ -1033,7 +1167,7 @@ function CastAdd() {
           >
             <p className="text-[0.8rem] text-accent">時間</p>
             <p>
-              {purchaseOrder[0]?.startTime || "00:00"}~
+              {purchaseOrder[0]?.StartTime || "00:00"}~
               {purchaseOrder[0]?.endTime || "00:00"}
             </p>
           </div>
@@ -1383,6 +1517,7 @@ export default function OrderSheet() {
   const [isLock, setIsLock] = useIsLockGlobal();
   const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
     usePurchaseOrderItemAddGlobal();
+  const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
 
   return (
     <>
@@ -1405,6 +1540,15 @@ export default function OrderSheet() {
           );
         }
       })}
+      {purchaseOrder[0].isCallTimeCalculator && (
+        <Calculator9
+          result={purchaseOrder[0]}
+          time={purchaseOrder[0].callTime}
+          callback={(hour: any, minite: any) => {
+            purchaseOrder[0].callTime = hour + ":" + minite;
+          }}
+        />
+      )}
       <Card>
         <div
           className="flex h-full w-[340px] flex-col font-bold"

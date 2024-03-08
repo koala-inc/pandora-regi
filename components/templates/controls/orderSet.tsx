@@ -62,6 +62,8 @@ export default function ControlOrderSet() {
       .minute(Math.round(nowDate.minute() / 5) * 5)
       .format("HH:mm"),
     cast: [],
+    orderExtension: 0,
+    callToggle: true,
   });
 
   const fetcher = (q: RequestDocument) =>
@@ -211,6 +213,8 @@ export default function ControlOrderSet() {
 
   const [setTimeResult, setSetTimeResult] = useState("0");
   const [startTimeResult, setStartTimeResult] = useState("0");
+
+  const [extensionPrice, setExtensionPrice] = useState(0);
 
   return (
     <>
@@ -372,6 +376,7 @@ export default function ControlOrderSet() {
               if (activeTab == -1 && count == 0) {
                 setActiveTab(area.id);
                 setActiveTabRC(area.charge_price);
+                setExtensionPrice(area.extra_price);
               }
               count += 1;
               return (
@@ -385,6 +390,7 @@ export default function ControlOrderSet() {
                   onClick={() => {
                     setActiveTab(area.id);
                     setActiveTabRC(area.charge_price);
+                    setExtensionPrice(area.extra_price);
                   }}
                 >
                   {area.name}
@@ -420,6 +426,7 @@ export default function ControlOrderSet() {
                             setTime: Number(event.event_revision.set_time),
                             price: Number(event.event_revision.price),
                             roomCharge: Number(activeTabRC),
+                            extensionPrice: Number(extensionPrice),
                             startTime: date.format("HH:mm"),
                             endTime: date
                               .add(
@@ -1293,8 +1300,12 @@ export default function ControlOrderSet() {
                           toggle: toggle,
                           setName: setName,
                           status: status,
+                          mainStartTime: order.startTime,
+                          mainEndTime: order.endTime,
                           orderItem: [],
                           orderCast: [],
+                          orderExtension: 0,
+                          extensionPrice: Number(extensionPrice),
                           price: Number(result.replace(/[^0-9]/g, "")),
                           priceTax: result.includes("##"),
                           roomCharge: Number(roomResult.replace(/[^0-9]/g, "")),
