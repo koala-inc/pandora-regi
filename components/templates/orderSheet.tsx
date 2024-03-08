@@ -123,7 +123,7 @@ function Base() {
   };
 
   const checker = () =>
-    Math.floor(
+    (Math.floor(
       (Number(
         dayjs(
           date(
@@ -141,7 +141,7 @@ function Base() {
         Number(purchaseOrder[0]?.setTime) -
         1) /
         30
-    ) > 0
+    ) >= 0
       ? Math.floor(
           (Number(
             dayjs(
@@ -160,8 +160,8 @@ function Base() {
             Number(purchaseOrder[0]?.setTime) -
             1) /
             30
-        )
-      : 0;
+        ) + 1
+      : 0) * purchaseOrder[0].num;
 
   return (
     <>
@@ -212,6 +212,14 @@ function Base() {
                   .format("HH:mm");
                 purchaseOrder[0].endTime = purchaseOrder[0].mainEndTime;
                 purchaseOrder[0].orderExtension = checker();
+                purchaseOrder[0].callTime = dayjs(
+                  date(
+                    purchaseOrder[0]?.mainEndTime.split(":")[0],
+                    purchaseOrder[0]?.mainEndTime.split(":")[1]
+                  )
+                )
+                  .subtract(10, "minute")
+                  .format("HH:mm");
               }}
             >
               <Border
@@ -238,6 +246,14 @@ function Base() {
                   .format("HH:mm");
                 purchaseOrder[0].endTime = purchaseOrder[0].mainEndTime;
                 purchaseOrder[0].orderExtension = checker();
+                purchaseOrder[0].callTime = dayjs(
+                  date(
+                    purchaseOrder[0]?.mainEndTime.split(":")[0],
+                    purchaseOrder[0]?.mainEndTime.split(":")[1]
+                  )
+                )
+                  .subtract(10, "minute")
+                  .format("HH:mm");
               }}
             >
               <Border

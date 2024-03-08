@@ -90,7 +90,7 @@ export default function OrderTime() {
   };
 
   const checker = () =>
-    Math.floor(
+    (Math.floor(
       (Number(
         dayjs(
           date(
@@ -108,7 +108,7 @@ export default function OrderTime() {
         Number(purchaseOrder[0]?.setTime) -
         1) /
         30
-    ) > 0
+    ) >= 0
       ? Math.floor(
           (Number(
             dayjs(
@@ -127,8 +127,8 @@ export default function OrderTime() {
             Number(purchaseOrder[0]?.setTime) -
             1) /
             30
-        )
-      : 0;
+        ) + 1
+      : 0) * purchaseOrder[0].num;
 
   return (
     <>
