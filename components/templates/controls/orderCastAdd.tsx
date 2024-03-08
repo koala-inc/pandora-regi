@@ -181,7 +181,7 @@ export default function OrderCastAdd() {
                 全て
               </Button>
             </div>
-            <div className="flex justify-around w-[800px] border border-white bg-black p-3 rounded-md">
+            <div className="flex justify-around w-[1100px] border border-white bg-black p-3 rounded-md">
               <div
                 className={
                   "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
@@ -401,11 +401,6 @@ export default function OrderCastAdd() {
               >
                 わ
               </div>
-            </div>
-            <div className="flex justify-around items-center w-[200px] ml-2 border border-white bg-black p-3 rounded-md text-white">
-              <Button className={"min-w-[5rem]"} natural>
-                伝票内指名編集
-              </Button>
             </div>
           </div>
           <div className="grid w-full grid-cols-7 grid-rows-5 content-start items-center justify-center rounded-md border border-white bg-black p-4 min-h-[580px]">

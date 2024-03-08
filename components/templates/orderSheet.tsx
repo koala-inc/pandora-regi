@@ -212,14 +212,21 @@ function Base() {
                   .format("HH:mm");
                 purchaseOrder[0].endTime = purchaseOrder[0].mainEndTime;
                 purchaseOrder[0].orderExtension = checker();
-                purchaseOrder[0].callTime = dayjs(
-                  date(
-                    purchaseOrder[0]?.mainEndTime.split(":")[0],
-                    purchaseOrder[0]?.mainEndTime.split(":")[1]
+                if (
+                  Number(purchaseOrder[0]?.callTime.split(":")[0]) <=
+                    Number(purchaseOrder[0]?.mainEndTime.split(":")[0]) &&
+                  Number(purchaseOrder[0]?.callTime.split(":")[0]) >=
+                    Number(purchaseOrder[0]?.mainStartTime.split(":")[0])
+                ) {
+                  purchaseOrder[0].callTime = dayjs(
+                    date(
+                      purchaseOrder[0]?.mainEndTime.split(":")[0],
+                      purchaseOrder[0]?.mainEndTime.split(":")[1]
+                    )
                   )
-                )
-                  .subtract(10, "minute")
-                  .format("HH:mm");
+                    .subtract(10, "minute")
+                    .format("HH:mm");
+                }
               }}
             >
               <Border
@@ -246,14 +253,21 @@ function Base() {
                   .format("HH:mm");
                 purchaseOrder[0].endTime = purchaseOrder[0].mainEndTime;
                 purchaseOrder[0].orderExtension = checker();
-                purchaseOrder[0].callTime = dayjs(
-                  date(
-                    purchaseOrder[0]?.mainEndTime.split(":")[0],
-                    purchaseOrder[0]?.mainEndTime.split(":")[1]
+                if (
+                  Number(purchaseOrder[0]?.callTime.split(":")[0]) <=
+                    Number(purchaseOrder[0]?.mainEndTime.split(":")[0]) &&
+                  Number(purchaseOrder[0]?.callTime.split(":")[0]) >=
+                    Number(purchaseOrder[0]?.mainStartTime.split(":")[0])
+                ) {
+                  purchaseOrder[0].callTime = dayjs(
+                    date(
+                      purchaseOrder[0]?.mainEndTime.split(":")[0],
+                      purchaseOrder[0]?.mainEndTime.split(":")[1]
+                    )
                   )
-                )
-                  .subtract(10, "minute")
-                  .format("HH:mm");
+                    .subtract(10, "minute")
+                    .format("HH:mm");
+                }
               }}
             >
               <Border
@@ -390,7 +404,7 @@ function Base() {
                           isTax: purchaseOrder[0]?.roomTax,
                         },
                         {
-                          title: "延長時間",
+                          title: "延長料金",
                           lot: Number(purchaseOrder[0].orderExtension),
                           price: Number(purchaseOrder[0].extensionPrice),
                           isTax: false,
@@ -419,7 +433,7 @@ function Base() {
                         isTax: purchaseOrder[0]?.priceTax,
                       },
                       {
-                        title: "延長時間",
+                        title: "延長料金",
                         lot: Number(purchaseOrder[0].orderExtension),
                         price: Number(purchaseOrder[0].extensionPrice),
                         isTax: false,
