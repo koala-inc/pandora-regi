@@ -4,6 +4,8 @@ import useIsCardGlobal from "@/globalstates/isCard";
 import useIsControlGlobal from "@/globalstates/isControl";
 import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
 import useIsLockGlobal from "@/globalstates/isLock";
+import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
+import { useState } from "react";
 
 export default function Seat({
   children,
@@ -23,6 +25,7 @@ export default function Seat({
   });
 
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
+  const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [isLock, setIsLock] = useIsLockGlobal();
 
   const bg =

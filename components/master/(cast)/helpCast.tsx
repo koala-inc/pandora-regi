@@ -376,6 +376,25 @@ export default function CastList() {
                 }
               />
             </div>
+            <div className="flex flex-col">
+              <label className="mt-3 text-xs font-bold text-accent">
+                キャスト区分
+              </label>
+              <select
+                className="mr-2 h-[30px] mt-1 w-[7rem] rounded-md px-2 text-sm"
+                onChange={(e) => {
+                  setSearchForm((searchForm: any) => {
+                    return {
+                      ...searchForm,
+                      section: Number(e.target.value),
+                    };
+                  });
+                }}
+              >
+                <option value={2}>体入</option>
+                <option value={3}>ヘルプ</option>
+              </select>
+            </div>
             <div
               className="ml-auto mr-4 flex flex-col justify-end"
               onClick={() => {
@@ -869,7 +888,10 @@ export default function CastList() {
       </Control>
       <nav
         className="absolute bottom-[15px] right-[15px] z-10 cursor-pointer"
-        onClick={() => setAddModal(true)}
+        onClick={() => {
+          setCreateForm({ section: 2 });
+          setAddModal(true);
+        }}
       >
         <Border2 rounded="rounded-full" size="h-[50px] w-[50px] p-[12px]">
           <Image
@@ -1110,6 +1132,28 @@ export default function CastList() {
                 </div>
                 <div className="flex flex-col">
                   <label className="mt-3 text-xs font-bold text-accent">
+                    キャスト区分
+                  </label>
+                  <select
+                    className="mr-2 h-[30px] mt-1 w-[7rem] rounded-md px-2 text-sm"
+                    onChange={(e) => {
+                      setCreateForm((createForm: any) => {
+                        return {
+                          ...createForm,
+                          section: Number(e.target.value),
+                        };
+                      });
+                    }}
+                  >
+                    <option value={2}>体入</option>
+                    <option value={3}>ヘルプ</option>
+                  </select>
+                  {errors.firstName?.message && (
+                    <p>{errors.firstName?.message}</p>
+                  )}
+                </div>
+                <div className="flex flex-col">
+                  <label className="mt-3 text-xs font-bold text-accent">
                     媒体
                   </label>
                   <select className="mr-2 h-[30px] mt-1 w-[7rem] rounded-md px-2 text-sm">
@@ -1152,7 +1196,6 @@ export default function CastList() {
                     client
                       .request(createCast, {
                         ...createForm,
-                        section: 2,
                         ...defaultVariables,
                       })
                       .then(() => {
@@ -1400,6 +1443,28 @@ export default function CastList() {
                     }}
                     value={updateForm?.remarks || ""}
                   />
+                </div>
+                <div className="flex flex-col">
+                  <label className="mt-3 text-xs font-bold text-accent">
+                    キャスト区分
+                  </label>
+                  <select
+                    className="mr-2 h-[30px] mt-1 w-[7rem] rounded-md px-2 text-sm"
+                    onChange={(e) => {
+                      setUpdateForm((updateForm: any) => {
+                        return {
+                          ...updateForm,
+                          section: Number(e.target.value),
+                        };
+                      });
+                    }}
+                  >
+                    <option value={2}>体入</option>
+                    <option value={3}>ヘルプ</option>
+                  </select>
+                  {errors.firstName?.message && (
+                    <p>{errors.firstName?.message}</p>
+                  )}
                 </div>
                 <div className="flex flex-col">
                   <label className="mt-3 text-xs font-bold text-accent">

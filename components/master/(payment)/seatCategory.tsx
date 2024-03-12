@@ -134,26 +134,58 @@ export default function ItemCategoryLists() {
                               area.extra_time?.toLocaleString() || ""
                             }
                             onBlur={(e) => {
-                              client
-                                .request(updateSeatArea, {
-                                  id: area.id,
-                                  extra_time: Number(
-                                    e.target.value.replace(/[^0-9]/g, "")
-                                  ),
-                                  ...defaultVariables,
-                                })
-                                .then(() => {
-                                  searchData.mutate(
-                                    () =>
-                                      client.request(searchSeatArea, {
-                                        ...defaultVariables,
-                                      }),
-                                    {
-                                      populateCache: true,
-                                      revalidate: false,
-                                    }
-                                  );
-                                });
+                              if (
+                                Number(e.target.value.replace(/[^0-9]/g, "")) <
+                                11
+                              ) {
+                                if (
+                                  confirm(
+                                    "短い間隔で自動延長オーダーが入ります。よろしいですか？"
+                                  )
+                                ) {
+                                  client
+                                    .request(updateSeatArea, {
+                                      id: area.id,
+                                      extra_time: Number(
+                                        e.target.value.replace(/[^0-9]/g, "")
+                                      ),
+                                      ...defaultVariables,
+                                    })
+                                    .then(() => {
+                                      searchData.mutate(
+                                        () =>
+                                          client.request(searchSeatArea, {
+                                            ...defaultVariables,
+                                          }),
+                                        {
+                                          populateCache: true,
+                                          revalidate: false,
+                                        }
+                                      );
+                                    });
+                                }
+                              } else {
+                                client
+                                  .request(updateSeatArea, {
+                                    id: area.id,
+                                    extra_time: Number(
+                                      e.target.value.replace(/[^0-9]/g, "")
+                                    ),
+                                    ...defaultVariables,
+                                  })
+                                  .then(() => {
+                                    searchData.mutate(
+                                      () =>
+                                        client.request(searchSeatArea, {
+                                          ...defaultVariables,
+                                        }),
+                                      {
+                                        populateCache: true,
+                                        revalidate: false,
+                                      }
+                                    );
+                                  });
+                              }
                             }}
                           />
                           <p className="absolute bottom-[11px] right-[7px] opacity-60">
@@ -230,6 +262,34 @@ export default function ItemCategoryLists() {
                             ％
                           </p>
                         </div>
+                        <div className="flex flex-col py-2 mx-2">
+                          <p className="text-accent">ルーム名</p>
+                          <input
+                            type="text"
+                            className="h-[30px] w-[10rem] rounded-md px-2 text-sm"
+                            defaultValue={area.room_name || ""}
+                            onBlur={(e) => {
+                              client
+                                .request(updateSeatArea, {
+                                  id: area.id,
+                                  room_name: e.target.value,
+                                  ...defaultVariables,
+                                })
+                                .then(() => {
+                                  searchData.mutate(
+                                    () =>
+                                      client.request(searchSeatArea, {
+                                        ...defaultVariables,
+                                      }),
+                                    {
+                                      populateCache: true,
+                                      revalidate: false,
+                                    }
+                                  );
+                                });
+                            }}
+                          />
+                        </div>
                         <div className="relative flex flex-col py-2 mx-2">
                           <p className="text-accent">RC料</p>
                           <input
@@ -274,26 +334,58 @@ export default function ItemCategoryLists() {
                               area.extra_charge_time?.toLocaleString() || ""
                             }
                             onBlur={(e) => {
-                              client
-                                .request(updateSeatArea, {
-                                  id: area.id,
-                                  extra_charge_time: Number(
-                                    e.target.value.replace(/[^0-9]/g, "")
-                                  ),
-                                  ...defaultVariables,
-                                })
-                                .then(() => {
-                                  searchData.mutate(
-                                    () =>
-                                      client.request(searchSeatArea, {
-                                        ...defaultVariables,
-                                      }),
-                                    {
-                                      populateCache: true,
-                                      revalidate: false,
-                                    }
-                                  );
-                                });
+                              if (
+                                Number(e.target.value.replace(/[^0-9]/g, "")) <
+                                11
+                              ) {
+                                if (
+                                  confirm(
+                                    "短い間隔で自動延長オーダーが入ります。よろしいですか？"
+                                  )
+                                ) {
+                                  client
+                                    .request(updateSeatArea, {
+                                      id: area.id,
+                                      extra_charge_time: Number(
+                                        e.target.value.replace(/[^0-9]/g, "")
+                                      ),
+                                      ...defaultVariables,
+                                    })
+                                    .then(() => {
+                                      searchData.mutate(
+                                        () =>
+                                          client.request(searchSeatArea, {
+                                            ...defaultVariables,
+                                          }),
+                                        {
+                                          populateCache: true,
+                                          revalidate: false,
+                                        }
+                                      );
+                                    });
+                                }
+                              } else {
+                                client
+                                  .request(updateSeatArea, {
+                                    id: area.id,
+                                    extra_charge_time: Number(
+                                      e.target.value.replace(/[^0-9]/g, "")
+                                    ),
+                                    ...defaultVariables,
+                                  })
+                                  .then(() => {
+                                    searchData.mutate(
+                                      () =>
+                                        client.request(searchSeatArea, {
+                                          ...defaultVariables,
+                                        }),
+                                      {
+                                        populateCache: true,
+                                        revalidate: false,
+                                      }
+                                    );
+                                  });
+                              }
                             }}
                           />
                           <p className="absolute bottom-[11px] right-[7px] opacity-60">

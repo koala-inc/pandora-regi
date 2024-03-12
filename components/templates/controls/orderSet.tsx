@@ -1,9 +1,9 @@
-import { motion } from "framer-motion";
+import { m, motion } from "framer-motion";
 import Border from "@/components/templates/border";
 import Border2 from "@/components/master/border";
 import SubBorder from "@/components/templates/subBorder";
 import Button from "../button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Toggle from "../toggle";
 import { searchCast } from "@/gqls/query/cast";
 import client from "@/connection";
@@ -19,6 +19,7 @@ import ja from "dayjs/locale/ja";
 import Calculator from "@/components/parts/calculator";
 import Calculator1 from "@/components/parts/calculator1";
 import Calculator2 from "@/components/parts/calculator2";
+import useOrderGlobal from "@/globalstates/order";
 
 dayjs.locale(ja);
 
@@ -57,14 +58,28 @@ export default function ControlOrderSet() {
   const [activeTab, setActiveTab] = useState(-1);
   const [nowDate, setNowDate] = useState(dayjs(new Date()));
   const [toggle, setToggle] = useState(false);
-  const [order, setOrder] = useState<any>({
-    startTime: nowDate
-      .minute(Math.round(nowDate.minute() / 5) * 5)
-      .format("HH:mm"),
-    cast: [],
-    orderExtension: 0,
-    callToggle: true,
-  });
+  const [order, setOrder] = useOrderGlobal();
+  if (!order.price) {
+    setOrder({
+      startTime: nowDate
+        .minute(Math.round(nowDate.minute() / 5) * 5)
+        .format("HH:mm"),
+      cast: [],
+      orderExtension: 0,
+      callToggle: true,
+      state: {
+        result: "0",
+        selectCast: [],
+        timeResult: "0",
+        numResult: "0",
+        roomResult: "0",
+        setName: "",
+        roomName: "",
+        setStatus: "なし",
+      },
+      ...order,
+    });
+  }
 
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
@@ -78,34 +93,28 @@ export default function ControlOrderSet() {
   const searchData = useSWR<any>(searchCast, fetcher);
   const [selectCast, setSelectCast] = useState<any>([]);
 
-  const [setName, setSetName] = useState("");
+  const [setName, setSetName] = useState(
+    order.price ? order.state?.setName : ""
+  );
+
+  const [roomName, setRoomName] = useState(
+    order.state?.roomName ? order.state?.roomName : ""
+  );
 
   const seatAlphabet = [
     {
       prefCode: "A",
       prefName: "A",
     },
-    {
-      prefCode: "B",
-      prefName: "B",
-    },
-    {
-      prefCode: "C",
-      prefName: "C",
-    },
   ];
   const seatNumber = [
     {
-      prefCode: "1",
+      prefCode: "01",
       prefName: "1",
     },
     {
-      prefCode: "2",
+      prefCode: "02",
       prefName: "2",
-    },
-    {
-      prefCode: "99",
-      prefName: "99",
     },
   ];
   const type = [
@@ -194,7 +203,9 @@ export default function ControlOrderSet() {
     },
   ];
 
-  const [status, setStatus] = useState("なし");
+  const [status, setStatus] = useState(
+    order.price ? order.state?.status : "なし"
+  );
   const [activeTabRC, setActiveTabRC] = useState(0);
 
   const [searchType, setSearchType] = useState("全て");
@@ -207,14 +218,27 @@ export default function ControlOrderSet() {
 
   const [isCalculator, setIsCalculator] = useState(false);
   const [isCalculatorSelect, setIsCalculatorSelect] = useState(0);
-  const [result, setResult] = useState("0");
-  const [roomResult, setRoomResult] = useState("0");
-  const [numResult, setNumResult] = useState("0");
+  const [result, setResult] = useState(order.price ? order.state?.result : "0");
+  const [roomResult, setRoomResult] = useState(
+    order.price ? order.state?.roomResult : "0"
+  );
+  const [numResult, setNumResult] = useState(
+    order.price ? order.state?.numResult : "0"
+  );
 
-  const [setTimeResult, setSetTimeResult] = useState("0");
-  const [startTimeResult, setStartTimeResult] = useState("0");
+  const [setTimeResult, setSetTimeResult] = useState(
+    order.price ? order.state?.timeResult : "0"
+  );
+  const [startTimeResult, setStartTimeResult] = useState(
+    order.price ? order.state?.startTimeResult : "0"
+  );
 
   const [extensionPrice, setExtensionPrice] = useState(0);
+
+  const [isRoomCharge, setIsRoomCharge] = useState(false);
+  const [id, setId] = useState("01");
+
+  const [serviceTax, setServiceTax] = useState(0);
 
   return (
     <>
@@ -223,6 +247,14 @@ export default function ControlOrderSet() {
           result={result}
           setResult={setResult}
           setIsCalculator={setIsCalculator}
+          callback={(price: string) => {
+            setOrder({
+              ...order,
+              state: {
+                result: price,
+              },
+            });
+          }}
         />
       )}
       {isCalculator && isCalculatorSelect == 1 && (
@@ -230,6 +262,14 @@ export default function ControlOrderSet() {
           result={roomResult}
           setResult={setRoomResult}
           setIsCalculator={setIsCalculator}
+          callback={(price: string) => {
+            setOrder({
+              ...order,
+              state: {
+                roomResult: price,
+              },
+            });
+          }}
         />
       )}
       {isCalculator && isCalculatorSelect == 2 && (
@@ -349,7 +389,12 @@ export default function ControlOrderSet() {
                     );
                   })}
                 </select>
-                <select className="mr-2 h-[45px] w-[80px] rounded-md bg-black px-2 text-center text-3xl font-bold text-white">
+                <select
+                  className="mr-2 h-[45px] w-[80px] rounded-md bg-black px-2 text-center text-3xl font-bold text-white"
+                  onChange={(e) => {
+                    setId(e.target.value);
+                  }}
+                >
                   {seatNumber.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefCode}>
@@ -377,6 +422,8 @@ export default function ControlOrderSet() {
                 setActiveTab(area.id);
                 setActiveTabRC(area.charge_price);
                 setExtensionPrice(area.extra_price);
+                setServiceTax(area.service_tax);
+                setRoomName(area.room_name);
               }
               count += 1;
               return (
@@ -391,6 +438,8 @@ export default function ControlOrderSet() {
                     setActiveTab(area.id);
                     setActiveTabRC(area.charge_price);
                     setExtensionPrice(area.extra_price);
+                    setServiceTax(area.service_tax);
+                    setRoomName(area.room_name);
                   }}
                 >
                   {area.name}
@@ -427,6 +476,7 @@ export default function ControlOrderSet() {
                             price: Number(event.event_revision.price),
                             roomCharge: Number(activeTabRC),
                             extensionPrice: Number(extensionPrice),
+                            serviceTax: serviceTax,
                             startTime: date.format("HH:mm"),
                             endTime: date
                               .add(
@@ -442,6 +492,7 @@ export default function ControlOrderSet() {
                               .format("HH:mm"),
                           };
                         });
+                        setIsRoomCharge(Number(activeTabRC) > 0);
                         setResult(String(Number(event.event_revision.price)));
                         setSetTimeResult(
                           String(Number(event.event_revision.set_time))
@@ -563,31 +614,48 @@ export default function ControlOrderSet() {
               <label className="mt-3 mb-2 text-xs font-bold text-accent">
                 ルームチャージ
               </label>
-              <input
-                type="text"
-                className="mr-4 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl"
-                placeholder="0"
-                maxLength={7}
-                // onChange={(e) => {
-                //   setOrder((order: any) => {
-                //     return {
-                //       ...order,
-                //       roomCharge: Number(e.target.value.replace(/[^0-9]/g, "")),
-                //     };
-                //   });
-                // }}
-                value={Number(
-                  roomResult.replace(/[^0-9]/g, "")
-                )?.toLocaleString()}
-                onClick={() => {
-                  setIsCalculatorSelect(1);
-                  setIsCalculator(true);
-                }}
-                readOnly
-              />
-              <p className="absolute text-xl bottom-[8px] right-[25px] opacity-60">
-                {roomResult.includes("##") ? "込" : "円"}
-              </p>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={isRoomCharge}
+                  onChange={() => {
+                    setIsRoomCharge((isRoomCharge) => !isRoomCharge);
+                  }}
+                  className="mr-4 h-[40px] w-[3rem] text-right rounded-md text-xl"
+                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    className={
+                      isRoomCharge
+                        ? "mr-4 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl"
+                        : "mr-4 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl opacity-50"
+                    }
+                    placeholder="0"
+                    maxLength={7}
+                    // onChange={(e) => {
+                    //   setOrder((order: any) => {
+                    //     return {
+                    //       ...order,
+                    //       roomCharge: Number(e.target.value.replace(/[^0-9]/g, "")),
+                    //     };
+                    //   });
+                    // }}
+                    value={Number(
+                      roomResult.replace(/[^0-9]/g, "")
+                    )?.toLocaleString()}
+                    onClick={() => {
+                      setIsCalculatorSelect(1);
+                      setIsCalculator(true);
+                    }}
+                    readOnly
+                    disabled={!isRoomCharge}
+                  />
+                  <p className="absolute text-xl bottom-[8px] right-[25px] opacity-60">
+                    {roomResult.includes("##") ? "込" : "円"}
+                  </p>
+                </div>
+              </div>
             </div>
             <hr className="w-full opacity-0" />
             <div className="relative flex flex-col">
@@ -1196,12 +1264,22 @@ export default function ControlOrderSet() {
                       type="text"
                       className="mx-2 h-[25px] w-[30px] rounded-md text-center"
                       defaultValue={1}
+                      onClick={() => {
+                        // purchaseOrder[0].set.isCalculator = true;
+                        // purchaseOrder[0].set.isCalculatorSelect = 1;
+                      }}
+                      readOnly
                     />
                     <div className="relative">
                       <input
                         type="text"
                         className="ml-5 h-[25px] w-[90px] rounded-md px-2 pr-[25px] text-right"
                         value={Number(cast.split("##")[1]).toLocaleString()}
+                        onClick={() => {
+                          // purchaseOrder[0].set.isCalculator = true;
+                          // purchaseOrder[0].set.isCalculatorSelect = 2;
+                        }}
+                        readOnly
                       />
                       <p className="absolute text-md bottom-[0.5px] right-[5px] opacity-60">
                         円
@@ -1247,6 +1325,16 @@ export default function ControlOrderSet() {
                       price: 0,
                       roomCharge: 0,
                       cast: [],
+                      state: {
+                        result: "0",
+                        selectCast: [],
+                        timeResult: "0",
+                        numResult: "0",
+                        roomResult: "0",
+                        setName: "",
+                        roomName: "",
+                        setStatus: "なし",
+                      },
                     });
                     setResult("0");
                     setSelectCast([]);
@@ -1297,8 +1385,10 @@ export default function ControlOrderSet() {
                         ...purchaseOrder,
                         {
                           ...order,
+                          id: id,
                           toggle: toggle,
                           setName: setName,
+                          roomName: roomName,
                           status: status,
                           mainStartTime: order.startTime,
                           mainEndTime: order.endTime,
@@ -1308,11 +1398,41 @@ export default function ControlOrderSet() {
                           extensionPrice: Number(extensionPrice),
                           price: Number(result.replace(/[^0-9]/g, "")),
                           priceTax: result.includes("##"),
-                          roomCharge: Number(roomResult.replace(/[^0-9]/g, "")),
+                          roomCharge: isRoomCharge
+                            ? Number(roomResult.replace(/[^0-9]/g, ""))
+                            : "0",
                           roomTax: roomResult.includes("##"),
                           num: Number(numResult.replace(/[^0-9]/g, "")),
+                          order: order,
                         },
                       ]);
+                      setOrder({
+                        startTime: "",
+                        endTime: "",
+                        callTime: "",
+                        num: 0,
+                        setTime: 0,
+                        price: 0,
+                        roomCharge: 0,
+                        cast: [],
+                        state: {
+                          result: "0",
+                          selectCast: [],
+                          timeResult: "0",
+                          numResult: "0",
+                          roomResult: "0",
+                          setName: "",
+                          roomName: "",
+                          setStatus: "なし",
+                        },
+                      });
+                      setResult("0");
+                      setSelectCast([]);
+                      setSetTimeResult("0");
+                      setNumResult("0");
+                      setRoomResult("0");
+                      setSetName("");
+                      setStatus("なし");
                     }
                   }}
                 >

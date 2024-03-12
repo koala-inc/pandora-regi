@@ -23,6 +23,7 @@ import dayjs from "dayjs";
 import ja from "dayjs/locale/ja";
 import Calculator7 from "@/components/parts/calculator7";
 import Calculator8 from "@/components/parts/calculator8";
+import { searchSeatArea } from "@/gqls/query/seat";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -78,6 +79,7 @@ export default function OrderTime() {
 
   const searchData = useSWR<any>(searchCast, fetcher);
   const searchAData = useSWR<any>(searchAttendanceManagementCast, fetcher);
+  const searchData2 = useSWR<any>(searchSeatArea, fetcher);
 
   const [isCalculator, setIsCalculator] = useState(false);
   const [isCalculatorSelect, setIsCalculatorSelect] = useState(0);
@@ -90,6 +92,9 @@ export default function OrderTime() {
     const b = a.minute(Number(minite));
     return b;
   };
+  let count = 0;
+
+  const [activeTab, setActiveTab] = useState(-1);
 
   const checker = () =>
     (Math.floor(
@@ -238,6 +243,52 @@ export default function OrderTime() {
                     readOnly
                   />
                 </div>
+                <div className="flex flex-col">
+                  <label className="mt-3 mb-2 text-xs font-bold text-accent">
+                    席カテゴリー
+                  </label>
+                  <select
+                    className="mr-8 h-[45px] w-[120px] rounded-md px-2 text-xl text-center"
+                    value={purchaseOrder[0].room_name}
+                    onChange={(e) => {
+                      {
+                        searchData2?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
+                          (area: any, index: any) => {
+                            if (area.room_name == e.target.value) {
+                              purchaseOrder[0].roomName = area.room_name;
+                              purchaseOrder[0].roomCharge = area.charge_price;
+                              purchaseOrder[0].extensionPrice =
+                                area.extra_price;
+                              purchaseOrder[0].serviceTax = area.service_tax;
+                            }
+                          }
+                        );
+                      }
+                    }}
+                  >
+                    {searchData2?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
+                      (area: any, index: any) => {
+                        return (
+                          <option key={index} value={area.room_name}>
+                            {area.name}
+                          </option>
+                        );
+                      }
+                    )}
+                  </select>
+                </div>
+                <div className="flex flex-col">
+                  <label className="mt-3 mb-6 text-xs font-bold text-accent"></label>
+                  <div
+                    className={"my-auto"}
+                    onClick={() => {
+                      purchaseOrder[0].isRoomCharge = true;
+                    }}
+                  >
+                    <Button natural>ルームチャージ追加</Button>
+                  </div>
+                </div>
+
                 {/* <div className="flex flex-col mr-6">
                   <label className="mt-3 mb-2 text-xs font-bold text-accent">
                     延長
@@ -527,6 +578,149 @@ export default function OrderTime() {
                       </div>
                     </th>
                   </tr>
+                  {purchaseOrder[0].isRoomCharge ? (
+                    <tr className="h-[80px]">
+                      <th className="w-[20px] text-center text-lg">
+                        <input
+                          type="checkbox"
+                          className="mt-[8px] h-[20px] w-[20px]"
+                        />
+                      </th>
+                      <th className="w-[120px] text-left text-sm">
+                        <input
+                          className="h-[40px] w-[120px] rounded-md text-left px-2 text-sm"
+                          value={
+                            purchaseOrder[0]?.roomName == ""
+                              ? "ルームチャージ"
+                              : purchaseOrder[0]?.roomName
+                          }
+                          readOnly
+                        />
+                      </th>
+                      <th className="relative w-[60px] text-left text-lg"></th>
+                      <th className="relative w-[103px] text-left text-lg">
+                        <input
+                          type="text"
+                          className="h-[40px] w-[103px] text-right rounded-md px-2 pr-[26px] text-sm"
+                          value={purchaseOrder[0]?.roomCharge}
+                          onClick={() => {
+                            setIsCalculatorSelect(5);
+                            setIsCalculator(true);
+                          }}
+                          readOnly
+                        />
+                        <p className="absolute bottom-[30.5px] text-sm left-[90px] opacity-60">
+                          円
+                        </p>
+                      </th>
+                      <th className="w-[210px] flex text-left text-sm"></th>
+                      <th className="w-[80px] text-center text-lg">
+                        <input
+                          type="text"
+                          className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
+                          value={purchaseOrder[0]?.startTime}
+                          onClick={() => {
+                            setIsCalculatorSelect(4);
+                            purchaseOrder[0].isTimeCalculator = true;
+                          }}
+                          readOnly
+                        />
+                      </th>
+                      <th className="w-[80px] text-center text-lg">
+                        <input
+                          type="text"
+                          className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
+                          value={purchaseOrder[0]?.endTime}
+                          onClick={() => {
+                            setIsCalculatorSelect(5);
+                            purchaseOrder[0].isTimeCalculator = true;
+                          }}
+                          readOnly
+                        />
+                      </th>
+                      <th className="w-[20px] text-center text-sm">
+                        {checker()}
+                      </th>
+                      <th className="w-[130px] text-center items-center h-[80px] flex text-sm">
+                        <div
+                          onClick={() => {
+                            purchaseOrder[0].endTime = dayjs(
+                              date(
+                                purchaseOrder[0]?.endTime.split(":")[0],
+                                purchaseOrder[0]?.endTime.split(":")[1]
+                              )
+                            )
+                              .subtract(30, "minute")
+                              .format("HH:mm");
+                            purchaseOrder[0].orderExtension = checker();
+                          }}
+                        >
+                          <Border
+                            className="mr-1 w-[3.8rem]"
+                            size="px-2 text-red-700 flex justify-center items-center align-middle"
+                            natural
+                            stroke="md"
+                          >
+                            <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
+                              -
+                            </div>
+                            <span>30</span>
+                          </Border>
+                        </div>
+                        <div
+                          onClick={() => {
+                            purchaseOrder[0].endTime = dayjs(
+                              date(
+                                purchaseOrder[0]?.endTime.split(":")[0],
+                                purchaseOrder[0]?.endTime.split(":")[1]
+                              )
+                            )
+                              .add(30, "minute")
+                              .format("HH:mm");
+                            purchaseOrder[0].orderExtension = checker();
+                          }}
+                        >
+                          <Border
+                            className="w-[3.8rem]"
+                            size="px-2 text-blue-700 flex justify-center items-center align-middle"
+                            natural
+                            stroke="md"
+                          >
+                            <div className="flex justify-center items-center h-full mt-[-3px]">
+                              +
+                            </div>
+                            <span>30</span>
+                          </Border>
+                        </div>
+                      </th>
+                      <th className="w-[80px] text-center text-sm"></th>
+                      <th className="w-[20px] text-center text-sm">
+                        <div
+                          className="flex"
+                          onClick={() => {
+                            purchaseOrder[0].isRoomCharge = false;
+                          }}
+                        >
+                          <Border2
+                            rounded="rounded-full"
+                            size="h-[28px] w-[28px] p-[6px]"
+                          >
+                            <div>
+                              <Image
+                                src={"/assets/close.svg"}
+                                width={26}
+                                height={26}
+                                className="!h-full !w-full"
+                                alt=""
+                              />
+                            </div>
+                          </Border2>
+                        </div>
+                      </th>
+                    </tr>
+                  ) : (
+                    <></>
+                  )}
                 </tbody>
               </table>
             </Border>
@@ -569,159 +763,306 @@ export default function OrderTime() {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* <tr className="h-[80px]">
-                    <th className="w-[20px] text-center text-lg">
-                      <input
-                        type="checkbox"
-                        className="mt-[8px] h-[20px] w-[20px]"
-                      />
-                    </th>
-                    <th className="w-[120px] text-left text-sm">
-                      <select className="h-[40px] w-[120px] rounded-md text-left px-1 text-sm">
-                        <option>{purchaseOrder[0]?.setName}</option>
-                      </select>
-                    </th>
-                    <th className="relative w-[60px] text-left text-lg">
-                      <input
-                        type="text"
-                        className="h-[40px] w-[60px] text-right rounded-md px-1 pr-[27px] text-sm"
-                        value={purchaseOrder[0]?.setTime}
-                        onClick={() => {
-                          setIsCalculatorSelect(5);
-                          setIsCalculator(true);
-                        }}
-                        readOnly
-                      />
-                      <p className="absolute bottom-[30.5px] text-sm left-[46px] opacity-60">
-                        分
-                      </p>
-                    </th>
-                    <th className="relative w-[103px] text-left text-lg">
-                      <input
-                        type="text"
-                        className="h-[40px] w-[103px] text-right rounded-md px-2 pr-[26px] text-sm"
-                        value={purchaseOrder[0]?.price}
-                        onClick={() => {
-                          setIsCalculatorSelect(5);
-                          setIsCalculator(true);
-                        }}
-                        readOnly
-                      />
-                      <p className="absolute bottom-[30.5px] text-sm left-[90px] opacity-60">
-                        円
-                      </p>
-                    </th>
-                    <th className="w-[210px] flex text-left text-sm">
-                      <select className="h-[40px] w-[90px] rounded-md text-left px-1 text-sm mr-2">
-                        <option>案内所</option>
-                      </select>
-                      <select className="h-[40px] w-[120px] rounded-md text-left px-1 text-sm">
-                        <option>案内所１</option>
-                      </select>
-                    </th>
-                    <th className="w-[80px] text-center text-lg">
-                      <input
-                        type="text"
-                        className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
-                        value={purchaseOrder[0]?.startTime}
-                        onClick={() => {
-                          setIsCalculatorSelect(4);
-                          purchaseOrder[0].isTimeCalculator = true;
-                        }}
-                        readOnly
-                      />
-                    </th>
-                    <th className="w-[80px] text-center text-lg">
-                      <input
-                        type="text"
-                        className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
-                        value={purchaseOrder[0]?.endTime}
-                        onClick={() => {
-                          setIsCalculatorSelect(5);
-                          purchaseOrder[0].isTimeCalculator = true;
-                        }}
-                        readOnly
-                      />
-                    </th>
-                    <th className="w-[20px] text-center text-sm">
-                      {checker()}
-                    </th>
-                    <th className="w-[130px] text-center items-center h-[80px] flex text-sm">
-                      <div
-                        onClick={() => {
-                          purchaseOrder[0].endTime = dayjs(
-                            date(
-                              purchaseOrder[0]?.endTime.split(":")[0],
-                              purchaseOrder[0]?.endTime.split(":")[1]
-                            )
-                          )
-                            .subtract(30, "minute")
-                            .format("HH:mm");
-                          purchaseOrder[0].orderExtension = checker();
-                        }}
-                      >
-                        <Border
-                          className="mr-1 w-[3.8rem]"
-                          size="px-2 text-red-700 flex justify-center items-center align-middle"
-                          natural
-                          stroke="md"
-                        >
-                          <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
-                            -
+                  {purchaseOrder[0]?.cast?.map((cast: any, index: any) => {
+                    return (
+                      <tr className="h-[80px]" key={index}>
+                        <th className="w-[20px] text-center text-lg">
+                          <input
+                            type="checkbox"
+                            className="mt-[8px] h-[20px] w-[20px]"
+                          />
+                        </th>
+                        <th className="w-[120px] text-left text-sm">
+                          <select className="h-[40px] w-[120px] rounded-md text-left px-1 text-sm">
+                            <option>{cast.split("##")[0]}</option>
+                          </select>
+                        </th>
+                        <th className="relative w-[60px] text-left text-lg">
+                          <input
+                            type="text"
+                            className="h-[40px] w-[60px] text-right rounded-md px-1 pr-[27px] text-sm"
+                            value={0}
+                            onClick={() => {
+                              setIsCalculatorSelect(5);
+                              setIsCalculator(true);
+                            }}
+                            readOnly
+                          />
+                          <p className="absolute bottom-[30.5px] text-sm left-[46px] opacity-60">
+                            分
+                          </p>
+                        </th>
+                        <th className="relative w-[103px] text-left text-lg">
+                          <input
+                            type="text"
+                            className="h-[40px] w-[103px] text-right rounded-md px-2 pr-[26px] text-sm"
+                            value={cast.split("##")[1]}
+                            onClick={() => {
+                              setIsCalculatorSelect(5);
+                              setIsCalculator(true);
+                            }}
+                            readOnly
+                          />
+                          <p className="absolute bottom-[30.5px] text-sm left-[90px] opacity-60">
+                            {cast.isTax ? "込" : "円"}
+                          </p>
+                        </th>
+                        <th className="w-[210px] flex text-left text-sm"></th>
+                        <th className="w-[80px] text-center text-lg">
+                          <input
+                            type="text"
+                            className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
+                            value={purchaseOrder[0]?.startTime}
+                            onClick={() => {
+                              setIsCalculatorSelect(4);
+                              purchaseOrder[0].isTimeCalculator = true;
+                            }}
+                            readOnly
+                          />
+                        </th>
+                        <th className="w-[80px] text-center text-lg">
+                          <input
+                            type="text"
+                            className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
+                            value={purchaseOrder[0]?.endTime}
+                            onClick={() => {
+                              setIsCalculatorSelect(5);
+                              purchaseOrder[0].isTimeCalculator = true;
+                            }}
+                            readOnly
+                          />
+                        </th>
+                        <th className="w-[20px] text-center text-sm">
+                          {checker()}
+                        </th>
+                        <th className="w-[130px] text-center items-center h-[80px] flex text-sm">
+                          <div
+                            onClick={() => {
+                              purchaseOrder[0].endTime = dayjs(
+                                date(
+                                  purchaseOrder[0]?.endTime.split(":")[0],
+                                  purchaseOrder[0]?.endTime.split(":")[1]
+                                )
+                              )
+                                .subtract(30, "minute")
+                                .format("HH:mm");
+                              purchaseOrder[0].orderExtension = checker();
+                            }}
+                          >
+                            <Border
+                              className="mr-1 w-[3.8rem]"
+                              size="px-2 text-red-700 flex justify-center items-center align-middle"
+                              natural
+                              stroke="md"
+                            >
+                              <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
+                                -
+                              </div>
+                              <span>30</span>
+                            </Border>
                           </div>
-                          <span>30</span>
-                        </Border>
-                      </div>
-                      <div
-                        onClick={() => {
-                          purchaseOrder[0].endTime = dayjs(
-                            date(
-                              purchaseOrder[0]?.endTime.split(":")[0],
-                              purchaseOrder[0]?.endTime.split(":")[1]
-                            )
-                          )
-                            .add(30, "minute")
-                            .format("HH:mm");
-                          purchaseOrder[0].orderExtension = checker();
-                        }}
-                      >
-                        <Border
-                          className="w-[3.8rem]"
-                          size="px-2 text-blue-700 flex justify-center items-center align-middle"
-                          natural
-                          stroke="md"
-                        >
-                          <div className="flex justify-center items-center h-full mt-[-3px]">
-                            +
+                          <div
+                            onClick={() => {
+                              purchaseOrder[0].endTime = dayjs(
+                                date(
+                                  purchaseOrder[0]?.endTime.split(":")[0],
+                                  purchaseOrder[0]?.endTime.split(":")[1]
+                                )
+                              )
+                                .add(30, "minute")
+                                .format("HH:mm");
+                              purchaseOrder[0].orderExtension = checker();
+                            }}
+                          >
+                            <Border
+                              className="w-[3.8rem]"
+                              size="px-2 text-blue-700 flex justify-center items-center align-middle"
+                              natural
+                              stroke="md"
+                            >
+                              <div className="flex justify-center items-center h-full mt-[-3px]">
+                                +
+                              </div>
+                              <span>30</span>
+                            </Border>
                           </div>
-                          <span>30</span>
-                        </Border>
-                      </div>
-                    </th>
-                    <th className="w-[80px] text-center text-sm">
-                      <Border natural stroke="md">
-                        <p className="text-red-700">退店</p>
-                      </Border>
-                    </th>
-                    <th className="w-[20px] text-center text-sm">
-                      <div className="flex">
-                        <Border2
-                          rounded="rounded-full"
-                          size="h-[28px] w-[28px] p-[6px]"
-                        >
-                          <div>
-                            <Image
-                              src={"/assets/close.svg"}
-                              width={26}
-                              height={26}
-                              className="!h-full !w-full"
-                              alt=""
-                            />
+                        </th>
+                        <th className="w-[80px] text-center text-sm">
+                          <Border natural stroke="md">
+                            <p className="text-red-700">退店</p>
+                          </Border>
+                        </th>
+                        <th className="w-[20px] text-center text-sm">
+                          <div className="flex">
+                            <Border2
+                              rounded="rounded-full"
+                              size="h-[28px] w-[28px] p-[6px]"
+                            >
+                              <div>
+                                <Image
+                                  src={"/assets/close.svg"}
+                                  width={26}
+                                  height={26}
+                                  className="!h-full !w-full"
+                                  alt=""
+                                />
+                              </div>
+                            </Border2>
                           </div>
-                        </Border2>
-                      </div>
-                    </th>
-                  </tr> */}
+                        </th>
+                      </tr>
+                    );
+                  })}
+                  {purchaseOrder[0].orderCast?.map((cast: any, index: any) => {
+                    return (
+                      <tr className="h-[80px]" key={index}>
+                        <th className="w-[20px] text-center text-lg">
+                          <input
+                            type="checkbox"
+                            className="mt-[8px] h-[20px] w-[20px]"
+                          />
+                        </th>
+                        <th className="w-[120px] text-left text-sm">
+                          <select className="h-[40px] w-[120px] rounded-md text-left px-1 text-sm">
+                            <option>{cast.title}</option>
+                          </select>
+                        </th>
+                        <th className="relative w-[60px] text-left text-lg">
+                          <input
+                            type="text"
+                            className="h-[40px] w-[60px] text-right rounded-md px-1 pr-[27px] text-sm"
+                            value={0}
+                            onClick={() => {
+                              setIsCalculatorSelect(5);
+                              setIsCalculator(true);
+                            }}
+                            readOnly
+                          />
+                          <p className="absolute bottom-[30.5px] text-sm left-[46px] opacity-60">
+                            分
+                          </p>
+                        </th>
+                        <th className="relative w-[103px] text-left text-lg">
+                          <input
+                            type="text"
+                            className="h-[40px] w-[103px] text-right rounded-md px-2 pr-[26px] text-sm"
+                            value={cast.price}
+                            onClick={() => {
+                              setIsCalculatorSelect(5);
+                              setIsCalculator(true);
+                            }}
+                            readOnly
+                          />
+                          <p className="absolute bottom-[30.5px] text-sm left-[90px] opacity-60">
+                            {cast.isTax ? "込" : "円"}
+                          </p>
+                        </th>
+                        <th className="w-[210px] flex text-left text-sm"></th>
+                        <th className="w-[80px] text-center text-lg">
+                          <input
+                            type="text"
+                            className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
+                            value={purchaseOrder[0]?.startTime}
+                            onClick={() => {
+                              setIsCalculatorSelect(4);
+                              purchaseOrder[0].isTimeCalculator = true;
+                            }}
+                            readOnly
+                          />
+                        </th>
+                        <th className="w-[80px] text-center text-lg">
+                          <input
+                            type="text"
+                            className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
+                            value={purchaseOrder[0]?.endTime}
+                            onClick={() => {
+                              setIsCalculatorSelect(5);
+                              purchaseOrder[0].isTimeCalculator = true;
+                            }}
+                            readOnly
+                          />
+                        </th>
+                        <th className="w-[20px] text-center text-sm">
+                          {checker()}
+                        </th>
+                        <th className="w-[130px] text-center items-center h-[80px] flex text-sm">
+                          <div
+                            onClick={() => {
+                              purchaseOrder[0].endTime = dayjs(
+                                date(
+                                  purchaseOrder[0]?.endTime.split(":")[0],
+                                  purchaseOrder[0]?.endTime.split(":")[1]
+                                )
+                              )
+                                .subtract(30, "minute")
+                                .format("HH:mm");
+                              purchaseOrder[0].orderExtension = checker();
+                            }}
+                          >
+                            <Border
+                              className="mr-1 w-[3.8rem]"
+                              size="px-2 text-red-700 flex justify-center items-center align-middle"
+                              natural
+                              stroke="md"
+                            >
+                              <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
+                                -
+                              </div>
+                              <span>30</span>
+                            </Border>
+                          </div>
+                          <div
+                            onClick={() => {
+                              purchaseOrder[0].endTime = dayjs(
+                                date(
+                                  purchaseOrder[0]?.endTime.split(":")[0],
+                                  purchaseOrder[0]?.endTime.split(":")[1]
+                                )
+                              )
+                                .add(30, "minute")
+                                .format("HH:mm");
+                              purchaseOrder[0].orderExtension = checker();
+                            }}
+                          >
+                            <Border
+                              className="w-[3.8rem]"
+                              size="px-2 text-blue-700 flex justify-center items-center align-middle"
+                              natural
+                              stroke="md"
+                            >
+                              <div className="flex justify-center items-center h-full mt-[-3px]">
+                                +
+                              </div>
+                              <span>30</span>
+                            </Border>
+                          </div>
+                        </th>
+                        <th className="w-[80px] text-center text-sm">
+                          <Border natural stroke="md">
+                            <p className="text-red-700">退店</p>
+                          </Border>
+                        </th>
+                        <th className="w-[20px] text-center text-sm">
+                          <div className="flex">
+                            <Border2
+                              rounded="rounded-full"
+                              size="h-[28px] w-[28px] p-[6px]"
+                            >
+                              <div>
+                                <Image
+                                  src={"/assets/close.svg"}
+                                  width={26}
+                                  height={26}
+                                  className="!h-full !w-full"
+                                  alt=""
+                                />
+                              </div>
+                            </Border2>
+                          </div>
+                        </th>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </Border>

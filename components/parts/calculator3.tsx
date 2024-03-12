@@ -28,31 +28,12 @@ function Line({ ml }: { ml?: string }) {
   );
 }
 
-export default function Calculator3({
-  result,
-  setResult,
-  setIsCalculator,
-}: any) {
+export default function Calculator3({ result, callback }: any) {
   // const [result, setResult] = useState("");
-  const [tax, setTax] = useState(false);
-  const max = 99;
-
-  const [isHour, setIsHour] = useState(false);
-  const [isHourTrue, setIsHourTrue] = useState(false);
-  const [hour, setHour] = useState("00");
-
-  const [isMinite, setIsMinite] = useState(false);
-  const [isMiniteTrue, setIsMiniteTrue] = useState(false);
-  const [minite, setMinite] = useState("00");
-
-  const [miniteType, setMiniteType] = useState(5);
-
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
 
   preload(searchCast, fetcher);
-
-  const [searchForm, setSearchForm] = useState<any>({});
 
   const searchData = useSWR<any>(searchCast, fetcher);
   const [castNames, setCastNames] = useState("");
@@ -69,7 +50,7 @@ export default function Calculator3({
         <div
           className="absolute right-[-15px] top-[-15px] rounded-full border-4 border-secondary"
           onClick={() => {
-            setIsCalculator(false);
+            result.isCastsCalculator = false;
           }}
         >
           <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full border border-black bg-primary p-[6px]">
@@ -351,7 +332,8 @@ export default function Calculator3({
         <div className="flex mt-2 justify-center">
           <div
             onClick={() => {
-              setIsCalculator(false);
+              if (callback) callback(castNames);
+              result.isCastsCalculator = false;
             }}
           >
             <Button natural>確定</Button>

@@ -11,6 +11,7 @@ const createSeatArea = gql`
   mutation (
     $store_code: Int!
     $name: String
+    $room_name: String
     $is_preset: Int
     $area_key: String
     $area_code: Int
@@ -26,6 +27,7 @@ const createSeatArea = gql`
       input: {
         store_code: $store_code
         name: $name
+        room_name: $room_name
         is_preset: $is_preset
         area_key: $area_key
         area_code: $area_code
@@ -68,6 +70,7 @@ const updateSeatArea = gql`
     $store_code: Int!
     $id: Int!
     $name: String
+    $room_name: String
     $is_preset: Int
     $area_key: String
     $area_code: Int
@@ -84,6 +87,7 @@ const updateSeatArea = gql`
         store_code: $store_code
         id: $id
         name: $name
+        room_name: $room_name
         is_preset: $is_preset
         area_key: $area_key
         area_code: $area_code

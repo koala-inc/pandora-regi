@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 
-export default function Calculator({
+export default function Calculator10({
   result,
   setResult,
   setIsCalculator,
@@ -225,12 +225,12 @@ export default function Calculator({
                 if (result2 != "") {
                   setResult(tax ? result2 + "##" : result2.replace("##", ""));
                   if (callback) {
-                    callback(tax ? result2 + "##" : result2.replace("##", ""));
+                    callback(tax, result2.replace("##", ""));
                   }
                 } else {
                   setResult(tax ? result + "##" : result.replace("##", ""));
                   if (callback) {
-                    callback(tax ? result + "##" : result.replace("##", ""));
+                    callback(tax, result.replace("##", ""));
                   }
                 }
                 setIsCalculator(false);

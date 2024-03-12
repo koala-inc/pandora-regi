@@ -47,6 +47,7 @@ const searchSeatArea = gql`
           extra_time
           id
           name
+          room_name
           price
           service_tax
         }

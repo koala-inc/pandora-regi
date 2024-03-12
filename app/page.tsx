@@ -29,6 +29,8 @@ import Calculator2 from "@/components/parts/calculator2";
 import Lock2 from "@/components/parts/lock2";
 import useIsLockGlobal from "@/globalstates/isLock";
 import OrderTime from "@/components/templates/controls/orderTime";
+import OrderCastEdit from "@/components/templates/controls/orderCastEdit";
+import OrderItemEdit from "@/components/templates/controls/orderItemEdit";
 
 function Control(isControl: any) {
   switch (isControl) {
@@ -48,9 +50,13 @@ function Control(isControl: any) {
     case "CAST":
       // セットの追加コンポーネント
       return <OrderCastAdd />;
+    case "CASTEDIT":
+      return <OrderCastEdit />;
     case "ITEM":
       // オーダー追加コンポーネント
       return <OrderItemAdd />;
+    case "ITEMEDIT":
+      return <OrderItemEdit />;
     case "APPROX":
       // 概算コンポーネント
       return (
