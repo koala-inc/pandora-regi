@@ -32,6 +32,7 @@ import ja from "dayjs/locale/ja";
 import Calculator8 from "../parts/calculator8";
 import Calculator9 from "../parts/calculator9";
 import Calculator from "../parts/calculator";
+import useSeatPresetGlobal from "@/globalstates/seatPreset";
 
 function Lists({
   lists,
@@ -96,12 +97,12 @@ function Base() {
     total += Number(cast.split("##")[1]);
   });
   total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
-  total += purchaseOrder[0].isRoomCharge
+  total += purchaseOrder[0]?.isRoomCharge
     ? Number(purchaseOrder[0]?.roomCharge)
     : 0;
   total +=
-    Number(purchaseOrder[0].extensionPrice) *
-    Number(purchaseOrder[0].orderExtension);
+    Number(purchaseOrder[0]?.extensionPrice) *
+    Number(purchaseOrder[0]?.orderExtension);
   purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
     if (!orderItem.isTax) {
       total += Number(orderItem.price) * Number(orderItem.lot);
@@ -166,13 +167,15 @@ function Base() {
             1) /
             30
         ) + 1
-      : 0) * purchaseOrder[0].num;
+      : 0) * purchaseOrder[0]?.num;
+
+  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
 
   return (
     <>
       <section className="flex items-center justify-around text-md">
         <div className="flex-col flex items-center">
-          <p className="text-4xl mb-6">A1　</p>
+          <p className="text-4xl mb-6">A{seatPreset}</p>
           <Toggle isChecked={toggle} setIsChecked={setToggle} />
         </div>
         <div className="flex flex-col items-center justify-center">
@@ -215,7 +218,7 @@ function Base() {
                 )
                   .subtract(30, "minute")
                   .format("HH:mm");
-                purchaseOrder[0].endTime = purchaseOrder[0].mainEndTime;
+                purchaseOrder[0].endTime = purchaseOrder[0]?.mainEndTime;
                 purchaseOrder[0].orderExtension = checker();
                 if (
                   Number(purchaseOrder[0]?.callTime.split(":")[0]) <=
@@ -256,7 +259,7 @@ function Base() {
                 )
                   .add(30, "minute")
                   .format("HH:mm");
-                purchaseOrder[0].endTime = purchaseOrder[0].mainEndTime;
+                purchaseOrder[0].endTime = purchaseOrder[0]?.mainEndTime;
                 purchaseOrder[0].orderExtension = checker();
                 if (
                   Number(purchaseOrder[0]?.callTime.split(":")[0]) <=
@@ -394,7 +397,7 @@ function Base() {
             <Lists
               lists={
                 purchaseOrder[0]?.isRoomCharge
-                  ? Number(purchaseOrder[0].orderExtension) > 0
+                  ? Number(purchaseOrder[0]?.orderExtension) > 0
                     ? [
                         {
                           title: purchaseOrder[0]?.setName,
@@ -413,8 +416,8 @@ function Base() {
                         },
                         {
                           title: "延長料金",
-                          lot: Number(purchaseOrder[0].orderExtension),
-                          price: Number(purchaseOrder[0].extensionPrice),
+                          lot: Number(purchaseOrder[0]?.orderExtension),
+                          price: Number(purchaseOrder[0]?.extensionPrice),
                           isTax: false,
                         },
                       ]
@@ -435,7 +438,7 @@ function Base() {
                           isTax: purchaseOrder[0]?.roomTax,
                         },
                       ]
-                  : Number(purchaseOrder[0].orderExtension) > 0
+                  : Number(purchaseOrder[0]?.orderExtension) > 0
                   ? [
                       {
                         title: purchaseOrder[0]?.setName,
@@ -445,8 +448,8 @@ function Base() {
                       },
                       {
                         title: "延長料金",
-                        lot: Number(purchaseOrder[0].orderExtension),
-                        price: Number(purchaseOrder[0].extensionPrice),
+                        lot: Number(purchaseOrder[0]?.orderExtension),
+                        price: Number(purchaseOrder[0]?.extensionPrice),
                         isTax: false,
                       },
                     ]
@@ -520,7 +523,7 @@ function Base() {
                       isTax: cast.isTax,
                     };
                   }),
-                  ...purchaseOrder[0].orderCast?.map((cast: any) => {
+                  ...purchaseOrder[0]?.orderCast?.map((cast: any) => {
                     return {
                       title: cast.title,
                       subTitle: "",
@@ -693,7 +696,7 @@ function Base() {
                       (purchaseOrder[0]?.priceTax
                         ? purchaseOrder[0]?.price
                         : 0) -
-                      (purchaseOrder[0].isRoomCharge
+                      (purchaseOrder[0]?.isRoomCharge
                         ? purchaseOrder[0]?.roomTax
                           ? purchaseOrder[0]?.roomCharge
                           : 0
@@ -713,7 +716,7 @@ function Base() {
                       (purchaseOrder[0]?.priceTax
                         ? purchaseOrder[0]?.price
                         : 0) -
-                      (purchaseOrder[0].isRoomCharge
+                      (purchaseOrder[0]?.isRoomCharge
                         ? purchaseOrder[0]?.roomTax
                           ? purchaseOrder[0]?.roomCharge
                           : 0
@@ -735,7 +738,7 @@ function Base() {
                         (purchaseOrder[0]?.priceTax
                           ? purchaseOrder[0]?.price
                           : 0) -
-                        (purchaseOrder[0].isRoomCharge
+                        (purchaseOrder[0]?.isRoomCharge
                           ? purchaseOrder[0]?.roomTax
                             ? purchaseOrder[0]?.roomCharge
                             : 0
@@ -745,7 +748,7 @@ function Base() {
                         (purchaseOrder[0]?.priceTax
                           ? purchaseOrder[0]?.price
                           : 0) +
-                        (purchaseOrder[0].isRoomCharge
+                        (purchaseOrder[0]?.isRoomCharge
                           ? purchaseOrder[0]?.roomTax
                             ? purchaseOrder[0]?.roomCharge
                             : 0
@@ -812,12 +815,12 @@ function Add({ isCalculator, setIsCalculator }: any) {
     total += Number(cast.split("##")[1]);
   });
   total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
-  total += purchaseOrder[0].isRoomCharge
+  total += purchaseOrder[0]?.isRoomCharge
     ? Number(purchaseOrder[0]?.roomCharge)
     : 0;
   total +=
-    Number(purchaseOrder[0].extensionPrice) *
-    Number(purchaseOrder[0].orderExtension);
+    Number(purchaseOrder[0]?.extensionPrice) *
+    Number(purchaseOrder[0]?.orderExtension);
   purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
     total += Number(orderItem.price) * Number(orderItem.lot);
   });
@@ -837,11 +840,13 @@ function Add({ isCalculator, setIsCalculator }: any) {
 
   // const [isCalculator, setIsCalculator] = useState(false);
 
+  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
+
   return (
     <>
       <section className="flex items-center justify-around text-md mb-4">
         <div className="flex-col flex items-center w-[77.45px]">
-          <p className="text-4xl w-full text-left">A1</p>
+          <p className="text-4xl w-full text-left">A{seatPreset}</p>
         </div>
         <div className="flex flex-col items-center justify-center w-[64px]">
           <div className="flex flex-col items-center justify-center">
@@ -913,7 +918,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                         (purchaseOrder[0]?.priceTax
                           ? purchaseOrder[0]?.price
                           : 0) -
-                        (purchaseOrder[0].isRoomCharge
+                        (purchaseOrder[0]?.isRoomCharge
                           ? purchaseOrder[0]?.roomTax
                             ? purchaseOrder[0]?.roomCharge
                             : 0
@@ -923,7 +928,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                         (purchaseOrder[0]?.priceTax
                           ? purchaseOrder[0]?.price
                           : 0) +
-                        (purchaseOrder[0].isRoomCharge
+                        (purchaseOrder[0]?.isRoomCharge
                           ? purchaseOrder[0]?.roomTax
                             ? purchaseOrder[0]?.roomCharge
                             : 0
@@ -964,7 +969,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                         (purchaseOrder[0]?.priceTax
                           ? purchaseOrder[0]?.price
                           : 0) -
-                        (purchaseOrder[0].isRoomCharge
+                        (purchaseOrder[0]?.isRoomCharge
                           ? purchaseOrder[0]?.roomTax
                             ? purchaseOrder[0]?.roomCharge
                             : 0
@@ -974,7 +979,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                         (purchaseOrder[0]?.priceTax
                           ? purchaseOrder[0]?.price
                           : 0) +
-                        (purchaseOrder[0].isRoomCharge
+                        (purchaseOrder[0]?.isRoomCharge
                           ? purchaseOrder[0]?.roomTax
                             ? purchaseOrder[0]?.roomCharge
                             : 0
@@ -1202,17 +1207,19 @@ function CastAdd() {
   const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
     usePurchaseOrderItemAddGlobal();
 
+  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
+
   let total = 0;
   purchaseOrder[0]?.cast?.map((cast: any) => {
     total += Number(cast.split("##")[1]);
   });
   total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
-  total += purchaseOrder[0].isRoomCharge
+  total += purchaseOrder[0]?.isRoomCharge
     ? Number(purchaseOrder[0]?.roomCharge)
     : 0;
   total +=
-    Number(purchaseOrder[0].extensionPrice) *
-    Number(purchaseOrder[0].orderExtension);
+    Number(purchaseOrder[0]?.extensionPrice) *
+    Number(purchaseOrder[0]?.orderExtension);
   purchaseOrder[0]?.orderCast?.map((orderCast: any) => {
     total += Number(orderCast.price) * Number(orderCast.lot);
   });
@@ -1242,7 +1249,7 @@ function CastAdd() {
     <>
       <section className="flex items-center justify-around text-md mb-4">
         <div className="flex-col flex items-center w-[77.45px]">
-          <p className="text-4xl w-full text-left">A1</p>
+          <p className="text-4xl w-full text-left">A{seatPreset}</p>
         </div>
         <div className="flex flex-col items-center justify-center w-[64px]">
           <div className="flex flex-col items-center justify-center">
@@ -1335,7 +1342,7 @@ function CastAdd() {
                         (purchaseOrder[0]?.priceTax
                           ? purchaseOrder[0]?.price
                           : 0) -
-                        (purchaseOrder[0].isRoomCharge
+                        (purchaseOrder[0]?.isRoomCharge
                           ? purchaseOrder[0]?.roomTax
                             ? purchaseOrder[0]?.roomCharge
                             : 0
@@ -1345,7 +1352,7 @@ function CastAdd() {
                         (purchaseOrder[0]?.priceTax
                           ? purchaseOrder[0]?.price
                           : 0) +
-                        (purchaseOrder[0].isRoomCharge
+                        (purchaseOrder[0]?.isRoomCharge
                           ? purchaseOrder[0]?.roomTax
                             ? purchaseOrder[0]?.roomCharge
                             : 0
@@ -1386,7 +1393,7 @@ function CastAdd() {
                         (purchaseOrder[0]?.priceTax
                           ? purchaseOrder[0]?.price
                           : 0) -
-                        (purchaseOrder[0].isRoomCharge
+                        (purchaseOrder[0]?.isRoomCharge
                           ? purchaseOrder[0]?.roomTax
                             ? purchaseOrder[0]?.roomCharge
                             : 0
@@ -1396,7 +1403,7 @@ function CastAdd() {
                         (purchaseOrder[0]?.priceTax
                           ? purchaseOrder[0]?.price
                           : 0) +
-                        (purchaseOrder[0].isRoomCharge
+                        (purchaseOrder[0]?.isRoomCharge
                           ? purchaseOrder[0]?.roomTax
                             ? purchaseOrder[0]?.roomCharge
                             : 0
@@ -1647,7 +1654,7 @@ export default function OrderSheet() {
   return (
     <>
       {isLock == 1 && <Lock />}
-      {purchaseOrder[0].set?.isCalculator && (
+      {purchaseOrder[0]?.set?.isCalculator && (
         <Calculator setIsCalculator={setIsCalculator} />
       )}
       {purchaseOrderItemAdd?.map((purchaseOrderItem: any, index: any) => {
@@ -1677,10 +1684,10 @@ export default function OrderSheet() {
           );
         }
       })}
-      {purchaseOrder[0].isCallTimeCalculator && (
+      {purchaseOrder[0]?.isCallTimeCalculator && (
         <Calculator9
           result={purchaseOrder[0]}
-          time={purchaseOrder[0].callTime}
+          time={purchaseOrder[0]?.callTime}
           callback={(hour: any, minite: any) => {
             purchaseOrder[0].callTime = hour + ":" + minite;
           }}

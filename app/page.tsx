@@ -31,6 +31,7 @@ import useIsLockGlobal from "@/globalstates/isLock";
 import OrderTime from "@/components/templates/controls/orderTime";
 import OrderCastEdit from "@/components/templates/controls/orderCastEdit";
 import OrderItemEdit from "@/components/templates/controls/orderItemEdit";
+import useSeatPresetGlobal from "@/globalstates/seatPreset";
 
 function Control(isControl: any) {
   switch (isControl) {
@@ -78,6 +79,8 @@ export default function Home() {
   const [isControl] = useIsControlGlobal();
   const [isLock] = useIsLockGlobal();
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
+  const [purchaseOrder] = usePurchaseOrderGlobal();
+  const [seatPreset] = useSeatPresetGlobal();
   const [datetime, setDatetime] = useState(new Date());
 
   useEffect(() => {
@@ -102,7 +105,7 @@ export default function Home() {
         {isFooter && !isCard && <Footer />}
         {isCard && (
           <>
-            {isPurchaseOrder ? (
+            {purchaseOrder[0]?.id != seatPreset && isPurchaseOrder ? (
               <>
                 <OrderSheetSet />
                 <OrderSet />

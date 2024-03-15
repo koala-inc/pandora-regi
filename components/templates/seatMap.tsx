@@ -7,12 +7,19 @@ import Image from "next/image";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import useIsControlGlobal from "@/globalstates/isControl";
 import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
+import useIsLockGlobal from "@/globalstates/isLock";
+import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
+import useSeatPresetGlobal from "@/globalstates/seatPreset";
 
 export default function SeatMap() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isCard, setIsCard] = useIsCardGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
+  const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
+  const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+  const [isLock, setIsLock] = useIsLockGlobal();
+  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
 
   return (
     <TransformWrapper initialScale={1}>
@@ -29,7 +36,27 @@ export default function SeatMap() {
               switch (seat.type) {
                 case "seat":
                   return (
-                    <Seat key={index} id={seat.id} area={seat.area}>
+                    <Seat
+                      key={index}
+                      id={seat.id}
+                      area={seat.area}
+                      bg={
+                        isLock > 1
+                          ? " bg-green-200 opacity-90"
+                          : purchaseOrder[0]?.id != seat.id
+                          ? " bg-natural"
+                          : " bg-blue-200 opacity-90"
+                      }
+                      onClick={() => {
+                        if (isLock < 2) {
+                          setIsCard(true);
+                          if (isControl != "") setIsControl("");
+                        } else if (isLock == 2) {
+                          setIsLock(3);
+                        }
+                        setSeatPreset(seat.id);
+                      }}
+                    >
                       {seat.id.toLocaleUpperCase()}
                     </Seat>
                   );
@@ -46,7 +73,26 @@ export default function SeatMap() {
                   );
                 case "text":
                   return (
-                    <Seat key={index} id={seat.id} area={seat.area}>
+                    <Seat
+                      key={index}
+                      id={seat.id}
+                      area={seat.area}
+                      bg={
+                        isLock > 1
+                          ? " bg-green-200 opacity-90"
+                          : purchaseOrder[0].id != seat.id
+                          ? " bg-natural"
+                          : " bg-blue-200 opacity-90"
+                      }
+                      onClick={() => {
+                        if (isLock < 2) {
+                          setIsCard(true);
+                          if (isControl != "") setIsControl("");
+                        } else if (isLock == 2) {
+                          setIsLock(3);
+                        }
+                      }}
+                    >
                       {seat.body}
                     </Seat>
                   );

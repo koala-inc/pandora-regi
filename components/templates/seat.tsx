@@ -6,15 +6,20 @@ import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
 import useIsLockGlobal from "@/globalstates/isLock";
 import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 import { useState } from "react";
+import useSeatPresetGlobal from "@/globalstates/seatPreset";
 
 export default function Seat({
   children,
   id,
   area,
+  bg,
+  onClick,
 }: {
   children: any;
   id: string;
   area: string;
+  bg: string;
+  onClick: any;
 }) {
   const overlay = false;
 
@@ -26,32 +31,26 @@ export default function Seat({
 
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+
   const [isLock, setIsLock] = useIsLockGlobal();
 
-  const bg =
-    isLock > 1
-      ? " bg-green-200 opacity-90"
-      : isPurchaseOrder
-      ? " bg-natural"
-      : " bg-blue-200 opacity-90";
+  // const bg =
+  //   isLock > 1
+  //     ? " bg-green-200 opacity-90"
+  //     : isPurchaseOrder
+  //     ? " bg-natural"
+  //     : " bg-blue-200 opacity-90";
 
   // 指名は0.5rem
   // 入退店は0.8rem
   return (
     <div
       className={
-        "relative flex h-full w-full cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all " +
+        "relative text-2xl flex h-full w-full cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all " +
         area +
         bg
       }
-      onClick={() => {
-        if (isLock < 2) {
-          setIsCard(true);
-          if (isControl != "") setIsControl("");
-        } else if (isLock == 2) {
-          setIsLock(3);
-        }
-      }}
+      onClick={() => onClick()}
       {...editMode(id)}
     >
       {overlay ? (

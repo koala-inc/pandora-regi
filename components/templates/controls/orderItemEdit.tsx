@@ -121,7 +121,7 @@ export default function OrderItemEdit() {
           {purchaseOrder[0]?.orderItem?.map((orderItem: any, index: any) => (
             <div
               className="flex flex-col w-full mx-1 max-w-[340px] max-h-[180px] border border-white justify-center rounded-md bg-black my-3 px-3 py-2"
-              // key={index}
+              key={index}
             >
               <div className="flex w-full">
                 <div className="flex flex-col w-[200px] text-left">

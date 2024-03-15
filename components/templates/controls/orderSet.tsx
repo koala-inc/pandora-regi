@@ -20,6 +20,7 @@ import Calculator from "@/components/parts/calculator";
 import Calculator1 from "@/components/parts/calculator1";
 import Calculator2 from "@/components/parts/calculator2";
 import useOrderGlobal from "@/globalstates/order";
+import useSeatPresetGlobal from "@/globalstates/seatPreset";
 
 dayjs.locale(ja);
 
@@ -109,11 +110,11 @@ export default function ControlOrderSet() {
   ];
   const seatNumber = [
     {
-      prefCode: "01",
+      prefCode: "1",
       prefName: "1",
     },
     {
-      prefCode: "02",
+      prefCode: "2",
       prefName: "2",
     },
   ];
@@ -235,8 +236,10 @@ export default function ControlOrderSet() {
 
   const [extensionPrice, setExtensionPrice] = useState(0);
 
+  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
+
   const [isRoomCharge, setIsRoomCharge] = useState(false);
-  const [id, setId] = useState("01");
+  const [id, setId] = useState(seatPreset);
 
   const [serviceTax, setServiceTax] = useState(0);
 
@@ -394,6 +397,7 @@ export default function ControlOrderSet() {
                   onChange={(e) => {
                     setId(e.target.value);
                   }}
+                  defaultValue={seatPreset}
                 >
                   {seatNumber.map((pref) => {
                     return (

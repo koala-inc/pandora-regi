@@ -1,18 +1,18 @@
 const seatMap = [
   {
-    id: "01",
+    id: "1",
     area: "[grid-area:3/5]",
     type: "seat",
     body: "",
     objectUrl: "",
   },
-  // {
-  //   id: "02",
-  //   area: "[grid-area:5/8]",
-  //   type: "seat",
-  //   body: "",
-  //   objectUrl: "",
-  // },
+  {
+    id: "2",
+    area: "[grid-area:5/8]",
+    type: "seat",
+    body: "",
+    objectUrl: "",
+  },
   // {
   //   id: "02",
   //   area: "[grid-area:3/6]",
