@@ -11,6 +11,7 @@ import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
 import useOrderGlobal from "@/globalstates/order";
 import usePurchaseOrderSetGlobal from "@/globalstates/purchaseOrderSet";
 import { useEffect } from "react";
+import useSeatPresetGlobal from "@/globalstates/seatPreset";
 
 function Lists({
   lists,
@@ -64,6 +65,7 @@ export default function OrderSheetSet() {
   const [purchaseOrderSet, setPurchaseOrderSet] = usePurchaseOrderSetGlobal();
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
   const [order, setOrder] = useOrderGlobal();
+  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
 
   // useEffect(() => {
   //   setPurchaseOrderSet([]);
@@ -210,8 +212,8 @@ export default function OrderSheetSet() {
               if (purchaseOrderSet.length >= 1) {
                 setIsControl("");
                 setIsCard(false);
+                setSeatPreset("");
                 setIsPurchaseOrder(false);
-                alert(purchaseOrderSet);
                 setPurchaseOrder([...purchaseOrder, ...purchaseOrderSet]);
               }
             }}

@@ -88,29 +88,34 @@ function Base() {
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
-  const [toggle, setToggle] = useState(purchaseOrder[0]?.toggle || false);
+  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
+  const purchaseOrderState = purchaseOrder.filter(
+    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  );
+  const [toggle, setToggle] = useState(purchaseOrderState[0]?.toggle || false);
   const [isLock, setIsLock] = useIsLockGlobal();
 
   let total = 0;
   let taxNoTotal = 0;
-  purchaseOrder[0]?.cast?.map((cast: any) => {
+  purchaseOrderState[0]?.cast?.map((cast: any) => {
     total += Number(cast.split("##")[1]);
   });
-  total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
-  total += purchaseOrder[0]?.isRoomCharge
-    ? Number(purchaseOrder[0]?.roomCharge)
+  total +=
+    Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.num);
+  total += purchaseOrderState[0]?.isRoomCharge
+    ? Number(purchaseOrderState[0]?.roomCharge)
     : 0;
   total +=
-    Number(purchaseOrder[0]?.extensionPrice) *
-    Number(purchaseOrder[0]?.orderExtension);
-  purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
+    Number(purchaseOrderState[0]?.extensionPrice) *
+    Number(purchaseOrderState[0]?.orderExtension);
+  purchaseOrderState[0]?.orderItem?.map((orderItem: any) => {
     if (!orderItem.isTax) {
       total += Number(orderItem.price) * Number(orderItem.lot);
     } else {
       taxNoTotal += Number(orderItem.price) * Number(orderItem.lot);
     }
   });
-  purchaseOrder[0]?.orderCast?.map((cast: any) => {
+  purchaseOrderState[0]?.orderCast?.map((cast: any) => {
     if (!cast.isTax) {
       total += Number(cast.price) * Number(cast.lot);
     } else {
@@ -133,18 +138,18 @@ function Base() {
       (Number(
         dayjs(
           date(
-            purchaseOrder[0]?.endTime.split(":")[0],
-            purchaseOrder[0]?.endTime.split(":")[1]
+            purchaseOrderState[0]?.endTime.split(":")[0],
+            purchaseOrderState[0]?.endTime.split(":")[1]
           )
         ).diff(
           date(
-            purchaseOrder[0]?.startTime.split(":")[0],
-            purchaseOrder[0]?.startTime.split(":")[1]
+            purchaseOrderState[0]?.startTime.split(":")[0],
+            purchaseOrderState[0]?.startTime.split(":")[1]
           ),
           "minute"
         )
       ) -
-        Number(purchaseOrder[0]?.setTime) -
+        Number(purchaseOrderState[0]?.setTime) -
         1) /
         30
     ) >= 0
@@ -152,24 +157,22 @@ function Base() {
           (Number(
             dayjs(
               date(
-                purchaseOrder[0]?.endTime.split(":")[0],
-                purchaseOrder[0]?.endTime.split(":")[1]
+                purchaseOrderState[0]?.endTime.split(":")[0],
+                purchaseOrderState[0]?.endTime.split(":")[1]
               )
             ).diff(
               date(
-                purchaseOrder[0]?.startTime.split(":")[0],
-                purchaseOrder[0]?.startTime.split(":")[1]
+                purchaseOrderState[0]?.startTime.split(":")[0],
+                purchaseOrderState[0]?.startTime.split(":")[1]
               ),
               "minute"
             )
           ) -
-            Number(purchaseOrder[0]?.setTime) -
+            Number(purchaseOrderState[0]?.setTime) -
             1) /
             30
         ) + 1
-      : 0) * purchaseOrder[0]?.num;
-
-  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
+      : 0) * purchaseOrderState[0]?.num;
 
   return (
     <>
@@ -181,16 +184,16 @@ function Base() {
         <div className="flex flex-col items-center justify-center">
           <div className="flex flex-col items-center justify-center">
             <p className="text-[0.8rem] text-accent">人数</p>
-            <p>{purchaseOrder[0]?.num}名</p>
+            <p>{purchaseOrderState[0]?.num}名</p>
           </div>
           <div
             className="mt-3 flex min-w-[4em] flex-col items-center justify-center"
             onClick={() => {
-              purchaseOrder[0].isCallTimeCalculator = true;
+              purchaseOrderState[0].isCallTimeCalculator = true;
             }}
           >
             <p className="text-[0.8rem] text-accent">コール時間</p>
-            <p>{toggle ? "-" : purchaseOrder[0]?.callTime}</p>
+            <p>{toggle ? "-" : purchaseOrderState[0]?.callTime}</p>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center">
@@ -203,33 +206,35 @@ function Base() {
           >
             <p className="text-[0.8rem] text-accent">時間</p>
             <p>
-              {purchaseOrder[0]?.mainStartTime}~{purchaseOrder[0]?.mainEndTime}
+              {purchaseOrderState[0]?.mainStartTime}~
+              {purchaseOrderState[0]?.mainEndTime}
             </p>
           </div>
 
           <div className="mt-6 flex items-center justify-center">
             <div
               onClick={() => {
-                purchaseOrder[0].mainEndTime = dayjs(
+                purchaseOrderState[0].mainEndTime = dayjs(
                   date(
-                    purchaseOrder[0]?.mainEndTime.split(":")[0],
-                    purchaseOrder[0]?.mainEndTime.split(":")[1]
+                    purchaseOrderState[0]?.mainEndTime.split(":")[0],
+                    purchaseOrderState[0]?.mainEndTime.split(":")[1]
                   )
                 )
                   .subtract(30, "minute")
                   .format("HH:mm");
-                purchaseOrder[0].endTime = purchaseOrder[0]?.mainEndTime;
-                purchaseOrder[0].orderExtension = checker();
+                purchaseOrderState[0].endTime =
+                  purchaseOrderState[0]?.mainEndTime;
+                purchaseOrderState[0].orderExtension = checker();
                 if (
-                  Number(purchaseOrder[0]?.callTime.split(":")[0]) <=
-                    Number(purchaseOrder[0]?.mainEndTime.split(":")[0]) &&
-                  Number(purchaseOrder[0]?.callTime.split(":")[0]) >=
-                    Number(purchaseOrder[0]?.mainStartTime.split(":")[0])
+                  Number(purchaseOrderState[0]?.callTime.split(":")[0]) <=
+                    Number(purchaseOrderState[0]?.mainEndTime.split(":")[0]) &&
+                  Number(purchaseOrderState[0]?.callTime.split(":")[0]) >=
+                    Number(purchaseOrderState[0]?.mainStartTime.split(":")[0])
                 ) {
-                  purchaseOrder[0].callTime = dayjs(
+                  purchaseOrderState[0].callTime = dayjs(
                     date(
-                      purchaseOrder[0]?.mainEndTime.split(":")[0],
-                      purchaseOrder[0]?.mainEndTime.split(":")[1]
+                      purchaseOrderState[0]?.mainEndTime.split(":")[0],
+                      purchaseOrderState[0]?.mainEndTime.split(":")[1]
                     )
                   )
                     .subtract(10, "minute")
@@ -251,26 +256,27 @@ function Base() {
             </div>
             <div
               onClick={() => {
-                purchaseOrder[0].mainEndTime = dayjs(
+                purchaseOrderState[0].mainEndTime = dayjs(
                   date(
-                    purchaseOrder[0]?.mainEndTime.split(":")[0],
-                    purchaseOrder[0]?.mainEndTime.split(":")[1]
+                    purchaseOrderState[0]?.mainEndTime.split(":")[0],
+                    purchaseOrderState[0]?.mainEndTime.split(":")[1]
                   )
                 )
                   .add(30, "minute")
                   .format("HH:mm");
-                purchaseOrder[0].endTime = purchaseOrder[0]?.mainEndTime;
-                purchaseOrder[0].orderExtension = checker();
+                purchaseOrderState[0].endTime =
+                  purchaseOrderState[0]?.mainEndTime;
+                purchaseOrderState[0].orderExtension = checker();
                 if (
-                  Number(purchaseOrder[0]?.callTime.split(":")[0]) <=
-                    Number(purchaseOrder[0]?.mainEndTime.split(":")[0]) &&
-                  Number(purchaseOrder[0]?.callTime.split(":")[0]) >=
-                    Number(purchaseOrder[0]?.mainStartTime.split(":")[0])
+                  Number(purchaseOrderState[0]?.callTime.split(":")[0]) <=
+                    Number(purchaseOrderState[0]?.mainEndTime.split(":")[0]) &&
+                  Number(purchaseOrderState[0]?.callTime.split(":")[0]) >=
+                    Number(purchaseOrderState[0]?.mainStartTime.split(":")[0])
                 ) {
-                  purchaseOrder[0].callTime = dayjs(
+                  purchaseOrderState[0].callTime = dayjs(
                     date(
-                      purchaseOrder[0]?.mainEndTime.split(":")[0],
-                      purchaseOrder[0]?.mainEndTime.split(":")[1]
+                      purchaseOrderState[0]?.mainEndTime.split(":")[0],
+                      purchaseOrderState[0]?.mainEndTime.split(":")[1]
                     )
                   )
                     .subtract(10, "minute")
@@ -396,69 +402,69 @@ function Base() {
           <div className="flex text-sm px-2 h-[120px] max-h-[100px] min-h-[100px]">
             <Lists
               lists={
-                purchaseOrder[0]?.isRoomCharge
-                  ? Number(purchaseOrder[0]?.orderExtension) > 0
+                purchaseOrderState[0]?.isRoomCharge
+                  ? Number(purchaseOrderState[0]?.orderExtension) > 0
                     ? [
                         {
-                          title: purchaseOrder[0]?.setName,
-                          lot: purchaseOrder[0]?.num,
-                          price: purchaseOrder[0]?.price,
-                          isTax: purchaseOrder[0]?.priceTax,
+                          title: purchaseOrderState[0]?.setName,
+                          lot: purchaseOrderState[0]?.num,
+                          price: purchaseOrderState[0]?.price,
+                          isTax: purchaseOrderState[0]?.priceTax,
                         },
                         {
                           title:
-                            purchaseOrder[0]?.roomName == ""
+                            purchaseOrderState[0]?.roomName == ""
                               ? "ルームチャージ"
-                              : purchaseOrder[0]?.roomName,
+                              : purchaseOrderState[0]?.roomName,
                           lot: 1,
-                          price: purchaseOrder[0]?.roomCharge,
-                          isTax: purchaseOrder[0]?.roomTax,
+                          price: purchaseOrderState[0]?.roomCharge,
+                          isTax: purchaseOrderState[0]?.roomTax,
                         },
                         {
                           title: "延長料金",
-                          lot: Number(purchaseOrder[0]?.orderExtension),
-                          price: Number(purchaseOrder[0]?.extensionPrice),
+                          lot: Number(purchaseOrderState[0]?.orderExtension),
+                          price: Number(purchaseOrderState[0]?.extensionPrice),
                           isTax: false,
                         },
                       ]
                     : [
                         {
-                          title: purchaseOrder[0]?.setName,
-                          lot: purchaseOrder[0]?.num,
-                          price: purchaseOrder[0]?.price,
-                          isTax: purchaseOrder[0]?.priceTax,
+                          title: purchaseOrderState[0]?.setName,
+                          lot: purchaseOrderState[0]?.num,
+                          price: purchaseOrderState[0]?.price,
+                          isTax: purchaseOrderState[0]?.priceTax,
                         },
                         {
                           title:
-                            purchaseOrder[0]?.roomName == ""
+                            purchaseOrderState[0]?.roomName == ""
                               ? "ルームチャージ"
-                              : purchaseOrder[0]?.roomName,
+                              : purchaseOrderState[0]?.roomName,
                           lot: 1,
-                          price: purchaseOrder[0]?.roomCharge,
-                          isTax: purchaseOrder[0]?.roomTax,
+                          price: purchaseOrderState[0]?.roomCharge,
+                          isTax: purchaseOrderState[0]?.roomTax,
                         },
                       ]
-                  : Number(purchaseOrder[0]?.orderExtension) > 0
+                  : Number(purchaseOrderState[0]?.orderExtension) > 0
                   ? [
                       {
-                        title: purchaseOrder[0]?.setName,
-                        lot: purchaseOrder[0]?.num,
-                        price: purchaseOrder[0]?.price,
-                        isTax: purchaseOrder[0]?.priceTax,
+                        title: purchaseOrderState[0]?.setName,
+                        lot: purchaseOrderState[0]?.num,
+                        price: purchaseOrderState[0]?.price,
+                        isTax: purchaseOrderState[0]?.priceTax,
                       },
                       {
                         title: "延長料金",
-                        lot: Number(purchaseOrder[0]?.orderExtension),
-                        price: Number(purchaseOrder[0]?.extensionPrice),
+                        lot: Number(purchaseOrderState[0]?.orderExtension),
+                        price: Number(purchaseOrderState[0]?.extensionPrice),
                         isTax: false,
                       },
                     ]
                   : [
                       {
-                        title: purchaseOrder[0]?.setName,
-                        lot: purchaseOrder[0]?.num,
-                        price: purchaseOrder[0]?.price,
-                        isTax: purchaseOrder[0]?.priceTax,
+                        title: purchaseOrderState[0]?.setName,
+                        lot: purchaseOrderState[0]?.num,
+                        price: purchaseOrderState[0]?.price,
+                        isTax: purchaseOrderState[0]?.priceTax,
                       },
                     ]
                 // {
@@ -514,7 +520,7 @@ function Base() {
             <Lists
               lists={
                 [
-                  ...purchaseOrder[0]?.cast?.map((cast: any) => {
+                  ...purchaseOrderState[0]?.cast?.map((cast: any) => {
                     return {
                       title: cast.split("##")[0],
                       subTitle: "",
@@ -523,7 +529,7 @@ function Base() {
                       isTax: cast.isTax,
                     };
                   }),
-                  ...purchaseOrder[0]?.orderCast?.map((cast: any) => {
+                  ...purchaseOrderState[0]?.orderCast?.map((cast: any) => {
                     return {
                       title: cast.title,
                       subTitle: "",
@@ -535,7 +541,7 @@ function Base() {
                 ]
                 // [
                 // {
-                //   title: purchaseOrder[0]?.cast[0] || "",
+                //   title: purchaseOrderState[0]?.cast[0] || "",
                 //   subTitle: "",
                 //   lot: 1,
                 //   price: 0,
@@ -655,7 +661,7 @@ function Base() {
             <Line ml="ml-10" />
           </div>
           <div className="flex text-sm px-2 max-h-[130px] min-h-[130px]">
-            <Lists lists={purchaseOrder[0]?.orderItem || []} />
+            <Lists lists={purchaseOrderState[0]?.orderItem || []} />
             <div
               className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
               onClick={(e) => {
@@ -693,16 +699,16 @@ function Base() {
                 {(
                   Math.floor(
                     totalPay -
-                      (purchaseOrder[0]?.priceTax
-                        ? purchaseOrder[0]?.price
+                      (purchaseOrderState[0]?.priceTax
+                        ? purchaseOrderState[0]?.price
                         : 0) -
-                      (purchaseOrder[0]?.isRoomCharge
-                        ? purchaseOrder[0]?.roomTax
-                          ? purchaseOrder[0]?.roomCharge
+                      (purchaseOrderState[0]?.isRoomCharge
+                        ? purchaseOrderState[0]?.roomTax
+                          ? purchaseOrderState[0]?.roomCharge
                           : 0
                         : 0)
                   ) *
-                  (Number(purchaseOrder[0]?.serviceTax) / 100)
+                  (Number(purchaseOrderState[0]?.serviceTax) / 100)
                 ).toLocaleString()}
                 円
               </div>
@@ -713,16 +719,16 @@ function Base() {
                 {(
                   Math.floor(
                     totalPay -
-                      (purchaseOrder[0]?.priceTax
-                        ? purchaseOrder[0]?.price
+                      (purchaseOrderState[0]?.priceTax
+                        ? purchaseOrderState[0]?.price
                         : 0) -
-                      (purchaseOrder[0]?.isRoomCharge
-                        ? purchaseOrder[0]?.roomTax
-                          ? purchaseOrder[0]?.roomCharge
+                      (purchaseOrderState[0]?.isRoomCharge
+                        ? purchaseOrderState[0]?.roomTax
+                          ? purchaseOrderState[0]?.roomCharge
                           : 0
                         : 0)
                   ) *
-                  (Number(purchaseOrder[0]?.serviceTax) / 100 + 1) *
+                  (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
                   0.1
                 ).toLocaleString()}
                 円
@@ -735,22 +741,22 @@ function Base() {
                   Math.ceil(
                     Math.floor(
                       (totalPay -
-                        (purchaseOrder[0]?.priceTax
-                          ? purchaseOrder[0]?.price
+                        (purchaseOrderState[0]?.priceTax
+                          ? purchaseOrderState[0]?.price
                           : 0) -
-                        (purchaseOrder[0]?.isRoomCharge
-                          ? purchaseOrder[0]?.roomTax
-                            ? purchaseOrder[0]?.roomCharge
+                        (purchaseOrderState[0]?.isRoomCharge
+                          ? purchaseOrderState[0]?.roomTax
+                            ? purchaseOrderState[0]?.roomCharge
                             : 0
                           : 0)) *
-                        (Number(purchaseOrder[0]?.serviceTax) / 100 + 1) *
+                        (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
                         1.1 +
-                        (purchaseOrder[0]?.priceTax
-                          ? purchaseOrder[0]?.price
+                        (purchaseOrderState[0]?.priceTax
+                          ? purchaseOrderState[0]?.price
                           : 0) +
-                        (purchaseOrder[0]?.isRoomCharge
-                          ? purchaseOrder[0]?.roomTax
-                            ? purchaseOrder[0]?.roomCharge
+                        (purchaseOrderState[0]?.isRoomCharge
+                          ? purchaseOrderState[0]?.roomTax
+                            ? purchaseOrderState[0]?.roomCharge
                             : 0
                           : 0) +
                         taxNoTotal
@@ -809,22 +815,27 @@ function Add({ isCalculator, setIsCalculator }: any) {
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
     usePurchaseOrderItemAddGlobal();
+  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
+  const purchaseOrderState = purchaseOrder.filter(
+    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  );
 
   let total = 0;
-  purchaseOrder[0]?.cast?.map((cast: any) => {
+  purchaseOrderState[0]?.cast?.map((cast: any) => {
     total += Number(cast.split("##")[1]);
   });
-  total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
-  total += purchaseOrder[0]?.isRoomCharge
-    ? Number(purchaseOrder[0]?.roomCharge)
+  total +=
+    Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.num);
+  total += purchaseOrderState[0]?.isRoomCharge
+    ? Number(purchaseOrderState[0]?.roomCharge)
     : 0;
   total +=
-    Number(purchaseOrder[0]?.extensionPrice) *
-    Number(purchaseOrder[0]?.orderExtension);
-  purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
+    Number(purchaseOrderState[0]?.extensionPrice) *
+    Number(purchaseOrderState[0]?.orderExtension);
+  purchaseOrderState[0]?.orderItem?.map((orderItem: any) => {
     total += Number(orderItem.price) * Number(orderItem.lot);
   });
-  purchaseOrder[0]?.orderCast?.map((cast: any) => {
+  purchaseOrderState[0]?.orderCast?.map((cast: any) => {
     total += Number(cast.price) * Number(cast.lot);
   });
 
@@ -840,8 +851,6 @@ function Add({ isCalculator, setIsCalculator }: any) {
 
   // const [isCalculator, setIsCalculator] = useState(false);
 
-  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
-
   return (
     <>
       <section className="flex items-center justify-around text-md mb-4">
@@ -851,7 +860,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
         <div className="flex flex-col items-center justify-center w-[64px]">
           <div className="flex flex-col items-center justify-center">
             <p className="text-[0.8rem] text-accent">人数</p>
-            <p>{purchaseOrder[0]?.num}名</p>
+            <p>{purchaseOrderState[0]?.num}名</p>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center w-[111.77px]">
@@ -864,8 +873,8 @@ function Add({ isCalculator, setIsCalculator }: any) {
           >
             <p className="text-[0.8rem] text-accent">時間</p>
             <p>
-              {purchaseOrder[0]?.StartTime || "00:00"}~
-              {purchaseOrder[0]?.endTime || "00:00"}
+              {purchaseOrderState[0]?.StartTime || "00:00"}~
+              {purchaseOrderState[0]?.endTime || "00:00"}
             </p>
           </div>
         </div>
@@ -882,7 +891,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
               setIsControl("ITEMEDIT");
             }}
           >
-            <Lists lists={purchaseOrder[0]?.orderItem || []} />
+            <Lists lists={purchaseOrderState[0]?.orderItem || []} />
           </div>
           <div className="flex w-full">
             <Line />
@@ -915,22 +924,22 @@ function Add({ isCalculator, setIsCalculator }: any) {
                   Math.ceil(
                     Math.floor(
                       (totalPay -
-                        (purchaseOrder[0]?.priceTax
-                          ? purchaseOrder[0]?.price
+                        (purchaseOrderState[0]?.priceTax
+                          ? purchaseOrderState[0]?.price
                           : 0) -
-                        (purchaseOrder[0]?.isRoomCharge
-                          ? purchaseOrder[0]?.roomTax
-                            ? purchaseOrder[0]?.roomCharge
+                        (purchaseOrderState[0]?.isRoomCharge
+                          ? purchaseOrderState[0]?.roomTax
+                            ? purchaseOrderState[0]?.roomCharge
                             : 0
                           : 0)) *
-                        (Number(purchaseOrder[0]?.serviceTax) / 100 + 1) *
+                        (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
                         1.1 +
-                        (purchaseOrder[0]?.priceTax
-                          ? purchaseOrder[0]?.price
+                        (purchaseOrderState[0]?.priceTax
+                          ? purchaseOrderState[0]?.price
                           : 0) +
-                        (purchaseOrder[0]?.isRoomCharge
-                          ? purchaseOrder[0]?.roomTax
-                            ? purchaseOrder[0]?.roomCharge
+                        (purchaseOrderState[0]?.isRoomCharge
+                          ? purchaseOrderState[0]?.roomTax
+                            ? purchaseOrderState[0]?.roomCharge
                             : 0
                           : 0)
                     ) / 100
@@ -966,22 +975,22 @@ function Add({ isCalculator, setIsCalculator }: any) {
                   Math.ceil(
                     Math.floor(
                       (totalPay2 -
-                        (purchaseOrder[0]?.priceTax
-                          ? purchaseOrder[0]?.price
+                        (purchaseOrderState[0]?.priceTax
+                          ? purchaseOrderState[0]?.price
                           : 0) -
-                        (purchaseOrder[0]?.isRoomCharge
-                          ? purchaseOrder[0]?.roomTax
-                            ? purchaseOrder[0]?.roomCharge
+                        (purchaseOrderState[0]?.isRoomCharge
+                          ? purchaseOrderState[0]?.roomTax
+                            ? purchaseOrderState[0]?.roomCharge
                             : 0
                           : 0)) *
-                        (Number(purchaseOrder[0]?.serviceTax) / 100 + 1) *
+                        (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
                         1.1 +
-                        (purchaseOrder[0]?.priceTax
-                          ? purchaseOrder[0]?.price
+                        (purchaseOrderState[0]?.priceTax
+                          ? purchaseOrderState[0]?.price
                           : 0) +
-                        (purchaseOrder[0]?.isRoomCharge
-                          ? purchaseOrder[0]?.roomTax
-                            ? purchaseOrder[0]?.roomCharge
+                        (purchaseOrderState[0]?.isRoomCharge
+                          ? purchaseOrderState[0]?.roomTax
+                            ? purchaseOrderState[0]?.roomCharge
                             : 0
                           : 0)
                     ) / 100
@@ -1153,12 +1162,12 @@ function Add({ isCalculator, setIsCalculator }: any) {
           onClick={(e) => {
             e.stopPropagation();
             if (purchaseOrderItemAdd.length >= 1) {
-              if (purchaseOrder[0]?.orderItem) {
+              if (purchaseOrderState[0]?.orderItem) {
                 setPurchaseOrder([
                   {
-                    ...purchaseOrder[0],
+                    ...purchaseOrderState[0],
                     orderItem: [
-                      ...purchaseOrder[0]?.orderItem,
+                      ...purchaseOrderState[0]?.orderItem,
                       ...purchaseOrderItemAdd,
                     ],
                   },
@@ -1166,7 +1175,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
               } else {
                 setPurchaseOrder([
                   {
-                    ...purchaseOrder[0],
+                    ...purchaseOrderState[0],
                     orderItem: purchaseOrderItemAdd,
                   },
                 ]);
@@ -1206,24 +1215,27 @@ function CastAdd() {
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
     usePurchaseOrderItemAddGlobal();
-
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
+  const purchaseOrderState = purchaseOrder.filter(
+    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  );
 
   let total = 0;
-  purchaseOrder[0]?.cast?.map((cast: any) => {
+  purchaseOrderState[0]?.cast?.map((cast: any) => {
     total += Number(cast.split("##")[1]);
   });
-  total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
-  total += purchaseOrder[0]?.isRoomCharge
-    ? Number(purchaseOrder[0]?.roomCharge)
+  total +=
+    Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.num);
+  total += purchaseOrderState[0]?.isRoomCharge
+    ? Number(purchaseOrderState[0]?.roomCharge)
     : 0;
   total +=
-    Number(purchaseOrder[0]?.extensionPrice) *
-    Number(purchaseOrder[0]?.orderExtension);
-  purchaseOrder[0]?.orderCast?.map((orderCast: any) => {
+    Number(purchaseOrderState[0]?.extensionPrice) *
+    Number(purchaseOrderState[0]?.orderExtension);
+  purchaseOrderState[0]?.orderCast?.map((orderCast: any) => {
     total += Number(orderCast.price) * Number(orderCast.lot);
   });
-  purchaseOrder[0]?.orderCast?.map((cast: any) => {
+  purchaseOrderState[0]?.orderCast?.map((cast: any) => {
     total += Number(cast.price) * Number(cast.lot);
   });
 
@@ -1254,7 +1266,7 @@ function CastAdd() {
         <div className="flex flex-col items-center justify-center w-[64px]">
           <div className="flex flex-col items-center justify-center">
             <p className="text-[0.8rem] text-accent">人数</p>
-            <p>{purchaseOrder[0]?.num}名</p>
+            <p>{purchaseOrderState[0]?.num}名</p>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center w-[111.77px]">
@@ -1267,8 +1279,8 @@ function CastAdd() {
           >
             <p className="text-[0.8rem] text-accent">時間</p>
             <p>
-              {purchaseOrder[0]?.StartTime || "00:00"}~
-              {purchaseOrder[0]?.endTime || "00:00"}
+              {purchaseOrderState[0]?.StartTime || "00:00"}~
+              {purchaseOrderState[0]?.endTime || "00:00"}
             </p>
           </div>
         </div>
@@ -1287,7 +1299,7 @@ function CastAdd() {
           >
             <Lists
               lists={[
-                ...purchaseOrder[0]?.cast?.map((cast: any) => {
+                ...purchaseOrderState[0]?.cast?.map((cast: any) => {
                   return {
                     title: cast.split("##")[0],
                     subTitle: "",
@@ -1296,7 +1308,7 @@ function CastAdd() {
                     isTax: cast.isTax,
                   };
                 }),
-                ...purchaseOrder[0]?.orderCast?.map((cast: any) => {
+                ...purchaseOrderState[0]?.orderCast?.map((cast: any) => {
                   return {
                     title: cast.title,
                     subTitle: "",
@@ -1339,22 +1351,22 @@ function CastAdd() {
                   Math.ceil(
                     Math.floor(
                       (totalPay -
-                        (purchaseOrder[0]?.priceTax
-                          ? purchaseOrder[0]?.price
+                        (purchaseOrderState[0]?.priceTax
+                          ? purchaseOrderState[0]?.price
                           : 0) -
-                        (purchaseOrder[0]?.isRoomCharge
-                          ? purchaseOrder[0]?.roomTax
-                            ? purchaseOrder[0]?.roomCharge
+                        (purchaseOrderState[0]?.isRoomCharge
+                          ? purchaseOrderState[0]?.roomTax
+                            ? purchaseOrderState[0]?.roomCharge
                             : 0
                           : 0)) *
-                        (Number(purchaseOrder[0]?.serviceTax) / 100 + 1) *
+                        (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
                         1.1 +
-                        (purchaseOrder[0]?.priceTax
-                          ? purchaseOrder[0]?.price
+                        (purchaseOrderState[0]?.priceTax
+                          ? purchaseOrderState[0]?.price
                           : 0) +
-                        (purchaseOrder[0]?.isRoomCharge
-                          ? purchaseOrder[0]?.roomTax
-                            ? purchaseOrder[0]?.roomCharge
+                        (purchaseOrderState[0]?.isRoomCharge
+                          ? purchaseOrderState[0]?.roomTax
+                            ? purchaseOrderState[0]?.roomCharge
                             : 0
                           : 0)
                     ) / 100
@@ -1390,22 +1402,22 @@ function CastAdd() {
                   Math.ceil(
                     Math.floor(
                       (totalPay2 -
-                        (purchaseOrder[0]?.priceTax
-                          ? purchaseOrder[0]?.price
+                        (purchaseOrderState[0]?.priceTax
+                          ? purchaseOrderState[0]?.price
                           : 0) -
-                        (purchaseOrder[0]?.isRoomCharge
-                          ? purchaseOrder[0]?.roomTax
-                            ? purchaseOrder[0]?.roomCharge
+                        (purchaseOrderState[0]?.isRoomCharge
+                          ? purchaseOrderState[0]?.roomTax
+                            ? purchaseOrderState[0]?.roomCharge
                             : 0
                           : 0)) *
-                        (Number(purchaseOrder[0]?.serviceTax) / 100 + 1) *
+                        (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
                         1.1 +
-                        (purchaseOrder[0]?.priceTax
-                          ? purchaseOrder[0]?.price
+                        (purchaseOrderState[0]?.priceTax
+                          ? purchaseOrderState[0]?.price
                           : 0) +
-                        (purchaseOrder[0]?.isRoomCharge
-                          ? purchaseOrder[0]?.roomTax
-                            ? purchaseOrder[0]?.roomCharge
+                        (purchaseOrderState[0]?.isRoomCharge
+                          ? purchaseOrderState[0]?.roomTax
+                            ? purchaseOrderState[0]?.roomCharge
                             : 0
                           : 0)
                     ) / 100
@@ -1599,12 +1611,12 @@ function CastAdd() {
           onClick={(e) => {
             e.stopPropagation();
             if (purchaseOrderItemAdd.length >= 1) {
-              if (purchaseOrder[0]?.orderCast) {
+              if (purchaseOrderState[0]?.orderCast) {
                 setPurchaseOrder([
                   {
-                    ...purchaseOrder[0],
+                    ...purchaseOrderState[0],
                     orderCast: [
-                      ...purchaseOrder[0]?.orderCast,
+                      ...purchaseOrderState[0]?.orderCast,
                       ...purchaseOrderItemAdd,
                     ],
                   },
@@ -1612,7 +1624,7 @@ function CastAdd() {
               } else {
                 setPurchaseOrder([
                   {
-                    ...purchaseOrder[0],
+                    ...purchaseOrderState[0],
                     orderCast: purchaseOrderItemAdd,
                   },
                 ]);
@@ -1651,14 +1663,14 @@ export default function OrderSheet() {
   const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
     usePurchaseOrderItemAddGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
-  setPurchaseOrder(() =>
-    purchaseOrder.filter((purchaseOrder: any) => purchaseOrder.id == seatPreset)
+  const purchaseOrderState = purchaseOrder.filter(
+    (purchaseOrder: any) => purchaseOrder.id == seatPreset
   );
 
   return (
     <>
       {isLock == 1 && <Lock />}
-      {purchaseOrder[0]?.set?.isCalculator && (
+      {purchaseOrderState[0]?.set?.isCalculator && (
         <Calculator setIsCalculator={setIsCalculator} />
       )}
       {purchaseOrderItemAdd?.map((purchaseOrderItem: any, index: any) => {
@@ -1688,12 +1700,12 @@ export default function OrderSheet() {
           );
         }
       })}
-      {purchaseOrder[0]?.isCallTimeCalculator && (
+      {purchaseOrderState[0]?.isCallTimeCalculator && (
         <Calculator9
-          result={purchaseOrder[0]}
-          time={purchaseOrder[0]?.callTime}
+          result={purchaseOrderState[0]}
+          time={purchaseOrderState[0]?.callTime}
           callback={(hour: any, minite: any) => {
-            purchaseOrder[0].callTime = hour + ":" + minite;
+            purchaseOrderState[0].callTime = hour + ":" + minite;
           }}
         />
       )}

@@ -13,6 +13,7 @@ import { useState } from "react";
 import Calculator1 from "@/components/parts/calculator1";
 import Calculator from "@/components/parts/calculator";
 import Calculator4 from "@/components/parts/calculator4";
+import useSeatPresetGlobal from "@/globalstates/seatPreset";
 
 export default function OrderEnd() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
@@ -21,19 +22,24 @@ export default function OrderEnd() {
   const [isCard, setIsCard] = useIsCardGlobal();
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
+  const purchaseOrderState = purchaseOrder.filter(
+    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  );
   let total = 0;
-  purchaseOrder[0]?.cast?.map((cast: any) => {
+  purchaseOrderState[0]?.cast?.map((cast: any) => {
     total += Number(cast.split("##")[1]);
   });
-  total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
-  total += Number(purchaseOrder[0]?.roomCharge);
   total +=
-    Number(purchaseOrder[0].extensionPrice) *
-    Number(purchaseOrder[0].orderExtension);
-  purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
+    Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.num);
+  total += Number(purchaseOrderState[0]?.roomCharge);
+  total +=
+    Number(purchaseOrderState[0].extensionPrice) *
+    Number(purchaseOrderState[0].orderExtension);
+  purchaseOrderState[0]?.orderItem?.map((orderItem: any) => {
     total += Number(orderItem.price) * Number(orderItem.lot);
   });
-  purchaseOrder[0]?.orderCast?.map((cast: any) => {
+  purchaseOrderState[0]?.orderCast?.map((cast: any) => {
     total += Number(cast.price) * Number(cast.lot);
   });
 
@@ -41,12 +47,16 @@ export default function OrderEnd() {
     Math.ceil(
       Math.floor(
         (total -
-          (purchaseOrder[0]?.priceTax ? purchaseOrder[0]?.price : 0) -
-          (purchaseOrder[0]?.roomTax ? purchaseOrder[0]?.roomCharge : 0)) *
+          (purchaseOrderState[0]?.priceTax ? purchaseOrderState[0]?.price : 0) -
+          (purchaseOrderState[0]?.roomTax
+            ? purchaseOrderState[0]?.roomCharge
+            : 0)) *
           1.3 *
           1.1 +
-          (purchaseOrder[0]?.priceTax ? purchaseOrder[0]?.price : 0) +
-          (purchaseOrder[0]?.roomTax ? purchaseOrder[0]?.roomCharge : 0)
+          (purchaseOrderState[0]?.priceTax ? purchaseOrderState[0]?.price : 0) +
+          (purchaseOrderState[0]?.roomTax
+            ? purchaseOrderState[0]?.roomCharge
+            : 0)
       ) / 100
     ) * 100;
   const [discount, setDiscount] = useState(0);
