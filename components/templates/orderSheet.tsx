@@ -1163,22 +1163,29 @@ function Add({ isCalculator, setIsCalculator }: any) {
             e.stopPropagation();
             if (purchaseOrderItemAdd.length >= 1) {
               if (purchaseOrderState[0]?.orderItem) {
-                setPurchaseOrder([
-                  {
-                    ...purchaseOrderState[0],
-                    orderItem: [
-                      ...purchaseOrderState[0]?.orderItem,
-                      ...purchaseOrderItemAdd,
-                    ],
-                  },
-                ]);
+                setPurchaseOrder(
+                  purchaseOrder.map((e: any) => {
+                    if (e.id == seatPreset) {
+                      return {
+                        ...e,
+                        orderItem: [...e?.orderItem, ...purchaseOrderItemAdd],
+                      };
+                    }
+                    return e;
+                  })
+                );
               } else {
-                setPurchaseOrder([
-                  {
-                    ...purchaseOrderState[0],
-                    orderItem: purchaseOrderItemAdd,
-                  },
-                ]);
+                setPurchaseOrder(
+                  purchaseOrder.map((e: any) => {
+                    if (e.id == seatPreset) {
+                      return {
+                        ...e,
+                        orderItem: purchaseOrderItemAdd,
+                      };
+                    }
+                    return e;
+                  })
+                );
               }
               setPurchaseOrderItemAdd([]);
               setIsControl("");
@@ -1612,22 +1619,29 @@ function CastAdd() {
             e.stopPropagation();
             if (purchaseOrderItemAdd.length >= 1) {
               if (purchaseOrderState[0]?.orderCast) {
-                setPurchaseOrder([
-                  {
-                    ...purchaseOrderState[0],
-                    orderCast: [
-                      ...purchaseOrderState[0]?.orderCast,
-                      ...purchaseOrderItemAdd,
-                    ],
-                  },
-                ]);
+                setPurchaseOrder(
+                  purchaseOrder.map((e: any) => {
+                    if (e.id == seatPreset) {
+                      return {
+                        ...e,
+                        orderCast: [...e?.orderCast, ...purchaseOrderItemAdd],
+                      };
+                    }
+                    return e;
+                  })
+                );
               } else {
-                setPurchaseOrder([
-                  {
-                    ...purchaseOrderState[0],
-                    orderCast: purchaseOrderItemAdd,
-                  },
-                ]);
+                setPurchaseOrder(
+                  purchaseOrder.map((e: any) => {
+                    if (e.id == seatPreset) {
+                      return {
+                        ...e,
+                        orderCast: purchaseOrderItemAdd,
+                      };
+                    }
+                    return e;
+                  })
+                );
               }
               setPurchaseOrderItemAdd([]);
               setIsControl("");
