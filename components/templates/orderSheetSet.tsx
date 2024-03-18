@@ -65,6 +65,10 @@ export default function OrderSheetSet() {
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
   const [order, setOrder] = useOrderGlobal();
 
+  // useEffect(() => {
+  //   setPurchaseOrderSet([]);
+  // }, []);
+
   return (
     <Card>
       <div
@@ -74,110 +78,107 @@ export default function OrderSheetSet() {
         // }}
       >
         <section className="flex flex-1 flex-col text-sm max-h-[700px] p-1 py-3 overflow-scroll">
-          {isPurchaseOrder &&
-            purchaseOrderSet.map((order: any, index: any) => (
+          {purchaseOrderSet.map((order: any, index: any) => (
+            <div
+              key={index}
+              className="relative my-1 mb-6 mx-[auto] w-[95%] flex flex-wrap border border-white bg-black p-3"
+            >
               <div
-                key={index}
-                className="relative my-1 mb-6 mx-[auto] w-[95%] flex flex-wrap border border-white bg-black p-3"
+                onClick={() => {
+                  delete purchaseOrderSet[index];
+                  setPurchaseOrderSet(() =>
+                    purchaseOrderSet.filter((v: any) => v)
+                  );
+                }}
               >
-                <div
-                  onClick={() => {
-                    delete purchaseOrderSet[index];
-                    setPurchaseOrderSet(() =>
-                      purchaseOrderSet.filter((v: any) => v)
-                    );
-                  }}
+                <Border2
+                  className="absolute right-[-15px] top-[-15px]"
+                  rounded="rounded-full"
+                  size="h-[28px] w-[28px] p-[6px]"
                 >
-                  <Border2
-                    className="absolute right-[-15px] top-[-15px]"
-                    rounded="rounded-full"
-                    size="h-[28px] w-[28px] p-[6px]"
-                  >
-                    <Image
-                      src={"/assets/close.svg"}
-                      width={26}
-                      height={26}
-                      className="!h-full !w-full"
-                      alt=""
-                    />
-                  </Border2>
-                </div>
-                <div
-                  onClick={() => {
-                    setOrder(purchaseOrderSet.order);
-                    // setResult("0");
-                    // setSelectCast([]);
-                    // setSetTimeResult("0");
-                    // setNumResult("0");
-                    // setRoomResult("0");
-                    // setSetName("");
-                    // setStatus("なし");
-                    delete purchaseOrderSet[index];
-                    setPurchaseOrderSet(() =>
-                      purchaseOrderSet.filter((v: any) => v)
-                    );
-                  }}
-                >
-                  <Border2
-                    className="absolute right-[30px] top-[-15px]"
-                    rounded="rounded-full"
-                    size="h-[28px] w-[28px] p-[6px]"
-                  >
-                    <Image
-                      src={"/assets/reset.svg"}
-                      width={26}
-                      height={26}
-                      className="!h-full !w-full"
-                      alt=""
-                    />
-                  </Border2>
-                </div>
-                <div className="mx-2 flex flex-col">
-                  <p>A1</p>
-                </div>
-                <div className="mx-2 flex flex-col">
-                  <p>{order?.num}名</p>
-                </div>
-                <div className="mt-2 mx-2 flex w-full flex-col">
-                  <p className="text-accent">指名</p>
-                  <p>
-                    {order?.cast?.map(
-                      (cast: any) => cast.split("##")[0] + "　"
-                    )}
-                  </p>
-                </div>
-                <div className="mx-2 flex flex-col mt-2">
-                  <p className="text-accent">区分</p>
-                  <p>{order?.status}</p>
-                </div>
-                <div className="mx-2 flex flex-col mt-2">
-                  <p className="text-accent">セット</p>
-                  <p>{order?.setName}</p>
-                </div>
-                <div className="mx-2 flex flex-col mt-2">
-                  <p className="text-accent">ルームチャージ</p>
-                  <p className="">
-                    {Number(order.roomCharge) == 0
-                      ? "なし"
-                      : order?.roomCharge?.toLocaleString()}
-                    {Number(order.roomCharge) == 0
-                      ? ""
-                      : order?.roomTax
-                      ? "込"
-                      : "円"}
-                  </p>
-                </div>
-                <hr className="w-full opacity-0" />
-                <div className="mx-2 flex flex-col mt-2">
-                  <p className="text-accent">セット内容</p>
-                  <p>
-                    {order?.setTime}分　{order?.startTime}~{order?.endTime}　
-                    {order?.price?.toLocaleString()}
-                    {order?.priceTax ? "込" : "円"}
-                  </p>
-                </div>
+                  <Image
+                    src={"/assets/close.svg"}
+                    width={26}
+                    height={26}
+                    className="!h-full !w-full"
+                    alt=""
+                  />
+                </Border2>
               </div>
-            ))}
+              <div
+                onClick={() => {
+                  setOrder(purchaseOrderSet.order);
+                  // setResult("0");
+                  // setSelectCast([]);
+                  // setSetTimeResult("0");
+                  // setNumResult("0");
+                  // setRoomResult("0");
+                  // setSetName("");
+                  // setStatus("なし");
+                  delete purchaseOrderSet[index];
+                  setPurchaseOrderSet(() =>
+                    purchaseOrderSet.filter((v: any) => v)
+                  );
+                }}
+              >
+                <Border2
+                  className="absolute right-[30px] top-[-15px]"
+                  rounded="rounded-full"
+                  size="h-[28px] w-[28px] p-[6px]"
+                >
+                  <Image
+                    src={"/assets/reset.svg"}
+                    width={26}
+                    height={26}
+                    className="!h-full !w-full"
+                    alt=""
+                  />
+                </Border2>
+              </div>
+              <div className="mx-2 flex flex-col">
+                <p>A{order?.id}</p>
+              </div>
+              <div className="mx-2 flex flex-col">
+                <p>{order?.num}名</p>
+              </div>
+              <div className="mt-2 mx-2 flex w-full flex-col">
+                <p className="text-accent">指名</p>
+                <p>
+                  {order?.cast?.map((cast: any) => cast.split("##")[0] + "　")}
+                </p>
+              </div>
+              <div className="mx-2 flex flex-col mt-2">
+                <p className="text-accent">区分</p>
+                <p>{order?.status}</p>
+              </div>
+              <div className="mx-2 flex flex-col mt-2">
+                <p className="text-accent">セット</p>
+                <p>{order?.setName}</p>
+              </div>
+              <div className="mx-2 flex flex-col mt-2">
+                <p className="text-accent">ルームチャージ</p>
+                <p className="">
+                  {Number(order.roomCharge) == 0
+                    ? "なし"
+                    : order?.roomCharge?.toLocaleString()}
+                  {Number(order.roomCharge) == 0
+                    ? ""
+                    : order?.roomTax
+                    ? "込"
+                    : "円"}
+                </p>
+              </div>
+              <hr className="w-full opacity-0" />
+              <div className="mx-2 flex flex-col mt-2">
+                <p className="text-accent">セット内容</p>
+                <p>
+                  {order?.setTime}分　{order?.startTime}~{order?.endTime}　
+                  {order?.price?.toLocaleString()}
+                  {order?.priceTax ? "込" : "円"}
+                </p>
+              </div>
+            </div>
+          ))}
         </section>
         <div className="mb-1 flex w-full">
           <Line />
@@ -210,6 +211,7 @@ export default function OrderSheetSet() {
                 setIsControl("");
                 setIsCard(false);
                 setIsPurchaseOrder(false);
+                alert(purchaseOrderSet);
                 setPurchaseOrder([...purchaseOrder, ...purchaseOrderSet]);
               }
             }}

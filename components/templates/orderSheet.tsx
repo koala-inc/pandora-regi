@@ -1651,7 +1651,7 @@ export default function OrderSheet() {
   const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
     usePurchaseOrderItemAddGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
-  setPurchaseOrder(
+  setPurchaseOrder(() =>
     purchaseOrder.filter((purchaseOrder: any) => purchaseOrder.id == seatPreset)
   );
 
