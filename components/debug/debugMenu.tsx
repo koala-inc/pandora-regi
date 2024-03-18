@@ -33,6 +33,9 @@ import { searchUser } from "@/gqls/query/user";
 import { searchVisit } from "@/gqls/query/visit";
 import { createCast } from "@/gqls/mutation/cast";
 import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
+import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
+import useIsLockGlobal from "@/globalstates/isLock";
+import useSeatPresetGlobal from "@/globalstates/seatPreset";
 
 export default function DebugMenu() {
   const [settings, setSettings] = useSettingsGlobal();
@@ -41,6 +44,10 @@ export default function DebugMenu() {
   const [isCard, setIsCard] = useIsCardGlobal();
   const [isControl] = useIsControlGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+  const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
+  const [isLock, setIsLock] = useIsLockGlobal();
+  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
+
   const [activeTab, setActiveTab] = useState(0);
   const [activeTab2, setActiveTab2] = useState(0);
   const [result, setResult] = useState(0);
@@ -101,7 +108,7 @@ export default function DebugMenu() {
             {activeTab == 0 && (
               <ul>
                 <li className="flex">
-                  <div className="w-[6rem]">settings</div>:{" "}
+                  <div className="w-[6rem]">settings</div>:
                   {JSON.stringify(settings)}
                 </li>
                 <li className="flex">
@@ -117,7 +124,19 @@ export default function DebugMenu() {
                   <div className="w-[6rem]">isControl</div>: {String(isControl)}
                 </li>
                 <li className="flex">
-                  <div className="w-[6rem]">purchaseOrder</div>:{" "}
+                  <div className="w-[10rem]">isPurchaseOrder</div>:
+                  {String(isPurchaseOrder)}
+                </li>
+                <li className="flex">
+                  <div className="w-[6rem]">isLock</div>: {String(isLock)}
+                </li>
+                <li className="flex">
+                  <div className="w-[6rem]">seatPreset</div>:
+                  {String(seatPreset)}
+                </li>
+
+                <li className="flex">
+                  <div className="w-[10rem]">purchaseOrder</div>:
                   {JSON.stringify(purchaseOrder)}
                 </li>
               </ul>

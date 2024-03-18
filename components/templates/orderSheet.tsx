@@ -1647,9 +1647,13 @@ export default function OrderSheet() {
   const [isControl, setIsControl] = useIsControlGlobal();
   const [isCalculator, setIsCalculator] = useState(false);
   const [isLock, setIsLock] = useIsLockGlobal();
+  const [seatPreset] = useSeatPresetGlobal();
   const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
     usePurchaseOrderItemAddGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+  setPurchaseOrder(
+    purchaseOrder.filter((purchaseOrder: any) => purchaseOrder.id == seatPreset)
+  );
 
   return (
     <>

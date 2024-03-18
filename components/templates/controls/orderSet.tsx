@@ -21,6 +21,7 @@ import Calculator1 from "@/components/parts/calculator1";
 import Calculator2 from "@/components/parts/calculator2";
 import useOrderGlobal from "@/globalstates/order";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
+import usePurchaseOrderSetGlobal from "@/globalstates/purchaseOrderSet";
 
 dayjs.locale(ja);
 
@@ -56,6 +57,7 @@ const defaultVariables = {
 
 export default function ControlOrderSet() {
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+  const [purchaseOrderSet, setPurchaseOrderSet] = usePurchaseOrderSetGlobal();
   const [activeTab, setActiveTab] = useState(-1);
   const [nowDate, setNowDate] = useState(dayjs(new Date()));
   const [toggle, setToggle] = useState(false);
@@ -81,6 +83,10 @@ export default function ControlOrderSet() {
       ...order,
     });
   }
+
+  useEffect(() => {
+    setPurchaseOrderSet([]);
+  }, []);
 
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
@@ -116,6 +122,10 @@ export default function ControlOrderSet() {
     {
       prefCode: "2",
       prefName: "2",
+    },
+    {
+      prefCode: "3",
+      prefName: "3",
     },
   ];
   const type = [
@@ -1385,8 +1395,8 @@ export default function ControlOrderSet() {
                       flag4 = false;
                     }
                     if (flag1 && flag2 && flag3 && flag4) {
-                      setPurchaseOrder([
-                        ...purchaseOrder,
+                      setPurchaseOrderSet([
+                        ...purchaseOrderSet,
                         {
                           ...order,
                           id: id,

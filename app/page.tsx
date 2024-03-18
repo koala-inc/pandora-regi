@@ -32,6 +32,7 @@ import OrderTime from "@/components/templates/controls/orderTime";
 import OrderCastEdit from "@/components/templates/controls/orderCastEdit";
 import OrderItemEdit from "@/components/templates/controls/orderItemEdit";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
+import usePurchaseOrderSetGlobal from "@/globalstates/purchaseOrderSet";
 
 function Control(isControl: any) {
   switch (isControl) {
@@ -80,6 +81,7 @@ export default function Home() {
   const [isLock] = useIsLockGlobal();
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
   const [purchaseOrder] = usePurchaseOrderGlobal();
+  const [purchaseOrderSet] = usePurchaseOrderSetGlobal();
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
   const [datetime, setDatetime] = useState(new Date());
 
@@ -93,7 +95,15 @@ export default function Home() {
     <main
       className="relative h-full w-full"
       onClick={() => {
-        if (isCard && isControl == "" && !isPurchaseOrder && isLock == 0) {
+        if (
+          isCard &&
+          isControl == "" &&
+          seatPreset != "" &&
+          purchaseOrder.some(
+            (purchaseOrder: any) => purchaseOrder.id == seatPreset
+          ) &&
+          isLock == 0
+        ) {
           setIsCard(false);
           setSeatPreset("");
         }
@@ -104,33 +114,29 @@ export default function Home() {
         {!isCard && <SeatMap />}
         {isHeader && !isCard && <Header datetime={datetime} />}
         {isFooter && !isCard && <Footer />}
-        {seatPreset != "" ? (
-          purchaseOrder.map((purchaseOrder: any) => {
-            if (purchaseOrder.id == seatPreset) {
-              if (isCard) {
-                return (
-                  <>
-                    {isPurchaseOrder ? (
-                      <>
-                        <OrderSheetSet />
-                        <OrderSet />
-                        <HomeButton />
-                      </>
-                    ) : (
-                      <>
-                        <OrderSheet />
-                        {Control(isControl)}
-                        {isControl != "" && <HomeButton />}
-                      </>
-                    )}
-                  </>
-                );
-              }
-            }
-          })
+        {purchaseOrder.length != 0 && seatPreset != "" ? (
+          purchaseOrder.some(
+            (purchaseOrder: any) => purchaseOrder.id == seatPreset
+          ) ? (
+            isCard && (
+              <>
+                <OrderSheet />
+                {Control(isControl)}
+                {isControl != "" && <HomeButton />}
+              </>
+            )
+          ) : (
+            isCard && (
+              <>
+                <OrderSheetSet />
+                <OrderSet />
+                <HomeButton />
+              </>
+            )
+          )
         ) : (
           <>
-            {isCard && isPurchaseOrder ? (
+            {isCard ? (
               <>
                 <OrderSheetSet />
                 <OrderSet />

@@ -9,6 +9,8 @@ import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 import useIsCardGlobal from "@/globalstates/isCard";
 import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
 import useOrderGlobal from "@/globalstates/order";
+import usePurchaseOrderSetGlobal from "@/globalstates/purchaseOrderSet";
+import { useEffect } from "react";
 
 function Lists({
   lists,
@@ -59,6 +61,7 @@ export default function OrderSheetSet() {
   const [isControl, setIsControl] = useIsControlGlobal();
   const [isCard, setIsCard] = useIsCardGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+  const [purchaseOrderSet, setPurchaseOrderSet] = usePurchaseOrderSetGlobal();
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
   const [order, setOrder] = useOrderGlobal();
 
@@ -72,15 +75,17 @@ export default function OrderSheetSet() {
       >
         <section className="flex flex-1 flex-col text-sm max-h-[700px] p-1 py-3 overflow-scroll">
           {isPurchaseOrder &&
-            purchaseOrder.map((order: any, index: any) => (
+            purchaseOrderSet.map((order: any, index: any) => (
               <div
                 key={index}
                 className="relative my-1 mb-6 mx-[auto] w-[95%] flex flex-wrap border border-white bg-black p-3"
               >
                 <div
                   onClick={() => {
-                    delete purchaseOrder[index];
-                    setPurchaseOrder(() => purchaseOrder.filter((v: any) => v));
+                    delete purchaseOrderSet[index];
+                    setPurchaseOrderSet(() =>
+                      purchaseOrderSet.filter((v: any) => v)
+                    );
                   }}
                 >
                   <Border2
@@ -99,7 +104,7 @@ export default function OrderSheetSet() {
                 </div>
                 <div
                   onClick={() => {
-                    setOrder(purchaseOrder.order);
+                    setOrder(purchaseOrderSet.order);
                     // setResult("0");
                     // setSelectCast([]);
                     // setSetTimeResult("0");
@@ -107,8 +112,10 @@ export default function OrderSheetSet() {
                     // setRoomResult("0");
                     // setSetName("");
                     // setStatus("なし");
-                    delete purchaseOrder[index];
-                    setPurchaseOrder(() => purchaseOrder.filter((v: any) => v));
+                    delete purchaseOrderSet[index];
+                    setPurchaseOrderSet(() =>
+                      purchaseOrderSet.filter((v: any) => v)
+                    );
                   }}
                 >
                   <Border2
@@ -179,7 +186,7 @@ export default function OrderSheetSet() {
           <div
             className="w-[150px] flex justify-center items-center"
             onClick={() => {
-              setPurchaseOrder([]);
+              setPurchaseOrderSet([]);
             }}
           >
             <Border2
@@ -199,10 +206,11 @@ export default function OrderSheetSet() {
             className="w-[150px] flex justify-center items-center"
             onClick={(e) => {
               e.stopPropagation();
-              if (purchaseOrder.length >= 1) {
+              if (purchaseOrderSet.length >= 1) {
                 setIsControl("");
                 setIsCard(false);
                 setIsPurchaseOrder(false);
+                setPurchaseOrder([...purchaseOrder, ...purchaseOrderSet]);
               }
             }}
           >

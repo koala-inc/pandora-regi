@@ -29,7 +29,7 @@ export default function SeatMap() {
             id="map"
             onClick={() => {
               if (isCard) setIsCard(false);
-              if (seatPreset) setSeatPreset(false);
+              if (seatPreset) setSeatPreset("");
               if (isControl == "") setIsControl("");
             }}
           >
@@ -44,18 +44,21 @@ export default function SeatMap() {
                       bg={
                         isLock > 1
                           ? " bg-green-200 opacity-90"
-                          : purchaseOrder[0]?.id != seat.id
-                          ? " bg-natural"
-                          : " bg-blue-200 opacity-90"
+                          : purchaseOrder.some(
+                              (purchaseOrder: any) =>
+                                purchaseOrder.id == seat.id
+                            )
+                          ? " bg-blue-200 opacity-90"
+                          : " bg-natural"
                       }
                       onClick={() => {
+                        setSeatPreset(seat.id);
                         if (isLock < 2) {
                           setIsCard(true);
                           if (isControl != "") setIsControl("");
                         } else if (isLock == 2) {
                           setIsLock(3);
                         }
-                        setSeatPreset(seat.id);
                       }}
                     >
                       {seat.id.toLocaleUpperCase()}

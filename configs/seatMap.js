@@ -13,6 +13,13 @@ const seatMap = [
     body: "",
     objectUrl: "",
   },
+  {
+    id: "3",
+    area: "[grid-area:7/11]",
+    type: "seat",
+    body: "",
+    objectUrl: "",
+  },
   // {
   //   id: "02",
   //   area: "[grid-area:3/6]",
