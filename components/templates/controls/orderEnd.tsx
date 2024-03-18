@@ -422,7 +422,10 @@ export default function OrderEnd() {
                   className="mt-3"
                   natural
                   onClick={() => {
-                    setPurchaseOrder([]);
+                    setPurchaseOrder(
+                      purchaseOrder.filter((v: any) => v.id != seatPreset)
+                    );
+                    setSeatPreset("");
                     setIsPurchaseOrder(true);
                     setIsControl("");
                     setIsCard(false);

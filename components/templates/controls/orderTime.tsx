@@ -24,6 +24,7 @@ import ja from "dayjs/locale/ja";
 import Calculator7 from "@/components/parts/calculator7";
 import Calculator8 from "@/components/parts/calculator8";
 import { searchSeatArea } from "@/gqls/query/seat";
+import useSeatPresetGlobal from "@/globalstates/seatPreset";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -50,17 +51,22 @@ export default function OrderTime() {
   const [isCard, setIsCard] = useIsCardGlobal();
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
-  const [toggle, setToggle] = useState(purchaseOrder[0]?.toggle || false);
+  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
+  const purchaseOrderState = purchaseOrder.filter(
+    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  );
+  const [toggle, setToggle] = useState(purchaseOrderState[0]?.toggle || false);
 
   let total = 0;
-  purchaseOrder[0]?.cast?.map((cast: any) => {
+  purchaseOrderState[0]?.cast?.map((cast: any) => {
     total += Number(cast.split("##")[1]);
   });
-  total += Number(purchaseOrder[0]?.price) * Number(purchaseOrder[0]?.num);
-  purchaseOrder[0]?.orderItem?.map((orderItem: any) => {
+  total +=
+    Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.num);
+  purchaseOrderState[0]?.orderItem?.map((orderItem: any) => {
     total += Number(orderItem.price) * Number(orderItem.lot);
   });
-  purchaseOrder[0]?.orderCast?.map((cast: any) => {
+  purchaseOrderState[0]?.orderCast?.map((cast: any) => {
     total += Number(cast.price) * Number(cast.lot);
   });
 
@@ -101,18 +107,18 @@ export default function OrderTime() {
       (Number(
         dayjs(
           date(
-            purchaseOrder[0]?.endTime.split(":")[0],
-            purchaseOrder[0]?.endTime.split(":")[1]
+            purchaseOrderState[0]?.endTime.split(":")[0],
+            purchaseOrderState[0]?.endTime.split(":")[1]
           )
         ).diff(
           date(
-            purchaseOrder[0]?.startTime.split(":")[0],
-            purchaseOrder[0]?.startTime.split(":")[1]
+            purchaseOrderState[0]?.startTime.split(":")[0],
+            purchaseOrderState[0]?.startTime.split(":")[1]
           ),
           "minute"
         )
       ) -
-        Number(purchaseOrder[0]?.setTime) -
+        Number(purchaseOrderState[0]?.setTime) -
         1) /
         30
     ) >= 0
@@ -120,73 +126,74 @@ export default function OrderTime() {
           (Number(
             dayjs(
               date(
-                purchaseOrder[0]?.endTime.split(":")[0],
-                purchaseOrder[0]?.endTime.split(":")[1]
+                purchaseOrderState[0]?.endTime.split(":")[0],
+                purchaseOrderState[0]?.endTime.split(":")[1]
               )
             ).diff(
               date(
-                purchaseOrder[0]?.startTime.split(":")[0],
-                purchaseOrder[0]?.startTime.split(":")[1]
+                purchaseOrderState[0]?.startTime.split(":")[0],
+                purchaseOrderState[0]?.startTime.split(":")[1]
               ),
               "minute"
             )
           ) -
-            Number(purchaseOrder[0]?.setTime) -
+            Number(purchaseOrderState[0]?.setTime) -
             1) /
             30
         ) + 1
-      : 0) * purchaseOrder[0].num;
+      : 0) * purchaseOrderState[0].num;
 
   return (
     <>
-      {purchaseOrder[0].isTimeCalculator && isCalculatorSelect == 1 && (
+      {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 1 && (
         <Calculator8
-          result={purchaseOrder[0]}
-          time={purchaseOrder[0].callTime}
+          result={purchaseOrderState[0]}
+          time={purchaseOrderState[0].callTime}
           callback={(hour: any, minite: any) => {
-            purchaseOrder[0].callTime = hour + ":" + minite;
+            purchaseOrderState[0].callTime = hour + ":" + minite;
           }}
         />
       )}
-      {purchaseOrder[0].isTimeCalculator && isCalculatorSelect == 2 && (
+      {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 2 && (
         <Calculator8
-          result={purchaseOrder[0]}
-          time={purchaseOrder[0].mainStartTime}
+          result={purchaseOrderState[0]}
+          time={purchaseOrderState[0].mainStartTime}
           callback={(hour: any, minite: any) => {
-            purchaseOrder[0].mainStartTime = hour + ":" + minite;
-            purchaseOrder[0].startTime = purchaseOrder[0].mainStartTime;
-            purchaseOrder[0].orderExtension = checker();
+            purchaseOrderState[0].mainStartTime = hour + ":" + minite;
+            purchaseOrderState[0].startTime =
+              purchaseOrderState[0].mainStartTime;
+            purchaseOrderState[0].orderExtension = checker();
           }}
         />
       )}
-      {purchaseOrder[0].isTimeCalculator && isCalculatorSelect == 3 && (
+      {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 3 && (
         <Calculator8
-          result={purchaseOrder[0]}
-          time={purchaseOrder[0].mainEndTime}
+          result={purchaseOrderState[0]}
+          time={purchaseOrderState[0].mainEndTime}
           callback={(hour: any, minite: any) => {
-            purchaseOrder[0].mainEndTime = hour + ":" + minite;
-            purchaseOrder[0].endTime = purchaseOrder[0].mainEndTime;
-            purchaseOrder[0].orderExtension = checker();
+            purchaseOrderState[0].mainEndTime = hour + ":" + minite;
+            purchaseOrderState[0].endTime = purchaseOrderState[0].mainEndTime;
+            purchaseOrderState[0].orderExtension = checker();
           }}
         />
       )}
-      {purchaseOrder[0].isTimeCalculator && isCalculatorSelect == 4 && (
+      {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 4 && (
         <Calculator8
-          result={purchaseOrder[0]}
-          time={purchaseOrder[0].startTime}
+          result={purchaseOrderState[0]}
+          time={purchaseOrderState[0].startTime}
           callback={(hour: any, minite: any) => {
-            purchaseOrder[0].startTime = hour + ":" + minite;
-            purchaseOrder[0].orderExtension = checker();
+            purchaseOrderState[0].startTime = hour + ":" + minite;
+            purchaseOrderState[0].orderExtension = checker();
           }}
         />
       )}
-      {purchaseOrder[0].isTimeCalculator && isCalculatorSelect == 5 && (
+      {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 5 && (
         <Calculator8
-          result={purchaseOrder[0]}
-          time={purchaseOrder[0].endTime}
+          result={purchaseOrderState[0]}
+          time={purchaseOrderState[0].endTime}
           callback={(hour: any, minite: any) => {
-            purchaseOrder[0].endTime = hour + ":" + minite;
-            purchaseOrder[0].orderExtension = checker();
+            purchaseOrderState[0].endTime = hour + ":" + minite;
+            purchaseOrderState[0].orderExtension = checker();
           }}
         />
       )}
@@ -217,11 +224,11 @@ export default function OrderTime() {
                   <input
                     type="text"
                     className="mr-4 h-[45px] w-[80px] rounded-md px-2 text-xl text-center"
-                    value={purchaseOrder[0]?.mainStartTime}
+                    value={purchaseOrderState[0]?.mainStartTime}
                     onClick={() => {
                       setIsCalculatorSelect(2);
                       // setIsCalculator(true);
-                      purchaseOrder[0].isTimeCalculator = true;
+                      purchaseOrderState[0].isTimeCalculator = true;
                     }}
                     readOnly
                   />
@@ -234,11 +241,11 @@ export default function OrderTime() {
                   <input
                     type="text"
                     className="mr-8 h-[45px] w-[80px] rounded-md px-2 text-xl text-center"
-                    value={purchaseOrder[0]?.mainEndTime}
+                    value={purchaseOrderState[0]?.mainEndTime}
                     onClick={() => {
                       setIsCalculatorSelect(3);
                       // setIsCalculator(true);
-                      purchaseOrder[0].isTimeCalculator = true;
+                      purchaseOrderState[0].isTimeCalculator = true;
                     }}
                     readOnly
                   />
@@ -249,17 +256,19 @@ export default function OrderTime() {
                   </label>
                   <select
                     className="mr-8 h-[45px] w-[120px] rounded-md px-2 text-xl text-center"
-                    value={purchaseOrder[0].room_name}
+                    value={purchaseOrderState[0].room_name}
                     onChange={(e) => {
                       {
                         searchData2?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
                           (area: any, index: any) => {
                             if (area.room_name == e.target.value) {
-                              purchaseOrder[0].roomName = area.room_name;
-                              purchaseOrder[0].roomCharge = area.charge_price;
-                              purchaseOrder[0].extensionPrice =
+                              purchaseOrderState[0].roomName = area.room_name;
+                              purchaseOrderState[0].roomCharge =
+                                area.charge_price;
+                              purchaseOrderState[0].extensionPrice =
                                 area.extra_price;
-                              purchaseOrder[0].serviceTax = area.service_tax;
+                              purchaseOrderState[0].serviceTax =
+                                area.service_tax;
                             }
                           }
                         );
@@ -282,7 +291,7 @@ export default function OrderTime() {
                   <div
                     className={"my-auto"}
                     onClick={() => {
-                      purchaseOrder[0].isRoomCharge = true;
+                      purchaseOrderState[0].isRoomCharge = true;
                     }}
                   >
                     <Button natural>ルームチャージ追加</Button>
@@ -296,16 +305,16 @@ export default function OrderTime() {
                   <div className="flex my-auto">
                     <div
                       onClick={() => {
-                        purchaseOrder[0].mainEndTime = dayjs(
+                        purchaseOrderState[0].mainEndTime = dayjs(
                           date(
-                            purchaseOrder[0]?.mainEndTime.split(":")[0],
-                            purchaseOrder[0]?.mainEndTime.split(":")[1]
+                            purchaseOrderState[0]?.mainEndTime.split(":")[0],
+                            purchaseOrderState[0]?.mainEndTime.split(":")[1]
                           )
                         )
                           .subtract(30, "minute")
                           .format("HH:mm");
-                        purchaseOrder[0].endTime = purchaseOrder[0].mainEndTime;
-                        purchaseOrder[0].orderExtension = checker();
+                        purchaseOrderState[0].endTime = purchaseOrderState[0].mainEndTime;
+                        purchaseOrderState[0].orderExtension = checker();
                       }}
                     >
                       <Border
@@ -322,16 +331,16 @@ export default function OrderTime() {
                     </div>
                     <div
                       onClick={() => {
-                        purchaseOrder[0].mainEndTime = dayjs(
+                        purchaseOrderState[0].mainEndTime = dayjs(
                           date(
-                            purchaseOrder[0]?.mainEndTime.split(":")[0],
-                            purchaseOrder[0]?.mainEndTime.split(":")[1]
+                            purchaseOrderState[0]?.mainEndTime.split(":")[0],
+                            purchaseOrderState[0]?.mainEndTime.split(":")[1]
                           )
                         )
                           .add(30, "minute")
                           .format("HH:mm");
-                        purchaseOrder[0].endTime = purchaseOrder[0].mainEndTime;
-                        purchaseOrder[0].orderExtension = checker();
+                        purchaseOrderState[0].endTime = purchaseOrderState[0].mainEndTime;
+                        purchaseOrderState[0].orderExtension = checker();
                       }}
                     >
                       <Border
@@ -352,14 +361,14 @@ export default function OrderTime() {
                   <label className="mt-3 mb-2 text-xs font-bold text-accent">
                     コール時間
                   </label>
-                  {!purchaseOrder[0].callToggle ? (
+                  {!purchaseOrderState[0].callToggle ? (
                     <input
                       type="text"
                       className="mr-8 h-[45px] w-[80px] rounded-md px-2 text-xl text-center"
-                      value={purchaseOrder[0]?.callTime}
+                      value={purchaseOrderState[0]?.callTime}
                       onClick={() => {
                         setIsCalculatorSelect(1);
-                        purchaseOrder[0].isTimeCalculator = true;
+                        purchaseOrderState[0].isTimeCalculator = true;
                       }}
                       readOnly
                     />
@@ -434,14 +443,14 @@ export default function OrderTime() {
                     </th>
                     <th className="w-[120px] text-left text-sm">
                       <select className="h-[40px] w-[120px] rounded-md text-left px-1 text-sm">
-                        <option>{purchaseOrder[0]?.setName}</option>
+                        <option>{purchaseOrderState[0]?.setName}</option>
                       </select>
                     </th>
                     <th className="relative w-[60px] text-left text-lg">
                       <input
                         type="text"
                         className="h-[40px] w-[60px] text-right rounded-md px-1 pr-[27px] text-sm"
-                        value={purchaseOrder[0]?.setTime}
+                        value={purchaseOrderState[0]?.setTime}
                         onClick={() => {
                           setIsCalculatorSelect(5);
                           setIsCalculator(true);
@@ -456,7 +465,7 @@ export default function OrderTime() {
                       <input
                         type="text"
                         className="h-[40px] w-[103px] text-right rounded-md px-2 pr-[26px] text-sm"
-                        value={purchaseOrder[0]?.price}
+                        value={purchaseOrderState[0]?.price}
                         onClick={() => {
                           setIsCalculatorSelect(5);
                           setIsCalculator(true);
@@ -479,10 +488,10 @@ export default function OrderTime() {
                       <input
                         type="text"
                         className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
-                        value={purchaseOrder[0]?.startTime}
+                        value={purchaseOrderState[0]?.startTime}
                         onClick={() => {
                           setIsCalculatorSelect(4);
-                          purchaseOrder[0].isTimeCalculator = true;
+                          purchaseOrderState[0].isTimeCalculator = true;
                         }}
                         readOnly
                       />
@@ -491,10 +500,10 @@ export default function OrderTime() {
                       <input
                         type="text"
                         className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
-                        value={purchaseOrder[0]?.endTime}
+                        value={purchaseOrderState[0]?.endTime}
                         onClick={() => {
                           setIsCalculatorSelect(5);
-                          purchaseOrder[0].isTimeCalculator = true;
+                          purchaseOrderState[0].isTimeCalculator = true;
                         }}
                         readOnly
                       />
@@ -505,15 +514,15 @@ export default function OrderTime() {
                     <th className="w-[130px] text-center items-center h-[80px] flex text-sm">
                       <div
                         onClick={() => {
-                          purchaseOrder[0].endTime = dayjs(
+                          purchaseOrderState[0].endTime = dayjs(
                             date(
-                              purchaseOrder[0]?.endTime.split(":")[0],
-                              purchaseOrder[0]?.endTime.split(":")[1]
+                              purchaseOrderState[0]?.endTime.split(":")[0],
+                              purchaseOrderState[0]?.endTime.split(":")[1]
                             )
                           )
                             .subtract(30, "minute")
                             .format("HH:mm");
-                          purchaseOrder[0].orderExtension = checker();
+                          purchaseOrderState[0].orderExtension = checker();
                         }}
                       >
                         <Border
@@ -530,15 +539,15 @@ export default function OrderTime() {
                       </div>
                       <div
                         onClick={() => {
-                          purchaseOrder[0].endTime = dayjs(
+                          purchaseOrderState[0].endTime = dayjs(
                             date(
-                              purchaseOrder[0]?.endTime.split(":")[0],
-                              purchaseOrder[0]?.endTime.split(":")[1]
+                              purchaseOrderState[0]?.endTime.split(":")[0],
+                              purchaseOrderState[0]?.endTime.split(":")[1]
                             )
                           )
                             .add(30, "minute")
                             .format("HH:mm");
-                          purchaseOrder[0].orderExtension = checker();
+                          purchaseOrderState[0].orderExtension = checker();
                         }}
                       >
                         <Border
@@ -578,7 +587,7 @@ export default function OrderTime() {
                       </div>
                     </th>
                   </tr>
-                  {purchaseOrder[0].isRoomCharge ? (
+                  {purchaseOrderState[0].isRoomCharge ? (
                     <tr className="h-[80px]">
                       <th className="w-[20px] text-center text-lg">
                         <input
@@ -590,9 +599,9 @@ export default function OrderTime() {
                         <input
                           className="h-[40px] w-[120px] rounded-md text-left px-2 text-sm"
                           value={
-                            purchaseOrder[0]?.roomName == ""
+                            purchaseOrderState[0]?.roomName == ""
                               ? "ルームチャージ"
-                              : purchaseOrder[0]?.roomName
+                              : purchaseOrderState[0]?.roomName
                           }
                           readOnly
                         />
@@ -602,7 +611,7 @@ export default function OrderTime() {
                         <input
                           type="text"
                           className="h-[40px] w-[103px] text-right rounded-md px-2 pr-[26px] text-sm"
-                          value={purchaseOrder[0]?.roomCharge}
+                          value={purchaseOrderState[0]?.roomCharge}
                           onClick={() => {
                             setIsCalculatorSelect(5);
                             setIsCalculator(true);
@@ -618,10 +627,10 @@ export default function OrderTime() {
                         <input
                           type="text"
                           className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
-                          value={purchaseOrder[0]?.startTime}
+                          value={purchaseOrderState[0]?.startTime}
                           onClick={() => {
                             setIsCalculatorSelect(4);
-                            purchaseOrder[0].isTimeCalculator = true;
+                            purchaseOrderState[0].isTimeCalculator = true;
                           }}
                           readOnly
                         />
@@ -630,10 +639,10 @@ export default function OrderTime() {
                         <input
                           type="text"
                           className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
-                          value={purchaseOrder[0]?.endTime}
+                          value={purchaseOrderState[0]?.endTime}
                           onClick={() => {
                             setIsCalculatorSelect(5);
-                            purchaseOrder[0].isTimeCalculator = true;
+                            purchaseOrderState[0].isTimeCalculator = true;
                           }}
                           readOnly
                         />
@@ -644,15 +653,15 @@ export default function OrderTime() {
                       <th className="w-[130px] text-center items-center h-[80px] flex text-sm">
                         <div
                           onClick={() => {
-                            purchaseOrder[0].endTime = dayjs(
+                            purchaseOrderState[0].endTime = dayjs(
                               date(
-                                purchaseOrder[0]?.endTime.split(":")[0],
-                                purchaseOrder[0]?.endTime.split(":")[1]
+                                purchaseOrderState[0]?.endTime.split(":")[0],
+                                purchaseOrderState[0]?.endTime.split(":")[1]
                               )
                             )
                               .subtract(30, "minute")
                               .format("HH:mm");
-                            purchaseOrder[0].orderExtension = checker();
+                            purchaseOrderState[0].orderExtension = checker();
                           }}
                         >
                           <Border
@@ -669,15 +678,15 @@ export default function OrderTime() {
                         </div>
                         <div
                           onClick={() => {
-                            purchaseOrder[0].endTime = dayjs(
+                            purchaseOrderState[0].endTime = dayjs(
                               date(
-                                purchaseOrder[0]?.endTime.split(":")[0],
-                                purchaseOrder[0]?.endTime.split(":")[1]
+                                purchaseOrderState[0]?.endTime.split(":")[0],
+                                purchaseOrderState[0]?.endTime.split(":")[1]
                               )
                             )
                               .add(30, "minute")
                               .format("HH:mm");
-                            purchaseOrder[0].orderExtension = checker();
+                            purchaseOrderState[0].orderExtension = checker();
                           }}
                         >
                           <Border
@@ -698,7 +707,7 @@ export default function OrderTime() {
                         <div
                           className="flex"
                           onClick={() => {
-                            purchaseOrder[0].isRoomCharge = false;
+                            purchaseOrderState[0].isRoomCharge = false;
                           }}
                         >
                           <Border2
@@ -763,7 +772,7 @@ export default function OrderTime() {
                   </tr>
                 </thead>
                 <tbody>
-                  {purchaseOrder[0]?.cast?.map((cast: any, index: any) => {
+                  {purchaseOrderState[0]?.cast?.map((cast: any, index: any) => {
                     return (
                       <tr className="h-[80px]" key={index}>
                         <th className="w-[20px] text-center text-lg">
@@ -812,10 +821,10 @@ export default function OrderTime() {
                           <input
                             type="text"
                             className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
-                            value={purchaseOrder[0]?.startTime}
+                            value={purchaseOrderState[0]?.startTime}
                             onClick={() => {
                               setIsCalculatorSelect(4);
-                              purchaseOrder[0].isTimeCalculator = true;
+                              purchaseOrderState[0].isTimeCalculator = true;
                             }}
                             readOnly
                           />
@@ -824,10 +833,10 @@ export default function OrderTime() {
                           <input
                             type="text"
                             className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
-                            value={purchaseOrder[0]?.endTime}
+                            value={purchaseOrderState[0]?.endTime}
                             onClick={() => {
                               setIsCalculatorSelect(5);
-                              purchaseOrder[0].isTimeCalculator = true;
+                              purchaseOrderState[0].isTimeCalculator = true;
                             }}
                             readOnly
                           />
@@ -838,15 +847,15 @@ export default function OrderTime() {
                         <th className="w-[130px] text-center items-center h-[80px] flex text-sm">
                           <div
                             onClick={() => {
-                              purchaseOrder[0].endTime = dayjs(
+                              purchaseOrderState[0].endTime = dayjs(
                                 date(
-                                  purchaseOrder[0]?.endTime.split(":")[0],
-                                  purchaseOrder[0]?.endTime.split(":")[1]
+                                  purchaseOrderState[0]?.endTime.split(":")[0],
+                                  purchaseOrderState[0]?.endTime.split(":")[1]
                                 )
                               )
                                 .subtract(30, "minute")
                                 .format("HH:mm");
-                              purchaseOrder[0].orderExtension = checker();
+                              purchaseOrderState[0].orderExtension = checker();
                             }}
                           >
                             <Border
@@ -863,15 +872,15 @@ export default function OrderTime() {
                           </div>
                           <div
                             onClick={() => {
-                              purchaseOrder[0].endTime = dayjs(
+                              purchaseOrderState[0].endTime = dayjs(
                                 date(
-                                  purchaseOrder[0]?.endTime.split(":")[0],
-                                  purchaseOrder[0]?.endTime.split(":")[1]
+                                  purchaseOrderState[0]?.endTime.split(":")[0],
+                                  purchaseOrderState[0]?.endTime.split(":")[1]
                                 )
                               )
                                 .add(30, "minute")
                                 .format("HH:mm");
-                              purchaseOrder[0].orderExtension = checker();
+                              purchaseOrderState[0].orderExtension = checker();
                             }}
                           >
                             <Border
@@ -913,156 +922,164 @@ export default function OrderTime() {
                       </tr>
                     );
                   })}
-                  {purchaseOrder[0].orderCast?.map((cast: any, index: any) => {
-                    return (
-                      <tr className="h-[80px]" key={index}>
-                        <th className="w-[20px] text-center text-lg">
-                          <input
-                            type="checkbox"
-                            className="mt-[8px] h-[20px] w-[20px]"
-                          />
-                        </th>
-                        <th className="w-[120px] text-left text-sm">
-                          <select className="h-[40px] w-[120px] rounded-md text-left px-1 text-sm">
-                            <option>{cast.title}</option>
-                          </select>
-                        </th>
-                        <th className="relative w-[60px] text-left text-lg">
-                          <input
-                            type="text"
-                            className="h-[40px] w-[60px] text-right rounded-md px-1 pr-[27px] text-sm"
-                            value={0}
-                            onClick={() => {
-                              setIsCalculatorSelect(5);
-                              setIsCalculator(true);
-                            }}
-                            readOnly
-                          />
-                          <p className="absolute bottom-[30.5px] text-sm left-[46px] opacity-60">
-                            分
-                          </p>
-                        </th>
-                        <th className="relative w-[103px] text-left text-lg">
-                          <input
-                            type="text"
-                            className="h-[40px] w-[103px] text-right rounded-md px-2 pr-[26px] text-sm"
-                            value={cast.price}
-                            onClick={() => {
-                              setIsCalculatorSelect(5);
-                              setIsCalculator(true);
-                            }}
-                            readOnly
-                          />
-                          <p className="absolute bottom-[30.5px] text-sm left-[90px] opacity-60">
-                            {cast.isTax ? "込" : "円"}
-                          </p>
-                        </th>
-                        <th className="w-[210px] flex text-left text-sm"></th>
-                        <th className="w-[80px] text-center text-lg">
-                          <input
-                            type="text"
-                            className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
-                            value={purchaseOrder[0]?.startTime}
-                            onClick={() => {
-                              setIsCalculatorSelect(4);
-                              purchaseOrder[0].isTimeCalculator = true;
-                            }}
-                            readOnly
-                          />
-                        </th>
-                        <th className="w-[80px] text-center text-lg">
-                          <input
-                            type="text"
-                            className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
-                            value={purchaseOrder[0]?.endTime}
-                            onClick={() => {
-                              setIsCalculatorSelect(5);
-                              purchaseOrder[0].isTimeCalculator = true;
-                            }}
-                            readOnly
-                          />
-                        </th>
-                        <th className="w-[20px] text-center text-sm">
-                          {checker()}
-                        </th>
-                        <th className="w-[130px] text-center items-center h-[80px] flex text-sm">
-                          <div
-                            onClick={() => {
-                              purchaseOrder[0].endTime = dayjs(
-                                date(
-                                  purchaseOrder[0]?.endTime.split(":")[0],
-                                  purchaseOrder[0]?.endTime.split(":")[1]
+                  {purchaseOrderState[0].orderCast?.map(
+                    (cast: any, index: any) => {
+                      return (
+                        <tr className="h-[80px]" key={index}>
+                          <th className="w-[20px] text-center text-lg">
+                            <input
+                              type="checkbox"
+                              className="mt-[8px] h-[20px] w-[20px]"
+                            />
+                          </th>
+                          <th className="w-[120px] text-left text-sm">
+                            <select className="h-[40px] w-[120px] rounded-md text-left px-1 text-sm">
+                              <option>{cast.title}</option>
+                            </select>
+                          </th>
+                          <th className="relative w-[60px] text-left text-lg">
+                            <input
+                              type="text"
+                              className="h-[40px] w-[60px] text-right rounded-md px-1 pr-[27px] text-sm"
+                              value={0}
+                              onClick={() => {
+                                setIsCalculatorSelect(5);
+                                setIsCalculator(true);
+                              }}
+                              readOnly
+                            />
+                            <p className="absolute bottom-[30.5px] text-sm left-[46px] opacity-60">
+                              分
+                            </p>
+                          </th>
+                          <th className="relative w-[103px] text-left text-lg">
+                            <input
+                              type="text"
+                              className="h-[40px] w-[103px] text-right rounded-md px-2 pr-[26px] text-sm"
+                              value={cast.price}
+                              onClick={() => {
+                                setIsCalculatorSelect(5);
+                                setIsCalculator(true);
+                              }}
+                              readOnly
+                            />
+                            <p className="absolute bottom-[30.5px] text-sm left-[90px] opacity-60">
+                              {cast.isTax ? "込" : "円"}
+                            </p>
+                          </th>
+                          <th className="w-[210px] flex text-left text-sm"></th>
+                          <th className="w-[80px] text-center text-lg">
+                            <input
+                              type="text"
+                              className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
+                              value={purchaseOrderState[0]?.startTime}
+                              onClick={() => {
+                                setIsCalculatorSelect(4);
+                                purchaseOrderState[0].isTimeCalculator = true;
+                              }}
+                              readOnly
+                            />
+                          </th>
+                          <th className="w-[80px] text-center text-lg">
+                            <input
+                              type="text"
+                              className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
+                              value={purchaseOrderState[0]?.endTime}
+                              onClick={() => {
+                                setIsCalculatorSelect(5);
+                                purchaseOrderState[0].isTimeCalculator = true;
+                              }}
+                              readOnly
+                            />
+                          </th>
+                          <th className="w-[20px] text-center text-sm">
+                            {checker()}
+                          </th>
+                          <th className="w-[130px] text-center items-center h-[80px] flex text-sm">
+                            <div
+                              onClick={() => {
+                                purchaseOrderState[0].endTime = dayjs(
+                                  date(
+                                    purchaseOrderState[0]?.endTime.split(
+                                      ":"
+                                    )[0],
+                                    purchaseOrderState[0]?.endTime.split(":")[1]
+                                  )
                                 )
-                              )
-                                .subtract(30, "minute")
-                                .format("HH:mm");
-                              purchaseOrder[0].orderExtension = checker();
-                            }}
-                          >
-                            <Border
-                              className="mr-1 w-[3.8rem]"
-                              size="px-2 text-red-700 flex justify-center items-center align-middle"
-                              natural
-                              stroke="md"
+                                  .subtract(30, "minute")
+                                  .format("HH:mm");
+                                purchaseOrderState[0].orderExtension =
+                                  checker();
+                              }}
                             >
-                              <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
-                                -
-                              </div>
-                              <span>30</span>
-                            </Border>
-                          </div>
-                          <div
-                            onClick={() => {
-                              purchaseOrder[0].endTime = dayjs(
-                                date(
-                                  purchaseOrder[0]?.endTime.split(":")[0],
-                                  purchaseOrder[0]?.endTime.split(":")[1]
+                              <Border
+                                className="mr-1 w-[3.8rem]"
+                                size="px-2 text-red-700 flex justify-center items-center align-middle"
+                                natural
+                                stroke="md"
+                              >
+                                <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
+                                  -
+                                </div>
+                                <span>30</span>
+                              </Border>
+                            </div>
+                            <div
+                              onClick={() => {
+                                purchaseOrderState[0].endTime = dayjs(
+                                  date(
+                                    purchaseOrderState[0]?.endTime.split(
+                                      ":"
+                                    )[0],
+                                    purchaseOrderState[0]?.endTime.split(":")[1]
+                                  )
                                 )
-                              )
-                                .add(30, "minute")
-                                .format("HH:mm");
-                              purchaseOrder[0].orderExtension = checker();
-                            }}
-                          >
-                            <Border
-                              className="w-[3.8rem]"
-                              size="px-2 text-blue-700 flex justify-center items-center align-middle"
-                              natural
-                              stroke="md"
+                                  .add(30, "minute")
+                                  .format("HH:mm");
+                                purchaseOrderState[0].orderExtension =
+                                  checker();
+                              }}
                             >
-                              <div className="flex justify-center items-center h-full mt-[-3px]">
-                                +
-                              </div>
-                              <span>30</span>
+                              <Border
+                                className="w-[3.8rem]"
+                                size="px-2 text-blue-700 flex justify-center items-center align-middle"
+                                natural
+                                stroke="md"
+                              >
+                                <div className="flex justify-center items-center h-full mt-[-3px]">
+                                  +
+                                </div>
+                                <span>30</span>
+                              </Border>
+                            </div>
+                          </th>
+                          <th className="w-[80px] text-center text-sm">
+                            <Border natural stroke="md">
+                              <p className="text-red-700">退店</p>
                             </Border>
-                          </div>
-                        </th>
-                        <th className="w-[80px] text-center text-sm">
-                          <Border natural stroke="md">
-                            <p className="text-red-700">退店</p>
-                          </Border>
-                        </th>
-                        <th className="w-[20px] text-center text-sm">
-                          <div className="flex">
-                            <Border2
-                              rounded="rounded-full"
-                              size="h-[28px] w-[28px] p-[6px]"
-                            >
-                              <div>
-                                <Image
-                                  src={"/assets/close.svg"}
-                                  width={26}
-                                  height={26}
-                                  className="!h-full !w-full"
-                                  alt=""
-                                />
-                              </div>
-                            </Border2>
-                          </div>
-                        </th>
-                      </tr>
-                    );
-                  })}
+                          </th>
+                          <th className="w-[20px] text-center text-sm">
+                            <div className="flex">
+                              <Border2
+                                rounded="rounded-full"
+                                size="h-[28px] w-[28px] p-[6px]"
+                              >
+                                <div>
+                                  <Image
+                                    src={"/assets/close.svg"}
+                                    width={26}
+                                    height={26}
+                                    className="!h-full !w-full"
+                                    alt=""
+                                  />
+                                </div>
+                              </Border2>
+                            </div>
+                          </th>
+                        </tr>
+                      );
+                    }
+                  )}
                 </tbody>
               </table>
             </Border>
