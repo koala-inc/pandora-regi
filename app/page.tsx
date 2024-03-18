@@ -80,7 +80,7 @@ export default function Home() {
   const [isLock] = useIsLockGlobal();
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
   const [purchaseOrder] = usePurchaseOrderGlobal();
-  const [seatPreset] = useSeatPresetGlobal();
+  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
   const [datetime, setDatetime] = useState(new Date());
 
   useEffect(() => {
@@ -95,6 +95,7 @@ export default function Home() {
       onClick={() => {
         if (isCard && isControl == "" && !isPurchaseOrder && isLock == 0) {
           setIsCard(false);
+          setSeatPreset("");
         }
       }}
     >
@@ -103,20 +104,40 @@ export default function Home() {
         {!isCard && <SeatMap />}
         {isHeader && !isCard && <Header datetime={datetime} />}
         {isFooter && !isCard && <Footer />}
-        {isCard && (
+        {seatPreset != "" ? (
+          purchaseOrder.map((purchaseOrder: any) => {
+            if (purchaseOrder.id == seatPreset) {
+              if (isCard) {
+                return (
+                  <>
+                    {isPurchaseOrder ? (
+                      <>
+                        <OrderSheetSet />
+                        <OrderSet />
+                        <HomeButton />
+                      </>
+                    ) : (
+                      <>
+                        <OrderSheet />
+                        {Control(isControl)}
+                        {isControl != "" && <HomeButton />}
+                      </>
+                    )}
+                  </>
+                );
+              }
+            }
+          })
+        ) : (
           <>
-            {purchaseOrder[0]?.id != seatPreset && isPurchaseOrder ? (
+            {isCard && isPurchaseOrder ? (
               <>
                 <OrderSheetSet />
                 <OrderSet />
                 <HomeButton />
               </>
             ) : (
-              <>
-                <OrderSheet />
-                {Control(isControl)}
-                {isControl != "" && <HomeButton />}
-              </>
+              <></>
             )}
           </>
         )}

@@ -29,6 +29,7 @@ export default function SeatMap() {
             id="map"
             onClick={() => {
               if (isCard) setIsCard(false);
+              if (seatPreset) setSeatPreset(false);
               if (isControl == "") setIsControl("");
             }}
           >

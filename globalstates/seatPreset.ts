@@ -13,5 +13,5 @@ import useGlobal from "@/globalstates/useGlobal";
  */
 
 export default function useSeatPresetGlobal() {
-  return useGlobal("seatPreset", "01");
+  return useGlobal("seatPreset", "");
 }

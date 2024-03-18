@@ -5,6 +5,7 @@ import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsCardGlobal from "@/globalstates/isCard";
 import useIsControlGlobal from "@/globalstates/isControl";
+import useSeatPresetGlobal from "@/globalstates/seatPreset";
 
 function ContentHeader({ children }: { children: any }) {
   return <SubBorder size="h-[147.5px] w-[90%] px-4 py-2">{children}</SubBorder>;
@@ -19,6 +20,7 @@ export default function Control({ children }: { children: any }) {
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
   const [isCard, setIsCard] = useIsCardGlobal();
+  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
 
   return (
     <>
@@ -38,6 +40,7 @@ export default function Control({ children }: { children: any }) {
           if (isFooter) setIsFooter(false);
           if (isControl) setIsControl(false);
           if (isCard) setIsCard(false);
+          if (seatPreset) setSeatPreset("");
         }}
       >
         <div
