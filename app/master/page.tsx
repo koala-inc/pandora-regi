@@ -314,7 +314,7 @@ export default function Mater() {
             <>
               <ReactFullScreenComponent>
                 {({ ref, onRequest, onExit }) => {
-                  onRequest();
+                  // onRequest();
                   return (
                     <SeatEditor
                       onExit={onExit}

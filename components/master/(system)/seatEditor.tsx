@@ -2,11 +2,11 @@
 
 import Control from "@/components/master/(component)/control";
 import Border from "@/components/master/border";
-import SeatMap from "@/components/templates/seatMap";
 import Image from "next/image";
 import Link from "next/link";
 import ReactFlow, { useEdgesState, useNodesState } from "reactflow";
 import ReactFullscreeen from "react-easyfullscreen";
+import EditSeatMap from "@/components/templates/editSeatMap";
 
 const initialNodes = [
   { id: "10", position: { x: 200, y: 100 }, data: { label: "木" } },
@@ -27,7 +27,7 @@ export default function SeatEditor({ onExit, setMasterActivePage }: any) {
 
   return (
     <>
-      <SeatMap />
+      <EditSeatMap />
 
       <Link
         href={"/master"}
@@ -48,7 +48,7 @@ export default function SeatEditor({ onExit, setMasterActivePage }: any) {
           </Border>
         </nav>
       </Link>
-      <div className="absolute top-[20dvh] h-[60dvh] w-[300px] p-5 border-black border-8 bg-primary rounded-xl left-[50px]">
+      <div className="hidden absolute top-[20dvh] h-[60dvh] w-[300px] p-5 border-black border-8 bg-primary rounded-xl left-[50px]">
         <h3 className="text-accent font-bold text-lg">モード</h3>
         <select className="rounded-md">
           <option>席配置モード</option>
@@ -67,31 +67,6 @@ export default function SeatEditor({ onExit, setMasterActivePage }: any) {
         <div className="flex">
           <select className="rounded-md">
             <option>A</option>
-            <option>B</option>
-            <option>C</option>
-            <option>D</option>
-            <option>E</option>
-            <option>F</option>
-            <option>G</option>
-            <option>H</option>
-            <option>I</option>
-            <option>J</option>
-            <option>K</option>
-            <option>L</option>
-            <option>M</option>
-            <option>N</option>
-            <option>O</option>
-            <option>P</option>
-            <option>Q</option>
-            <option>R</option>
-            <option>S</option>
-            <option>T</option>
-            <option>U</option>
-            <option>V</option>
-            <option>W</option>
-            <option>X</option>
-            <option>Y</option>
-            <option>Z</option>
           </select>
           <select className="rounded-md">
             <option>1</option>
