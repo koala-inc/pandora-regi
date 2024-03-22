@@ -10,6 +10,7 @@ import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
 import useIsLockGlobal from "@/globalstates/isLock";
 import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
+import GridLayout, { Layout } from "react-grid-layout";
 
 export default function SeatMap() {
   const [isHeader, setIsHeader] = useIsHeaderGlobal();
@@ -22,89 +23,87 @@ export default function SeatMap() {
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
 
   return (
-    <TransformWrapper initialScale={1}>
-      <TransformComponent>
-        <div className="flex h-[100dvh] w-[100dvw] items-center justify-center">
-          <section
-            id="map"
-            onClick={() => {
-              if (isCard) setIsCard(false);
-              if (seatPreset) setSeatPreset("");
-              if (isControl == "") setIsControl("");
-            }}
-          >
-            {seatMap.map((seat, index) => {
-              switch (seat.type) {
-                case "seat":
-                  return (
-                    <Seat
-                      key={index}
-                      id={seat.id}
-                      area={seat.area}
-                      bg={
-                        isLock > 1
-                          ? " bg-green-200 opacity-90"
-                          : purchaseOrder.some(
-                              (purchaseOrder: any) =>
-                                purchaseOrder.id == seat.id
-                            )
-                          ? " bg-blue-200 opacity-90"
-                          : " bg-natural"
-                      }
-                      onClick={() => {
-                        setSeatPreset(seat.id);
-                        if (isLock < 2) {
-                          setIsCard(true);
-                          if (isControl != "") setIsControl("");
-                        } else if (isLock == 2) {
-                          setIsLock(3);
-                        }
-                      }}
-                    >
-                      {seat.id.toLocaleUpperCase()}
-                    </Seat>
-                  );
-                case "object":
-                  return (
-                    <Image
-                      key={index}
-                      width={30}
-                      height={30}
-                      className={seat.area + " !w-full !h-full"}
-                      src={seat.objectUrl}
-                      alt=""
-                    />
-                  );
-                case "text":
-                  return (
-                    <Seat
-                      key={index}
-                      id={seat.id}
-                      area={seat.area}
-                      bg={
-                        isLock > 1
-                          ? " bg-green-200 opacity-90"
-                          : purchaseOrder[0].id != seat.id
-                          ? " bg-natural"
-                          : " bg-blue-200 opacity-90"
-                      }
-                      onClick={() => {
-                        if (isLock < 2) {
-                          setIsCard(true);
-                          if (isControl != "") setIsControl("");
-                        } else if (isLock == 2) {
-                          setIsLock(3);
-                        }
-                      }}
-                    >
-                      {seat.body}
-                    </Seat>
-                  );
-              }
-            })}
-          </section>
-        </div>
-      </TransformComponent>
-    </TransformWrapper>
+    <GridLayout
+      className="layout !h-[100dvh]"
+      cols={23}
+      compactType={null}
+      width={window.parent.screen.width}
+      rowHeight={60}
+      isDraggable={false}
+      // onDrag={onDragStop}
+    >
+      {seatMap.map((seat, index) => {
+        switch (seat.type) {
+          case "seat":
+            return (
+              <div
+                key={index}
+                id={seat.id}
+                data-grid={{
+                  x: seat.x,
+                  y: seat.y,
+                  w: 1,
+                  h: 1,
+                }}
+                className={
+                  isLock > 1
+                    ? "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all bg-green-200 opacity-90"
+                    : purchaseOrder.some(
+                        (purchaseOrder: any) => purchaseOrder.id == seat.id
+                      )
+                    ? "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all bg-blue-200 opacity-90"
+                    : "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all bg-natural"
+                }
+                onClick={() => {
+                  setSeatPreset(seat.id);
+                  if (isLock < 2) {
+                    setIsCard(true);
+                    if (isControl != "") setIsControl("");
+                  } else if (isLock == 2) {
+                    setIsLock(3);
+                  }
+                }}
+              >
+                {seat.id.toLocaleUpperCase()}
+              </div>
+            );
+          case "object":
+            return (
+              <Image
+                key={index}
+                width={30}
+                height={30}
+                className={seat.area + " !w-full !h-full"}
+                src={seat.objectUrl}
+                alt=""
+              />
+            );
+          case "text":
+            return (
+              <Seat
+                key={index}
+                id={seat.id}
+                bg={
+                  isLock > 1
+                    ? " bg-green-200 opacity-90"
+                    : purchaseOrder[0].id != seat.id
+                    ? " bg-natural"
+                    : " bg-blue-200 opacity-90"
+                }
+                onClick={() => {
+                  if (isLock < 2) {
+                    setIsCard(true);
+                    if (isControl != "") setIsControl("");
+                  } else if (isLock == 2) {
+                    setIsLock(3);
+                  }
+                }}
+              >
+                {seat.body}
+              </Seat>
+            );
+        }
+      })}
+    </GridLayout>
   );
 }

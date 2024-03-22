@@ -1,7 +1,7 @@
 "use client";
 
 import Control from "@/components/master/(component)/control";
-import Border from "@/components/master/border";
+import Border from "@/components/templates/border";
 import Image from "next/image";
 import Link from "next/link";
 import ReactFlow, { useEdgesState, useNodesState } from "reactflow";
@@ -37,7 +37,7 @@ export default function SeatEditor({ onExit, setMasterActivePage }: any) {
         }}
       >
         <nav className="absolute right-[15px] top-[15px] z-50 cursor-pointer">
-          <Border rounded="rounded-full" size="h-[56px] w-[56px] p-3">
+          <Border rounded="rounded-full" size="h-[50px] w-[50px] p-3">
             <Image
               src={"/assets/close.svg"}
               width={26}

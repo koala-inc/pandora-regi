@@ -5,6 +5,10 @@ const seatMap = [
     type: "seat",
     body: "",
     objectUrl: "",
+    x: 10,
+    y: 2,
+    w: 1,
+    h: 1,
   },
   {
     id: "2",
@@ -12,6 +16,10 @@ const seatMap = [
     type: "seat",
     body: "",
     objectUrl: "",
+    x: 6,
+    y: 5,
+    w: 1,
+    h: 1,
   },
   {
     id: "3",
@@ -19,6 +27,10 @@ const seatMap = [
     type: "seat",
     body: "",
     objectUrl: "",
+    x: 8,
+    y: 6,
+    w: 1,
+    h: 1,
   },
   // {
   //   id: "02",

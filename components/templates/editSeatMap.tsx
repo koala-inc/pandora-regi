@@ -33,7 +33,7 @@ export default function EditSeatMap() {
 
   return (
     <GridLayout
-      className="layout"
+      className="layout !h-[100dvh]"
       cols={23}
       layout={buttons}
       compactType={null}
@@ -55,7 +55,7 @@ export default function EditSeatMap() {
                   h: buttons[index].h,
                 }}
                 className={
-                  "relative text-2xl flex h-[100px] w-[100px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all bg-natural"
+                  "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all bg-natural"
                 }
               >
                 {seat.id.toLocaleUpperCase()}

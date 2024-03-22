@@ -11,11 +11,13 @@ import useSeatPresetGlobal from "@/globalstates/seatPreset";
 export default function Seat({
   children,
   id,
+  area,
   bg,
   onClick,
 }: {
   children: any;
   id: string;
+  area: string;
   bg: string;
   onClick: any;
 }) {
@@ -44,7 +46,8 @@ export default function Seat({
   return (
     <div
       className={
-        "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all " +
+        "relative text-2xl flex h-full w-full cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all " +
+        area +
         bg
       }
       onClick={() => onClick()}
