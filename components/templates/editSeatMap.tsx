@@ -44,10 +44,14 @@ export default function EditSeatMap() {
 
   const searchData = useSWR<any>(searchSeatMap, fetcher);
 
-  const [changePosition, setChangePosition] = useState<any[]>([]);
-
-  const onLayoutChange = (updateSeatMap: any) => {
-    setChangePosition(updateSeatMap);
+  const onLayoutChange = (updateSeatMapDate: any) => {
+    updateSeatMapDate.map((seatMap: any) => {
+      client.request(updateSeatMap, {
+        ...defaultVariables,
+        id: seatMap.i,
+        location: String(seatMap.x + "/" + seatMap.y),
+      });
+    });
   };
 
   const onDrop = (layout: any, layoutItem: any, _event: any) => {
@@ -92,7 +96,7 @@ export default function EditSeatMap() {
         rowHeight={60}
         isResizable={false}
         preventCollision={true}
-        onLayoutChange={onLayoutChange}
+        onDragStop={onLayoutChange}
         onDrop={onDrop}
         isDroppable={true}
       >
@@ -102,8 +106,7 @@ export default function EditSeatMap() {
               case 0:
                 return (
                   <div
-                    key={index}
-                    id={seat.id}
+                    key={seat.id}
                     data-grid={{
                       x: Number(seat.location.split("/")[0]),
                       y: Number(seat.location.split("/")[1]),
@@ -113,31 +116,6 @@ export default function EditSeatMap() {
                     className={
                       "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all bg-natural"
                     }
-                    onClick={(e: any) => {
-                      client
-                        .request(updateSeatMap, {
-                          ...defaultVariables,
-                          id: seat.id,
-                          location: String(
-                            changePosition[changePosition.length - seat.id].x +
-                              "/" +
-                              changePosition[changePosition.length - seat.id].y
-                          ),
-                        })
-                        .then(() => {
-                          searchData.mutate(
-                            () =>
-                              client.request(searchSeatMap, {
-                                ...defaultVariables,
-                              }),
-                            {
-                              populateCache: true,
-                              revalidate: false,
-                            }
-                          );
-                          setChangePosition([]);
-                        });
-                    }}
                   >
                     {String(seat.id).toLocaleUpperCase()}
                   </div>

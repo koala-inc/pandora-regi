@@ -32,8 +32,7 @@ export default function SeatEditor({ onExit, setMasterActivePage }: any) {
       <Link
         href={"/master"}
         onClick={() => {
-          onExit();
-          setMasterActivePage("");
+          window.location.reload();
         }}
       >
         <nav className="absolute right-[15px] top-[15px] z-50 cursor-pointer">
