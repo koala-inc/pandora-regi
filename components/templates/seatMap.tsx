@@ -53,8 +53,7 @@ export default function SeatMap() {
             case 0:
               return (
                 <div
-                  key={index}
-                  id={seat.id}
+                  key={seat.id}
                   data-grid={{
                     x: Number(seat.location.split("/")[0]),
                     y: Number(seat.location.split("/")[1]),
@@ -80,7 +79,7 @@ export default function SeatMap() {
                     }
                   }}
                 >
-                  {String(seat.id).toLocaleUpperCase()}
+                  {String(seat.name).toLocaleUpperCase()}
                 </div>
               );
             case 1:
