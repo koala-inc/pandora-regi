@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 
-export { searchSeat, searchSeatArea, searchSeatSetPriceChange };
+export { searchSeat, searchSeatArea, searchSeatSetPriceChange, searchSeatMap };
 
 const searchSeat = gql`
   query ($store_code: [Int]!, $id: [Int], $seat_area_id: [Int]) {
@@ -68,6 +68,22 @@ const searchSeatSetPriceChange = gql`
           deleted_at
           charge_price
           created_at
+        }
+      }
+    }
+  }
+`;
+
+const searchSeatMap = gql`
+  query ($store_code: [Int]!, $id: [Int]) {
+    seatMap(store_code: $store_code, id: $id) {
+      store_seat_map {
+        seat_map {
+          id
+          name
+          location
+          layer
+          type
         }
       }
     }

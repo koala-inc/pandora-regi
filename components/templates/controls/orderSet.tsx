@@ -127,6 +127,74 @@ export default function ControlOrderSet() {
       prefCode: "3",
       prefName: "3",
     },
+    {
+      prefCode: "4",
+      prefName: "4",
+    },
+    {
+      prefCode: "5",
+      prefName: "5",
+    },
+    {
+      prefCode: "6",
+      prefName: "6",
+    },
+    {
+      prefCode: "7",
+      prefName: "7",
+    },
+    {
+      prefCode: "8",
+      prefName: "8",
+    },
+    {
+      prefCode: "9",
+      prefName: "9",
+    },
+    {
+      prefCode: "10",
+      prefName: "10",
+    },
+    {
+      prefCode: "11",
+      prefName: "11",
+    },
+    {
+      prefCode: "12",
+      prefName: "12",
+    },
+    {
+      prefCode: "13",
+      prefName: "13",
+    },
+    {
+      prefCode: "14",
+      prefName: "14",
+    },
+    {
+      prefCode: "15",
+      prefName: "15",
+    },
+    {
+      prefCode: "16",
+      prefName: "16",
+    },
+    {
+      prefCode: "17",
+      prefName: "17",
+    },
+    {
+      prefCode: "18",
+      prefName: "18",
+    },
+    {
+      prefCode: "19",
+      prefName: "19",
+    },
+    {
+      prefCode: "20",
+      prefName: "20",
+    },
   ];
   const type = [
     {

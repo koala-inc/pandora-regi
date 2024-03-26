@@ -5,6 +5,9 @@ export {
   createSeatSetPriceChange,
   deleteSeatArea,
   updateSeatArea,
+  createSeatMap,
+  updateSeatMap,
+  deleteSeatMap,
 };
 
 const createSeatArea = gql`
@@ -108,6 +111,68 @@ const updateSeatArea = gql`
 const deleteSeatArea = gql`
   mutation ($store_code: Int!, $id: Int!) {
     deleteSeatArea(input: { store_code: $store_code, id: $id }) {
+      __typename
+    }
+  }
+`;
+
+const createSeatMap = gql`
+  mutation (
+    $store_code: Int!
+    $name: String
+    $location: String
+    $layer: Int
+    $type: Int
+    $text_value: String
+    $image_url: String
+  ) {
+    createSeatMap(
+      input: {
+        store_code: $store_code
+        name: $name
+        location: $location
+        layer: $layer
+        type: $type
+        text_value: $text_value
+        image_url: $image_url
+      }
+    ) {
+      __typename
+    }
+  }
+`;
+
+const updateSeatMap = gql`
+  mutation (
+    $store_code: Int!
+    $id: Int!
+    $name: String
+    $location: String
+    $layer: Int
+    $type: Int
+    $text_value: String
+    $image_url: String
+  ) {
+    updateSeatMap(
+      input: {
+        store_code: $store_code
+        id: $id
+        name: $name
+        location: $location
+        layer: $layer
+        type: $type
+        text_value: $text_value
+        image_url: $image_url
+      }
+    ) {
+      __typename
+    }
+  }
+`;
+
+const deleteSeatMap = gql`
+  mutation ($store_code: Int!, $id: Int!) {
+    deleteSeatMap(input: { store_code: $store_code, id: $id }) {
       __typename
     }
   }
