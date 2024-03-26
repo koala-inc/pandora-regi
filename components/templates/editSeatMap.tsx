@@ -24,6 +24,8 @@ import {
   updateSeatMap,
 } from "@/gqls/mutation/seat";
 import { searchUser } from "@/gqls/query/user";
+import Border2 from "../master/border";
+import Button from "./button";
 
 const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
@@ -79,6 +81,7 @@ export default function EditSeatMap() {
 
   const [ID, setID] = useState("1");
   const [showMenu, setShowMenu] = useState(false);
+  const [deleteMode, setDeleteMode] = useState(false);
 
   return (
     <>
@@ -113,6 +116,45 @@ export default function EditSeatMap() {
                       "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all bg-natural"
                     }
                   >
+                    {deleteMode ? (
+                      <Border2
+                        className="absolute right-[-20px] top-[-15px]"
+                        rounded="rounded-full"
+                        size="h-[28px] w-[28px] p-[6px]"
+                      >
+                        <div
+                          onClick={() => {
+                            client
+                              .request(deleteSeatMap, {
+                                id: seat.id,
+                                ...defaultVariables,
+                              })
+                              .then(() => {
+                                searchData.mutate(
+                                  () =>
+                                    client.request(searchSeatMap, {
+                                      ...defaultVariables,
+                                    }),
+                                  {
+                                    populateCache: true,
+                                    revalidate: false,
+                                  }
+                                );
+                              });
+                          }}
+                        >
+                          <Image
+                            src={"/assets/close.svg"}
+                            width={26}
+                            height={26}
+                            className="!h-full !w-full"
+                            alt=""
+                          />
+                        </div>
+                      </Border2>
+                    ) : (
+                      <></>
+                    )}
                     A{String(seat.name).toLocaleUpperCase()}
                   </div>
                 );
@@ -171,7 +213,14 @@ export default function EditSeatMap() {
         >
           {showMenu ? "〈" : "　〉"}
         </div>
-        <h3 className="text-accent font-bold text-lg">配置パーツ</h3>
+        <Button
+          onClick={() => setDeleteMode((deleteMode) => !deleteMode)}
+          natural
+          className={deleteMode ? "" : "opacity-50"}
+        >
+          削除モード
+        </Button>
+        <h3 className="text-accent font-bold text-lg mt-5">配置パーツ</h3>
         <div
           draggable
           unselectable="on"
