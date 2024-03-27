@@ -41,9 +41,7 @@ export default function SeatMap() {
         className="absolute top-0 left-0 layout !h-[100dvh] z-10"
         cols={92}
         compactType={null}
-        width={
-          typeof window !== "undefined" ? window.parent.screen.width : 1200
-        }
+        width={1400}
         rowHeight={7.5}
         isDraggable={false}
         isResizable={false}
@@ -131,9 +129,7 @@ export default function SeatMap() {
         className="absolute top-0 left-0 layout !h-[100dvh]"
         cols={92}
         compactType={null}
-        width={
-          typeof window !== "undefined" ? window.parent.screen.width : 1200
-        }
+        width={1400}
         rowHeight={7.5}
         preventCollision={true}
         isDraggable={false}

@@ -96,9 +96,7 @@ export default function EditSeatMap() {
         }
         cols={92}
         compactType={null}
-        width={
-          typeof window !== "undefined" ? window.parent.screen.width : 1200
-        }
+        width={1400}
         rowHeight={7.5}
         isResizable={false}
         preventCollision={true}
@@ -215,9 +213,7 @@ export default function EditSeatMap() {
         }
         cols={92}
         compactType={null}
-        width={
-          typeof window !== "undefined" ? window.parent.screen.width : 1200
-        }
+        width={1400}
         rowHeight={7.5}
         isResizable={false}
         preventCollision={true}
