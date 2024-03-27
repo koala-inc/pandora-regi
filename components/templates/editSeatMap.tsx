@@ -62,8 +62,9 @@ export default function EditSeatMap() {
         ...defaultVariables,
         name: ID,
         location: String(layoutItem.x + "/" + layoutItem.y),
-        layer: tabMenu == 0 ? 3 : 1,
-        text_value: tabMenu == 1 ? textValue : "",
+        layer: tabMenu == 0 ? 3 : tabMenu == 1 ? 2 : tabMenu == 2 ? 1 : 0,
+        text_value: tabMenu == 2 ? textValue : "",
+        image_url: tabMenu == 1 ? textValue : "",
         type: 0,
       })
       .then(() => {
@@ -226,6 +227,91 @@ export default function EditSeatMap() {
       >
         {searchData?.data?.seatMap[0]?.store_seat_map[0]?.seat_map?.map(
           (seat: any, index: any) => {
+            if (seat.layer == 2) {
+              return (
+                <div
+                  key={seat.id}
+                  data-grid={{
+                    x: Number(seat.location.split("/")[0]),
+                    y: Number(seat.location.split("/")[1]),
+                    w: 4,
+                    h: 4,
+                  }}
+                  className={
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-cente font-bold text-balck"
+                  }
+                >
+                  {deleteMode ? (
+                    <Border2
+                      className="absolute right-[-20px] top-[-15px]"
+                      rounded="rounded-full"
+                      size="h-[28px] w-[28px] p-[6px]"
+                    >
+                      <div
+                        onClick={() => {
+                          client
+                            .request(deleteSeatMap, {
+                              id: seat.id,
+                              ...defaultVariables,
+                            })
+                            .then(() => {
+                              searchData.mutate(
+                                () =>
+                                  client.request(searchSeatMap, {
+                                    ...defaultVariables,
+                                  }),
+                                {
+                                  populateCache: true,
+                                  revalidate: false,
+                                }
+                              );
+                            });
+                        }}
+                      >
+                        <Image
+                          src={"/assets/close.svg"}
+                          width={26}
+                          height={26}
+                          className="!h-full !w-full"
+                          alt=""
+                        />
+                      </div>
+                    </Border2>
+                  ) : (
+                    <></>
+                  )}
+                  <Image
+                    width={30}
+                    height={30}
+                    className={"!w-full !h-full drag-none !select-none"}
+                    src={seat.image_url}
+                    alt=""
+                  />
+                </div>
+              );
+            }
+          }
+        )}
+      </GridLayout>
+      <GridLayout
+        className={
+          tabMenu == 2
+            ? "absolute top-0 left-0 layout !h-[100dvh] !w-[100dvw]"
+            : "absolute top-0 left-0 layout !h-[100dvh] !w-[100dvw] opacity-30 z-[-1]"
+        }
+        cols={133}
+        compactType={null}
+        width={2000}
+        rowHeight={5}
+        isResizable={false}
+        preventCollision={true}
+        onDragStop={onLayoutChange}
+        onDrop={onDrop}
+        isDroppable={true}
+        isDraggable={deleteMode || tabMenu != 2 ? false : true}
+      >
+        {searchData?.data?.seatMap[0]?.store_seat_map[0]?.seat_map?.map(
+          (seat: any, index: any) => {
             if (seat.layer == 1) {
               let color =
                 "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center border border-black font-bold bg-white text-balck";
@@ -329,31 +415,31 @@ export default function EditSeatMap() {
             setTabMenu(0);
           }}
         >
-          席配置
+          席
         </div>
         <div
           className={
             tabMenu == 1
-              ? "absolute text-white top-[-56px] left-[85px] px-5 py-3 z-99 border-secondary rounded-t-xl border-8 border-b-0 bg-primary"
-              : "absolute text-white top-[-56px] left-[85px] px-5 py-3 z-99 border-secondary rounded-t-xl border-8 border-b-0 bg-primary opacity-50"
+              ? "absolute text-white top-[-56px] left-[60px] px-5 py-3 z-99 border-secondary rounded-t-xl border-8 border-b-0 bg-primary"
+              : "absolute text-white top-[-56px] left-[60px] px-5 py-3 z-99 border-secondary rounded-t-xl border-8 border-b-0 bg-primary opacity-50"
           }
           onClick={() => {
             setTabMenu(1);
           }}
         >
-          背景
+          オブジェクト
         </div>
         <div
           className={
             tabMenu == 2
-              ? "absolute text-white top-[-56px] left-[165px] px-5 py-3 z-99 border-secondary rounded-t-xl border-8 border-b-0 bg-primary"
-              : "absolute text-white top-[-56px] left-[165px] px-5 py-3 z-99 border-secondary rounded-t-xl border-8 border-b-0 bg-primary opacity-50"
+              ? "absolute text-white top-[-56px] left-[205px] px-5 py-3 z-99 border-secondary rounded-t-xl border-8 border-b-0 bg-primary"
+              : "absolute text-white top-[-56px] left-[205px] px-5 py-3 z-99 border-secondary rounded-t-xl border-8 border-b-0 bg-primary opacity-50"
           }
           onClick={() => {
             setTabMenu(2);
           }}
         >
-          壁紙
+          壁
         </div>
         <div
           className="absolute right-[-40px] top-[calc(50%-50px)] text-black h-[100px] w-[20px] flex justify-center items-center font-bold"
@@ -498,44 +584,29 @@ export default function EditSeatMap() {
               </div>
             </div>
           </>
-        ) : (
+        ) : tabMenu == 1 ? (
           <div className="flex justify-start flex-wrap">
             <div
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center border border-black font-bold text-black bg-white shadow-md transition-all"
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
               }
               onDragStart={() => {
-                setTextValue("木");
+                setTextValue("/seatMap/toilet.svg");
               }}
             >
-              木
+              <Image
+                width={30}
+                height={30}
+                className={"!w-full !h-full !select-none"}
+                src={"/seatMap/toilet.svg"}
+                alt=""
+              />
             </div>
-            <div
-              draggable
-              unselectable="on"
-              className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center border border-black font-bold text-black bg-white shadow-md transition-all"
-              }
-              onDragStart={() => {
-                setTextValue("壁");
-              }}
-            >
-              壁
-            </div>
-            <div
-              draggable
-              unselectable="on"
-              className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center border border-black font-bold text-black bg-white shadow-md transition-all"
-              }
-              onDragStart={() => {
-                setTextValue("ﾄｲﾚ");
-              }}
-            >
-              ﾄｲﾚ
-            </div>
+          </div>
+        ) : tabMenu == 2 ? (
+          <div className="flex justify-start flex-wrap">
             <div
               draggable
               unselectable="on"
@@ -587,6 +658,8 @@ export default function EditSeatMap() {
               }}
             ></div>
           </div>
+        ) : (
+          <></>
         )}
       </div>
     </>

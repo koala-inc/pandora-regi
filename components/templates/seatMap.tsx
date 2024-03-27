@@ -137,6 +137,45 @@ export default function SeatMap() {
       >
         {searchData?.data?.seatMap[0]?.store_seat_map[0]?.seat_map?.map(
           (seat: any, index: any) => {
+            if (seat.layer == 2) {
+              return (
+                <div
+                  key={seat.id}
+                  data-grid={{
+                    x: Number(seat.location.split("/")[0]),
+                    y: Number(seat.location.split("/")[1]),
+                    w: 4,
+                    h: 4,
+                  }}
+                  className={
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-cente font-bold text-balck"
+                  }
+                >
+                  <Image
+                    width={30}
+                    height={30}
+                    className={"!w-full !h-full drag-none !select-none"}
+                    src={seat.image_url}
+                    alt=""
+                  />
+                </div>
+              );
+            }
+          }
+        )}
+      </GridLayout>
+      <GridLayout
+        className="absolute top-0 left-0 layout !h-[100dvh]"
+        cols={133}
+        compactType={null}
+        width={2000}
+        rowHeight={5}
+        preventCollision={true}
+        isDraggable={false}
+        isResizable={false}
+      >
+        {searchData?.data?.seatMap[0]?.store_seat_map[0]?.seat_map?.map(
+          (seat: any, index: any) => {
             if (seat.layer == 1) {
               let color =
                 "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center border border-black font-bold bg-white text-balck";

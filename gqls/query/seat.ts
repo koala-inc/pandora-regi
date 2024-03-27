@@ -85,6 +85,7 @@ const searchSeatMap = gql`
           layer
           type
           text_value
+          image_url
         }
       }
     }
