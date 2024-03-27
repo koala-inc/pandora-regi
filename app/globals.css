@@ -111,11 +111,11 @@ body {
   align-content: center;
 }
 
-/* .react-grid-placeholder {
+.react-grid-placeholder {
   z-index: -1;
   width: 60px !important;
   height: 60px;
   border-radius: 15px;
   background: red;
   opacity: 0.6;
-} */
+}

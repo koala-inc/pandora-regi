@@ -39,12 +39,12 @@ export default function SeatMap() {
     <>
       <GridLayout
         className="absolute top-0 left-0 layout !h-[100dvh] z-10"
-        cols={23}
+        cols={92}
         compactType={null}
         width={
           typeof window !== "undefined" ? window.parent.screen.width : 1200
         }
-        rowHeight={60}
+        rowHeight={7.5}
         isDraggable={false}
         isResizable={false}
 
@@ -61,8 +61,8 @@ export default function SeatMap() {
                       data-grid={{
                         x: Number(seat.location.split("/")[0]),
                         y: Number(seat.location.split("/")[1]),
-                        w: 1,
-                        h: 1,
+                        w: 4,
+                        h: 4,
                       }}
                       className={
                         isLock > 1
@@ -129,12 +129,12 @@ export default function SeatMap() {
       </GridLayout>
       <GridLayout
         className="absolute top-0 left-0 layout !h-[100dvh]"
-        cols={23}
+        cols={92}
         compactType={null}
         width={
           typeof window !== "undefined" ? window.parent.screen.width : 1200
         }
-        rowHeight={60}
+        rowHeight={7.5}
         preventCollision={true}
         isDraggable={false}
         isResizable={false}
@@ -148,8 +148,8 @@ export default function SeatMap() {
                   data-grid={{
                     x: Number(seat.location.split("/")[0]),
                     y: Number(seat.location.split("/")[1]),
-                    w: 1,
-                    h: 1,
+                    w: 4,
+                    h: 4,
                   }}
                   className={
                     "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center border border-black font-bold bg-white text-balck transition-all "

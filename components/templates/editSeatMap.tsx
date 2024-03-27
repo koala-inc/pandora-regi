@@ -91,15 +91,15 @@ export default function EditSeatMap() {
       <GridLayout
         className={
           tabMenu == 0
-            ? "absolute top-0 left-0 layout !h-[100dvh]"
-            : "absolute top-0 left-0 layout !h-[100dvh] opacity-30"
+            ? "absolute top-0 left-0 layout !h-[100dvh] !w-[100dvw]"
+            : "absolute top-0 left-0 layout !h-[100dvh] !w-[100dvw] opacity-30 z-[-1]"
         }
-        cols={23}
+        cols={92}
         compactType={null}
         width={
           typeof window !== "undefined" ? window.parent.screen.width : 1200
         }
-        rowHeight={60}
+        rowHeight={7.5}
         isResizable={false}
         preventCollision={true}
         onDragStop={onLayoutChange}
@@ -117,8 +117,8 @@ export default function EditSeatMap() {
                       data-grid={{
                         x: Number(seat.location.split("/")[0]),
                         y: Number(seat.location.split("/")[1]),
-                        w: 1,
-                        h: 1,
+                        w: 4,
+                        h: 4,
                       }}
                       className={
                         "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all bg-natural"
@@ -210,15 +210,15 @@ export default function EditSeatMap() {
       <GridLayout
         className={
           tabMenu == 1
-            ? "absolute top-0 left-0 layout !h-[100dvh]"
-            : "absolute top-0 left-0 layout !h-[100dvh] opacity-30"
+            ? "absolute top-0 left-0 layout !h-[100dvh] !w-[100dvw]"
+            : "absolute top-0 left-0 layout !h-[100dvh] !w-[100dvw] opacity-30 z-[-1]"
         }
-        cols={23}
+        cols={92}
         compactType={null}
         width={
           typeof window !== "undefined" ? window.parent.screen.width : 1200
         }
-        rowHeight={60}
+        rowHeight={7.5}
         isResizable={false}
         preventCollision={true}
         onDragStop={onLayoutChange}
@@ -234,8 +234,8 @@ export default function EditSeatMap() {
                   data-grid={{
                     x: Number(seat.location.split("/")[0]),
                     y: Number(seat.location.split("/")[1]),
-                    w: 1,
-                    h: 1,
+                    w: 4,
+                    h: 4,
                   }}
                   className={
                     "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center border border-black font-bold bg-white text-balck transition-all "
