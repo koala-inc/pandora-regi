@@ -236,11 +236,11 @@ export default function EditSeatMap() {
                   break;
                 case "床緑":
                   color =
-                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-green-300 text-balck";
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-[#93b69c] text-balck";
                   break;
                 case "床黄":
                   color =
-                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-yellow-300 text-balck";
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-[#f2f2b0] text-balck";
                   break;
                 case "床黒":
                   color =
@@ -540,7 +540,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black bg-green-300 shadow-md transition-all"
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black bg-[#93b69c] shadow-md transition-all"
               }
               onDragStart={() => {
                 setTextValue("床緑");
@@ -560,7 +560,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black bg-yellow-300 shadow-md transition-all"
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black bg-[#f2f2b0] shadow-md transition-all"
               }
               onDragStart={() => {
                 setTextValue("床黄");

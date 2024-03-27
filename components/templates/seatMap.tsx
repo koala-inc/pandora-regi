@@ -147,11 +147,11 @@ export default function SeatMap() {
                   break;
                 case "床緑":
                   color =
-                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-green-300 text-balck";
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-[#93b69c] text-balck";
                   break;
                 case "床黄":
                   color =
-                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-yellow-300 text-balck";
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-[#f2f2b0] text-balck";
                   break;
                 case "床黒":
                   color =
