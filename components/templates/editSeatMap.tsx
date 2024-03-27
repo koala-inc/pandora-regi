@@ -94,10 +94,10 @@ export default function EditSeatMap() {
             ? "absolute top-0 left-0 layout !h-[100dvh] !w-[100dvw]"
             : "absolute top-0 left-0 layout !h-[100dvh] !w-[100dvw] opacity-30 z-[-1]"
         }
-        cols={92}
+        cols={133}
         compactType={null}
-        width={1400}
-        rowHeight={7.5}
+        width={2000}
+        rowHeight={5}
         isResizable={false}
         preventCollision={true}
         onDragStop={onLayoutChange}
@@ -119,7 +119,7 @@ export default function EditSeatMap() {
                         h: 4,
                       }}
                       className={
-                        "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all bg-natural"
+                        "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent transition-all bg-natural"
                       }
                     >
                       {deleteMode ? (
@@ -211,10 +211,10 @@ export default function EditSeatMap() {
             ? "absolute top-0 left-0 layout !h-[100dvh] !w-[100dvw]"
             : "absolute top-0 left-0 layout !h-[100dvh] !w-[100dvw] opacity-30 z-[-1]"
         }
-        cols={92}
+        cols={133}
         compactType={null}
-        width={1400}
-        rowHeight={7.5}
+        width={2000}
+        rowHeight={5}
         isResizable={false}
         preventCollision={true}
         onDragStop={onLayoutChange}

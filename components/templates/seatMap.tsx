@@ -39,10 +39,10 @@ export default function SeatMap() {
     <>
       <GridLayout
         className="absolute top-0 left-0 layout !h-[100dvh] z-10"
-        cols={92}
+        cols={133}
         compactType={null}
-        width={1400}
-        rowHeight={7.5}
+        width={2000}
+        rowHeight={5}
         isDraggable={false}
         isResizable={false}
 
@@ -127,10 +127,10 @@ export default function SeatMap() {
       </GridLayout>
       <GridLayout
         className="absolute top-0 left-0 layout !h-[100dvh]"
-        cols={92}
+        cols={133}
         compactType={null}
-        width={1400}
-        rowHeight={7.5}
+        width={2000}
+        rowHeight={5}
         preventCollision={true}
         isDraggable={false}
         isResizable={false}

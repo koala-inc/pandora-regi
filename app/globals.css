@@ -114,8 +114,7 @@ body {
 .react-grid-placeholder {
   z-index: -1;
   width: 60px !important;
-  height: 60px;
-  border-radius: 15px;
+  height: 60px !important;
   background: red;
-  opacity: 0.6;
+  opacity: 0.3;
 }
