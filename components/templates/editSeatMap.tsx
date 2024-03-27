@@ -96,6 +96,7 @@ export default function EditSeatMap() {
         }
         cols={133}
         compactType={null}
+        verticalCompact={false}
         width={2000}
         rowHeight={5}
         isResizable={false}
@@ -103,6 +104,7 @@ export default function EditSeatMap() {
         onDragStop={onLayoutChange}
         onDrop={onDrop}
         isDroppable={true}
+        isDraggable={deleteMode || tabMenu != 0 ? false : true}
       >
         {searchData?.data?.seatMap[0]?.store_seat_map[0]?.seat_map?.map(
           (seat: any, index: any) => {
@@ -220,6 +222,7 @@ export default function EditSeatMap() {
         onDragStop={onLayoutChange}
         onDrop={onDrop}
         isDroppable={true}
+        isDraggable={deleteMode || tabMenu != 1 ? false : true}
       >
         {searchData?.data?.seatMap[0]?.store_seat_map[0]?.seat_map?.map(
           (seat: any, index: any) => {
