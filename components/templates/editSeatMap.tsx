@@ -121,7 +121,7 @@ export default function EditSeatMap() {
                         h: 4,
                       }}
                       className={
-                        "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent transition-all bg-natural"
+                        "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent bg-natural"
                       }
                     >
                       {deleteMode ? (
@@ -227,6 +227,30 @@ export default function EditSeatMap() {
         {searchData?.data?.seatMap[0]?.store_seat_map[0]?.seat_map?.map(
           (seat: any, index: any) => {
             if (seat.layer == 1) {
+              let color =
+                "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center border border-black font-bold bg-white text-balck";
+              switch (seat.text_value) {
+                case "床赤":
+                  color =
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-red-300 text-balck";
+                  break;
+                case "床緑":
+                  color =
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-green-300 text-balck";
+                  break;
+                case "床黄":
+                  color =
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-yellow-300 text-balck";
+                  break;
+                case "床黒":
+                  color =
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-black text-balck";
+                  break;
+                case "床白":
+                  color =
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-white text-balck";
+                  break;
+              }
               return (
                 <div
                   key={seat.id}
@@ -236,9 +260,7 @@ export default function EditSeatMap() {
                     w: 4,
                     h: 4,
                   }}
-                  className={
-                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center border border-black font-bold bg-white text-balck transition-all "
-                  }
+                  className={color}
                 >
                   {deleteMode ? (
                     <Border2
@@ -279,7 +301,11 @@ export default function EditSeatMap() {
                   ) : (
                     <></>
                   )}
-                  {seat.text_value}
+                  {seat.text_value == "木" ||
+                  seat.text_value == "壁" ||
+                  seat.text_value == "ﾄｲﾚ"
+                    ? seat.text_value
+                    : ""}
                 </div>
               );
             }
@@ -351,7 +377,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all bg-natural"
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-natural"
               }
             >
               A{String(ID).toLocaleUpperCase()}
@@ -473,7 +499,7 @@ export default function EditSeatMap() {
             </div>
           </>
         ) : (
-          <div className="flex justify-around">
+          <div className="flex justify-start flex-wrap">
             <div
               draggable
               unselectable="on"
@@ -510,6 +536,56 @@ export default function EditSeatMap() {
             >
               ﾄｲﾚ
             </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black bg-green-300 shadow-md transition-all"
+              }
+              onDragStart={() => {
+                setTextValue("床緑");
+              }}
+            ></div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black bg-red-300 shadow-md transition-all"
+              }
+              onDragStart={() => {
+                setTextValue("床赤");
+              }}
+            ></div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black bg-yellow-300 shadow-md transition-all"
+              }
+              onDragStart={() => {
+                setTextValue("床黄");
+              }}
+            ></div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black bg-black shadow-md transition-all"
+              }
+              onDragStart={() => {
+                setTextValue("床黒");
+              }}
+            ></div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black bg-white shadow-md transition-all"
+              }
+              onDragStart={() => {
+                setTextValue("床白");
+              }}
+            ></div>
           </div>
         )}
       </div>

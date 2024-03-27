@@ -64,13 +64,13 @@ export default function SeatMap() {
                       }}
                       className={
                         isLock > 1
-                          ? "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all bg-green-200 opacity-90"
+                          ? "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-green-200 opacity-90"
                           : purchaseOrder.some(
                               (purchaseOrder: any) =>
                                 purchaseOrder.id == seat.name
                             )
-                          ? "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all bg-blue-200 opacity-90"
-                          : "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md transition-all bg-natural"
+                          ? "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-blue-200 opacity-90"
+                          : "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-natural"
                       }
                       onClick={() => {
                         setSeatPreset(seat.name);
@@ -138,6 +138,30 @@ export default function SeatMap() {
         {searchData?.data?.seatMap[0]?.store_seat_map[0]?.seat_map?.map(
           (seat: any, index: any) => {
             if (seat.layer == 1) {
+              let color =
+                "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center border border-black font-bold bg-white text-balck";
+              switch (seat.text_value) {
+                case "床赤":
+                  color =
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-red-300 text-balck";
+                  break;
+                case "床緑":
+                  color =
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-green-300 text-balck";
+                  break;
+                case "床黄":
+                  color =
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-yellow-300 text-balck";
+                  break;
+                case "床黒":
+                  color =
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-black text-balck";
+                  break;
+                case "床白":
+                  color =
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-white text-balck";
+                  break;
+              }
               return (
                 <div
                   key={seat.id}
@@ -147,11 +171,13 @@ export default function SeatMap() {
                     w: 4,
                     h: 4,
                   }}
-                  className={
-                    "relative text-xl flex !h-[60px] !w-[60px] items-center justify-center border border-black font-bold bg-white text-balck transition-all "
-                  }
+                  className={color}
                 >
-                  {seat.text_value}
+                  {seat.text_value == "木" ||
+                  seat.text_value == "壁" ||
+                  seat.text_value == "ﾄｲﾚ"
+                    ? seat.text_value
+                    : ""}
                 </div>
               );
             }
