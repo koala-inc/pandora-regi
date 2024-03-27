@@ -148,7 +148,7 @@ export default function SeatMap() {
                     h: 4,
                   }}
                   className={
-                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center border border-black font-bold bg-white text-balck transition-all "
+                    "relative text-xl flex !h-[60px] !w-[60px] items-center justify-center border border-black font-bold bg-white text-balck transition-all "
                   }
                 >
                   {seat.text_value}
