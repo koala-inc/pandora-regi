@@ -201,7 +201,7 @@ export default function EditSeatMap() {
                     h: 4,
                   }}
                   className={
-                    "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-cente font-bold text-balck"
+                    "relative text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-cente font-bold text-[#4f38107b]"
                   }
                 >
                   {deleteMode && tabMenu == 1 ? (
@@ -1043,7 +1043,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black"
               }
               onDragStart={() => {
                 setTextValue("A");
@@ -1055,7 +1055,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black"
               }
               onDragStart={() => {
                 setTextValue("B");
@@ -1067,7 +1067,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black"
               }
               onDragStart={() => {
                 setTextValue("C");
@@ -1079,7 +1079,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black"
               }
               onDragStart={() => {
                 setTextValue("D");
@@ -1091,7 +1091,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black"
               }
               onDragStart={() => {
                 setTextValue("E");
@@ -1103,7 +1103,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black"
               }
               onDragStart={() => {
                 setTextValue("V");
@@ -1115,7 +1115,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black"
               }
               onDragStart={() => {
                 setTextValue("I");
@@ -1127,7 +1127,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black"
               }
               onDragStart={() => {
                 setTextValue("P");
