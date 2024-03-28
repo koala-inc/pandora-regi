@@ -681,9 +681,9 @@ export default function ControlOrderSet() {
                   defaultValue={seatPreset.split("#")[2]}
                 >
                   <option value=""></option>
-                  <option value="&#39;">'</option>
-                  <option value="&#39;&#39;">''</option>
-                  <option value="&#39;&#39;&#39;">'''</option>
+                  <option value={`'`}>{`'`}</option>
+                  <option value={`''`}>{`''`}</option>
+                  <option value={`'''`}>{`'''`}</option>
                 </select>
               </div>
             </div>
