@@ -1647,19 +1647,19 @@ export default function ControlOrderSet() {
                     let flag3 = true;
                     let flag4 = true;
                     if (Number(numResult) <= 0 || !numResult) {
-                      alert("人数を正しく入力してください。");
+                      alert("人数を正しく入力してください");
                       flag1 = false;
                     }
                     if (Number(setTimeResult) <= 0 || !setTimeResult) {
-                      alert("セット時間を正しく入力してください。");
+                      alert("セット時間を正しく入力してください");
                       flag2 = false;
                     }
                     if (Number(result.replace(/[^0-9]/g, "")) <= 0 || !result) {
-                      alert("金額を正しく入力してください。");
+                      alert("金額を正しく入力してください");
                       flag3 = false;
                     }
                     if (!(order.startTime && order.endTime)) {
-                      alert("時間を入力してください。");
+                      alert("時間を入力してください");
                       flag4 = false;
                     }
                     if (flag1 && flag2 && flag3 && flag4) {
