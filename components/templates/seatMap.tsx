@@ -149,7 +149,7 @@ export default function SeatMap() {
         )}
       </GridLayout>
       <GridLayout
-        className="absolute top-0 left-0 layout !h-[100dvh]"
+        className="absolute top-0 left-0 layout !h-[100dvh] opacity-30"
         cols={133}
         compactType={null}
         width={2000}
