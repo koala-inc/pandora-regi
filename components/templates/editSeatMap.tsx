@@ -702,6 +702,42 @@ export default function EditSeatMap() {
                 "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
               }
               onDragStart={() => {
+                setTextValue("/seatMap/middle-line.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!w-full !h-full !select-none"}
+                src={"/seatMap/middle-line.svg"}
+                alt=""
+              />
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("/seatMap/short-line.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!w-full !h-full !select-none"}
+                src={"/seatMap/short-line.svg"}
+                alt=""
+              />
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
                 setTextValue("/seatMap/substract.svg");
               }}
             >
