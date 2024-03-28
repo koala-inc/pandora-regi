@@ -607,9 +607,9 @@ export default function EditSeatMap() {
                   }}
                 >
                   <option value=""></option>
-                  <option value="'">'</option>
-                  <option value="''">''</option>
-                  <option value="'''">'''</option>
+                  <option value="&#39;">'</option>
+                  <option value="&#39;&#39;">''</option>
+                  <option value="&#39;&#39;&#39;">'''</option>
                 </select>
               </div>
             </div>
