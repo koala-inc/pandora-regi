@@ -97,7 +97,7 @@ export default function Home() {
       onClick={() => {
         if (
           isCard &&
-          isControl == "" &&
+          (isControl == "" || isControl == "OPEN") &&
           seatPreset != "" &&
           purchaseOrder.some(
             (purchaseOrder: any) => purchaseOrder.id == seatPreset
@@ -111,7 +111,7 @@ export default function Home() {
     >
       <AnimatePresence>
         {isLock == 3 && <Lock2 />}
-        {!isCard && <SeatMap />}
+        {(isControl == "" || isControl == "OPEN") && <SeatMap />}
         {isHeader && !isCard && <Header datetime={datetime} />}
         {isFooter && !isCard && <Footer />}
         {purchaseOrder.length != 0 && seatPreset != "" ? (
@@ -122,7 +122,7 @@ export default function Home() {
               <>
                 <OrderSheet />
                 {Control(isControl)}
-                {isControl != "" && <HomeButton />}
+                {(isControl != "" || isControl != "OPEN") && <HomeButton />}
               </>
             )
           ) : (

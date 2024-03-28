@@ -178,7 +178,11 @@ function Base() {
     <>
       <section className="flex items-center justify-around text-md">
         <div className="flex-col flex items-center">
-          <p className="text-4xl mb-6">A{seatPreset}</p>
+          <p className="text-4xl mb-6">
+            {seatPreset.split("#")[0] +
+              seatPreset.split("#")[1] +
+              seatPreset.split("#")[2]}
+          </p>
           <Toggle isChecked={toggle} setIsChecked={setToggle} />
         </div>
         <div className="flex flex-col items-center justify-center">
@@ -855,7 +859,11 @@ function Add({ isCalculator, setIsCalculator }: any) {
     <>
       <section className="flex items-center justify-around text-md mb-4">
         <div className="flex-col flex items-center w-[77.45px]">
-          <p className="text-4xl w-full text-left">A{seatPreset}</p>
+          <p className="text-4xl w-full text-left">
+            {seatPreset.split("#")[0] +
+              seatPreset.split("#")[1] +
+              seatPreset.split("#")[2]}
+          </p>
         </div>
         <div className="flex flex-col items-center justify-center w-[64px]">
           <div className="flex flex-col items-center justify-center">
@@ -1268,7 +1276,11 @@ function CastAdd() {
     <>
       <section className="flex items-center justify-around text-md mb-4">
         <div className="flex-col flex items-center w-[77.45px]">
-          <p className="text-4xl w-full text-left">A{seatPreset}</p>
+          <p className="text-4xl w-full text-left">
+            {seatPreset.split("#")[0] +
+              seatPreset.split("#")[1] +
+              seatPreset.split("#")[2]}
+          </p>
         </div>
         <div className="flex flex-col items-center justify-center w-[64px]">
           <div className="flex flex-col items-center justify-center">

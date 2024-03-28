@@ -62,7 +62,7 @@ export default function EditSeatMap() {
     client
       .request(createSeatMap, {
         ...defaultVariables,
-        name: ID,
+        name: ID2 + "#" + ID + "#" + ID3,
         location: String(layoutItem.x + "/" + layoutItem.y),
         layer: tabMenu == 0 ? 3 : tabMenu == 1 ? 2 : tabMenu == 2 ? 1 : 0,
         text_value: tabMenu == 2 ? textValue : "",
@@ -84,6 +84,8 @@ export default function EditSeatMap() {
   };
 
   const [ID, setID] = useState("1");
+  const [ID2, setID2] = useState("A");
+  const [ID3, setID3] = useState("");
   const [showMenu, setShowMenu] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
   const [tabMenu, setTabMenu] = useState(0);
@@ -163,7 +165,9 @@ export default function EditSeatMap() {
                   ) : (
                     <></>
                   )}
-                  A{String(seat.name).toLocaleUpperCase()}
+                  {seat.name.split("#")[0] +
+                    seat.name.split("#")[1] +
+                    seat.name.split("#")[2]}
                 </div>
               );
             }
@@ -451,14 +455,44 @@ export default function EditSeatMap() {
                 "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-natural"
               }
             >
-              A{String(ID).toLocaleUpperCase()}
+              {ID2 + ID + ID3}
             </div>
             <hr className="my-4" />
             <h3 className="text-accent font-bold text-lg">卓番設定</h3>
             <div className="flex flex-col justify-end">
               <div className="flex">
-                <select className="mr-2 h-[45px] w-[60px] rounded-md bg-black px-2 text-center text-3xl font-bold text-white">
+                <select
+                  className="mr-2 h-[45px] w-[60px] rounded-md bg-black px-2 text-center text-3xl font-bold text-white"
+                  onChange={(e) => {
+                    setID2(e.target.value);
+                  }}
+                >
                   <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                  <option value="E">E</option>
+                  <option value="F">F</option>
+                  <option value="G">G</option>
+                  <option value="H">H</option>
+                  <option value="I">I</option>
+                  <option value="J">J</option>
+                  <option value="K">K</option>
+                  <option value="L">L</option>
+                  <option value="M">M</option>
+                  <option value="N">N</option>
+                  <option value="O">O</option>
+                  <option value="P">P</option>
+                  <option value="Q">Q</option>
+                  <option value="R">R</option>
+                  <option value="S">S</option>
+                  <option value="T">T</option>
+                  <option value="U">U</option>
+                  <option value="V">V</option>
+                  <option value="W">W</option>
+                  <option value="X">X</option>
+                  <option value="Y">Y</option>
+                  <option value="Z">Z</option>
                 </select>
                 <select
                   className="mr-2 h-[45px] w-[80px] rounded-md bg-black px-2 text-center text-3xl font-bold text-white"
@@ -565,6 +599,17 @@ export default function EditSeatMap() {
                   <option value="97">97</option>
                   <option value="98">98</option>
                   <option value="99">99</option>
+                </select>
+                <select
+                  className="mr-2 h-[45px] w-[80px] rounded-md bg-black px-2 text-center text-3xl font-bold text-white"
+                  onChange={(e) => {
+                    setID3(e.target.value);
+                  }}
+                >
+                  <option value=""></option>
+                  <option value="'">'</option>
+                  <option value="''">''</option>
+                  <option value="'''">'''</option>
                 </select>
               </div>
             </div>

@@ -73,13 +73,13 @@ export default function SeatMap() {
                     setSeatPreset(seat.name);
                     if (isLock < 2) {
                       setIsCard(true);
-                      if (isControl != "") setIsControl("");
+                      setIsControl("OPEN");
                     } else if (isLock == 2) {
                       setIsLock(3);
                     }
                   }}
                 >
-                  {String(seat.name).toLocaleUpperCase()}
+                  {seat.name.split("#")[1] + seat.name.split("#")[2]}
                 </div>
               );
             }

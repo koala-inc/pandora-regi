@@ -4,9 +4,11 @@ import Image from "next/image";
 import useIsCardGlobal from "@/globalstates/isCard";
 import usePurchaseOrderItemAddGlobal from "@/globalstates/purchaseOrderItemAdd";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
+import useIsControlGlobal from "@/globalstates/isControl";
 
 export default function HomeButton() {
   const [isCard, setIsCard] = useIsCardGlobal();
+  const [isControl, setIsControl] = useIsControlGlobal();
   const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
     usePurchaseOrderItemAddGlobal();
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
@@ -16,6 +18,7 @@ export default function HomeButton() {
       href={"/"}
       onClick={() => {
         setIsCard(false);
+        setIsControl("");
         setPurchaseOrderItemAdd([]);
         setSeatPreset("");
       }}

@@ -27,7 +27,7 @@ dayjs.locale(ja);
 
 function ContentHeader({ children }: { children: any }) {
   return (
-    <SubBorder size="h-[110px] mt-[-2px] max-w-[550px]">{children}</SubBorder>
+    <SubBorder size="h-[110px] mt-[-2px] max-w-[650px]">{children}</SubBorder>
   );
 }
 
@@ -113,6 +113,106 @@ export default function ControlOrderSet() {
       prefCode: "A",
       prefName: "A",
     },
+    {
+      prefCode: "B",
+      prefName: "B",
+    },
+    {
+      prefCode: "C",
+      prefName: "C",
+    },
+    {
+      prefCode: "D",
+      prefName: "D",
+    },
+    {
+      prefCode: "E",
+      prefName: "E",
+    },
+    {
+      prefCode: "F",
+      prefName: "F",
+    },
+    {
+      prefCode: "G",
+      prefName: "G",
+    },
+    {
+      prefCode: "H",
+      prefName: "H",
+    },
+    {
+      prefCode: "I",
+      prefName: "I",
+    },
+    {
+      prefCode: "J",
+      prefName: "J",
+    },
+    {
+      prefCode: "K",
+      prefName: "K",
+    },
+    {
+      prefCode: "L",
+      prefName: "L",
+    },
+    {
+      prefCode: "M",
+      prefName: "M",
+    },
+    {
+      prefCode: "N",
+      prefName: "N",
+    },
+    {
+      prefCode: "O",
+      prefName: "O",
+    },
+    {
+      prefCode: "P",
+      prefName: "P",
+    },
+    {
+      prefCode: "Q",
+      prefName: "Q",
+    },
+    {
+      prefCode: "R",
+      prefName: "R",
+    },
+    {
+      prefCode: "S",
+      prefName: "S",
+    },
+    {
+      prefCode: "T",
+      prefName: "T",
+    },
+    {
+      prefCode: "U",
+      prefName: "U",
+    },
+    {
+      prefCode: "V",
+      prefName: "V",
+    },
+    {
+      prefCode: "W",
+      prefName: "W",
+    },
+    {
+      prefCode: "X",
+      prefName: "X",
+    },
+    {
+      prefCode: "Y",
+      prefName: "Y",
+    },
+    {
+      prefCode: "Z",
+      prefName: "Z",
+    },
   ];
   const seatNumber = [
     {
@@ -194,6 +294,86 @@ export default function ControlOrderSet() {
     {
       prefCode: "20",
       prefName: "20",
+    },
+    {
+      prefCode: "21",
+      prefName: "21",
+    },
+    {
+      prefCode: "22",
+      prefName: "22",
+    },
+    {
+      prefCode: "23",
+      prefName: "23",
+    },
+    {
+      prefCode: "24",
+      prefName: "24",
+    },
+    {
+      prefCode: "25",
+      prefName: "25",
+    },
+    {
+      prefCode: "26",
+      prefName: "26",
+    },
+    {
+      prefCode: "27",
+      prefName: "27",
+    },
+    {
+      prefCode: "28",
+      prefName: "28",
+    },
+    {
+      prefCode: "29",
+      prefName: "29",
+    },
+    {
+      prefCode: "30",
+      prefName: "30",
+    },
+    {
+      prefCode: "31",
+      prefName: "31",
+    },
+    {
+      prefCode: "32",
+      prefName: "32",
+    },
+    {
+      prefCode: "33",
+      prefName: "33",
+    },
+    {
+      prefCode: "34",
+      prefName: "34",
+    },
+    {
+      prefCode: "35",
+      prefName: "35",
+    },
+    {
+      prefCode: "36",
+      prefName: "36",
+    },
+    {
+      prefCode: "37",
+      prefName: "37",
+    },
+    {
+      prefCode: "38",
+      prefName: "38",
+    },
+    {
+      prefCode: "39",
+      prefName: "39",
+    },
+    {
+      prefCode: "40",
+      prefName: "40",
     },
   ];
   const type = [
@@ -317,7 +497,9 @@ export default function ControlOrderSet() {
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
 
   const [isRoomCharge, setIsRoomCharge] = useState(false);
-  const [id, setId] = useState(seatPreset);
+  const [id, setId] = useState(seatPreset.split("#")[1]);
+  const [id2, setId2] = useState(seatPreset.split("#")[0]);
+  const [id3, setId3] = useState(seatPreset.split("#")[2]);
 
   const [serviceTax, setServiceTax] = useState(0);
 
@@ -461,7 +643,13 @@ export default function ControlOrderSet() {
             <div className="flex flex-col justify-end">
               <label className="mb-1 text-xs font-bold text-accent">卓番</label>
               <div className="flex">
-                <select className="mr-2 h-[45px] w-[60px] rounded-md bg-black px-2 text-center text-3xl font-bold text-white">
+                <select
+                  className="mr-2 h-[45px] w-[60px] rounded-md bg-black px-2 text-center text-3xl font-bold text-white"
+                  onChange={(e) => {
+                    setId2(e.target.value);
+                  }}
+                  defaultValue={seatPreset.split("#")[0]}
+                >
                   {seatAlphabet.map((pref) => {
                     return (
                       <option key={pref.prefCode} value={pref.prefCode}>
@@ -475,7 +663,7 @@ export default function ControlOrderSet() {
                   onChange={(e) => {
                     setId(e.target.value);
                   }}
-                  defaultValue={seatPreset}
+                  defaultValue={seatPreset.split("#")[1]}
                 >
                   {seatNumber.map((pref) => {
                     return (
@@ -484,6 +672,18 @@ export default function ControlOrderSet() {
                       </option>
                     );
                   })}
+                </select>
+                <select
+                  className="mr-2 h-[45px] w-[80px] rounded-md bg-black px-2 text-center text-3xl font-bold text-white"
+                  onChange={(e) => {
+                    setId3(e.target.value);
+                  }}
+                  defaultValue={seatPreset.split("#")[2]}
+                >
+                  <option value=""></option>
+                  <option value="'">'</option>
+                  <option value="''">''</option>
+                  <option value="'''">'''</option>
                 </select>
               </div>
             </div>
@@ -1467,7 +1667,7 @@ export default function ControlOrderSet() {
                         ...purchaseOrderSet,
                         {
                           ...order,
-                          id: id,
+                          id: id2 + "#" + id + "#" + id3,
                           toggle: toggle,
                           setName: setName,
                           roomName: roomName,
