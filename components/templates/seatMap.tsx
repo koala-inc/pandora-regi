@@ -110,7 +110,7 @@ export default function SeatMap() {
                     h: 4,
                   }}
                   className={
-                    "relative text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-cente font-bold text-[#4f38107b]"
+                    "relative text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
                   }
                 >
                   {seat.image_url == "A" ? (

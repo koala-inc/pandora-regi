@@ -201,7 +201,7 @@ export default function EditSeatMap() {
                     h: 4,
                   }}
                   className={
-                    "relative text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-cente font-bold text-[#4f38107b]"
+                    "relative text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
                   }
                 >
                   {deleteMode && tabMenu == 1 ? (
