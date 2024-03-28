@@ -612,6 +612,60 @@ export default function EditSeatMap() {
                 "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
               }
               onDragStart={() => {
+                setTextValue("/seatMap/objects/armchair-left.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!w-full !h-full !select-none"}
+                src={"/seatMap/objects/armchair-left.svg"}
+                alt=""
+              />
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("/seatMap/objects/armchair-right.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!w-full !h-full !select-none"}
+                src={"/seatMap/objects/armchair-right.svg"}
+                alt=""
+              />
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("/seatMap/objects/armchair-up.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!w-full !h-full !select-none"}
+                src={"/seatMap/objects/armchair-up.svg"}
+                alt=""
+              />
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
                 setTextValue("/seatMap/objects/cashier.svg");
               }}
             >
@@ -784,186 +838,186 @@ export default function EditSeatMap() {
                 src={"/seatMap/objects/karaoke.svg"}
                 alt=""
               />
-              <div
-                draggable
-                unselectable="on"
-                className={
-                  "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
-                }
-                onDragStart={() => {
-                  setTextValue("/seatMap/objects/locker-room.svg");
-                }}
-              >
-                <Image
-                  width={30}
-                  height={30}
-                  className={"!w-full !h-full !select-none"}
-                  src={"/seatMap/objects/locker-room.svg"}
-                  alt=""
-                />
-              </div>
-              <div
-                draggable
-                unselectable="on"
-                className={
-                  "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
-                }
-                onDragStart={() => {
-                  setTextValue("/seatMap/objects/shelf.svg");
-                }}
-              >
-                <Image
-                  width={30}
-                  height={30}
-                  className={"!w-full !h-full !select-none"}
-                  src={"/seatMap/objects/shelf.svg"}
-                  alt=""
-                />
-              </div>
-              <div
-                draggable
-                unselectable="on"
-                className={
-                  "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
-                }
-                onDragStart={() => {
-                  setTextValue("/seatMap/objects/smartphone.svg");
-                }}
-              >
-                <Image
-                  width={30}
-                  height={30}
-                  className={"!w-full !h-full !select-none"}
-                  src={"/seatMap/objects/smartphone.svg"}
-                  alt=""
-                />
-              </div>
-              <div
-                draggable
-                unselectable="on"
-                className={
-                  "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
-                }
-                onDragStart={() => {
-                  setTextValue("/seatMap/objects/smoke.svg");
-                }}
-              >
-                <Image
-                  width={30}
-                  height={30}
-                  className={"!w-full !h-full !select-none"}
-                  src={"/seatMap/objects/smoke.svg"}
-                  alt=""
-                />
-              </div>
-              <div
-                draggable
-                unselectable="on"
-                className={
-                  "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
-                }
-                onDragStart={() => {
-                  setTextValue("/seatMap/objects/sofa.svg");
-                }}
-              >
-                <Image
-                  width={30}
-                  height={30}
-                  className={"!w-full !h-full !select-none"}
-                  src={"/seatMap/objects/sofa.svg"}
-                  alt=""
-                />
-              </div>
-              <div
-                draggable
-                unselectable="on"
-                className={
-                  "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
-                }
-                onDragStart={() => {
-                  setTextValue("/seatMap/objects/sofa2.svg");
-                }}
-              >
-                <Image
-                  width={30}
-                  height={30}
-                  className={"!w-full !h-full !select-none"}
-                  src={"/seatMap/objects/sofa2.svg"}
-                  alt=""
-                />
-              </div>
-              <div
-                draggable
-                unselectable="on"
-                className={
-                  "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
-                }
-                onDragStart={() => {
-                  setTextValue("/seatMap/objects/tablet.svg");
-                }}
-              >
-                <Image
-                  width={30}
-                  height={30}
-                  className={"!w-full !h-full !select-none"}
-                  src={"/seatMap/objects/tablet.svg"}
-                  alt=""
-                />
-              </div>
-              <div
-                draggable
-                unselectable="on"
-                className={
-                  "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
-                }
-                onDragStart={() => {
-                  setTextValue("/seatMap/objects/wc-women.svg");
-                }}
-              >
-                <Image
-                  width={30}
-                  height={30}
-                  className={"!w-full !h-full !select-none"}
-                  src={"/seatMap/objects/wc-women.svg"}
-                  alt=""
-                />
-              </div>
-              <div
-                draggable
-                unselectable="on"
-                className={
-                  "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
-                }
-                onDragStart={() => {
-                  setTextValue("/seatMap/objects/wc-men.svg");
-                }}
-              >
-                <Image
-                  width={30}
-                  height={30}
-                  className={"!w-full !h-full !select-none"}
-                  src={"/seatMap/objects/wc-men.svg"}
-                  alt=""
-                />
-              </div>
-              <div
-                draggable
-                unselectable="on"
-                className={
-                  "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
-                }
-                onDragStart={() => {
-                  setTextValue("/seatMap/objects/wine.svg");
-                }}
-              >
-                <Image
-                  width={30}
-                  height={30}
-                  className={"!w-full !h-full !select-none"}
-                  src={"/seatMap/objects/wine.svg"}
-                  alt=""
-                />
-              </div>
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("/seatMap/objects/locker-room.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!w-full !h-full !select-none"}
+                src={"/seatMap/objects/locker-room.svg"}
+                alt=""
+              />
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("/seatMap/objects/shelf.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!w-full !h-full !select-none"}
+                src={"/seatMap/objects/shelf.svg"}
+                alt=""
+              />
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("/seatMap/objects/smartphone.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!w-full !h-full !select-none"}
+                src={"/seatMap/objects/smartphone.svg"}
+                alt=""
+              />
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("/seatMap/objects/smoke.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!w-full !h-full !select-none"}
+                src={"/seatMap/objects/smoke.svg"}
+                alt=""
+              />
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("/seatMap/objects/sofa.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!w-full !h-full !select-none"}
+                src={"/seatMap/objects/sofa.svg"}
+                alt=""
+              />
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("/seatMap/objects/sofa2.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!w-full !h-full !select-none"}
+                src={"/seatMap/objects/sofa2.svg"}
+                alt=""
+              />
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("/seatMap/objects/tablet.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!w-full !h-full !select-none"}
+                src={"/seatMap/objects/tablet.svg"}
+                alt=""
+              />
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("/seatMap/objects/wc-women.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!w-full !h-full !select-none"}
+                src={"/seatMap/objects/wc-women.svg"}
+                alt=""
+              />
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("/seatMap/objects/wc-men.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!w-full !h-full !select-none"}
+                src={"/seatMap/objects/wc-men.svg"}
+                alt=""
+              />
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("/seatMap/objects/wine.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!w-full !h-full !select-none"}
+                src={"/seatMap/objects/wine.svg"}
+                alt=""
+              />
             </div>
           </div>
         ) : tabMenu == 2 ? (
