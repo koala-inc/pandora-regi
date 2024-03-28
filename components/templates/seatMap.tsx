@@ -134,6 +134,7 @@ export default function SeatMap() {
         preventCollision={true}
         isDraggable={false}
         isResizable={false}
+        allowOverlap={true}
       >
         {searchData?.data?.seatMap[0]?.store_seat_map[0]?.seat_map?.map(
           (seat: any, index: any) => {

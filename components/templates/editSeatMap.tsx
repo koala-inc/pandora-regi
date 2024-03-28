@@ -224,6 +224,7 @@ export default function EditSeatMap() {
         onDrop={onDrop}
         isDroppable={true}
         isDraggable={deleteMode || tabMenu != 1 ? false : true}
+        allowOverlap={true}
       >
         {searchData?.data?.seatMap[0]?.store_seat_map[0]?.seat_map?.map(
           (seat: any, index: any) => {
