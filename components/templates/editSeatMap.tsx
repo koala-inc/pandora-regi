@@ -46,6 +46,8 @@ export default function EditSeatMap() {
 
   const searchData = useSWR<any>(searchSeatMap, fetcher);
 
+  console.log(searchData);
+
   const onLayoutChange = (updateSeatMapDate: any) => {
     updateSeatMapDate.map((seatMap: any) => {
       client.request(updateSeatMap, {
@@ -97,7 +99,6 @@ export default function EditSeatMap() {
         }
         cols={133}
         compactType={null}
-        verticalCompact={false}
         width={2000}
         rowHeight={5}
         isResizable={false}
@@ -110,100 +111,61 @@ export default function EditSeatMap() {
         {searchData?.data?.seatMap[0]?.store_seat_map[0]?.seat_map?.map(
           (seat: any, index: any) => {
             if (seat.layer == 3) {
-              switch (seat.type) {
-                case 0:
-                  return (
-                    <div
-                      key={seat.id}
-                      data-grid={{
-                        x: Number(seat.location.split("/")[0]),
-                        y: Number(seat.location.split("/")[1]),
-                        w: 4,
-                        h: 4,
-                      }}
-                      className={
-                        "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent bg-natural"
-                      }
+              return (
+                <div
+                  key={seat.id}
+                  data-grid={{
+                    x: Number(seat.location.split("/")[0]),
+                    y: Number(seat.location.split("/")[1]),
+                    w: 4,
+                    h: 4,
+                  }}
+                  className={
+                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent bg-natural"
+                  }
+                >
+                  {deleteMode && tabMenu == 0 ? (
+                    <Border2
+                      className="absolute right-[-20px] top-[-15px]"
+                      rounded="rounded-full"
+                      size="h-[28px] w-[28px] p-[6px]"
                     >
-                      {deleteMode && tabMenu == 0 ? (
-                        <Border2
-                          className="absolute right-[-20px] top-[-15px]"
-                          rounded="rounded-full"
-                          size="h-[28px] w-[28px] p-[6px]"
-                        >
-                          <div
-                            onClick={() => {
-                              client
-                                .request(deleteSeatMap, {
-                                  id: seat.id,
-                                  ...defaultVariables,
-                                })
-                                .then(() => {
-                                  searchData.mutate(
-                                    () =>
-                                      client.request(searchSeatMap, {
-                                        ...defaultVariables,
-                                      }),
-                                    {
-                                      populateCache: true,
-                                      revalidate: false,
-                                    }
-                                  );
-                                });
-                            }}
-                          >
-                            <Image
-                              src={"/assets/close.svg"}
-                              width={26}
-                              height={26}
-                              className="!h-full !w-full"
-                              alt=""
-                            />
-                          </div>
-                        </Border2>
-                      ) : (
-                        <></>
-                      )}
-                      A{String(seat.name).toLocaleUpperCase()}
-                    </div>
-                  );
-                case 1:
-                  return (
-                    <Image
-                      key={index}
-                      width={30}
-                      height={30}
-                      className={seat.area + " !w-full !h-full"}
-                      src={seat.objectUrl}
-                      alt=""
-                    />
-                  );
-                case 2:
-                  return (
-                    <EditSeat
-                      key={index}
-                      id={seat.id}
-                      area={seat.area}
-                      bg={
-                        isLock > 1
-                          ? " bg-green-200 opacity-90"
-                          : purchaseOrder[0].id != seat.id
-                          ? " bg-natural"
-                          : " bg-blue-200 opacity-90"
-                      }
-                      onClick={() => {
-                        if (isLock < 2) {
-                          setIsCard(true);
-                          if (isControl != "") setIsControl("");
-                        } else if (isLock == 2) {
-                          setIsLock(3);
-                        }
-                      }}
-                    >
-                      {seat.body}
-                    </EditSeat>
-                  );
-              }
+                      <div
+                        onClick={() => {
+                          client
+                            .request(deleteSeatMap, {
+                              id: seat.id,
+                              ...defaultVariables,
+                            })
+                            .then(() => {
+                              searchData.mutate(
+                                () =>
+                                  client.request(searchSeatMap, {
+                                    ...defaultVariables,
+                                  }),
+                                {
+                                  populateCache: true,
+                                  revalidate: false,
+                                }
+                              );
+                            });
+                        }}
+                      >
+                        <Image
+                          src={"/assets/close.svg"}
+                          width={26}
+                          height={26}
+                          className="!h-full !w-full"
+                          alt=""
+                        />
+                      </div>
+                    </Border2>
+                  ) : (
+                    <></>
+                  )}
+                  A{String(seat.name).toLocaleUpperCase()}
+                </div>
+              );
             }
           }
         )}
@@ -239,7 +201,7 @@ export default function EditSeatMap() {
                     h: 4,
                   }}
                   className={
-                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-cente font-bold text-balck"
+                    "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-cente font-bold text-balck"
                   }
                 >
                   {deleteMode && tabMenu == 1 ? (
@@ -281,13 +243,35 @@ export default function EditSeatMap() {
                   ) : (
                     <></>
                   )}
-                  <Image
-                    width={30}
-                    height={30}
-                    className={"!w-full !h-full drag-none !select-none"}
-                    src={seat.image_url}
-                    alt=""
-                  />
+                  {seat.image_url == "A" ? (
+                    "A"
+                  ) : seat.image_url == "B" ? (
+                    "B"
+                  ) : seat.image_url == "C" ? (
+                    "C"
+                  ) : seat.image_url == "D" ? (
+                    "D"
+                  ) : seat.image_url == "E" ? (
+                    "E"
+                  ) : seat.image_url == "F" ? (
+                    "F"
+                  ) : seat.image_url == "G" ? (
+                    "G"
+                  ) : seat.image_url == "V" ? (
+                    "V"
+                  ) : seat.image_url == "I" ? (
+                    "I"
+                  ) : seat.image_url == "P" ? (
+                    "P"
+                  ) : (
+                    <Image
+                      width={30}
+                      height={30}
+                      className={"!w-full !h-full drag-none !select-none"}
+                      src={seat.image_url}
+                      alt=""
+                    />
+                  )}
                 </div>
               );
             }
@@ -586,7 +570,7 @@ export default function EditSeatMap() {
             </div>
           </>
         ) : tabMenu == 1 ? (
-          <div className="flex justify-start flex-wrap">
+          <div className="flex justify-start flex-wrap max-h-[80%] overflow-scroll">
             <div
               draggable
               unselectable="on"
@@ -1054,6 +1038,102 @@ export default function EditSeatMap() {
                 src={"/seatMap/objects/wine.svg"}
                 alt=""
               />
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("A");
+              }}
+            >
+              A
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("B");
+              }}
+            >
+              B
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("C");
+              }}
+            >
+              C
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("D");
+              }}
+            >
+              D
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("E");
+              }}
+            >
+              E
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("V");
+              }}
+            >
+              V
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("I");
+              }}
+            >
+              I
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("P");
+              }}
+            >
+              P
             </div>
           </div>
         ) : tabMenu == 2 ? (

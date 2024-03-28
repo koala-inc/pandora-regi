@@ -51,76 +51,37 @@ export default function SeatMap() {
         {searchData?.data?.seatMap[0]?.store_seat_map[0]?.seat_map?.map(
           (seat: any, index: any) => {
             if (seat.layer == 3) {
-              switch (seat.type) {
-                case 0:
-                  return (
-                    <div
-                      key={seat.id}
-                      data-grid={{
-                        x: Number(seat.location.split("/")[0]),
-                        y: Number(seat.location.split("/")[1]),
-                        w: 4,
-                        h: 4,
-                      }}
-                      className={
-                        isLock > 1
-                          ? "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-green-200 opacity-90"
-                          : purchaseOrder.some(
-                              (purchaseOrder: any) =>
-                                purchaseOrder.id == seat.name
-                            )
-                          ? "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-blue-200 opacity-90"
-                          : "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-natural"
-                      }
-                      onClick={() => {
-                        setSeatPreset(seat.name);
-                        if (isLock < 2) {
-                          setIsCard(true);
-                          if (isControl != "") setIsControl("");
-                        } else if (isLock == 2) {
-                          setIsLock(3);
-                        }
-                      }}
-                    >
-                      {String(seat.name).toLocaleUpperCase()}
-                    </div>
-                  );
-                case 1:
-                  return (
-                    <Image
-                      key={index}
-                      width={30}
-                      height={30}
-                      className={seat.area + " !w-full !h-full"}
-                      src={seat.objectUrl}
-                      alt=""
-                    />
-                  );
-                case 2:
-                  return (
-                    <Seat
-                      key={index}
-                      id={seat.id}
-                      bg={
-                        isLock > 1
-                          ? " bg-green-200 opacity-90"
-                          : purchaseOrder[0].id != seat.id
-                          ? " bg-natural"
-                          : " bg-blue-200 opacity-90"
-                      }
-                      onClick={() => {
-                        if (isLock < 2) {
-                          setIsCard(true);
-                          if (isControl != "") setIsControl("");
-                        } else if (isLock == 2) {
-                          setIsLock(3);
-                        }
-                      }}
-                    >
-                      {seat.body}
-                    </Seat>
-                  );
-              }
+              return (
+                <div
+                  key={seat.id}
+                  data-grid={{
+                    x: Number(seat.location.split("/")[0]),
+                    y: Number(seat.location.split("/")[1]),
+                    w: 4,
+                    h: 4,
+                  }}
+                  className={
+                    isLock > 1
+                      ? "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-green-200 opacity-90"
+                      : purchaseOrder.some(
+                          (purchaseOrder: any) => purchaseOrder.id == seat.name
+                        )
+                      ? "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-blue-200 opacity-90"
+                      : "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-natural"
+                  }
+                  onClick={() => {
+                    setSeatPreset(seat.name);
+                    if (isLock < 2) {
+                      setIsCard(true);
+                      if (isControl != "") setIsControl("");
+                    } else if (isLock == 2) {
+                      setIsLock(3);
+                    }
+                  }}
+                >
+                  {String(seat.name).toLocaleUpperCase()}
+                </div>
+              );
             }
           }
         )}
@@ -152,13 +113,35 @@ export default function SeatMap() {
                     "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-cente font-bold text-balck"
                   }
                 >
-                  <Image
-                    width={30}
-                    height={30}
-                    className={"!w-full !h-full drag-none !select-none"}
-                    src={seat.image_url}
-                    alt=""
-                  />
+                  {seat.image_url == "A" ? (
+                    "A"
+                  ) : seat.image_url == "B" ? (
+                    "B"
+                  ) : seat.image_url == "C" ? (
+                    "C"
+                  ) : seat.image_url == "D" ? (
+                    "D"
+                  ) : seat.image_url == "E" ? (
+                    "E"
+                  ) : seat.image_url == "F" ? (
+                    "F"
+                  ) : seat.image_url == "G" ? (
+                    "G"
+                  ) : seat.image_url == "V" ? (
+                    "V"
+                  ) : seat.image_url == "I" ? (
+                    "I"
+                  ) : seat.image_url == "P" ? (
+                    "P"
+                  ) : (
+                    <Image
+                      width={30}
+                      height={30}
+                      className={"!w-full !h-full drag-none !select-none"}
+                      src={seat.image_url}
+                      alt=""
+                    />
+                  )}
                 </div>
               );
             }
@@ -166,7 +149,7 @@ export default function SeatMap() {
         )}
       </GridLayout>
       <GridLayout
-        className="absolute top-0 left-0 layout !h-[100dvh] opacity-30"
+        className="absolute top-0 left-0 layout !h-[100dvh]"
         cols={133}
         compactType={null}
         width={2000}

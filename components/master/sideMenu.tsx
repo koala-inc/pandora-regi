@@ -28,9 +28,8 @@ export default function SideMenu({
   return (
     <div className="absolute left-0 top-0 h-[100dvh] w-[200px] overflow-y-scroll border-t-8 border-secondary bg-thirdary font-bold">
       {nav.map((item, index) => (
-        <>
+        <div key={index}>
           <div
-            key={index}
             className={`relative flex h-[60px] w-full items-center justify-center border-b-8 border-secondary text-white first-letter:relative`}
             onClick={() => {
               if (!open[index].open) {
@@ -79,7 +78,6 @@ export default function SideMenu({
           </div>
           {item.submenu && open[index].open && (
             <div
-              key={index}
               className={`relative flex w-full flex-col items-center justify-center border-b-8 border-secondary bg-neutral-600 py-2 text-white first-letter:relative ${
                 item.disabled ? "disabled" : ""
               }`}
@@ -96,7 +94,7 @@ export default function SideMenu({
               ))}
             </div>
           )}
-        </>
+        </div>
       ))}
     </div>
   );
