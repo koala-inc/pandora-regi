@@ -88,6 +88,7 @@ export default function EditSeatMap() {
   const [ID3, setID3] = useState("");
   const [showMenu, setShowMenu] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
+  const [positionMode, setPositionMode] = useState(false);
   const [tabMenu, setTabMenu] = useState(0);
   const [textValue, setTextValue] = useState("");
 
@@ -390,15 +391,19 @@ export default function EditSeatMap() {
       <div
         className={
           showMenu
-            ? "absolute top-[20dvh] h-[60dvh] w-[300px] p-5 border-secondary border-8 bg-primary rounded-xl rounded-tl-none left-[50px] transition-all"
-            : "absolute top-[20dvh] h-[60dvh] w-[300px] p-5 border-secondary border-8 bg-primary rounded-xl rounded-tl-none left-[-300px] transition-all"
+            ? !positionMode
+              ? "absolute z-50 top-[20dvh] h-[60dvh] w-[300px] p-5 border-black bg-stone-400 border-8 rounded-xl rounded-t-none left-[50px] transition-all"
+              : "absolute z-50 top-[20dvh] h-[60dvh] w-[300px] p-5 border-black bg-stone-400 border-8 rounded-xl rounded-t-none right-[50px] transition-all"
+            : !positionMode
+            ? "absolute z-50 top-[20dvh] h-[60dvh] w-[300px] p-5 border-black bg-stone-400 border-8 rounded-xl rounded-t-none left-[-300px] transition-all"
+            : "absolute z-50 top-[20dvh] h-[60dvh] w-[300px] p-5 border-black bg-stone-400 border-8 rounded-xl rounded-t-none right-[-300px] transition-all"
         }
       >
         <div
           className={
             tabMenu == 0
-              ? "absolute text-white top-[-56px] left-[-8px] px-5 py-3 z-99 border-secondary rounded-t-xl border-8 border-b-0 bg-primary"
-              : "absolute text-white top-[-56px] left-[-8px] px-5 py-3 z-99 border-secondary rounded-t-xl border-8 border-b-0 bg-primary opacity-50"
+              ? "absolute text-white top-[-56px] left-[-8px] px-5 py-3 z-99 border-black rounded-t-xl border-8 border-b-0 bg-stone-400"
+              : "absolute text-white top-[-56px] left-[-8px] px-5 py-3 z-99 border-black rounded-t-xl border-8 border-b-0 bg-stone-400 opacity-50"
           }
           onClick={() => {
             setTabMenu(0);
@@ -407,13 +412,13 @@ export default function EditSeatMap() {
             setID3("");
           }}
         >
-          席
+          席配置
         </div>
         <div
           className={
             tabMenu == 1
-              ? "absolute text-white top-[-56px] left-[60px] px-5 py-3 z-99 border-secondary rounded-t-xl border-8 border-b-0 bg-primary"
-              : "absolute text-white top-[-56px] left-[60px] px-5 py-3 z-99 border-secondary rounded-t-xl border-8 border-b-0 bg-primary opacity-50"
+              ? "absolute text-white top-[-56px] left-[91px] px-5 py-3 z-99 border-black rounded-t-xl border-8 border-b-0 bg-stone-400"
+              : "absolute text-white top-[-56px] left-[91px] px-5 py-3 z-99 border-black rounded-t-xl border-8 border-b-0 bg-stone-400 opacity-50"
           }
           onClick={() => {
             setTabMenu(1);
@@ -422,13 +427,13 @@ export default function EditSeatMap() {
             setID3("");
           }}
         >
-          オブジェクト
+          ｵﾌﾞｼﾞｪ
         </div>
         <div
           className={
             tabMenu == 2
-              ? "absolute text-white top-[-56px] left-[205px] px-5 py-3 z-99 border-secondary rounded-t-xl border-8 border-b-0 bg-primary"
-              : "absolute text-white top-[-56px] left-[205px] px-5 py-3 z-99 border-secondary rounded-t-xl border-8 border-b-0 bg-primary opacity-50"
+              ? "absolute text-white top-[-56px] whitespace-nowrap left-[189.5px] px-5 py-3 z-99 border-black rounded-t-xl border-8 border-b-0 bg-stone-400"
+              : "absolute text-white top-[-56px] whitespace-nowrap left-[189.5px] px-5 py-3 z-99 border-black rounded-t-xl border-8 border-b-0 bg-stone-400 opacity-50"
           }
           onClick={() => {
             setTabMenu(2);
@@ -437,23 +442,42 @@ export default function EditSeatMap() {
             setID3("");
           }}
         >
-          壁
+          壁配置
         </div>
-        <div
-          className="absolute right-[-40px] top-[calc(50%-50px)] text-black h-[100px] w-[20px] flex justify-center items-center font-bold"
-          onClick={() => {
-            setShowMenu((showMenu) => !showMenu);
-          }}
-        >
-          {showMenu ? "〈" : "　〉"}
+        {!positionMode ? (
+          <div
+            className="absolute right-[-40px] top-[calc(50%-50px)] text-black h-[100px] w-[20px] flex justify-center items-center font-bold"
+            onClick={() => {
+              setShowMenu((showMenu) => !showMenu);
+            }}
+          >
+            {showMenu ? "〈" : "　〉"}
+          </div>
+        ) : (
+          <div
+            className="absolute left-[-50px] top-[calc(50%-50px)] text-black h-[100px] w-[20px] flex justify-center items-center font-bold"
+            onClick={() => {
+              setShowMenu((showMenu) => !showMenu);
+            }}
+          >
+            {showMenu ? "　〉" : "〈"}
+          </div>
+        )}
+        <div className="flex justify-around">
+          <Button
+            onClick={() => setDeleteMode((deleteMode) => !deleteMode)}
+            natural
+            className={deleteMode ? "" : "opacity-50"}
+          >
+            削除モード
+          </Button>
+          <Button
+            onClick={() => setPositionMode((positionMode) => !positionMode)}
+            natural
+          >
+            {positionMode ? "右表示へ" : "左表示へ"}
+          </Button>
         </div>
-        <Button
-          onClick={() => setDeleteMode((deleteMode) => !deleteMode)}
-          natural
-          className={deleteMode ? "" : "opacity-50"}
-        >
-          削除モード
-        </Button>
         <h3 className="text-accent font-bold text-lg mt-5">配置パーツ</h3>
         {tabMenu == 0 ? (
           <>
@@ -1097,7 +1121,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black"
+                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("A");
@@ -1109,7 +1133,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black"
+                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("B");
@@ -1121,7 +1145,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black"
+                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("C");
@@ -1133,7 +1157,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black"
+                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("D");
@@ -1145,7 +1169,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black"
+                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("E");
@@ -1157,7 +1181,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black"
+                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("V");
@@ -1169,7 +1193,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black"
+                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("I");
@@ -1181,7 +1205,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black"
+                "droppable-element text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("P");
