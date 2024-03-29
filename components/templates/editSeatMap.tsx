@@ -97,8 +97,8 @@ export default function EditSeatMap() {
       <GridLayout
         className={
           tabMenu == 0
-            ? "absolute top-0 left-0 layout !h-[100dvh] !w-[100dvw]"
-            : "absolute top-0 left-0 layout !h-[100dvh] !w-[100dvw] opacity-30 z-[-1]"
+            ? "layout absolute left-0 top-0 !h-[100dvh] !w-[100dvw]"
+            : "layout absolute left-0 top-0 z-[-1] !h-[100dvh] !w-[100dvw] opacity-30"
         }
         cols={133}
         compactType={null}
@@ -124,7 +124,7 @@ export default function EditSeatMap() {
                     h: 4,
                   }}
                   className={
-                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent bg-natural"
+                    "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-xl font-bold text-accent"
                   }
                 >
                   {deleteMode && tabMenu == 0 ? (
@@ -178,8 +178,8 @@ export default function EditSeatMap() {
       <GridLayout
         className={
           tabMenu == 1
-            ? "absolute top-0 left-0 layout !h-[100dvh] !w-[100dvw]"
-            : "absolute top-0 left-0 layout !h-[100dvh] !w-[100dvw] opacity-30 z-[-1]"
+            ? "layout absolute left-0 top-0 !h-[100dvh] !w-[100dvw]"
+            : "layout absolute left-0 top-0 z-[-1] !h-[100dvh] !w-[100dvw] opacity-30"
         }
         cols={133}
         compactType={null}
@@ -206,7 +206,7 @@ export default function EditSeatMap() {
                     h: 4,
                   }}
                   className={
-                    "relative text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
+                    "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center text-5xl font-bold text-[#4f38107b]"
                   }
                 >
                   {deleteMode && tabMenu == 1 ? (
@@ -272,7 +272,7 @@ export default function EditSeatMap() {
                     <Image
                       width={30}
                       height={30}
-                      className={"!w-full !h-full drag-none !select-none"}
+                      className={"drag-none !h-full !w-full !select-none"}
                       src={seat.image_url}
                       alt=""
                     />
@@ -286,8 +286,8 @@ export default function EditSeatMap() {
       <GridLayout
         className={
           tabMenu == 2
-            ? "absolute top-0 left-0 layout !h-[100dvh] !w-[100dvw]"
-            : "absolute top-0 left-0 layout !h-[100dvh] !w-[100dvw] opacity-30 z-[-1]"
+            ? "layout absolute left-0 top-0 !h-[100dvh] !w-[100dvw]"
+            : "layout absolute left-0 top-0 z-[-1] !h-[100dvh] !w-[100dvw] opacity-30"
         }
         cols={133}
         compactType={null}
@@ -392,18 +392,18 @@ export default function EditSeatMap() {
         className={
           showMenu
             ? !positionMode
-              ? "absolute z-50 top-[20dvh] h-[60dvh] w-[300px] p-5 border-black bg-stone-400 border-8 rounded-xl rounded-t-none left-[50px] transition-all"
-              : "absolute z-50 top-[20dvh] h-[60dvh] w-[300px] p-5 border-black bg-stone-400 border-8 rounded-xl rounded-t-none right-[50px] transition-all"
+              ? "absolute left-[50px] top-[20dvh] z-50 h-[60dvh] w-[300px] rounded-xl rounded-t-none border-8 border-black bg-stone-400 p-5 transition-all"
+              : "absolute right-[50px] top-[20dvh] z-50 h-[60dvh] w-[300px] rounded-xl rounded-t-none border-8 border-black bg-stone-400 p-5 transition-all"
             : !positionMode
-            ? "absolute z-50 top-[20dvh] h-[60dvh] w-[300px] p-5 border-black bg-stone-400 border-8 rounded-xl rounded-t-none left-[-300px] transition-all"
-            : "absolute z-50 top-[20dvh] h-[60dvh] w-[300px] p-5 border-black bg-stone-400 border-8 rounded-xl rounded-t-none right-[-300px] transition-all"
+            ? "absolute left-[-300px] top-[20dvh] z-50 h-[60dvh] w-[300px] rounded-xl rounded-t-none border-8 border-black bg-stone-400 p-5 transition-all"
+            : "absolute right-[-300px] top-[20dvh] z-50 h-[60dvh] w-[300px] rounded-xl rounded-t-none border-8 border-black bg-stone-400 p-5 transition-all"
         }
       >
         <div
           className={
             tabMenu == 0
-              ? "absolute text-white top-[-56px] left-[-8px] px-5 py-3 z-99 border-black rounded-t-xl border-8 border-b-0 bg-stone-400"
-              : "absolute text-white top-[-56px] left-[-8px] px-5 py-3 z-99 border-black rounded-t-xl border-8 border-b-0 bg-stone-400 opacity-50"
+              ? "z-99 absolute left-[-8px] top-[-56px] rounded-t-xl border-8 border-b-0 border-black bg-stone-400 px-5 py-3 text-white"
+              : "z-99 absolute left-[-8px] top-[-56px] rounded-t-xl border-8 border-b-0 border-black bg-stone-400 px-5 py-3 text-white opacity-50"
           }
           onClick={() => {
             setTabMenu(0);
@@ -417,8 +417,8 @@ export default function EditSeatMap() {
         <div
           className={
             tabMenu == 1
-              ? "absolute text-white top-[-56px] left-[91px] px-5 py-3 z-99 border-black rounded-t-xl border-8 border-b-0 bg-stone-400"
-              : "absolute text-white top-[-56px] left-[91px] px-5 py-3 z-99 border-black rounded-t-xl border-8 border-b-0 bg-stone-400 opacity-50"
+              ? "z-99 absolute left-[91px] top-[-56px] rounded-t-xl border-8 border-b-0 border-black bg-stone-400 px-5 py-3 text-white"
+              : "z-99 absolute left-[91px] top-[-56px] rounded-t-xl border-8 border-b-0 border-black bg-stone-400 px-5 py-3 text-white opacity-50"
           }
           onClick={() => {
             setTabMenu(1);
@@ -432,8 +432,8 @@ export default function EditSeatMap() {
         <div
           className={
             tabMenu == 2
-              ? "absolute text-white top-[-56px] whitespace-nowrap left-[189.5px] px-5 py-3 z-99 border-black rounded-t-xl border-8 border-b-0 bg-stone-400"
-              : "absolute text-white top-[-56px] whitespace-nowrap left-[189.5px] px-5 py-3 z-99 border-black rounded-t-xl border-8 border-b-0 bg-stone-400 opacity-50"
+              ? "z-99 absolute left-[189.5px] top-[-56px] whitespace-nowrap rounded-t-xl border-8 border-b-0 border-black bg-stone-400 px-5 py-3 text-white"
+              : "z-99 absolute left-[189.5px] top-[-56px] whitespace-nowrap rounded-t-xl border-8 border-b-0 border-black bg-stone-400 px-5 py-3 text-white opacity-50"
           }
           onClick={() => {
             setTabMenu(2);
@@ -446,7 +446,7 @@ export default function EditSeatMap() {
         </div>
         {!positionMode ? (
           <div
-            className="absolute right-[-40px] top-[calc(50%-50px)] text-black h-[100px] w-[20px] flex justify-center items-center font-bold"
+            className="absolute right-[-40px] top-[calc(50%-50px)] flex h-[100px] w-[20px] items-center justify-center font-bold text-black"
             onClick={() => {
               setShowMenu((showMenu) => !showMenu);
             }}
@@ -455,7 +455,7 @@ export default function EditSeatMap() {
           </div>
         ) : (
           <div
-            className="absolute left-[-50px] top-[calc(50%-50px)] text-black h-[100px] w-[20px] flex justify-center items-center font-bold"
+            className="absolute left-[-50px] top-[calc(50%-50px)] flex h-[100px] w-[20px] items-center justify-center font-bold text-black"
             onClick={() => {
               setShowMenu((showMenu) => !showMenu);
             }}
@@ -478,20 +478,20 @@ export default function EditSeatMap() {
             {positionMode ? "左表示へ" : "右表示へ"}
           </Button>
         </div>
-        <h3 className="text-black font-bold text-lg mt-5">配置パーツ</h3>
+        <h3 className="mt-5 text-lg font-bold text-black">配置パーツ</h3>
         {tabMenu == 0 ? (
           <>
             <div
               draggable
               unselectable="on"
               className={
-                "droppable-element text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-natural"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-xl font-bold text-accent shadow-md"
               }
             >
               {ID2 + ID + ID3}
             </div>
             <hr className="my-4" />
-            <h3 className="text-black font-bold text-lg">卓番設定</h3>
+            <h3 className="text-lg font-bold text-black">卓番設定</h3>
             <div className="flex flex-col justify-end">
               <div className="flex">
                 <select
@@ -648,13 +648,13 @@ export default function EditSeatMap() {
             </div>
           </>
         ) : tabMenu == 1 ? (
-          <div className="flex justify-start flex-wrap max-h-[80%] overflow-scroll">
+          <div className="flex max-h-[80%] flex-wrap justify-start overflow-scroll">
             <div className="w-full text-2xl text-black">席関連</div>
             <div
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/armchair.svg");
@@ -663,7 +663,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/armchair.svg"}
                 alt=""
               />
@@ -672,7 +672,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/armchair-left.svg");
@@ -681,7 +681,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/armchair-left.svg"}
                 alt=""
               />
@@ -690,7 +690,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/armchair-right.svg");
@@ -699,7 +699,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/armchair-right.svg"}
                 alt=""
               />
@@ -708,7 +708,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/armchair-up.svg");
@@ -717,7 +717,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/armchair-up.svg"}
                 alt=""
               />
@@ -726,7 +726,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/dry-clean.svg");
@@ -735,17 +735,17 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/dry-clean.svg"}
                 alt=""
               />
             </div>
-            <div className="w-full text-2xl text-black mt-3">線関連</div>
+            <div className="mt-3 w-full text-2xl text-black">線関連</div>
             <div
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/line.svg");
@@ -754,7 +754,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/line.svg"}
                 alt=""
               />
@@ -763,7 +763,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/middle-line.svg");
@@ -772,7 +772,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/middle-line.svg"}
                 alt=""
               />
@@ -781,7 +781,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/short-line.svg");
@@ -790,7 +790,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/short-line.svg"}
                 alt=""
               />
@@ -799,7 +799,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/substract.svg");
@@ -808,17 +808,53 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/substract.svg"}
                 alt=""
               />
             </div>
-            <div className="w-full text-2xl text-black mt-3">その他</div>
             <div
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("/seatMap/substract-right.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!h-full !w-full !select-none"}
+                src={"/seatMap/substract-right.svg"}
+                alt=""
+              />
+            </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("/seatMap/substract-left.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!h-full !w-full !select-none"}
+                src={"/seatMap/substract-left.svg"}
+                alt=""
+              />
+            </div>
+            <div className="mt-3 w-full text-2xl text-black">アイテム</div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/cashier.svg");
@@ -827,7 +863,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/cashier.svg"}
                 alt=""
               />
@@ -837,7 +873,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/checkroom.svg");
@@ -846,7 +882,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/checkroom.svg"}
                 alt=""
               />
@@ -855,7 +891,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/door.svg");
@@ -864,7 +900,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/door.svg"}
                 alt=""
               />
@@ -874,7 +910,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/exit.svg");
@@ -883,7 +919,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/exit.svg"}
                 alt=""
               />
@@ -892,7 +928,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/hair-dryer.svg");
@@ -901,7 +937,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/hair-dryer.svg"}
                 alt=""
               />
@@ -910,7 +946,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/imac.svg");
@@ -919,7 +955,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/imac.svg"}
                 alt=""
               />
@@ -928,7 +964,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/karaoke.svg");
@@ -937,7 +973,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/karaoke.svg"}
                 alt=""
               />
@@ -946,7 +982,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/locker-room.svg");
@@ -955,7 +991,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/locker-room.svg"}
                 alt=""
               />
@@ -964,7 +1000,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/shelf.svg");
@@ -973,7 +1009,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/shelf.svg"}
                 alt=""
               />
@@ -982,7 +1018,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/smartphone.svg");
@@ -991,7 +1027,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/smartphone.svg"}
                 alt=""
               />
@@ -1000,7 +1036,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/smoke.svg");
@@ -1009,7 +1045,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/smoke.svg"}
                 alt=""
               />
@@ -1018,7 +1054,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/towel.svg");
@@ -1027,7 +1063,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/towel.svg"}
                 alt=""
               />
@@ -1036,7 +1072,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/tablet.svg");
@@ -1045,7 +1081,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/tablet.svg"}
                 alt=""
               />
@@ -1054,7 +1090,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/wc-women.svg");
@@ -1063,7 +1099,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/wc-women.svg"}
                 alt=""
               />
@@ -1072,7 +1108,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/wc-men.svg");
@@ -1081,7 +1117,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/wc-men.svg"}
                 alt=""
               />
@@ -1090,7 +1126,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/wine.svg");
@@ -1099,7 +1135,7 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/wine.svg"}
                 alt=""
               />
@@ -1108,7 +1144,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
               }
               onDragStart={() => {
                 setTextValue("/seatMap/objects/cutlery.svg");
@@ -1117,17 +1153,17 @@ export default function EditSeatMap() {
               <Image
                 width={30}
                 height={30}
-                className={"!w-full !h-full !select-none"}
+                className={"!h-full !w-full !select-none"}
                 src={"/seatMap/objects/cutlery.svg"}
                 alt=""
               />
             </div>
-            <div className="w-full text-2xl text-black mt-3">文字関連</div>
+            <div className="mt-3 w-full text-2xl text-black">文字関連</div>
             <div
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-5xl font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("A");
@@ -1139,7 +1175,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-5xl font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("B");
@@ -1151,7 +1187,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-5xl font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("C");
@@ -1163,7 +1199,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-5xl font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("D");
@@ -1175,7 +1211,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-5xl font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("E");
@@ -1187,7 +1223,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-5xl font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("F");
@@ -1199,7 +1235,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-5xl font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("S");
@@ -1211,7 +1247,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-5xl font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("V");
@@ -1223,7 +1259,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-5xl font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("I");
@@ -1235,7 +1271,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element p-2 text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-5xl font-bold text-[#4f38107b]"
               }
               onDragStart={() => {
                 setTextValue("P");
@@ -1245,12 +1281,12 @@ export default function EditSeatMap() {
             </div>
           </div>
         ) : tabMenu == 2 ? (
-          <div className="flex justify-start flex-wrap">
+          <div className="flex flex-wrap justify-start">
             <div
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black bg-[#93b69c] shadow-md transition-all"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center bg-[#93b69c] text-2xl font-bold text-black shadow-md transition-all"
               }
               onDragStart={() => {
                 setTextValue("床緑");
@@ -1260,7 +1296,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black bg-red-300 shadow-md transition-all"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center bg-red-300 text-2xl font-bold text-black shadow-md transition-all"
               }
               onDragStart={() => {
                 setTextValue("床赤");
@@ -1270,7 +1306,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black bg-[#f2f2b0] shadow-md transition-all"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center bg-[#f2f2b0] text-2xl font-bold text-black shadow-md transition-all"
               }
               onDragStart={() => {
                 setTextValue("床黄");
@@ -1280,7 +1316,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black bg-black shadow-md transition-all"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center bg-black text-2xl font-bold text-black shadow-md transition-all"
               }
               onDragStart={() => {
                 setTextValue("床黒");
@@ -1290,7 +1326,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-black bg-white shadow-md transition-all"
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center bg-white text-2xl font-bold text-black shadow-md transition-all"
               }
               onDragStart={() => {
                 setTextValue("床白");
