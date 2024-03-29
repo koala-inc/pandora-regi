@@ -38,7 +38,7 @@ export default function SeatMap() {
   return (
     <>
       <GridLayout
-        className="absolute top-0 left-0 layout !h-[100dvh] z-10"
+        className="layout absolute left-0 top-0 z-10 !h-[100dvh]"
         cols={133}
         compactType={null}
         width={2000}
@@ -62,12 +62,12 @@ export default function SeatMap() {
                   }}
                   className={
                     isLock > 1
-                      ? "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-green-200 opacity-90"
+                      ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-green-200 text-2xl font-bold text-accent opacity-90 shadow-md"
                       : purchaseOrder.some(
                           (purchaseOrder: any) => purchaseOrder.id == seat.name
                         )
-                      ? "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-blue-200 opacity-90"
-                      : "relative text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-natural"
+                      ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-blue-200 text-2xl font-bold text-accent opacity-90 shadow-md"
+                      : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-2xl font-bold text-accent shadow-md"
                   }
                   onClick={() => {
                     setSeatPreset(seat.name);
@@ -87,7 +87,7 @@ export default function SeatMap() {
         )}
       </GridLayout>
       <GridLayout
-        className="absolute top-0 left-0 layout !h-[100dvh]"
+        className="layout absolute left-0 top-0 !h-[100dvh]"
         cols={133}
         compactType={null}
         width={2000}
@@ -110,7 +110,24 @@ export default function SeatMap() {
                     h: 4,
                   }}
                   className={
-                    "relative text-5xl flex !h-[60px] !w-[60px] items-center justify-center font-bold text-[#4f38107b]"
+                    seat.image_url == "/seatMap/line.svg" ||
+                    seat.image_url == "/seatMap/middle-line.svg" ||
+                    seat.image_url == "/seatMap/short-line.svg" ||
+                    seat.image_url == "/seatMap/substract.svg" ||
+                    seat.image_url == "/seatMap/substract-right.svg" ||
+                    seat.image_url == "/seatMap/substract-left.svg" ||
+                    seat.image_url == "A" ||
+                    seat.image_url == "B" ||
+                    seat.image_url == "C" ||
+                    seat.image_url == "D" ||
+                    seat.image_url == "E" ||
+                    seat.image_url == "F" ||
+                    seat.image_url == "S" ||
+                    seat.image_url == "V" ||
+                    seat.image_url == "I" ||
+                    seat.image_url == "P"
+                      ? "relative flex !h-[60px] !w-[60px] items-center justify-center text-5xl font-bold text-[#4f38107b]"
+                      : "relative flex !h-[60px] !w-[60px] items-center justify-center p-2 text-5xl font-bold text-[#4f38107b]"
                   }
                 >
                   {seat.image_url == "A" ? (
@@ -137,7 +154,7 @@ export default function SeatMap() {
                     <Image
                       width={30}
                       height={30}
-                      className={"!w-full !h-full drag-none !select-none"}
+                      className={"drag-none !h-full !w-full !select-none"}
                       src={seat.image_url}
                       alt=""
                     />
@@ -149,7 +166,7 @@ export default function SeatMap() {
         )}
       </GridLayout>
       <GridLayout
-        className="absolute top-0 left-0 layout !h-[100dvh] opacity-30"
+        className="layout absolute left-0 top-0 !h-[100dvh] opacity-30"
         cols={133}
         compactType={null}
         width={2000}

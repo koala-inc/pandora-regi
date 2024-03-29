@@ -212,7 +212,24 @@ export default function EditSeatMap() {
                     h: 4,
                   }}
                   className={
-                    "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center text-5xl font-bold text-[#4f38107b]"
+                    seat.image_url == "/seatMap/line.svg" ||
+                    seat.image_url == "/seatMap/middle-line.svg" ||
+                    seat.image_url == "/seatMap/short-line.svg" ||
+                    seat.image_url == "/seatMap/substract.svg" ||
+                    seat.image_url == "/seatMap/substract-right.svg" ||
+                    seat.image_url == "/seatMap/substract-left.svg" ||
+                    seat.image_url == "A" ||
+                    seat.image_url == "B" ||
+                    seat.image_url == "C" ||
+                    seat.image_url == "D" ||
+                    seat.image_url == "E" ||
+                    seat.image_url == "F" ||
+                    seat.image_url == "S" ||
+                    seat.image_url == "V" ||
+                    seat.image_url == "I" ||
+                    seat.image_url == "P"
+                      ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center text-5xl font-bold text-[#4f38107b]"
+                      : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-5xl font-bold text-[#4f38107b]"
                   }
                 >
                   {deleteMode && tabMenu == 1 ? (
