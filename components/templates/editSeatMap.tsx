@@ -86,7 +86,7 @@ export default function EditSeatMap() {
   const [ID, setID] = useState("1");
   const [ID2, setID2] = useState("A");
   const [ID3, setID3] = useState("");
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(true);
   const [deleteMode, setDeleteMode] = useState(false);
   const [positionMode, setPositionMode] = useState(false);
   const [tabMenu, setTabMenu] = useState(0);
@@ -475,7 +475,7 @@ export default function EditSeatMap() {
             onClick={() => setPositionMode((positionMode) => !positionMode)}
             natural
           >
-            {positionMode ? "右表示へ" : "左表示へ"}
+            {positionMode ? "左表示へ" : "右表示へ"}
           </Button>
         </div>
         <h3 className="text-accent font-bold text-lg mt-5">配置パーツ</h3>
