@@ -125,8 +125,8 @@ export default function SeatMap() {
                     "E"
                   ) : seat.image_url == "F" ? (
                     "F"
-                  ) : seat.image_url == "G" ? (
-                    "G"
+                  ) : seat.image_url == "S" ? (
+                    "S"
                   ) : seat.image_url == "V" ? (
                     "V"
                   ) : seat.image_url == "I" ? (
