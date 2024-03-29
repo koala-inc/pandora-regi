@@ -110,7 +110,7 @@ export default function SeatMap() {
                     h: 4,
                   }}
                   className={
-                    "relative text-5xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold text-[#4f38107b]"
+                    "relative text-5xl flex !h-[60px] !w-[60px] items-center justify-center font-bold text-[#4f38107b]"
                   }
                 >
                   {seat.image_url == "A" ? (
@@ -162,27 +162,27 @@ export default function SeatMap() {
           (seat: any, index: any) => {
             if (seat.layer == 1) {
               let color =
-                "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center border border-black font-bold bg-white text-balck";
+                "relative text-xl flex !h-[60px] !w-[60px] items-center justify-center border border-black font-bold bg-white text-balck";
               switch (seat.text_value) {
                 case "床赤":
                   color =
-                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-red-300 text-balck";
+                    "relative text-xl flex !h-[60px] !w-[60px] items-center justify-center font-bold bg-red-300 text-balck";
                   break;
                 case "床緑":
                   color =
-                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-[#93b69c] text-balck";
+                    "relative text-xl flex !h-[60px] !w-[60px] items-center justify-center font-bold bg-[#93b69c] text-balck";
                   break;
                 case "床黄":
                   color =
-                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-[#f2f2b0] text-balck";
+                    "relative text-xl flex !h-[60px] !w-[60px] items-center justify-center font-bold bg-[#f2f2b0] text-balck";
                   break;
                 case "床黒":
                   color =
-                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-black text-balck";
+                    "relative text-xl flex !h-[60px] !w-[60px] items-center justify-center font-bold bg-black text-balck";
                   break;
                 case "床白":
                   color =
-                    "relative text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold bg-white text-balck";
+                    "relative text-xl flex !h-[60px] !w-[60px] items-center justify-center font-bold bg-white text-balck";
                   break;
               }
               return (
