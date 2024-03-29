@@ -402,6 +402,9 @@ export default function EditSeatMap() {
           }
           onClick={() => {
             setTabMenu(0);
+            setID("1");
+            setID2("A");
+            setID3("");
           }}
         >
           席
@@ -414,6 +417,9 @@ export default function EditSeatMap() {
           }
           onClick={() => {
             setTabMenu(1);
+            setID("1");
+            setID2("A");
+            setID3("");
           }}
         >
           オブジェクト
@@ -426,6 +432,9 @@ export default function EditSeatMap() {
           }
           onClick={() => {
             setTabMenu(2);
+            setID("1");
+            setID2("A");
+            setID3("");
           }}
         >
           壁
