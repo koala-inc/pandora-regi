@@ -452,7 +452,7 @@ export default function EditSeatMap() {
               draggable
               unselectable="on"
               className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-natural"
+                "droppable-element text-xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black font-bold text-accent shadow-md bg-natural"
               }
             >
               {ID2 + ID + ID3}
@@ -607,9 +607,9 @@ export default function EditSeatMap() {
                   }}
                 >
                   <option value=""></option>
-                  <option value="’">’</option>
-                  <option value="’’">’’</option>
-                  <option value="’’’">’’’</option>
+                  <option value={`'`}>{`'`}</option>
+                  <option value={`''`}>{`''`}</option>
+                  <option value={`'''`}>{`'''`}</option>
                 </select>
               </div>
             </div>
