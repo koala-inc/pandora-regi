@@ -796,6 +796,11 @@ export default function EditSeatMap() {
               />
             </div>
             <div
+              className={
+                "flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
+              }
+            ></div>
+            <div
               draggable
               unselectable="on"
               className={
