@@ -46,16 +46,22 @@ export default function EditSeatMap() {
 
   const searchData = useSWR<any>(searchSeatMap, fetcher);
 
-  console.log(searchData);
-
   const onLayoutChange = (updateSeatMapDate: any) => {
-    updateSeatMapDate.map((seatMap: any) => {
-      client.request(updateSeatMap, {
-        ...defaultVariables,
-        id: seatMap.i,
-        location: String(seatMap.x + "/" + seatMap.y),
-      });
-    });
+    searchData?.data?.seatMap[0]?.store_seat_map[0]?.seat_map?.map(
+      (data: any, index: any) => {
+        updateSeatMapDate.map((seatMap: any) => {
+          if (data.id == seatMap.i) {
+            if (data.location != String(seatMap.x + "/" + seatMap.y)) {
+              client.request(updateSeatMap, {
+                ...defaultVariables,
+                id: seatMap.i,
+                location: String(seatMap.x + "/" + seatMap.y),
+              });
+            }
+          }
+        });
+      }
+    );
   };
 
   const onDrop = (layout: any, layoutItem: any, _event: any) => {
