@@ -992,32 +992,14 @@ export default function EditSeatMap() {
                 "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
               }
               onDragStart={() => {
-                setTextValue("/seatMap/objects/sofa.svg");
+                setTextValue("/seatMap/objects/towel.svg");
               }}
             >
               <Image
                 width={30}
                 height={30}
                 className={"!w-full !h-full !select-none"}
-                src={"/seatMap/objects/sofa.svg"}
-                alt=""
-              />
-            </div>
-            <div
-              draggable
-              unselectable="on"
-              className={
-                "droppable-element text-2xl flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center font-bold"
-              }
-              onDragStart={() => {
-                setTextValue("/seatMap/objects/sofa2.svg");
-              }}
-            >
-              <Image
-                width={30}
-                height={30}
-                className={"!w-full !h-full !select-none"}
-                src={"/seatMap/objects/sofa2.svg"}
+                src={"/seatMap/objects/towel.svg"}
                 alt=""
               />
             </div>
