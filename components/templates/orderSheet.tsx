@@ -33,10 +33,14 @@ import Calculator8 from "../parts/calculator8";
 import Calculator9 from "../parts/calculator9";
 import Calculator from "../parts/calculator";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
+import Calculator11 from "../parts/calculator11";
+import Calculator12 from "../parts/calculator12";
 
 function Lists({
+  setControl,
   lists,
 }: {
+  setControl?: string;
   lists: {
     title: string;
     subTitle?: string;
@@ -45,8 +49,16 @@ function Lists({
     isTax?: boolean;
   }[];
 }) {
+  const [isControl, setIsControl] = useIsControlGlobal();
+
   return (
-    <ul className="hidden-scrollbar w-full overflow-y-scroll pr-2">
+    <ul
+      className="hidden-scrollbar w-full overflow-y-scroll pr-2"
+      onClick={(e) => {
+        e.stopPropagation();
+        if (setControl) setIsControl(setControl);
+      }}
+    >
       {lists?.map((list, index) => (
         <li
           key={index}
@@ -176,9 +188,9 @@ function Base() {
 
   return (
     <>
-      <section className="flex items-center justify-around text-md">
-        <div className="flex-col flex items-center">
-          <p className="text-4xl mb-6">
+      <section className="text-md flex items-center justify-around">
+        <div className="flex flex-col items-center">
+          <p className="mb-6 text-4xl">
             {seatPreset.split("#")[0] +
               seatPreset.split("#")[1] +
               seatPreset.split("#")[2]}
@@ -186,7 +198,12 @@ function Base() {
           <Toggle isChecked={toggle} setIsChecked={setToggle} />
         </div>
         <div className="flex flex-col items-center justify-center">
-          <div className="flex flex-col items-center justify-center">
+          <div
+            className="flex flex-col items-center justify-center"
+            onClick={() => {
+              purchaseOrderState[0].isTopNumCalculator = true;
+            }}
+          >
             <p className="text-[0.8rem] text-accent">人数</p>
             <p>{purchaseOrderState[0]?.num}名</p>
           </div>
@@ -205,7 +222,7 @@ function Base() {
             className="flex flex-col items-center justify-center"
             onClick={(e) => {
               e.stopPropagation();
-              setIsControl("TIME");
+              purchaseOrderState[0].isAllTimeCalculator = true;
             }}
           >
             <p className="text-[0.8rem] text-accent">時間</p>
@@ -252,7 +269,7 @@ function Base() {
                 natural
                 stroke="md"
               >
-                <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
+                <div className="mr-[1px] mt-[-2px] flex h-full items-center justify-center">
                   -
                 </div>
                 <span>30</span>
@@ -294,7 +311,7 @@ function Base() {
                 natural
                 stroke="md"
               >
-                <div className="flex justify-center items-center h-full mt-[-3px]">
+                <div className="mt-[-3px] flex h-full items-center justify-center">
                   +
                 </div>
                 <span>30</span>
@@ -303,7 +320,7 @@ function Base() {
           </div>
         </div>
       </section>
-      <nav className="flex mt-4 items-start justify-around py-3">
+      <nav className="mt-4 flex items-start justify-around py-3">
         <div>
           <Border rounded="rounded-full" stroke="md">
             <Image
@@ -398,13 +415,14 @@ function Base() {
         </div>
       </nav>
       <section className="flex flex-1 flex-col text-xs">
-        <div className="mb-1 flex-1 max-h-[120px]">
+        <div className="mb-1 max-h-[120px] flex-1">
           <div className="mb-1 flex w-full">
             <div className="text-sm text-accent">セット料金</div>
             <Line ml="ml-10" />
           </div>
-          <div className="flex text-sm px-2 h-[120px] max-h-[100px] min-h-[100px]">
+          <div className="flex h-[120px] max-h-[100px] min-h-[100px] px-2 text-sm">
             <Lists
+              setControl="TIMESET"
               lists={
                 purchaseOrderState[0]?.isRoomCharge
                   ? Number(purchaseOrderState[0]?.orderExtension) > 0
@@ -494,7 +512,7 @@ function Base() {
               }
             />
             <div
-              className="my-auto flex w-[60px] h-full flex-col items-center justify-center pl-3"
+              className="my-auto flex h-full w-[60px] flex-col items-center justify-center pl-3"
               onClick={(e) => {
                 e.stopPropagation();
                 setIsControl("SET");
@@ -515,13 +533,14 @@ function Base() {
             </div>
           </div>
         </div>
-        <div className="mb-1 flex-1 max-h-[120px]">
+        <div className="mb-1 max-h-[120px] flex-1">
           <div className="mb-1 flex w-full">
             <div className="text-sm text-accent">指名キャスト</div>
             <Line ml="ml-10" />
           </div>
-          <div className="flex text-sm px-2 max-h-[100px] min-h-[100px]">
+          <div className="flex max-h-[100px] min-h-[100px] px-2 text-sm">
             <Lists
+              setControl="TIMEDESIGNATE"
               lists={
                 [
                   ...purchaseOrderState[0]?.cast?.map((cast: any) => {
@@ -664,8 +683,11 @@ function Base() {
             <div className="text-sm text-accent">オーダー</div>
             <Line ml="ml-10" />
           </div>
-          <div className="flex text-sm px-2 max-h-[130px] min-h-[130px]">
-            <Lists lists={purchaseOrderState[0]?.orderItem || []} />
+          <div className="flex max-h-[130px] min-h-[130px] px-2 text-sm">
+            <Lists
+              setControl="ORDEREDIT"
+              lists={purchaseOrderState[0]?.orderItem || []}
+            />
             <div
               className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
               onClick={(e) => {
@@ -693,11 +715,11 @@ function Base() {
         </div>
         <div className="flex px-2">
           <div className="w-full">
-            <div className="mt-3 flex text-sm w-full items-center justify-between">
+            <div className="mt-3 flex w-full items-center justify-between text-sm">
               <div>小計</div>
               <div>{Math.floor(totalPay + taxNoTotal).toLocaleString()}円</div>
             </div>
-            <div className="mt-1 flex text-sm w-full items-center justify-between">
+            <div className="mt-1 flex w-full items-center justify-between text-sm">
               <div>サービス</div>
               <div>
                 {(
@@ -717,7 +739,7 @@ function Base() {
                 円
               </div>
             </div>
-            <div className="mt-1 flex text-sm w-full items-center justify-between">
+            <div className="mt-1 flex w-full items-center justify-between text-sm">
               <div>税</div>
               <div>
                 {(
@@ -857,26 +879,31 @@ function Add({ isCalculator, setIsCalculator }: any) {
 
   return (
     <>
-      <section className="flex items-center justify-around text-md mb-4">
-        <div className="flex-col flex items-center w-[77.45px]">
-          <p className="text-4xl w-full text-left">
+      <section className="text-md mb-4 flex items-center justify-around">
+        <div className="flex w-[77.45px] flex-col items-center">
+          <p className="w-full text-left text-4xl">
             {seatPreset.split("#")[0] +
               seatPreset.split("#")[1] +
               seatPreset.split("#")[2]}
           </p>
         </div>
-        <div className="flex flex-col items-center justify-center w-[64px]">
+        <div
+          className="flex w-[64px] flex-col items-center justify-center"
+          onClick={() => {
+            purchaseOrderState[0].isTopNumCalculator = true;
+          }}
+        >
           <div className="flex flex-col items-center justify-center">
             <p className="text-[0.8rem] text-accent">人数</p>
             <p>{purchaseOrderState[0]?.num}名</p>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center w-[111.77px]">
+        <div className="flex w-[111.77px] flex-col items-center justify-center">
           <div
             className="flex flex-col items-center justify-center"
             onClick={(e) => {
               e.stopPropagation();
-              setIsControl("TIME");
+              purchaseOrderState[0].isAllTimeCalculator = true;
             }}
           >
             <p className="text-[0.8rem] text-accent">時間</p>
@@ -894,7 +921,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
             <Line ml="ml-10" />
           </div>
           <div
-            className="flex text-sm px-2 max-h-[90px] min-h-[90px]"
+            className="flex max-h-[90px] min-h-[90px] px-2 text-sm"
             onClick={() => {
               setIsControl("ITEMEDIT");
             }}
@@ -904,19 +931,19 @@ function Add({ isCalculator, setIsCalculator }: any) {
           <div className="flex w-full">
             <Line />
           </div>
-          <div className="flex w-full border border-white rounded-md my-2 px-3 py-2 pt-4">
-            <div className="flex flex-col w-[50px]">
+          <div className="my-2 flex w-full rounded-md border border-white px-3 py-2 pt-4">
+            <div className="flex w-[50px] flex-col">
               <p className="h-[20px]"></p>
-              <p className="h-[40px] flex items-center">小計</p>
-              <p className="h-[40px] flex items-center">合計</p>
+              <p className="flex h-[40px] items-center">小計</p>
+              <p className="flex h-[40px] items-center">合計</p>
             </div>
-            <div className="flex flex-col w-[200px] text-right">
+            <div className="flex w-[200px] flex-col text-right">
               <p className="h-[20px] text-center">現在</p>
               <p
                 className={
                   totalPay > 9999999
-                    ? "h-[40px] text-accent text-[15px] flex items-center justify-end"
-                    : "h-[40px] text-accent text-xl flex items-center justify-end"
+                    ? "flex h-[40px] items-center justify-end text-[15px] text-accent"
+                    : "flex h-[40px] items-center justify-end text-xl text-accent"
                 }
               >
                 {Math.floor(totalPay).toLocaleString()}円
@@ -924,8 +951,8 @@ function Add({ isCalculator, setIsCalculator }: any) {
               <p
                 className={
                   totalPay > 9999999
-                    ? "h-[40px] text-accent text-[15px] flex items-center justify-end"
-                    : "h-[40px] text-accent text-xl flex items-center justify-end"
+                    ? "flex h-[40px] items-center justify-end text-[15px] text-accent"
+                    : "flex h-[40px] items-center justify-end text-xl text-accent"
                 }
               >
                 {(
@@ -956,18 +983,18 @@ function Add({ isCalculator, setIsCalculator }: any) {
                 円
               </p>
             </div>
-            <div className="flex flex-col w-[20px] mx-2 text-right">
+            <div className="mx-2 flex w-[20px] flex-col text-right">
               <p className="h-[20px]"></p>
-              <p className="h-[40px] flex items-center">→</p>
-              <p className="h-[40px] flex items-center">→</p>
+              <p className="flex h-[40px] items-center">→</p>
+              <p className="flex h-[40px] items-center">→</p>
             </div>
-            <div className="flex flex-col w-[200px] text-right">
+            <div className="flex w-[200px] flex-col text-right">
               <p className="h-[20px] text-center">見込み</p>
               <p
                 className={
                   totalPay2 > 9999999
-                    ? "h-[40px] text-accent text-[15px] flex items-center justify-end"
-                    : "h-[40px] text-accent text-xl flex items-center justify-end"
+                    ? "flex h-[40px] items-center justify-end text-[15px] text-accent"
+                    : "flex h-[40px] items-center justify-end text-xl text-accent"
                 }
               >
                 {Math.floor(totalPay2).toLocaleString()}円
@@ -975,8 +1002,8 @@ function Add({ isCalculator, setIsCalculator }: any) {
               <p
                 className={
                   totalPay2 > 9999999
-                    ? "h-[40px] text-accent text-[15px] flex items-center justify-end"
-                    : "h-[40px] text-accent text-xl flex items-center justify-end"
+                    ? "flex h-[40px] items-center justify-end text-[15px] text-accent"
+                    : "flex h-[40px] items-center justify-end text-xl text-accent"
                 }
               >
                 {(
@@ -1014,20 +1041,20 @@ function Add({ isCalculator, setIsCalculator }: any) {
           <div className="h-[350px] overflow-scroll">
             {purchaseOrderItemAdd?.map((purchaseOrderItem: any, index: any) => (
               <div
-                className="flex flex-col w-full border border-white justify-center rounded-md bg-black my-3 px-3 py-2"
+                className="my-3 flex w-full flex-col justify-center rounded-md border border-white bg-black px-3 py-2"
                 key={index}
               >
                 <div className="flex w-full">
-                  <div className="flex flex-col w-[200px] text-left">
-                    <p className="text-accent h-[20px] text-xs">オーダー名</p>
-                    <p className="h-[40px] mb-2 text-white text-base leading-5 flex items-center text-left">
+                  <div className="flex w-[200px] flex-col text-left">
+                    <p className="h-[20px] text-xs text-accent">オーダー名</p>
+                    <p className="mb-2 flex h-[40px] items-center text-left text-base leading-5 text-white">
                       {purchaseOrderItem.title}
                     </p>
                   </div>
-                  <div className="flex flex-col w-[32px] mx-2 text-left">
-                    <p className="text-accent h-[20px] text-xs">数量</p>
+                  <div className="mx-2 flex w-[32px] flex-col text-left">
+                    <p className="h-[20px] text-xs text-accent">数量</p>
                     <input
-                      className="h-[40px] px-2 rounded-md text-white text-center"
+                      className="h-[40px] rounded-md px-2 text-center text-white"
                       placeholder="個"
                       value={purchaseOrderItem.lot}
                       // onChange={(e) => {
@@ -1039,10 +1066,10 @@ function Add({ isCalculator, setIsCalculator }: any) {
                       readOnly
                     />
                   </div>
-                  <div className="relative flex flex-col w-[110px] text-left">
-                    <p className="text-accent h-[20px] text-xs">金額</p>
+                  <div className="relative flex w-[110px] flex-col text-left">
+                    <p className="h-[20px] text-xs text-accent">金額</p>
                     <input
-                      className="h-[40px] mb-2 text-xs px-2 pr-[22px] rounded-md text-white text-right"
+                      className="mb-2 h-[40px] rounded-md px-2 pr-[22px] text-right text-xs text-white"
                       placeholder="金額"
                       value={purchaseOrderItem.price?.toLocaleString()}
                       onClick={() => {
@@ -1060,7 +1087,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                     </p>
                   </div>
                 </div>
-                <div className="mb-1 flex w-full h-full items-center">
+                <div className="mb-1 flex h-full w-full items-center">
                   <div
                     onClick={() => {
                       purchaseOrderItem.isCastsCalculator = true;
@@ -1076,7 +1103,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                         width={36}
                         height={36}
                         alt=""
-                        className="!w-full !h-full"
+                        className="!h-full !w-full"
                       />
                     </Border>
                   </div>
@@ -1108,7 +1135,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                 </div>
                 {purchaseOrderItem.castNames &&
                 purchaseOrderItem.castNames != "" ? (
-                  <div className="mb-1 flex w-full py-2 h-full items-center">
+                  <div className="mb-1 flex h-full w-full items-center py-2">
                     {purchaseOrderItem.castNames}
                   </div>
                 ) : (
@@ -1122,9 +1149,9 @@ function Add({ isCalculator, setIsCalculator }: any) {
           <Line />
         </div>
       </section>
-      <nav className="mt-4 flex w-[80%] mx-auto items-center justify-center">
+      <nav className="mx-auto mt-4 flex w-[80%] items-center justify-center">
         <div
-          className="w-[150px] flex justify-center items-center"
+          className="flex w-[150px] items-center justify-center"
           onClick={(e) => {
             e.stopPropagation();
             setPurchaseOrderItemAdd([]);
@@ -1145,7 +1172,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
             />
           </Border2>
         </div>
-        <div className="w-[150px] flex justify-center items-center">
+        <div className="flex w-[150px] items-center justify-center">
           <Border2
             rounded="rounded-full"
             size="h-[42px] w-[42px] p-[8px] bg-reset"
@@ -1166,7 +1193,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
           </Border2>
         </div>
         <div
-          className="w-[150px] flex justify-center items-center"
+          className="flex w-[150px] items-center justify-center"
           onClick={(e) => {
             e.stopPropagation();
             if (purchaseOrderItemAdd.length >= 1) {
@@ -1209,7 +1236,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
               src={"/assets/check-list.svg"}
               width={26}
               height={26}
-              className="!h-full !w-full mr-[-4px]"
+              className="mr-[-4px] !h-full !w-full"
               alt=""
             />
           </Border2>
@@ -1274,26 +1301,31 @@ function CastAdd() {
 
   return (
     <>
-      <section className="flex items-center justify-around text-md mb-4">
-        <div className="flex-col flex items-center w-[77.45px]">
-          <p className="text-4xl w-full text-left">
+      <section className="text-md mb-4 flex items-center justify-around">
+        <div className="flex w-[77.45px] flex-col items-center">
+          <p className="w-full text-left text-4xl">
             {seatPreset.split("#")[0] +
               seatPreset.split("#")[1] +
               seatPreset.split("#")[2]}
           </p>
         </div>
-        <div className="flex flex-col items-center justify-center w-[64px]">
+        <div
+          className="flex w-[64px] flex-col items-center justify-center"
+          onClick={() => {
+            purchaseOrderState[0].isTopNumCalculator = true;
+          }}
+        >
           <div className="flex flex-col items-center justify-center">
             <p className="text-[0.8rem] text-accent">人数</p>
             <p>{purchaseOrderState[0]?.num}名</p>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center w-[111.77px]">
+        <div className="flex w-[111.77px] flex-col items-center justify-center">
           <div
             className="flex flex-col items-center justify-center"
             onClick={(e) => {
               e.stopPropagation();
-              setIsControl("TIME");
+              purchaseOrderState[0].isAllTimeCalculator = true;
             }}
           >
             <p className="text-[0.8rem] text-accent">時間</p>
@@ -1311,7 +1343,7 @@ function CastAdd() {
             <Line ml="ml-10" />
           </div>
           <div
-            className="flex text-sm px-2 max-h-[90px] min-h-[90px]"
+            className="flex max-h-[90px] min-h-[90px] px-2 text-sm"
             onClick={() => {
               setIsControl("CASTEDIT");
             }}
@@ -1342,19 +1374,19 @@ function CastAdd() {
           <div className="flex w-full">
             <Line />
           </div>
-          <div className="flex w-full border border-white rounded-md my-2 px-3 py-2 pt-4">
-            <div className="flex flex-col w-[50px]">
+          <div className="my-2 flex w-full rounded-md border border-white px-3 py-2 pt-4">
+            <div className="flex w-[50px] flex-col">
               <p className="h-[20px]"></p>
-              <p className="h-[40px] flex items-center">小計</p>
-              <p className="h-[40px] flex items-center">合計</p>
+              <p className="flex h-[40px] items-center">小計</p>
+              <p className="flex h-[40px] items-center">合計</p>
             </div>
-            <div className="flex flex-col w-[200px] text-right">
+            <div className="flex w-[200px] flex-col text-right">
               <p className="h-[20px] text-center">現在</p>
               <p
                 className={
                   totalPay > 9999999
-                    ? "h-[40px] text-accent text-[15px] flex items-center justify-end"
-                    : "h-[40px] text-accent text-xl flex items-center justify-end"
+                    ? "flex h-[40px] items-center justify-end text-[15px] text-accent"
+                    : "flex h-[40px] items-center justify-end text-xl text-accent"
                 }
               >
                 {Math.floor(totalPay).toLocaleString()}円
@@ -1362,8 +1394,8 @@ function CastAdd() {
               <p
                 className={
                   totalPay > 9999999
-                    ? "h-[40px] text-accent text-[15px] flex items-center justify-end"
-                    : "h-[40px] text-accent text-xl flex items-center justify-end"
+                    ? "flex h-[40px] items-center justify-end text-[15px] text-accent"
+                    : "flex h-[40px] items-center justify-end text-xl text-accent"
                 }
               >
                 {(
@@ -1394,18 +1426,18 @@ function CastAdd() {
                 円
               </p>
             </div>
-            <div className="flex flex-col w-[20px] mx-2 text-right">
+            <div className="mx-2 flex w-[20px] flex-col text-right">
               <p className="h-[20px]"></p>
-              <p className="h-[40px] flex items-center">→</p>
-              <p className="h-[40px] flex items-center">→</p>
+              <p className="flex h-[40px] items-center">→</p>
+              <p className="flex h-[40px] items-center">→</p>
             </div>
-            <div className="flex flex-col w-[200px] text-right">
+            <div className="flex w-[200px] flex-col text-right">
               <p className="h-[20px] text-center">見込み</p>
               <p
                 className={
                   totalPay2 > 9999999
-                    ? "h-[40px] text-accent text-[15px] flex items-center justify-end"
-                    : "h-[40px] text-accent text-xl flex items-center justify-end"
+                    ? "flex h-[40px] items-center justify-end text-[15px] text-accent"
+                    : "flex h-[40px] items-center justify-end text-xl text-accent"
                 }
               >
                 {Math.floor(totalPay2).toLocaleString()}円
@@ -1413,8 +1445,8 @@ function CastAdd() {
               <p
                 className={
                   totalPay2 > 9999999
-                    ? "h-[40px] text-accent text-[15px] flex items-center justify-end"
-                    : "h-[40px] text-accent text-xl flex items-center justify-end"
+                    ? "flex h-[40px] items-center justify-end text-[15px] text-accent"
+                    : "flex h-[40px] items-center justify-end text-xl text-accent"
                 }
               >
                 {(
@@ -1453,12 +1485,12 @@ function CastAdd() {
             {purchaseOrderItemAdd?.map((purchaseOrderItem: any, index: any) => (
               <div
                 key={index}
-                className="flex flex-col w-full border border-white justify-start rounded-md bg-black my-3 px-3 py-2"
+                className="my-3 flex w-full flex-col justify-start rounded-md border border-white bg-black px-3 py-2"
               >
-                <div className="flex mb-2">
-                  <div className="flex flex-col w-full text-left">
-                    <p className="text-accent h-[20px] text-xs">キャスト名</p>
-                    <div className="h-[20px] text-white text-base justify-start leading-[40px] align-middle flex items-center">
+                <div className="mb-2 flex">
+                  <div className="flex w-full flex-col text-left">
+                    <p className="h-[20px] text-xs text-accent">キャスト名</p>
+                    <div className="flex h-[20px] items-center justify-start align-middle text-base leading-[40px] text-white">
                       {purchaseOrderItem.title.slice(1)}
                     </div>
                   </div>
@@ -1487,10 +1519,10 @@ function CastAdd() {
                   </div>
                 </div>
                 <div className="mb-1 flex">
-                  <div className="flex flex-col w-[88px] text-xs mr-1">
-                    <p className="text-accent h-[20px] text-xs">種別</p>
+                  <div className="mr-1 flex w-[88px] flex-col text-xs">
+                    <p className="h-[20px] text-xs text-accent">種別</p>
                     <select
-                      className="h-[44px] flex items-center text-base rounded-md mr-1"
+                      className="mr-1 flex h-[44px] items-center rounded-md text-base"
                       onChange={(e) => {
                         const data = JSON.parse(e.target.value);
                         setSelectDesignate(data.id);
@@ -1524,10 +1556,10 @@ function CastAdd() {
                       )}
                     </select>
                   </div>
-                  <div className="flex flex-col w-[40px] mr-2 text-left justify-center">
-                    <p className="text-accent h-[20px] text-xs">数量</p>
+                  <div className="mr-2 flex w-[40px] flex-col justify-center text-left">
+                    <p className="h-[20px] text-xs text-accent">数量</p>
                     <input
-                      className="h-[44px] px-2 text-base rounded-md text-center text-white"
+                      className="h-[44px] rounded-md px-2 text-center text-base text-white"
                       placeholder="個"
                       value={purchaseOrderItem.lot}
                       // onChange={(e) => {
@@ -1541,10 +1573,10 @@ function CastAdd() {
                       readOnly
                     />
                   </div>
-                  <div className="relative flex flex-col w-[110px] text-left justify-center mr-2">
-                    <p className="text-accent h-[20px] text-xs">単価</p>
+                  <div className="relative mr-2 flex w-[110px] flex-col justify-center text-left">
+                    <p className="h-[20px] text-xs text-accent">単価</p>
                     <input
-                      className="h-[44px] px-2 text-base  pr-[24px] rounded-md text-right text-white"
+                      className="h-[44px] rounded-md px-2  pr-[24px] text-right text-base text-white"
                       placeholder="金額"
                       value={purchaseOrderItem.price?.toLocaleString()}
                       // onChange={(e) => {
@@ -1561,11 +1593,11 @@ function CastAdd() {
                       {purchaseOrderItem.isTax ? "込" : "円"}
                     </p>
                   </div>
-                  <div className="flex flex-col w-[70px] text-left">
-                    <p className="text-accent h-[20px] text-xs">指名開始時間</p>
+                  <div className="flex w-[70px] flex-col text-left">
+                    <p className="h-[20px] text-xs text-accent">指名開始時間</p>
                     <input
                       type="text"
-                      className="h-[44px] px-2 rounded-md text-base text-center text-white"
+                      className="h-[44px] rounded-md px-2 text-center text-base text-white"
                       value={purchaseOrderItem.time}
                       onClick={() => {
                         purchaseOrderItem.isTimeCalculator = true;
@@ -1582,9 +1614,9 @@ function CastAdd() {
           <Line />
         </div>
       </section>
-      <nav className="mt-4 flex w-[80%] mx-auto items-center justify-center">
+      <nav className="mx-auto mt-4 flex w-[80%] items-center justify-center">
         <div
-          className="w-[150px] flex justify-center items-center"
+          className="flex w-[150px] items-center justify-center"
           onClick={(e) => {
             e.stopPropagation();
             setPurchaseOrderItemAdd([]);
@@ -1605,7 +1637,7 @@ function CastAdd() {
             />
           </Border2>
         </div>
-        <div className="w-[150px] flex justify-center items-center">
+        <div className="flex w-[150px] items-center justify-center">
           <Border2
             rounded="rounded-full"
             size="h-[42px] w-[42px] p-[8px] bg-reset"
@@ -1626,7 +1658,7 @@ function CastAdd() {
           </Border2>
         </div>
         <div
-          className="w-[150px] flex justify-center items-center"
+          className="flex w-[150px] items-center justify-center"
           onClick={(e) => {
             e.stopPropagation();
             if (purchaseOrderItemAdd.length >= 1) {
@@ -1669,7 +1701,7 @@ function CastAdd() {
               src={"/assets/check-list.svg"}
               width={26}
               height={26}
-              className="!h-full !w-full mr-[-4px]"
+              className="mr-[-4px] !h-full !w-full"
               alt=""
             />
           </Border2>
@@ -1692,6 +1724,54 @@ export default function OrderSheet() {
   const purchaseOrderState = purchaseOrder.filter(
     (purchaseOrder: any) => purchaseOrder.id == seatPreset
   );
+
+  const [nowDate, setNowDate] = useState(dayjs(new Date()));
+  const date = (hour: any, minite: any) => {
+    const a = nowDate.hour(Number(hour));
+    const b = a.minute(Number(minite));
+    return b;
+  };
+
+  const checker = () =>
+    (Math.floor(
+      (Number(
+        dayjs(
+          date(
+            purchaseOrderState[0]?.endTime.split(":")[0],
+            purchaseOrderState[0]?.endTime.split(":")[1]
+          )
+        ).diff(
+          date(
+            purchaseOrderState[0]?.startTime.split(":")[0],
+            purchaseOrderState[0]?.startTime.split(":")[1]
+          ),
+          "minute"
+        )
+      ) -
+        Number(purchaseOrderState[0]?.setTime) -
+        1) /
+        30
+    ) >= 0
+      ? Math.floor(
+          (Number(
+            dayjs(
+              date(
+                purchaseOrderState[0]?.endTime.split(":")[0],
+                purchaseOrderState[0]?.endTime.split(":")[1]
+              )
+            ).diff(
+              date(
+                purchaseOrderState[0]?.startTime.split(":")[0],
+                purchaseOrderState[0]?.startTime.split(":")[1]
+              ),
+              "minute"
+            )
+          ) -
+            Number(purchaseOrderState[0]?.setTime) -
+            1) /
+            30
+        ) + 1
+      : 0) * purchaseOrderState[0].num;
 
   return (
     <>
@@ -1734,6 +1814,26 @@ export default function OrderSheet() {
             purchaseOrderState[0].callTime = hour + ":" + minite;
           }}
         />
+      )}
+      {purchaseOrderState[0]?.isTopNumCalculator && (
+        <Calculator12 result={purchaseOrderState[0]} />
+      )}
+      {purchaseOrderState[0].isAllTimeCalculator && (
+        <div
+          className="absolute left-0 top-0 z-40 flex h-[100dvh] w-[100dvw] items-center justify-center bg-black/70 p-10 text-white"
+          onClick={() => {}}
+        >
+          <Calculator11
+            result={purchaseOrderState[0]}
+            time={purchaseOrderState[0].mainEndTime}
+            callback={(hour: any, minite: any) => {
+              purchaseOrderState[0].mainEndTime = hour + ":" + minite;
+              purchaseOrderState[0].endTime = purchaseOrderState[0].mainEndTime;
+              purchaseOrderState[0].orderExtension = checker();
+            }}
+            title="終了時間"
+          />
+        </div>
       )}
       <Card>
         <div

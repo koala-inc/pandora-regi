@@ -79,11 +79,11 @@ export default function OrderSheetSet() {
         //   if (isControl != "") setIsControl("");
         // }}
       >
-        <section className="flex flex-1 flex-col text-sm max-h-[700px] p-1 py-3 overflow-scroll">
+        <section className="flex max-h-[700px] flex-1 flex-col overflow-scroll p-1 py-3 text-sm">
           {purchaseOrderSet.map((order: any, index: any) => (
             <div
               key={index}
-              className="relative my-1 mb-6 mx-[auto] w-[95%] flex flex-wrap border border-white bg-black p-3"
+              className="relative mx-[auto] my-1 mb-6 flex w-[95%] flex-wrap border border-white bg-black p-3"
             >
               <div
                 onClick={() => {
@@ -147,21 +147,21 @@ export default function OrderSheetSet() {
               <div className="mx-2 flex flex-col">
                 <p>{order?.num}名</p>
               </div>
-              <div className="mt-2 mx-2 flex w-full flex-col">
+              <div className="mx-2 mt-2 flex w-full flex-col">
                 <p className="text-accent">指名</p>
                 <p>
                   {order?.cast?.map((cast: any) => cast.split("##")[0] + "　")}
                 </p>
               </div>
-              <div className="mx-2 flex flex-col mt-2">
+              <div className="mx-2 mt-2 flex flex-col">
                 <p className="text-accent">区分</p>
                 <p>{order?.status}</p>
               </div>
-              <div className="mx-2 flex flex-col mt-2">
+              <div className="mx-2 mt-2 flex flex-col">
                 <p className="text-accent">セット</p>
                 <p>{order?.setName}</p>
               </div>
-              <div className="mx-2 flex flex-col mt-2">
+              <div className="mx-2 mt-2 flex flex-col">
                 <p className="text-accent">ルームチャージ</p>
                 <p className="">
                   {Number(order.roomCharge) == 0
@@ -175,7 +175,7 @@ export default function OrderSheetSet() {
                 </p>
               </div>
               <hr className="w-full opacity-0" />
-              <div className="mx-2 flex flex-col mt-2">
+              <div className="mx-2 mt-2 flex flex-col">
                 <p className="text-accent">セット内容</p>
                 <p>
                   {order?.setTime}分　{order?.startTime}~{order?.endTime}　
@@ -191,7 +191,7 @@ export default function OrderSheetSet() {
         </div>
         <nav className="mt-4 flex w-full items-center justify-center">
           <div
-            className="w-[150px] flex justify-center items-center"
+            className="flex w-[150px] items-center justify-center"
             onClick={() => {
               setPurchaseOrderSet([]);
             }}
@@ -210,7 +210,7 @@ export default function OrderSheetSet() {
             </Border2>
           </div>
           <div
-            className="w-[150px] flex justify-center items-center"
+            className="flex w-[150px] items-center justify-center"
             onClick={(e) => {
               e.stopPropagation();
               if (purchaseOrderSet.length >= 1) {
@@ -231,7 +231,7 @@ export default function OrderSheetSet() {
                 src={"/assets/check-list.svg"}
                 width={26}
                 height={26}
-                className="!h-full !w-full mr-[-4px]"
+                className="mr-[-4px] !h-full !w-full"
                 alt=""
               />
             </Border2>

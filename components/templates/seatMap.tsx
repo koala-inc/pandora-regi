@@ -73,7 +73,6 @@ export default function SeatMap() {
                     setSeatPreset(seat.name);
                     if (isLock < 2) {
                       setIsCard(true);
-                      setIsControl("OPEN");
                     } else if (isLock == 2) {
                       setIsLock(3);
                     }

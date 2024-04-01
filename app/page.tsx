@@ -33,6 +33,8 @@ import OrderCastEdit from "@/components/templates/controls/orderCastEdit";
 import OrderItemEdit from "@/components/templates/controls/orderItemEdit";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
 import usePurchaseOrderSetGlobal from "@/globalstates/purchaseOrderSet";
+import OrderTimeDesignate from "@/components/templates/controls/orderTimeDesignate";
+import OrderTimeSet from "@/components/templates/controls/orderTimeSet";
 
 function Control(isControl: any) {
   switch (isControl) {
@@ -46,6 +48,10 @@ function Control(isControl: any) {
     case "TIME":
       // セット時間の管理コンポーネント
       return <OrderTime />;
+    case "TIMESET":
+      return <OrderTimeSet />;
+    case "TIMEDESIGNATE":
+      return <OrderTimeDesignate />;
     case "SET":
       // 合流コンポーネント
       return <OrderSet />;
@@ -97,7 +103,7 @@ export default function Home() {
       onClick={() => {
         if (
           isCard &&
-          (isControl == "" || isControl == "OPEN") &&
+          isControl == "" &&
           seatPreset != "" &&
           purchaseOrder.some(
             (purchaseOrder: any) => purchaseOrder.id == seatPreset
@@ -111,7 +117,15 @@ export default function Home() {
     >
       <AnimatePresence>
         {isLock == 3 && <Lock2 />}
-        {(isControl == "" || isControl == "OPEN") && <SeatMap />}
+        {purchaseOrder.some(
+          (purchaseOrder: any) => purchaseOrder.id == seatPreset
+        ) ? (
+          isControl == "" && <SeatMap />
+        ) : isCard ? (
+          <></>
+        ) : (
+          <SeatMap />
+        )}
         {isHeader && !isCard && <Header datetime={datetime} />}
         {isFooter && !isCard && <Footer />}
         {purchaseOrder.length != 0 && seatPreset != "" ? (
@@ -122,7 +136,7 @@ export default function Home() {
               <>
                 <OrderSheet />
                 {Control(isControl)}
-                {(isControl != "" || isControl != "OPEN") && <HomeButton />}
+                {isControl != "" && <HomeButton />}
               </>
             )
           ) : (
