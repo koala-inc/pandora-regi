@@ -37,6 +37,7 @@ import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
 import useIsLockGlobal from "@/globalstates/isLock";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
 import usePurchaseOrderSetGlobal from "@/globalstates/purchaseOrderSet";
+import useOrderGlobal from "@/globalstates/order";
 
 export default function DebugMenu() {
   const [settings, setSettings] = useSettingsGlobal();
@@ -49,6 +50,7 @@ export default function DebugMenu() {
   const [isLock, setIsLock] = useIsLockGlobal();
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
   const [purchaseOrderSet, setPurchaseOrderSet] = usePurchaseOrderSetGlobal();
+  const [order, setOrder] = useOrderGlobal();
 
   const [activeTab, setActiveTab] = useState(0);
   const [activeTab2, setActiveTab2] = useState(0);
@@ -144,6 +146,9 @@ export default function DebugMenu() {
                 <li className="flex">
                   <div className="w-[10rem]">purchaseOrderSet</div>:
                   {JSON.stringify(purchaseOrderSet)}
+                </li>
+                <li className="flex">
+                  <div className="w-[10rem]">order</div>:{JSON.stringify(order)}
                 </li>
               </ul>
             )}

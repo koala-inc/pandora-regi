@@ -1186,6 +1186,24 @@ export default function EditSeatMap() {
                 alt=""
               />
             </div>
+            <div
+              draggable
+              unselectable="on"
+              className={
+                "droppable-element flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center p-2 text-2xl font-bold"
+              }
+              onDragStart={() => {
+                setTextValue("/seatMap/objects/stairs.svg");
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                className={"!h-full !w-full !select-none"}
+                src={"/seatMap/objects/stairs.svg"}
+                alt=""
+              />
+            </div>
             <div className="mt-3 w-full text-2xl text-black">文字関連</div>
             <div
               draggable

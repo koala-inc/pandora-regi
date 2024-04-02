@@ -109,14 +109,7 @@ export default function OrderSheetSet() {
               </div>
               <div
                 onClick={() => {
-                  setOrder(purchaseOrderSet.order);
-                  // setResult("0");
-                  // setSelectCast([]);
-                  // setSetTimeResult("0");
-                  // setNumResult("0");
-                  // setRoomResult("0");
-                  // setSetName("");
-                  // setStatus("なし");
+                  setOrder(order);
                   delete purchaseOrderSet[index];
                   setPurchaseOrderSet(() =>
                     purchaseOrderSet.filter((v: any) => v)

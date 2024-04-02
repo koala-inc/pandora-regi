@@ -55,6 +55,8 @@ const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
 };
 
+let flag = false;
+
 export default function ControlOrderSet() {
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [purchaseOrderSet, setPurchaseOrderSet] = usePurchaseOrderSetGlobal();
@@ -62,31 +64,32 @@ export default function ControlOrderSet() {
   const [nowDate, setNowDate] = useState(dayjs(new Date()));
   const [toggle, setToggle] = useState(false);
   const [order, setOrder] = useOrderGlobal();
-  if (!order.price) {
-    setOrder({
-      startTime: nowDate
-        .minute(Math.round(nowDate.minute() / 5) * 5)
-        .format("HH:mm"),
-      cast: [],
-      orderExtension: 0,
-      callToggle: true,
-      state: {
-        result: "0",
-        selectCast: [],
-        timeResult: "0",
-        numResult: "0",
-        roomResult: "0",
-        setName: "",
-        roomName: "",
-        setStatus: "なし",
-      },
-      ...order,
-    });
-  }
+
+  // if (!order.price) {
+  //   setOrder({
+  //     startTime: nowDate
+  //       .minute(Math.round(nowDate.minute() / 5) * 5)
+  //       .format("HH:mm"),
+  //     cast: [],
+  //     orderExtension: 0,
+  //     callToggle: true,
+  //     state: {
+  //       result: "0",
+  //       selectCast: [],
+  //       timeResult: "0",
+  //       numResult: "0",
+  //       roomResult: "0",
+  //       setName: "",
+  //       roomName: "",
+  //       setStatus: "なし",
+  //     },
+  //     ...order,
+  //   });
+  // }
 
   useEffect(() => {
     setPurchaseOrderSet([]);
-  }, []);
+  }, [setPurchaseOrderSet]);
 
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
@@ -503,6 +506,31 @@ export default function ControlOrderSet() {
 
   const [serviceTax, setServiceTax] = useState(0);
 
+  if (!flag && order.order) {
+    flag = true;
+    setSetName(order.setName);
+    setResult(order.price);
+    setSetTimeResult(order.setTime);
+    setRoomResult(order.roomCharge);
+    setRoomName(order.roomName);
+    setStatus(order.status);
+    setExtensionPrice(order.extensionPrice);
+    setNumResult(String(order.numResult));
+  }
+
+  console.log(
+    JSON.stringify({
+      setName: setName,
+      result: result,
+      setTimeResult: setTimeResult,
+      roomResult: roomResult,
+      roomName: roomName,
+      status: status,
+      extensionPrice: extensionPrice,
+      numResult: numResult,
+    })
+  );
+
   return (
     <>
       {isCalculator && isCalculatorSelect == 0 && (
@@ -730,7 +758,7 @@ export default function ControlOrderSet() {
             }
           )}
         </div>
-        <div className="mt-[-1px] flex min-h-[670px] min-w-[920px] max-w-[calc(100dvw-405px)] flex-wrap rounded-b-xl rounded-r-xl bg-primary px-4 pt-6 pb-0 text-white">
+        <div className="mt-[-1px] flex min-h-[670px] min-w-[920px] max-w-[calc(100dvw-405px)] flex-wrap rounded-b-xl rounded-r-xl bg-primary px-4 pb-0 pt-6 text-white">
           <div className="mt-2 flex min-h-[100px] min-w-full items-center justify-start overflow-x-scroll rounded-md border border-white bg-black p-4">
             {searchData3?.data?.event[0]?.store_event[0]?.event?.map(
               (event: any, index: any) => {
@@ -790,9 +818,9 @@ export default function ControlOrderSet() {
               }
             )}
           </div>
-          <div className="flex h-[220px] mt-[-30px] px-2 mb-[30px] flex-wrap py-10 justify-start">
+          <div className="mb-[30px] mt-[-30px] flex h-[220px] flex-wrap justify-start px-2 py-10">
             <div className="flex flex-col">
-              <label className="mt-3 mb-2 text-xs font-bold text-accent">
+              <label className="mb-2 mt-3 text-xs font-bold text-accent">
                 区分
               </label>
               <div className="flex">
@@ -851,7 +879,7 @@ export default function ControlOrderSet() {
               </div>
             </div>
             <div className="flex flex-col">
-              <label className="mt-3 mb-2 text-xs font-bold text-accent">
+              <label className="mb-2 mt-3 text-xs font-bold text-accent">
                 販売促進スタッフ
               </label>
               <div className="relative flex">
@@ -893,7 +921,7 @@ export default function ControlOrderSet() {
               <input type="checkbox" className="checkbox checkbox-md" />
             </div> */}
             <div className="relative flex flex-col">
-              <label className="mt-3 mb-2 text-xs font-bold text-accent">
+              <label className="mb-2 mt-3 text-xs font-bold text-accent">
                 ルームチャージ
               </label>
               <div className="flex items-center">
@@ -903,15 +931,15 @@ export default function ControlOrderSet() {
                   onChange={() => {
                     setIsRoomCharge((isRoomCharge) => !isRoomCharge);
                   }}
-                  className="mr-4 h-[40px] w-[3rem] text-right rounded-md text-xl"
+                  className="mr-4 h-[40px] w-[3rem] rounded-md text-right text-xl"
                 />
                 <div className="relative">
                   <input
                     type="text"
                     className={
                       isRoomCharge
-                        ? "mr-4 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl"
-                        : "mr-4 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl opacity-50"
+                        ? "mr-4 h-[45px] w-[8rem] rounded-md px-2 pr-8 text-right text-xl"
+                        : "mr-4 h-[45px] w-[8rem] rounded-md px-2 pr-8 text-right text-xl opacity-50"
                     }
                     placeholder="0"
                     maxLength={7}
@@ -933,7 +961,7 @@ export default function ControlOrderSet() {
                     readOnly
                     disabled={!isRoomCharge}
                   />
-                  <p className="absolute text-xl bottom-[8px] right-[25px] opacity-60">
+                  <p className="absolute bottom-[8px] right-[25px] text-xl opacity-60">
                     {roomResult.includes("##") ? "込" : "円"}
                   </p>
                 </div>
@@ -941,15 +969,15 @@ export default function ControlOrderSet() {
             </div>
             <hr className="w-full opacity-0" />
             <div className="relative flex flex-col">
-              <label className="mt-3 mb-2 text-xs font-bold text-accent">
+              <label className="mb-2 mt-3 text-xs font-bold text-accent">
                 人数　
-                <span className="bg-red-700 text-white px-[5px] py-[3px] text-xs rounded-md">
+                <span className="rounded-md bg-red-700 px-[5px] py-[3px] text-xs text-white">
                   必須
                 </span>
               </label>
               <input
                 type="text"
-                className="mr-8 h-[45px] w-[6rem] text-right rounded-md px-2 pr-8 text-xl"
+                className="mr-8 h-[45px] w-[6rem] rounded-md px-2 pr-8 text-right text-xl"
                 placeholder="0"
                 maxLength={3}
                 // value={order.num?.toLocaleString()}
@@ -970,16 +998,16 @@ export default function ControlOrderSet() {
                 }}
                 readOnly
               />
-              <p className="absolute text-xl bottom-[8px] right-[40px] opacity-60">
+              <p className="absolute bottom-[8px] right-[40px] text-xl opacity-60">
                 名
               </p>
             </div>
             <div className="relative flex flex-col">
-              <label className="mt-3 mb-2 text-xs font-bold text-accent">
+              <label className="mb-2 mt-3 text-xs font-bold text-accent">
                 セット名
               </label>
               <select
-                className="mr-8 h-[45px] w-[10rem] text-left rounded-md px-1 text-base"
+                className="mr-8 h-[45px] w-[10rem] rounded-md px-1 text-left text-base"
                 value={setName}
                 onChange={(e) => {
                   {
@@ -1041,15 +1069,15 @@ export default function ControlOrderSet() {
               </select>
             </div>
             <div className="relative flex flex-col">
-              <label className="mt-3 mb-2 text-xs font-bold text-accent">
+              <label className="mb-2 mt-3 text-xs font-bold text-accent">
                 セット時間　
-                <span className="bg-red-700 text-white px-[5px] py-[3px] text-xs rounded-md">
+                <span className="rounded-md bg-red-700 px-[5px] py-[3px] text-xs text-white">
                   必須
                 </span>
               </label>
               <input
                 type="text"
-                className="mr-8 h-[45px] w-[7rem] text-right rounded-md px-2 pr-8 text-xl"
+                className="mr-8 h-[45px] w-[7rem] rounded-md px-2 pr-8 text-right text-xl"
                 placeholder="0"
                 maxLength={3}
                 value={Number(
@@ -1091,20 +1119,20 @@ export default function ControlOrderSet() {
                 }}
                 readOnly
               />
-              <p className="absolute text-xl bottom-[8px] right-[40px] opacity-60">
+              <p className="absolute bottom-[8px] right-[40px] text-xl opacity-60">
                 分
               </p>
             </div>
             <div className="relative flex flex-col">
-              <label className="mt-3 mb-2 text-xs font-bold text-accent">
+              <label className="mb-2 mt-3 text-xs font-bold text-accent">
                 料金　
-                <span className="bg-red-700 text-white px-[5px] py-[3px] text-xs rounded-md">
+                <span className="rounded-md bg-red-700 px-[5px] py-[3px] text-xs text-white">
                   必須
                 </span>
               </label>
               <input
                 type="text"
-                className="mr-8 h-[45px] w-[8rem] text-right rounded-md px-2 pr-8 text-xl"
+                className="mr-8 h-[45px] w-[8rem] rounded-md px-2 pr-8 text-right text-xl"
                 placeholder="0"
                 maxLength={7}
                 value={Number(result.replace(/[^0-9]/g, ""))?.toLocaleString()}
@@ -1122,15 +1150,15 @@ export default function ControlOrderSet() {
                 }}
                 readOnly
               />
-              <p className="absolute text-xl bottom-[8px] right-[40px] opacity-60">
+              <p className="absolute bottom-[8px] right-[40px] text-xl opacity-60">
                 {result.includes("##") ? "込" : "円"}
               </p>
             </div>
             <div className="flex">
               <div className="flex flex-col">
-                <label className="mt-3 mb-2 text-xs font-bold text-accent">
+                <label className="mb-2 mt-3 text-xs font-bold text-accent">
                   開始時間　
-                  <span className="bg-red-700 text-white px-[5px] py-[3px] text-xs rounded-md">
+                  <span className="rounded-md bg-red-700 px-[5px] py-[3px] text-xs text-white">
                     必須
                   </span>
                 </label>
@@ -1145,11 +1173,11 @@ export default function ControlOrderSet() {
                   readOnly
                 />
               </div>
-              <p className="text-sm mr-4 mt-[50px]">〜</p>
+              <p className="mr-4 mt-[50px] text-sm">〜</p>
               <div className="flex flex-col">
-                <label className="mt-3 mb-2 text-xs font-bold text-accent">
+                <label className="mb-2 mt-3 text-xs font-bold text-accent">
                   終了時間　
-                  <span className="bg-red-700  text-white px-[5px] py-[3px] text-xs rounded-md">
+                  <span className="rounded-md  bg-red-700 px-[5px] py-[3px] text-xs text-white">
                     必須
                   </span>
                 </label>
@@ -1166,7 +1194,7 @@ export default function ControlOrderSet() {
               </div>
             </div>
             <div className="flex flex-col">
-              <label className="mt-3 mb-2 text-xs font-bold text-accent">
+              <label className="mb-2 mt-3 text-xs font-bold text-accent">
                 コール時間
               </label>
               <div className="flex">
@@ -1175,8 +1203,8 @@ export default function ControlOrderSet() {
                   type="text"
                   className={
                     toggle
-                      ? "ml-4 mr-4 h-[45px] w-[80px] rounded-md px-2 text-xl opacity-10"
-                      : "ml-4 mr-4 h-[45px] w-[80px] rounded-md px-2 text-xl"
+                      ? "mx-4 h-[45px] w-[80px] rounded-md px-2 text-xl opacity-10"
+                      : "mx-4 h-[45px] w-[80px] rounded-md px-2 text-xl"
                   }
                   value={order.callTime}
                   onClick={() => {
@@ -1188,7 +1216,7 @@ export default function ControlOrderSet() {
               </div>
             </div>
           </div>
-          <div className="w-full mb-6 flex justify-center mt-[-30px] ml-[20px] opacity-50">
+          <div className="mb-6 ml-[20px] mt-[-30px] flex w-full justify-center opacity-50">
             <Line />
           </div>
           <div className="flex w-full justify-around">
@@ -1211,8 +1239,8 @@ export default function ControlOrderSet() {
                       <Button
                         className={
                           designate.id == selectDesignate
-                            ? "min-w-[5rem] mb-2"
-                            : "min-w-[5rem] mb-2 opacity-60"
+                            ? "mb-2 min-w-[5rem]"
+                            : "mb-2 min-w-[5rem] opacity-60"
                         }
                         key={index}
                         natural
@@ -1482,7 +1510,7 @@ export default function ControlOrderSet() {
             </div>
             <div className="flex flex-col">
               <p className="mb-1 text-xs font-bold text-accent">キャスト検索</p>
-              <div className="flex max-h-[235px] min-h-[235px] w-[260px] flex-wrap justify-start items-start overflow-scroll rounded-md border border-white bg-black p-2">
+              <div className="flex max-h-[235px] min-h-[235px] w-[260px] flex-wrap items-start justify-start overflow-scroll rounded-md border border-white bg-black p-2">
                 {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
                   (cast: any, index: any) => {
                     const size = cast.name.length > 4 ? "text-xs" : "text-lg";
@@ -1523,11 +1551,11 @@ export default function ControlOrderSet() {
                     }
                   }
                 )}
-                <div className="opacity-0 m-2 flex h-[40px] w-[105px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider"></div>
-                <div className="opacity-0 m-2 flex h-[40px] w-[105px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider"></div>
-                <div className="opacity-0 m-2 flex h-[40px] w-[105px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider"></div>
-                <div className="opacity-0 m-2 flex h-[40px] w-[105px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider"></div>
-                <div className="opacity-0 m-2 flex h-[40px] w-[105px] font-bold cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 leading-4 tracking-wider"></div>
+                <div className="m-2 flex h-[40px] w-[105px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 font-bold leading-4 tracking-wider opacity-0"></div>
+                <div className="m-2 flex h-[40px] w-[105px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 font-bold leading-4 tracking-wider opacity-0"></div>
+                <div className="m-2 flex h-[40px] w-[105px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 font-bold leading-4 tracking-wider opacity-0"></div>
+                <div className="m-2 flex h-[40px] w-[105px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 font-bold leading-4 tracking-wider opacity-0"></div>
+                <div className="m-2 flex h-[40px] w-[105px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-2 font-bold leading-4 tracking-wider opacity-0"></div>
               </div>
             </div>
             <div className="flex flex-col">
@@ -1535,12 +1563,12 @@ export default function ControlOrderSet() {
               <div className="flex max-h-[200px] min-h-[200px] w-[350px] flex-col justify-start overflow-scroll rounded-md border border-white bg-black p-1">
                 <div className="mt-1 flex px-2 text-xs text-accent">
                   <p className="w-[140px]">キャスト名</p>
-                  <p className="h-[25px] w-[30px] mx-2 text-center">個数</p>
-                  <p className="ml-5 h-[25px] w-[90px] mx-2">料金</p>
+                  <p className="mx-2 h-[25px] w-[30px] text-center">個数</p>
+                  <p className="mx-2 ml-5 h-[25px] w-[90px]">料金</p>
                   <p className="ml-3 h-[25px] w-[25px]"></p>
                 </div>
                 {selectCast.map((cast: any, index: any) => (
-                  <div className="mb-2 flex px-2 text-md" key={index}>
+                  <div className="text-md mb-2 flex px-2" key={index}>
                     <p className="w-[140px]">{cast.split("##")[0]}</p>
                     <input
                       type="text"
@@ -1563,7 +1591,7 @@ export default function ControlOrderSet() {
                         }}
                         readOnly
                       />
-                      <p className="absolute text-md bottom-[0.5px] right-[5px] opacity-60">
+                      <p className="text-md absolute bottom-[0.5px] right-[5px] opacity-60">
                         円
                       </p>
                     </div>
@@ -1573,7 +1601,7 @@ export default function ControlOrderSet() {
                       size="h-[18px] w-[18px] p-[2px] text-red-600"
                     >
                       <div
-                        className="flex h-full w-full p-[1.5px] items-center justify-center"
+                        className="flex h-full w-full items-center justify-center p-[1.5px]"
                         onClick={() => {
                           setSelectCast((selectCast: any) =>
                             selectCast.filter((castRes: any) => {
