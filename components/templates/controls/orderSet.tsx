@@ -55,8 +55,6 @@ const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
 };
 
-let flag = false;
-
 export default function ControlOrderSet() {
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [purchaseOrderSet, setPurchaseOrderSet] = usePurchaseOrderSetGlobal();
@@ -64,6 +62,7 @@ export default function ControlOrderSet() {
   const [nowDate, setNowDate] = useState(dayjs(new Date()));
   const [toggle, setToggle] = useState(false);
   const [order, setOrder] = useOrderGlobal();
+  const [flag, setFlag] = useState(false);
 
   // if (!order.price) {
   //   setOrder({
@@ -506,16 +505,17 @@ export default function ControlOrderSet() {
 
   const [serviceTax, setServiceTax] = useState(0);
 
-  if (!flag && order.order) {
-    flag = true;
+  if (!flag && order.order != undefined) {
+    setFlag(true);
     setSetName(order.setName);
-    setResult(order.price);
-    setSetTimeResult(order.setTime);
-    setRoomResult(order.roomCharge);
+    setResult(String(order.price));
+    setSetTimeResult(String(order.setTime));
+    setRoomResult(String(order.roomCharge));
     setRoomName(order.roomName);
     setStatus(order.status);
     setExtensionPrice(order.extensionPrice);
-    setNumResult(String(order.numResult));
+    setNumResult(String(order.num));
+    setSelectCast(order.cast);
   }
 
   console.log(
@@ -1743,6 +1743,7 @@ export default function ControlOrderSet() {
                       setRoomResult("0");
                       setSetName("");
                       setStatus("なし");
+                      setFlag(false);
                     }
                   }}
                 >
