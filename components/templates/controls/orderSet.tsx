@@ -515,7 +515,7 @@ export default function ControlOrderSet() {
     setStatus(order.status);
     setExtensionPrice(order.extensionPrice);
     setNumResult(String(order.num));
-    setSelectCast(order.cast);
+    setSelectCast(order.cast ? order.cast : []);
   }
 
   console.log(
@@ -1696,6 +1696,7 @@ export default function ControlOrderSet() {
                         {
                           ...order,
                           id: id2 + "#" + id + "#" + id3,
+                          cast: order.cast ? order.cast : [],
                           toggle: toggle,
                           setName: setName,
                           roomName: roomName,
