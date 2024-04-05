@@ -479,19 +479,21 @@ export default function ControlOrderSet() {
 
   const [isCalculator, setIsCalculator] = useState(false);
   const [isCalculatorSelect, setIsCalculatorSelect] = useState(0);
-  const [result, setResult] = useState(order.price ? order.state?.result : "0");
+  const [result, setResult] = useState(
+    order.price ? String(order.state?.result) : "0"
+  );
   const [roomResult, setRoomResult] = useState(
-    order.price ? order.state?.roomResult : "0"
+    order.price ? String(order.state?.roomResult) : "0"
   );
   const [numResult, setNumResult] = useState(
-    order.price ? order.state?.numResult : "0"
+    order.price ? String(order.state?.numResult) : "0"
   );
 
   const [setTimeResult, setSetTimeResult] = useState(
-    order.price ? order.state?.timeResult : "0"
+    order.price ? String(order.state?.timeResult) : "0"
   );
   const [startTimeResult, setStartTimeResult] = useState(
-    order.price ? order.state?.startTimeResult : "0"
+    order.price ? String(order.state?.startTimeResult) : "0"
   );
 
   const [extensionPrice, setExtensionPrice] = useState(0);
