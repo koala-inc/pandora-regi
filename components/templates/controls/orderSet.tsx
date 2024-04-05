@@ -1610,6 +1610,14 @@ export default function ControlOrderSet() {
                               return castRes !== cast;
                             })
                           );
+                          setOrder((order: any) => {
+                            return {
+                              ...order,
+                              cast: order.cast.filter((castRes: any) => {
+                                return castRes !== cast;
+                              }),
+                            };
+                          });
                         }}
                       >
                         <Image
