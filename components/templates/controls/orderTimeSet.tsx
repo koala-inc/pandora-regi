@@ -292,7 +292,7 @@ export default function OrderTimeSet() {
                     </select>
                   </div>
                   <div className="flex flex-col">
-                    <label className="mb-6 mt-3 text-xs font-bold text-accent"></label>
+                    <label className="mb-6 mt-[-25px] text-xs font-bold text-accent"></label>
                     <div
                       className={"my-auto"}
                       onClick={() => {
