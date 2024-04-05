@@ -260,7 +260,7 @@ export default function OrderTimeSet() {
                       席カテゴリー
                     </label>
                     <select
-                      className="mr-8 h-[45px] w-[120px] rounded-md px-2 text-center text-xl"
+                      className="mr-8 h-[45px] w-[120px] rounded-md px-2 text-left text-xl"
                       value={purchaseOrderState[0].room_name}
                       onChange={(e) => {
                         {
