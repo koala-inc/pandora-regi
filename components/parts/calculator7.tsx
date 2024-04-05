@@ -15,7 +15,7 @@ export default function Calculator7({ result, callback }: any) {
     result.time ? result.time.split(":")[0] : "00"
   );
 
-  const [isMinite, setIsMinite] = useState(false);
+  const [isMinite, setIsMinite] = useState(true);
   const [isMiniteTrue, setIsMiniteTrue] = useState(false);
   const [minite, setMinite] = useState(
     result.time ? result.time.split(":")[1] : "00"
@@ -92,7 +92,7 @@ export default function Calculator7({ result, callback }: any) {
         </div>
         <div className="flex">
           <div
-            className="flex h-[60px] w-[45%] mx-2 items-center justify-center tracking-widest rounded-md　px-3 text-4xl text-white rotate-180"
+            className="rounded-md　px-3 mx-2 flex h-[60px] w-[45%] rotate-180 items-center justify-center text-4xl tracking-widest text-white"
             onClick={() => {
               const num = Number(hour) + 1;
               if (num > 23) {
@@ -112,9 +112,9 @@ export default function Calculator7({ result, callback }: any) {
               alt=""
             />
           </div>
-          <div className="flex h-[60px] w-[10%] mx-2 items-center justify-center tracking-widest px-3 text-4xl text-white"></div>
+          <div className="mx-2 flex h-[60px] w-[10%] items-center justify-center px-3 text-4xl tracking-widest text-white"></div>
           <div
-            className="flex h-[60px] w-[45%] mx-2 items-center justify-center tracking-widest rounded-md　px-3 text-4xl text-white rotate-180"
+            className="rounded-md　px-3 mx-2 flex h-[60px] w-[45%] rotate-180 items-center justify-center text-4xl tracking-widest text-white"
             onClick={() => {
               const num = Number(minite) + miniteType;
               if (num > 59) {
@@ -147,8 +147,8 @@ export default function Calculator7({ result, callback }: any) {
           <div
             className={
               isHour
-                ? "flex h-[60px] w-[45%] mx-2 items-center justify-center tracking-widest rounded-md bg-neutral-900 px-3 text-4xl text-white border border-blue-300"
-                : "flex h-[60px] w-[45%] mx-2 items-center justify-center tracking-widest rounded-md bg-neutral-900 px-3 text-4xl text-white"
+                ? "mx-2 flex h-[60px] w-[45%] items-center justify-center rounded-md border border-blue-300 bg-neutral-900 px-3 text-4xl tracking-widest text-white"
+                : "mx-2 flex h-[60px] w-[45%] items-center justify-center rounded-md bg-neutral-900 px-3 text-4xl tracking-widest text-white"
             }
             onClick={() => {
               setIsMinite(false);
@@ -158,14 +158,14 @@ export default function Calculator7({ result, callback }: any) {
           >
             {hour}
           </div>
-          <div className="flex h-[60px] w-[10%] mx-2 items-center justify-center tracking-widest px-3 text-4xl text-white">
+          <div className="mx-2 flex h-[60px] w-[10%] items-center justify-center px-3 text-4xl tracking-widest text-white">
             :
           </div>
           <div
             className={
               isMinite
-                ? "flex h-[60px] w-[45%] mx-2 items-center justify-center tracking-widest rounded-md bg-neutral-900 px-3 text-4xl text-white border border-blue-300"
-                : "flex h-[60px] w-[45%] mx-2 items-center justify-center tracking-widest rounded-md bg-neutral-900 px-3 text-4xl text-white"
+                ? "mx-2 flex h-[60px] w-[45%] items-center justify-center rounded-md border-2 border-blue-300 bg-neutral-900 px-3 text-4xl tracking-widest text-white"
+                : "mx-2 flex h-[60px] w-[45%] items-center justify-center rounded-md bg-neutral-900 px-3 text-4xl tracking-widest text-white"
             }
             onClick={() => {
               setIsHour(false);
@@ -178,7 +178,7 @@ export default function Calculator7({ result, callback }: any) {
         </div>
         <div className="flex">
           <div
-            className="flex h-[60px] w-[45%] mx-2 items-center justify-center tracking-widest rounded-md　px-3 text-4xl text-white"
+            className="rounded-md　px-3 mx-2 flex h-[60px] w-[45%] items-center justify-center text-4xl tracking-widest text-white"
             onClick={() => {
               const num = Number(hour) - 1;
               if (num < 0) {
@@ -198,9 +198,9 @@ export default function Calculator7({ result, callback }: any) {
               alt=""
             />
           </div>
-          <div className="flex h-[60px] w-[10%] mx-2 items-center justify-center tracking-widest px-3 text-4xl text-white"></div>
+          <div className="mx-2 flex h-[60px] w-[10%] items-center justify-center px-3 text-4xl tracking-widest text-white"></div>
           <div
-            className="flex h-[60px] w-[45%] mx-2 items-center justify-center tracking-widest rounded-md　px-3 text-4xl text-white"
+            className="rounded-md　px-3 mx-2 flex h-[60px] w-[45%] items-center justify-center text-4xl tracking-widest text-white"
             onClick={() => {
               const num = Number(minite) - miniteType;
               if (num < 0) {
@@ -787,7 +787,7 @@ export default function Calculator7({ result, callback }: any) {
               0
             </div>
           </div>
-          <div className="col-start-2 row-start-4 col-end-4 flex items-center justify-center text-2xl">
+          <div className="col-start-2 col-end-4 row-start-4 flex items-center justify-center text-2xl">
             <div
               className="flex h-[60px] w-[90%] items-center justify-center rounded-md border border-white bg-neutral-700 text-black shadow-2xl"
               onClick={() => {

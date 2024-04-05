@@ -1823,7 +1823,9 @@ export default function OrderSheet() {
       {purchaseOrderState[0].isAllTimeCalculator && (
         <div
           className="absolute left-0 top-0 z-40 flex h-[100dvh] w-[100dvw] items-center justify-center bg-black/70 p-10 text-white"
-          onClick={() => {}}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
         >
           <Calculator11
             result={purchaseOrderState[0]}

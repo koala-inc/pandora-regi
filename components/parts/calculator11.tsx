@@ -13,7 +13,7 @@ export default function Calculator11({ result, time, callback, title }: any) {
   const [isHourTrue, setIsHourTrue] = useState(false);
   const [hour, setHour] = useState(time ? time.split(":")[0] : "00");
 
-  const [isMinite, setIsMinite] = useState(false);
+  const [isMinite, setIsMinite] = useState(true);
   const [isMiniteTrue, setIsMiniteTrue] = useState(false);
   const [minite, setMinite] = useState(time ? time.split(":")[1] : "00");
 
@@ -165,7 +165,7 @@ export default function Calculator11({ result, time, callback, title }: any) {
           <div
             className={
               isMinite
-                ? "mx-2 flex h-[60px] w-[45%] items-center justify-center rounded-md border border-blue-300 bg-neutral-900 px-3 text-4xl tracking-widest text-white"
+                ? "mx-2 flex h-[60px] w-[45%] items-center justify-center rounded-md border-2 border-blue-300 bg-neutral-900 px-3 text-4xl tracking-widest text-white"
                 : "mx-2 flex h-[60px] w-[45%] items-center justify-center rounded-md bg-neutral-900 px-3 text-4xl tracking-widest text-white"
             }
             onClick={() => {
