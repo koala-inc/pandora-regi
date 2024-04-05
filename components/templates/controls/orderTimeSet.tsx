@@ -29,7 +29,7 @@ import { searchEvent } from "@/gqls/query/event";
 
 function ContentHeader({ children }: { children: any }) {
   return (
-    <SubBorder size="mt-[0px] h-[100px] w-[600px] px-4 py-2">
+    <SubBorder size="mt-[0px] h-[100px] !w-[700px] px-4 py-2">
       {children}
     </SubBorder>
   );
@@ -219,90 +219,91 @@ export default function OrderTimeSet() {
       >
         <div className="w-[calc(100%+50px)]">
           <ContentHeader>
-            <div className="flex-start flex w-full flex-col text-white">
-              <div className="flex w-full">
-                <div className="flex flex-col">
-                  <label className="mb-2 mt-3 text-xs font-bold text-accent">
-                    開始時間
-                  </label>
-                  <input
-                    type="text"
-                    className="mr-4 h-[45px] w-[80px] rounded-md px-2 text-center text-xl"
-                    value={purchaseOrderState[0]?.mainStartTime}
-                    onClick={() => {
-                      setIsCalculatorSelect(2);
-                      // setIsCalculator(true);
-                      purchaseOrderState[0].isTimeCalculator = true;
-                    }}
-                    readOnly
-                  />
-                </div>
-                <p className="mr-4 mt-[50px] text-sm">〜</p>
-                <div className="flex flex-col">
-                  <label className="mb-2 mt-3 text-xs font-bold text-accent">
-                    終了時間
-                  </label>
-                  <input
-                    type="text"
-                    className="mr-8 h-[45px] w-[80px] rounded-md px-2 text-center text-xl"
-                    value={purchaseOrderState[0]?.mainEndTime}
-                    onClick={() => {
-                      setIsCalculatorSelect(3);
-                      // setIsCalculator(true);
-                      purchaseOrderState[0].isTimeCalculator = true;
-                    }}
-                    readOnly
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label className="mb-2 mt-3 text-xs font-bold text-accent">
-                    席カテゴリー
-                  </label>
-                  <select
-                    className="mr-8 h-[45px] w-[120px] rounded-md px-2 text-center text-xl"
-                    value={purchaseOrderState[0].room_name}
-                    onChange={(e) => {
-                      {
-                        searchData2?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
-                          (area: any, index: any) => {
-                            if (area.room_name == e.target.value) {
-                              purchaseOrderState[0].roomName = area.room_name;
-                              purchaseOrderState[0].roomCharge =
-                                area.charge_price;
-                              purchaseOrderState[0].extensionPrice =
-                                area.extra_price;
-                              purchaseOrderState[0].serviceTax =
-                                area.service_tax;
-                            }
-                          }
-                        );
-                      }
-                    }}
-                  >
-                    {searchData2?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
-                      (area: any, index: any) => {
-                        return (
-                          <option key={index} value={area.room_name}>
-                            {area.name}
-                          </option>
-                        );
-                      }
-                    )}
-                  </select>
-                </div>
-                <div className="flex flex-col">
-                  <label className="mb-6 mt-3 text-xs font-bold text-accent"></label>
-                  <div
-                    className={"my-auto"}
-                    onClick={() => {
-                      purchaseOrderState[0].isRoomCharge = true;
-                    }}
-                  >
-                    <Button natural>ルームチャージ追加</Button>
+            <div className="flex items-end rounded-md border-4 border-white bg-black px-8 py-1">
+              <div className="flex-start flex w-full flex-col text-white">
+                <div className="flex w-full">
+                  <div className="flex flex-col">
+                    <label className="mb-2 mt-1 text-xs font-bold text-accent">
+                      開始時間
+                    </label>
+                    <input
+                      type="text"
+                      className="mr-4 h-[45px] w-[80px] rounded-md px-2 text-center text-xl"
+                      value={purchaseOrderState[0]?.mainStartTime}
+                      onClick={() => {
+                        setIsCalculatorSelect(2);
+                        // setIsCalculator(true);
+                        purchaseOrderState[0].isTimeCalculator = true;
+                      }}
+                      readOnly
+                    />
                   </div>
-                </div>
+                  <p className="mr-4 mt-[40px] text-sm">〜</p>
+                  <div className="flex flex-col">
+                    <label className="mb-2 mt-1 text-xs font-bold text-accent">
+                      終了時間
+                    </label>
+                    <input
+                      type="text"
+                      className="mr-8 h-[45px] w-[80px] rounded-md px-2 text-center text-xl"
+                      value={purchaseOrderState[0]?.mainEndTime}
+                      onClick={() => {
+                        setIsCalculatorSelect(3);
+                        // setIsCalculator(true);
+                        purchaseOrderState[0].isTimeCalculator = true;
+                      }}
+                      readOnly
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="mb-2 mt-1 text-xs font-bold text-accent">
+                      席カテゴリー
+                    </label>
+                    <select
+                      className="mr-8 h-[45px] w-[120px] rounded-md px-2 text-center text-xl"
+                      value={purchaseOrderState[0].room_name}
+                      onChange={(e) => {
+                        {
+                          searchData2?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
+                            (area: any, index: any) => {
+                              if (area.room_name == e.target.value) {
+                                purchaseOrderState[0].roomName = area.room_name;
+                                purchaseOrderState[0].roomCharge =
+                                  area.charge_price;
+                                purchaseOrderState[0].extensionPrice =
+                                  area.extra_price;
+                                purchaseOrderState[0].serviceTax =
+                                  area.service_tax;
+                              }
+                            }
+                          );
+                        }
+                      }}
+                    >
+                      {searchData2?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
+                        (area: any, index: any) => {
+                          return (
+                            <option key={index} value={area.room_name}>
+                              {area.name}
+                            </option>
+                          );
+                        }
+                      )}
+                    </select>
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="mb-6 mt-3 text-xs font-bold text-accent"></label>
+                    <div
+                      className={"my-auto"}
+                      onClick={() => {
+                        purchaseOrderState[0].isRoomCharge = true;
+                      }}
+                    >
+                      <Button natural>ルームチャージ追加</Button>
+                    </div>
+                  </div>
 
-                {/* <div className="flex flex-col mr-6">
+                  {/* <div className="flex flex-col mr-6">
                   <label className="mt-3 mb-2 text-xs font-bold text-accent">
                     延長
                   </label>
@@ -361,7 +362,7 @@ export default function OrderTimeSet() {
                     </div>
                   </div>
                 </div> */}
-                {/* <div className="flex flex-col">
+                  {/* <div className="flex flex-col">
                   <label className="mt-3 mb-2 text-xs font-bold text-accent">
                     コール時間
                   </label>
@@ -385,7 +386,7 @@ export default function OrderTimeSet() {
                     />
                   )}
                 </div> */}
-                {/* <div className="flex flex-col">
+                  {/* <div className="flex flex-col">
                   <label className="mt-3 mb-2 text-xs font-bold text-accent">
                     {"　"}
                   </label>
@@ -393,6 +394,7 @@ export default function OrderTimeSet() {
                     <Toggle isChecked={toggle} setIsChecked={setToggle} />
                   </div>
                 </div> */}
+                </div>
               </div>
             </div>
           </ContentHeader>
