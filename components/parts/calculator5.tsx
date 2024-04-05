@@ -11,7 +11,9 @@ export default function Calculator5({ result, callback }: any) {
   return (
     <div
       className="absolute left-0 top-0 z-40 flex h-[100dvh] w-[100dvw] items-center justify-center bg-black/70 p-10 text-white"
-      onClick={() => {}}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
     >
       <div
         className="relative h-[400px] w-[300px] rounded-md border border-secondary bg-primary p-4"

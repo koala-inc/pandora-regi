@@ -41,7 +41,9 @@ export default function Calculator3({ result, callback }: any) {
   return (
     <div
       className="absolute left-0 top-0 z-40 flex h-[100dvh] w-[100dvw] items-center justify-center bg-black/70 p-10 text-white"
-      onClick={() => {}}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
     >
       <div
         className="relative h-[750px] w-[470px] rounded-md border border-secondary bg-primary p-4"
@@ -63,7 +65,7 @@ export default function Calculator3({ result, callback }: any) {
             />
           </span>
         </div>
-        <div className="m-3 h-[50px] rounded-md text-white bg-black flex justify-end items-center">
+        <div className="m-3 flex h-[50px] items-center justify-end rounded-md bg-black text-white">
           <p className="pr-3">{castNames}</p>
         </div>
         <div className="my-3 flex justify-around">
@@ -299,7 +301,7 @@ export default function Calculator3({ result, callback }: any) {
         <div className="my-4 flex w-full">
           <Line />
         </div>
-        <div className="flex flex-wrap justify-start h-[360px] overflow-scroll">
+        <div className="flex h-[360px] flex-wrap justify-start overflow-scroll">
           <>
             {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
               (cast: any) => {
@@ -329,7 +331,7 @@ export default function Calculator3({ result, callback }: any) {
             )}
           </>
         </div>
-        <div className="flex mt-2 justify-center">
+        <div className="mt-2 flex justify-center">
           <div
             onClick={() => {
               if (callback) callback(castNames);
