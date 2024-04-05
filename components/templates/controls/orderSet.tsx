@@ -1303,7 +1303,7 @@ export default function ControlOrderSet() {
                   全て
                 </Button>
               </div>
-              <div className="mt-6 flex flex-col rounded-md border-4 border-white bg-black p-5">
+              <div className="mt-[19px] flex flex-col rounded-md border-4 border-white bg-black p-5">
                 <div className="flex justify-around">
                   <div
                     className={
