@@ -29,7 +29,7 @@ import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 
 function ContentHeader({ children }: { children: any }) {
   return (
-    <SubBorder size="mt-0 h-[100px] !w-[500px] px-10 py-2">
+    <SubBorder size="mt-0 h-[100px] !w-[465px] px-10 py-2">
       {children}
     </SubBorder>
   );

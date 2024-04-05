@@ -29,7 +29,7 @@ import { searchEvent } from "@/gqls/query/event";
 
 function ContentHeader({ children }: { children: any }) {
   return (
-    <SubBorder size="mt-[0px] h-[100px] !w-[700px] px-4 py-2">
+    <SubBorder size="mt-[0px] h-[115px] !w-[672px] px-4 py-2">
       {children}
     </SubBorder>
   );
@@ -37,7 +37,7 @@ function ContentHeader({ children }: { children: any }) {
 
 function Content({ children }: { children: any }) {
   return (
-    <Border size="h-[690px] w-full px-4 py-2 flex flex-col">{children}</Border>
+    <Border size="h-[680px] w-full px-4 py-2 flex flex-col">{children}</Border>
   );
 }
 
