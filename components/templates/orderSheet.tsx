@@ -931,7 +931,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
           <div className="flex w-full">
             <Line />
           </div>
-          <div className="my-2 flex w-full rounded-md border border-white px-3 py-2 pt-4">
+          <div className="my-2 flex w-full rounded-md border-4 border-white px-3 py-2 pt-4">
             <div className="flex w-[50px] flex-col">
               <p className="h-[20px]"></p>
               <p className="flex h-[40px] items-center">小計</p>
@@ -1041,7 +1041,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
           <div className="h-[350px] overflow-scroll">
             {purchaseOrderItemAdd?.map((purchaseOrderItem: any, index: any) => (
               <div
-                className="my-3 flex w-full flex-col justify-center rounded-md border border-white bg-black px-3 py-2"
+                className="relative my-3 flex w-[97%] flex-col justify-center rounded-md border-4 border-white bg-black px-3 py-2"
                 key={index}
               >
                 <div className="flex w-full">
@@ -1110,6 +1110,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                   <Toggle5 />
                   <Toggle6 />
                   <div
+                    className="absolute right-[-15px] top-[-15px]"
                     onClick={() => {
                       delete purchaseOrderItemAdd[index];
                       setPurchaseOrderItemAdd(() =>
@@ -1374,7 +1375,7 @@ function CastAdd() {
           <div className="flex w-full">
             <Line />
           </div>
-          <div className="my-2 flex w-full rounded-md border border-white px-3 py-2 pt-4">
+          <div className="my-2 flex w-full rounded-md border-4 border-white px-3 py-2 pt-4">
             <div className="flex w-[50px] flex-col">
               <p className="h-[20px]"></p>
               <p className="flex h-[40px] items-center">小計</p>
@@ -1485,7 +1486,7 @@ function CastAdd() {
             {purchaseOrderItemAdd?.map((purchaseOrderItem: any, index: any) => (
               <div
                 key={index}
-                className="my-3 flex w-full flex-col justify-start rounded-md border border-white bg-black px-3 py-2"
+                className="relative my-3 flex w-[97%] flex-col justify-start rounded-md border-4 border-white bg-black px-3 py-2"
               >
                 <div className="mb-2 flex">
                   <div className="flex w-full flex-col text-left">
@@ -1495,6 +1496,7 @@ function CastAdd() {
                     </div>
                   </div>
                   <div
+                    className="absolute right-[-15px] top-[-15px]"
                     onClick={() => {
                       delete purchaseOrderItemAdd[index];
                       setPurchaseOrderItemAdd(() =>

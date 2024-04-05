@@ -83,7 +83,7 @@ export default function OrderSheetSet() {
           {purchaseOrderSet.map((order: any, index: any) => (
             <div
               key={index}
-              className="relative mx-[auto] my-1 mb-6 flex w-[95%] flex-wrap border border-white bg-black p-3"
+              className="relative mx-[auto] my-1 mb-6 flex w-[93%] flex-wrap rounded-md border-4 border-white bg-black p-3"
             >
               <div
                 onClick={() => {
@@ -94,7 +94,7 @@ export default function OrderSheetSet() {
                 }}
               >
                 <Border2
-                  className="absolute right-[-15px] top-[-15px]"
+                  className="absolute right-[-20px] top-[-20px]"
                   rounded="rounded-full"
                   size="h-[28px] w-[28px] p-[6px]"
                 >
@@ -117,7 +117,7 @@ export default function OrderSheetSet() {
                 }}
               >
                 <Border2
-                  className="absolute right-[30px] top-[-15px]"
+                  className="absolute right-[25px] top-[-20px]"
                   rounded="rounded-full"
                   size="h-[28px] w-[28px] p-[6px]"
                 >
