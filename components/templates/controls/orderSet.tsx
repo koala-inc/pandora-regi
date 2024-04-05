@@ -669,7 +669,7 @@ export default function ControlOrderSet() {
         className="absolute left-[390px] top-1/2 z-20 min-w-[calc(100dvw-425px)] -translate-y-1/2"
       >
         <ContentHeader>
-          <div className="flex items-end rounded-md border border-white bg-black px-8 py-3">
+          <div className="flex items-end rounded-md border-4 border-white bg-black px-8 py-3">
             <div className="flex flex-col justify-end">
               <label className="mb-1 text-xs font-bold text-accent">卓番</label>
               <div className="flex">
@@ -761,7 +761,7 @@ export default function ControlOrderSet() {
           )}
         </div>
         <div className="mt-[-1px] flex min-h-[670px] min-w-[920px] max-w-[calc(100dvw-405px)] flex-wrap rounded-b-xl rounded-r-xl bg-primary px-4 pb-0 pt-6 text-white">
-          <div className="mt-2 flex min-h-[100px] min-w-full items-center justify-start overflow-x-scroll rounded-md border border-white bg-black p-4">
+          <div className="mt-2 flex min-h-[100px] min-w-full items-center justify-start overflow-x-scroll rounded-md border-4 border-white bg-black p-4">
             {searchData3?.data?.event[0]?.store_event[0]?.event?.map(
               (event: any, index: any) => {
                 if (activeTab == event.event_revision.seat_area_id) {
@@ -1224,7 +1224,7 @@ export default function ControlOrderSet() {
           <div className="flex w-full justify-around">
             <div className="flex flex-col">
               <p className="mb-1 text-xs font-bold text-accent">指名種</p>
-              <div className="flex h-[235px] flex-col overflow-scroll rounded-md border border-white bg-black p-4">
+              <div className="flex h-[235px] flex-col overflow-scroll rounded-md border-4 border-white bg-black p-4">
                 {searchData4?.data?.designate[0]?.store_designate[0]?.designate?.map(
                   (designate: any, index: any) => {
                     if (selectDesignate == -1 && count2 == 0) {
@@ -1303,7 +1303,7 @@ export default function ControlOrderSet() {
                   全て
                 </Button>
               </div>
-              <div className="mt-6 flex flex-col rounded-md border border-white bg-black p-5">
+              <div className="mt-6 flex flex-col rounded-md border-4 border-white bg-black p-5">
                 <div className="flex justify-around">
                   <div
                     className={
@@ -1512,7 +1512,7 @@ export default function ControlOrderSet() {
             </div>
             <div className="flex flex-col">
               <p className="mb-1 text-xs font-bold text-accent">キャスト検索</p>
-              <div className="flex max-h-[235px] min-h-[235px] w-[260px] flex-wrap items-start justify-start overflow-scroll rounded-md border border-white bg-black p-2">
+              <div className="flex max-h-[235px] min-h-[235px] w-[260px] flex-wrap items-start justify-start overflow-scroll rounded-md border-4 border-white bg-black p-2">
                 {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
                   (cast: any, index: any) => {
                     const size = cast.name.length > 4 ? "text-xs" : "text-lg";
@@ -1562,7 +1562,7 @@ export default function ControlOrderSet() {
             </div>
             <div className="flex flex-col">
               <p className="mb-1 text-xs font-bold text-accent">選択キャスト</p>
-              <div className="flex max-h-[200px] min-h-[200px] w-[350px] flex-col justify-start overflow-scroll rounded-md border border-white bg-black p-1">
+              <div className="flex max-h-[200px] min-h-[200px] w-[350px] flex-col justify-start overflow-scroll rounded-md border-4 border-white bg-black p-1">
                 <div className="mt-1 flex px-2 text-xs text-accent">
                   <p className="w-[140px]">キャスト名</p>
                   <p className="mx-2 h-[25px] w-[30px] text-center">個数</p>

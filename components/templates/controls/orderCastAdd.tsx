@@ -96,8 +96,8 @@ export default function OrderCastAdd() {
         }}
       >
         <ContentHeader>
-          <div className="w-full flex justify-start items-center">
-            <div className="w-full flex flex-col">
+          <div className="flex w-full items-center justify-start">
+            <div className="flex w-full flex-col">
               <p className="text-accent">指名種別</p>
               <div className="flex">
                 {searchData2?.data?.designate[0]?.store_designate[0]?.designate?.map(
@@ -116,8 +116,8 @@ export default function OrderCastAdd() {
                       <Button
                         className={
                           designate.id == selectDesignate
-                            ? "min-w-[7rem] mb-2 mr-2"
-                            : "min-w-[7rem] mb-2 mr-2 opacity-60"
+                            ? "mb-2 mr-2 min-w-[7rem]"
+                            : "mb-2 mr-2 min-w-[7rem] opacity-60"
                         }
                         key={index}
                         natural
@@ -142,8 +142,8 @@ export default function OrderCastAdd() {
           </div>
         </ContentHeader>
         <div className="mt-[-1px] flex h-[700px] w-[calc(100vw-405px)] flex-col rounded-xl bg-primary p-4 text-white">
-          <div className="w-full flex justify-center mb-3">
-            <div className="flex justify-around items-center w-[200px] mr-2 border border-white bg-black p-3 rounded-md text-white">
+          <div className="mb-3 flex w-full justify-center">
+            <div className="mr-2 flex w-[200px] items-center justify-around rounded-md border-4 border-white bg-black p-3 text-white">
               <Button
                 className={
                   searchType != "出勤"
@@ -181,7 +181,7 @@ export default function OrderCastAdd() {
                 全て
               </Button>
             </div>
-            <div className="flex justify-around w-[1100px] border border-white bg-black p-3 rounded-md">
+            <div className="flex w-[1100px] justify-around rounded-md border-4 border-white bg-black p-3">
               <div
                 className={
                   "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
@@ -403,7 +403,7 @@ export default function OrderCastAdd() {
               </div>
             </div>
           </div>
-          <div className="grid w-full grid-cols-7 grid-rows-5 content-start items-center justify-center rounded-md border border-white bg-black p-4 min-h-[580px]">
+          <div className="grid min-h-[580px] w-full grid-cols-7 grid-rows-5 content-start items-center justify-center rounded-md border-4 border-white bg-black p-4">
             {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
               (cast: any, index: any) => {
                 if (cast.leaving_date == null && cast.cast_code != 0) {

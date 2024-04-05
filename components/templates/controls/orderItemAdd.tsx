@@ -88,12 +88,12 @@ export default function OrderItemAdd() {
         }}
       >
         <ContentHeader>
-          <div className="w-full flex justify-center items-center">
+          <div className="flex w-full items-center justify-center">
             <Button className="mr-3">オーダー入力</Button>
             <Button className="mr-3 opacity-50">店内履歴</Button>
             <Button className="mr-6 opacity-50">オーダー修正</Button>
             <input
-              className="p-4 h-[45px] w-[180px] text-lg text-white rounded-md mr-4 ml-4"
+              className="mx-4 h-[45px] w-[180px] rounded-md p-4 text-lg text-white"
               placeholder="オーダー名を入力"
             />
             <div>
@@ -113,7 +113,7 @@ export default function OrderItemAdd() {
           </div>
         </ContentHeader>
         <div className="flex py-2">
-          <div className="bg-primary rounded-md mr-4 p-2 flex justify-center items-center">
+          <div className="mr-4 flex items-center justify-center rounded-md bg-primary p-2">
             <Toggle3 />
           </div>
           {searchData?.data?.category[0]?.store_category[0]?.category?.map(
@@ -136,10 +136,10 @@ export default function OrderItemAdd() {
                     className={
                       category.id == categoryActive
                         ? "mr-3"
-                        : "mr-3 grayscale opacity-30"
+                        : "mr-3 opacity-30 grayscale"
                     }
                   >
-                    <div className="text-black mx-auto flex h-[50px] w-[180px] cursor-pointer items-center justify-center rounded-md shadow-md bg-gradient-to-b from-[#cdd8e8] from-0% via-[#b9c5d8] via-50% to-[#a7bad4] p-2 text-center text-base leading-4 tracking-wider">
+                    <div className="mx-auto flex h-[50px] w-[180px] cursor-pointer items-center justify-center rounded-md bg-gradient-to-b from-[#cdd8e8] from-0% via-[#b9c5d8] via-50% to-[#a7bad4] p-2 text-center text-base leading-4 tracking-wider text-black shadow-md">
                       {category.category_revision.name}
                     </div>
                   </div>
@@ -159,7 +159,7 @@ export default function OrderItemAdd() {
                 count += 1;
                 return (
                   <a
-                    className={`!text-xs tab tab-md mr-1 w-[9em] h-[3.5em] rounded-t-xl ${
+                    className={`tab-md tab mr-1 h-[3.5em] w-[9em] rounded-t-xl !text-xs ${
                       activeTab == category.id
                         ? "tab-active bg-primary text-white"
                         : "tab-lifted bg-secondary text-black"
@@ -182,7 +182,7 @@ export default function OrderItemAdd() {
         </a> */}
         </div>
         <div className="mt-[-1px] flex h-[590px] w-[calc(100vw-405px)] rounded-b-xl rounded-r-xl bg-primary p-4 text-white">
-          <div className="grid w-full grid-cols-7 grid-rows-5 content-start items-center justify-center rounded-md border border-white bg-black p-4">
+          <div className="grid w-full grid-cols-7 grid-rows-5 content-start items-center justify-center rounded-md border-4 border-white bg-black p-4">
             {searchData2?.data?.bottle[0]?.store_bottle[0]?.bottle?.map(
               (bottle: any, index: any) => {
                 if (
