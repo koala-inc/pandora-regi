@@ -29,7 +29,7 @@ import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 
 function ContentHeader({ children }: { children: any }) {
   return (
-    <SubBorder size="mt-0 h-[100px] !w-[900px] px-10 py-2">
+    <SubBorder size="mt-0 h-[100px] !w-[500px] px-10 py-2">
       {children}
     </SubBorder>
   );
@@ -96,47 +96,49 @@ export default function OrderCastAdd() {
         }}
       >
         <ContentHeader>
-          <div className="flex w-full items-center justify-start">
-            <div className="flex w-full flex-col">
-              <p className="text-accent">指名種別</p>
-              <div className="flex">
-                {searchData2?.data?.designate[0]?.store_designate[0]?.designate?.map(
-                  (designate: any, index: any) => {
-                    if (selectDesignate == -1 && count2 == 0) {
-                      setSelectDesignate(designate.id);
-                      setSelectDesignateSymbol(
-                        designate.designate_revision.symbol
-                      );
-                      setSelectDesignatePrice(
-                        designate.designate_revision.price
+          <div className="flex items-end rounded-md border-4 border-white bg-black px-8 py-0">
+            <div className="flex w-full items-center justify-start">
+              <div className="flex w-full flex-col">
+                <p className="text-accent">指名種別</p>
+                <div className="flex">
+                  {searchData2?.data?.designate[0]?.store_designate[0]?.designate?.map(
+                    (designate: any, index: any) => {
+                      if (selectDesignate == -1 && count2 == 0) {
+                        setSelectDesignate(designate.id);
+                        setSelectDesignateSymbol(
+                          designate.designate_revision.symbol
+                        );
+                        setSelectDesignatePrice(
+                          designate.designate_revision.price
+                        );
+                      }
+                      count2 += 1;
+                      return (
+                        <Button
+                          className={
+                            designate.id == selectDesignate
+                              ? "mb-2 mr-2 min-w-[7rem]"
+                              : "mb-2 mr-2 min-w-[7rem] opacity-60"
+                          }
+                          key={index}
+                          natural
+                          textXL
+                          onClick={() => {
+                            setSelectDesignate(designate.id);
+                            setSelectDesignateSymbol(
+                              designate.designate_revision.symbol
+                            );
+                            setSelectDesignatePrice(
+                              designate.designate_revision.price
+                            );
+                          }}
+                        >
+                          {designate.designate_revision.name}
+                        </Button>
                       );
                     }
-                    count2 += 1;
-                    return (
-                      <Button
-                        className={
-                          designate.id == selectDesignate
-                            ? "mb-2 mr-2 min-w-[7rem]"
-                            : "mb-2 mr-2 min-w-[7rem] opacity-60"
-                        }
-                        key={index}
-                        natural
-                        textXL
-                        onClick={() => {
-                          setSelectDesignate(designate.id);
-                          setSelectDesignateSymbol(
-                            designate.designate_revision.symbol
-                          );
-                          setSelectDesignatePrice(
-                            designate.designate_revision.price
-                          );
-                        }}
-                      >
-                        {designate.designate_revision.name}
-                      </Button>
-                    );
-                  }
-                )}
+                  )}
+                </div>
               </div>
             </div>
           </div>

@@ -26,7 +26,7 @@ import usePurchaseOrderItemAddGlobal from "@/globalstates/purchaseOrderItemAdd";
 
 function ContentHeader({ children }: { children: any }) {
   return (
-    <SubBorder size="mt-0 h-[100px] !w-[800px] px-10 py-2">
+    <SubBorder size="mt-0 h-[100px] !w-[850px] px-10 py-2">
       {children}
     </SubBorder>
   );
@@ -88,27 +88,29 @@ export default function OrderItemAdd() {
         }}
       >
         <ContentHeader>
-          <div className="flex w-full items-center justify-center">
-            <Button className="mr-3">オーダー入力</Button>
-            <Button className="mr-3 opacity-50">店内履歴</Button>
-            <Button className="mr-6 opacity-50">オーダー修正</Button>
-            <input
-              className="mx-4 h-[45px] w-[180px] rounded-md p-4 text-lg text-white"
-              placeholder="オーダー名を入力"
-            />
-            <div>
-              <Border
-                rounded="rounded-full"
-                size="h-[36px] w-[36px] p-[6px] bg-search"
-              >
-                <Image
-                  src={"/assets/search.svg"}
-                  width={26}
-                  height={26}
-                  className="!h-full !w-full"
-                  alt=""
-                />
-              </Border>
+          <div className="flex items-end rounded-md border-4 border-white bg-black px-8 py-1">
+            <div className="flex w-full items-center justify-center">
+              <Button className="mr-3">オーダー入力</Button>
+              <Button className="mr-3 opacity-50">店内履歴</Button>
+              <Button className="mr-6 opacity-50">オーダー修正</Button>
+              <input
+                className="mx-4 h-[45px] w-[180px] rounded-md p-4 text-lg text-white"
+                placeholder="オーダー名を入力"
+              />
+              <div>
+                <Border
+                  rounded="rounded-full"
+                  size="h-[36px] w-[36px] p-[6px] bg-search"
+                >
+                  <Image
+                    src={"/assets/search.svg"}
+                    width={26}
+                    height={26}
+                    className="!h-full !w-full"
+                    alt=""
+                  />
+                </Border>
+              </div>
             </div>
           </div>
         </ContentHeader>

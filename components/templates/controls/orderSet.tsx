@@ -1512,7 +1512,7 @@ export default function ControlOrderSet() {
             </div>
             <div className="flex flex-col">
               <p className="mb-1 text-xs font-bold text-accent">キャスト検索</p>
-              <div className="flex max-h-[235px] min-h-[235px] w-[260px] flex-wrap items-start justify-start overflow-scroll rounded-md border-4 border-white bg-black p-2">
+              <div className="flex max-h-[235px] min-h-[235px] w-[260px] flex-wrap items-start justify-start overflow-scroll rounded-md border-4 border-white bg-black p-1">
                 {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
                   (cast: any, index: any) => {
                     const size = cast.name.length > 4 ? "text-xs" : "text-lg";
