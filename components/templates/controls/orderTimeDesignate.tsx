@@ -464,24 +464,24 @@ export default function OrderTimeDesignate() {
                             <input
                               type="text"
                               className="h-[40px] w-[70px] rounded-md px-2 text-center text-sm"
-                              value={purchaseOrderState[0]?.startTime}
+                              value={cast?.time}
                               onClick={() => {
-                                setIsCalculatorSelect(4);
-                                purchaseOrderState[0].isTimeCalculator = true;
+                                // setIsCalculatorSelect(4);
+                                // purchaseOrderState[0].isTimeCalculator = true;
                               }}
-                              readOnly
+                              // readOnly
                             />
                           </th>
                           <th className="w-[80px] text-center text-lg">
                             <input
                               type="text"
                               className="h-[40px] w-[70px] rounded-md px-2 text-center text-sm"
-                              value={purchaseOrderState[0]?.endTime}
+                              value={cast?.endTime}
                               onClick={() => {
-                                setIsCalculatorSelect(5);
-                                purchaseOrderState[0].isTimeCalculator = true;
+                                // setIsCalculatorSelect(5);
+                                // purchaseOrderState[0].isTimeCalculator = true;
                               }}
-                              readOnly
+                              // readOnly
                             />
                           </th>
                           <th className="w-[20px] text-center text-sm">
@@ -490,12 +490,10 @@ export default function OrderTimeDesignate() {
                           <th className="flex h-[80px] w-[130px] items-center text-center text-sm">
                             <div
                               onClick={() => {
-                                purchaseOrderState[0].endTime = dayjs(
+                                cast.endTime = dayjs(
                                   date(
-                                    purchaseOrderState[0]?.endTime.split(
-                                      ":"
-                                    )[0],
-                                    purchaseOrderState[0]?.endTime.split(":")[1]
+                                    cast?.endTime.split(":")[0],
+                                    cast?.endTime.split(":")[1]
                                   )
                                 )
                                   .subtract(30, "minute")
@@ -518,12 +516,10 @@ export default function OrderTimeDesignate() {
                             </div>
                             <div
                               onClick={() => {
-                                purchaseOrderState[0].endTime = dayjs(
+                                cast.endTime = dayjs(
                                   date(
-                                    purchaseOrderState[0]?.endTime.split(
-                                      ":"
-                                    )[0],
-                                    purchaseOrderState[0]?.endTime.split(":")[1]
+                                    cast?.endTime.split(":")[0],
+                                    cast?.endTime.split(":")[1]
                                   )
                                 )
                                   .add(30, "minute")

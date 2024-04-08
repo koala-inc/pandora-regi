@@ -428,6 +428,9 @@ export default function OrderCastAdd() {
                             time: nowDate
                               .minute(Math.round(nowDate.minute() / 5) * 5)
                               .format("HH:mm"),
+                            endTime: nowDate
+                              .minute(Math.round(nowDate.minute() / 5) * 5)
+                              .format("HH:mm"),
                             isCalculator: false,
                             isTax: false,
                             isNumCalculator: false,
