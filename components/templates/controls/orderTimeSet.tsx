@@ -220,7 +220,7 @@ export default function OrderTimeSet() {
         <div className="w-[calc(100%+50px)]">
           <ContentHeader>
             <div className="flex items-end rounded-md border-4 border-white bg-black px-8 py-1">
-              <div className="flex-start flex w-full flex-col text-white">
+              <div className="flex-start flex w-full flex-col pb-3 text-white">
                 <div className="flex w-full">
                   <div className="flex flex-col">
                     <label className="mb-2 mt-1 text-xs font-bold text-accent">
@@ -228,7 +228,7 @@ export default function OrderTimeSet() {
                     </label>
                     <input
                       type="text"
-                      className="mr-4 h-[45px] w-[80px] rounded-md px-2 text-center text-xl"
+                      className="mr-4 h-[40px] w-[80px] rounded-md px-2 text-center text-xl"
                       value={purchaseOrderState[0]?.mainStartTime}
                       onClick={() => {
                         setIsCalculatorSelect(2);
@@ -245,7 +245,7 @@ export default function OrderTimeSet() {
                     </label>
                     <input
                       type="text"
-                      className="mr-8 h-[45px] w-[80px] rounded-md px-2 text-center text-xl"
+                      className="mr-8 h-[40px] w-[80px] rounded-md px-2 text-center text-xl"
                       value={purchaseOrderState[0]?.mainEndTime}
                       onClick={() => {
                         setIsCalculatorSelect(3);
@@ -260,7 +260,7 @@ export default function OrderTimeSet() {
                       席カテゴリー
                     </label>
                     <select
-                      className="mr-8 h-[45px] w-[120px] rounded-md px-2 text-left text-xl"
+                      className="mr-8 h-[40px] w-[120px] rounded-md px-2 text-left text-xl"
                       value={purchaseOrderState[0].room_name}
                       onChange={(e) => {
                         {
@@ -292,7 +292,7 @@ export default function OrderTimeSet() {
                     </select>
                   </div>
                   <div className="flex flex-col">
-                    <label className="mb-6 mt-[-25px] text-xs font-bold text-accent"></label>
+                    <label className="mb-6 mt-[-10px] text-xs font-bold text-accent"></label>
                     <div
                       className={"my-auto"}
                       onClick={() => {
