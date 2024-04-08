@@ -225,8 +225,9 @@ export default function OrderTimeDesignate() {
                 {/* head */}
                 <thead>
                   <tr>
+                    <th className="w-[60px] text-left text-accent">指名種別</th>
                     <th className="w-[120px] text-left text-accent">
-                      指名内容
+                      指名キャスト
                     </th>
                     <th className="w-[60px] text-left text-accent">
                       セット時間
@@ -251,9 +252,14 @@ export default function OrderTimeDesignate() {
                   {purchaseOrderState[0]?.cast?.map((cast: any, index: any) => {
                     return (
                       <tr className="h-[80px]" key={index}>
+                        <th className="w-[60px] text-left text-sm">
+                          <select className="h-[40px] w-[60px] rounded-md px-1 text-left text-sm">
+                            <option>{cast.slice(0, 1)}</option>
+                          </select>
+                        </th>
                         <th className="w-[120px] text-left text-sm">
                           <select className="h-[40px] w-[120px] rounded-md px-1 text-left text-sm">
-                            <option>{cast.split("##")[0]}</option>
+                            <option>{cast.split("##")[0].substring(1)}</option>
                           </select>
                         </th>
                         <th className="relative w-[60px] text-left text-lg">
@@ -410,9 +416,14 @@ export default function OrderTimeDesignate() {
                     (cast: any, index: any) => {
                       return (
                         <tr className="h-[80px]" key={index}>
+                          <th className="w-[60px] text-left text-sm">
+                            <select className="h-[40px] w-[60px] rounded-md px-1 text-left text-sm">
+                              <option>{cast.title.slice(0, 1)}</option>
+                            </select>
+                          </th>
                           <th className="w-[120px] text-left text-sm">
                             <select className="h-[40px] w-[120px] rounded-md px-1 text-left text-sm">
-                              <option>{cast.title}</option>
+                              <option>{cast.title.substring(1)}</option>
                             </select>
                           </th>
                           <th className="relative w-[60px] text-left text-lg">

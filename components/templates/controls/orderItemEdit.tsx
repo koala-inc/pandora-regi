@@ -121,7 +121,6 @@ export default function OrderItemEdit() {
             <thead>
               <tr className="text-accent">
                 <th className="w-[15em] align-bottom">オーダー名</th>
-                <th className="w-[10em] align-bottom">数量</th>
                 <th className="w-[10em] align-bottom">金額</th>
                 <th className="w-[10em] align-bottom">レディース</th>
                 <th className="w-[5em] align-bottom">
@@ -136,7 +135,6 @@ export default function OrderItemEdit() {
                 <th className="w-[15em]"></th>
                 <th className="w-[10em]"></th>
                 <th className="w-[10em]"></th>
-                <th className="w-[10em]"></th>
                 <th className="w-[5em]">
                   <label></label>
                 </th>
@@ -149,7 +147,6 @@ export default function OrderItemEdit() {
                     <>
                       <tr key={index}>
                         <td>{orderItem.title}</td>
-                        <td>{orderItem.lot}個</td>
                         <td>
                           {orderItem.price?.toLocaleString()}
                           {orderItem.isTax ? "込" : "円"}
@@ -157,22 +154,19 @@ export default function OrderItemEdit() {
                         <td>
                           {orderItem.castNames && orderItem.castNames != ""
                             ? orderItem.castNames
+                                .replace(/ /g, ",")
+                                .replace(/.$/, "")
                             : ""}
                         </td>
                         <th className="flex">
                           <button
                             className="btn btn-ghost btn-xs"
-                            onClick={() => {}}
-                          >
-                            編集
-                          </button>
-                          <button
-                            className="btn btn-ghost btn-xs"
                             onClick={() => {
-                              delete orderItem[index];
-                              purchaseOrder[0].orderItem = orderItem.filter(
-                                (v: any) => v
-                              );
+                              delete purchaseOrder[0].orderItem[index];
+                              purchaseOrder[0].orderItem =
+                                purchaseOrder[0].orderItem.filter(
+                                  (v: any) => v
+                                );
                             }}
                             // onClick={() => {
                             // client

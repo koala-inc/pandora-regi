@@ -1137,7 +1137,9 @@ function Add({ isCalculator, setIsCalculator }: any) {
                 {purchaseOrderItem.castNames &&
                 purchaseOrderItem.castNames != "" ? (
                   <div className="mb-1 flex h-full w-full items-center py-2">
-                    {purchaseOrderItem.castNames}
+                    {purchaseOrderItem.castNames
+                      .replace(/ /g, ",")
+                      .replace(/.$/, "")}
                   </div>
                 ) : (
                   <></>

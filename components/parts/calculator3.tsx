@@ -66,7 +66,9 @@ export default function Calculator3({ result, callback }: any) {
           </span>
         </div>
         <div className="m-3 flex h-[50px] items-center justify-end rounded-md bg-black text-white">
-          <p className="pr-3">{castNames}</p>
+          <p className="pr-3">
+            {castNames?.replace(/ /g, ",").replace(/.$/, "")}
+          </p>
         </div>
         <div className="my-3 flex justify-around">
           <Button
