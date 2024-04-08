@@ -685,7 +685,7 @@ function Base() {
           </div>
           <div className="flex max-h-[130px] min-h-[130px] px-2 text-sm">
             <Lists
-              setControl="ORDEREDIT"
+              setControl="ITEMEDIT"
               lists={purchaseOrderState[0]?.orderItem || []}
             />
             <div
