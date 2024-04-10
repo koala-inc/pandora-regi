@@ -23,7 +23,7 @@ export default function Calculator11({ result, time, callback, title }: any) {
   return (
     <>
       <div
-        className="relative mx-12 h-[630px] w-[300px] rounded-md border border-secondary bg-primary p-4"
+        className="relative mx-12 h-[630px] w-[300px] rounded-md border-4 border-secondary bg-primary p-4"
         onClick={(e) => e.stopPropagation()}
       >
         <div
