@@ -210,6 +210,48 @@ function Base() {
     );
   }, [purchaseOrderState]);
 
+  const [countOrderCast, setCountOrderCast] = useState<any>([]);
+  useEffect(() => {
+    const orderData: any = [];
+    const orderCasts = [
+      ...purchaseOrderState[0]?.cast?.map((cast: any) => {
+        return {
+          title: cast.split("##")[0],
+          subTitle: "",
+          lot: 1,
+          price: Number(cast.split("##")[1]),
+          isTax: cast.isTax,
+        };
+      }),
+      ...purchaseOrderState[0]?.orderCast?.map((cast: any) => {
+        return {
+          title: cast.title,
+          subTitle: "",
+          lot: Number(cast.lot),
+          price: Number(cast.price),
+          isTax: cast.isTax,
+        };
+      }),
+    ];
+    orderCasts.map((orderCast: any, index: any) => {
+      const state = orderCasts.filter((n: any) => n.title === orderCast?.title);
+      let count = 0;
+      state.map((state: any) => (count += state.lot));
+      orderData.push({
+        title: orderCast?.title,
+        subTitle: orderCast?.subTitle,
+        lot: count,
+        price: orderCast?.price,
+        isTax: orderCast?.isTax,
+      });
+    });
+    setCountOrderCast(
+      Array.from(
+        new Map(orderData.map((data: any) => [data.title, data])).values()
+      )
+    );
+  }, [purchaseOrderState]);
+
   return (
     <>
       <section className="text-md flex items-center justify-around">
@@ -563,123 +605,7 @@ function Base() {
             <Line ml="ml-10" />
           </div>
           <div className="flex max-h-[100px] min-h-[100px] px-2 text-sm">
-            <Lists
-              setControl="TIMEDESIGNATE"
-              lists={
-                [
-                  ...purchaseOrderState[0]?.cast?.map((cast: any) => {
-                    return {
-                      title: cast.split("##")[0],
-                      subTitle: "",
-                      lot: 1,
-                      price: Number(cast.split("##")[1]),
-                      isTax: cast.isTax,
-                    };
-                  }),
-                  ...purchaseOrderState[0]?.orderCast?.map((cast: any) => {
-                    return {
-                      title: cast.title,
-                      subTitle: "",
-                      lot: Number(cast.lot),
-                      price: Number(cast.price),
-                      isTax: cast.isTax,
-                    };
-                  }),
-                ]
-                // [
-                // {
-                //   title: purchaseOrderState[0]?.cast[0] || "",
-                //   subTitle: "",
-                //   lot: 1,
-                //   price: 0,
-                // },
-                // {
-                //   title: "A",
-                //   subTitle: "◯",
-                //   lot: 100,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "aaaaaaaaaA",
-                //   subTitle: "◯",
-                //   lot: 1,
-                //   price: 105500,
-                // },
-                // {
-                //   title: "キャストA",
-                //   subTitle: "◯",
-                //   lot: 12,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "キャストA",
-                //   subTitle: "◯",
-                //   lot: 1,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "キャストA",
-                //   subTitle: "◯",
-                //   lot: 1,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "A",
-                //   subTitle: "◯",
-                //   lot: 100,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "aaaaaaaaaA",
-                //   subTitle: "◯",
-                //   lot: 1,
-                //   price: 105500,
-                // },
-                // {
-                //   title: "キャストA",
-                //   subTitle: "◯",
-                //   lot: 12,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "キャストA",
-                //   subTitle: "◯",
-                //   lot: 1,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "キャストA",
-                //   subTitle: "◯",
-                //   lot: 1,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "A",
-                //   subTitle: "◯",
-                //   lot: 100,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "aaaaaaaaaA",
-                //   subTitle: "◯",
-                //   lot: 1,
-                //   price: 105500,
-                // },
-                // {
-                //   title: "キャストA",
-                //   subTitle: "◯",
-                //   lot: 12,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "キャストA",
-                //   subTitle: "◯",
-                //   lot: 1,
-                //   price: 1000,
-                // },
-                // ]
-              }
-            />
+            <Lists setControl="TIMEDESIGNATE" lists={countOrderCast || []} />
             <div
               className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
               onClick={(e) => {
