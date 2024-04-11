@@ -1577,8 +1577,8 @@ export default function ControlOrderSet() {
                       className="mx-2 h-[25px] w-[30px] rounded-md text-center"
                       defaultValue={1}
                       onClick={() => {
-                        // purchaseOrder[0].set.isCalculator = true;
-                        // purchaseOrder[0].set.isCalculatorSelect = 1;
+                        setIsCalculator(true);
+                        setIsCalculatorSelect(2);
                       }}
                       readOnly
                     />
@@ -1588,8 +1588,8 @@ export default function ControlOrderSet() {
                         className="ml-5 h-[25px] w-[90px] rounded-md px-2 pr-[25px] text-right"
                         value={Number(cast.split("##")[1]).toLocaleString()}
                         onClick={() => {
-                          // purchaseOrder[0].set.isCalculator = true;
-                          // purchaseOrder[0].set.isCalculatorSelect = 2;
+                          setIsCalculator(true);
+                          setIsCalculatorSelect(1);
                         }}
                         readOnly
                       />

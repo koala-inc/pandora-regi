@@ -22,7 +22,7 @@ export default function Calculator({
       }}
     >
       <div
-        className="relative h-[400px] w-[300px] rounded-md border border-secondary bg-primary p-4"
+        className="relative h-[400px] w-[300px] rounded-md border-4 border-secondary bg-primary p-4"
         onClick={(e) => e.stopPropagation()}
       >
         <div
