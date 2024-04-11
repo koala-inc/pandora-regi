@@ -96,19 +96,19 @@ export default function OrderEnd() {
       >
         <div className="flex h-full w-full">
           <Border
-            className="mr-1 h-[300px] w-[calc(100%-360px)]"
+            className="mr-1 h-[100px] w-[calc(100%-360px)]"
             size="h-[auto] w-full"
           >
-            <div className="flex flex-col w-full">
-              <div className="flex p-4 pb-0 w-full">
+            <div className="flex w-full flex-col">
+              <div className="flex w-full p-4 pb-0">
                 <Border2
-                  className="my-2 w-full mr-4"
+                  className="my-2 mr-4 w-full"
                   rounded="border-white rounded-md"
                   size="p-4 flex min-h-[80px] overflow-scroll"
                   black
                 >
-                  <div className="flex flex-col w-full mr-4">
-                    <div className="text-accent w-full text-left">合計金額</div>
+                  <div className="mr-4 flex w-full flex-col">
+                    <div className="w-full text-left text-accent">合計金額</div>
                     <div className="w-full text-right text-2xl">
                       {(discountType
                         ? totalPay + Number(discount)
@@ -117,13 +117,13 @@ export default function OrderEnd() {
                       円
                     </div>
                   </div>
-                  <div className="flex flex-col w-full mr-4">
-                    <div className="text-accent w-full text-left">手数料</div>
+                  <div className="mr-4 flex w-full flex-col">
+                    <div className="w-full text-left text-accent">手数料</div>
                     <div className="w-full text-right text-2xl">{0}円</div>
                   </div>
-                  <div className="flex flex-col w-full">
+                  <div className="flex w-full flex-col">
                     <div
-                      className="text-accent w-full text-left"
+                      className="w-full text-left text-accent"
                       onClick={() => {
                         setDiscountType((discountType) => !discountType);
                       }}
@@ -132,8 +132,8 @@ export default function OrderEnd() {
                       <span
                         className={
                           discountType
-                            ? "opacity-50 ml-4 px-2"
-                            : "mx-2 ml-4 border border-white px-2 rounded-md"
+                            ? "ml-4 px-2 opacity-50"
+                            : "mx-2 ml-4 rounded-md border border-white px-2"
                         }
                       >
                         -
@@ -141,15 +141,15 @@ export default function OrderEnd() {
                       <span
                         className={
                           !discountType
-                            ? "opacity-50 px-2"
-                            : "mx-2 border border-white px-2 rounded-md"
+                            ? "px-2 opacity-50"
+                            : "mx-2 rounded-md border border-white px-2"
                         }
                       >
                         +
                       </span>
                     </div>
                     <input
-                      className="w-full border p-[3px] rounded-md text-right"
+                      className="w-full rounded-md border p-[3px] text-right"
                       value={
                         (discountType ? "" : "-") +
                         Number(discount).toLocaleString()
@@ -167,7 +167,7 @@ export default function OrderEnd() {
                   size="p-4 flex flex-col min-h-[90px] overflow-scroll justify-center"
                   black
                 >
-                  <div className="text-accent w-full text-left">残金</div>
+                  <div className="w-full text-left text-accent">残金</div>
                   <div className="w-full text-right text-2xl text-red-400">
                     {(discountType
                       ? totalPay + Number(discount) - pay
@@ -177,20 +177,20 @@ export default function OrderEnd() {
                   </div>
                 </Border2>
               </div>
-              <div className="p-4 pt-0 w-full flex justify-center items-center">
+              <div className="flex w-full items-center justify-center p-4 pt-0">
                 <Border2
                   className="my-2 w-full"
                   rounded="border-white rounded-md"
                   size="p-4 flex min-h-[100px] overflow-scroll flex-col !justify-end"
                   black
                 >
-                  <div className="w-full flex items-end mb-4">
-                    <div className="flex flex-col w-[30rem] mr-4">
-                      <div className="text-accent w-full text-left mb-1">
+                  <div className="mb-4 flex w-full items-end">
+                    <div className="mr-4 flex w-[30rem] flex-col">
+                      <div className="mb-1 w-full text-left text-accent">
                         支払方法
                       </div>
                       <select
-                        className="w-full text-md p-2 rounded-md"
+                        className="text-md w-full rounded-md p-2"
                         onChange={(e) => {
                           if (Number(e.target.value) == 1) {
                             setType(true);
@@ -207,15 +207,15 @@ export default function OrderEnd() {
                         <option value={4}>掛</option>
                       </select>
                     </div>
-                    <div className="flex flex-col w-[30rem] mr-4">
-                      <div className="text-accent w-full text-left mb-1">
+                    <div className="mr-4 flex w-[30rem] flex-col">
+                      <div className="mb-1 w-full text-left text-accent">
                         カード種類
                       </div>
                       <select
                         className={
                           type
-                            ? "w-full text-md p-2 rounded-md"
-                            : "w-full text-md p-2 rounded-md grayscale opacity-20"
+                            ? "text-md w-full rounded-md p-2"
+                            : "text-md w-full rounded-md p-2 opacity-20 grayscale"
                         }
                         disabled={!type}
                       >
@@ -230,15 +230,15 @@ export default function OrderEnd() {
                         <option>UNION(銀聯)</option>
                       </select>
                     </div>
-                    <div className="flex flex-col w-[20rem] mr-4">
-                      <div className="text-accent w-full text-left mb-1">
+                    <div className="mr-4 flex w-[20rem] flex-col">
+                      <div className="mb-1 w-full text-left text-accent">
                         手数料
                       </div>
                       <select
                         className={
                           type
-                            ? "w-full text-md text-right p-2 rounded-md"
-                            : "w-full text-md text-right p-2 rounded-md grayscale opacity-20"
+                            ? "text-md w-full rounded-md p-2 text-right"
+                            : "text-md w-full rounded-md p-2 text-right opacity-20 grayscale"
                         }
                         disabled={!type}
                       >
@@ -246,10 +246,10 @@ export default function OrderEnd() {
                         <option>10％</option>
                       </select>
                     </div>
-                    <div className="flex flex-col w-[30rem] mr-4">
-                      <div className="text-accent w-full text-left">預り金</div>
+                    <div className="mr-4 flex w-[30rem] flex-col">
+                      <div className="w-full text-left text-accent">預り金</div>
                       <input
-                        className="w-full border p-[6px] rounded-md text-right"
+                        className="w-full rounded-md border p-[6px] text-right"
                         value={pay}
                         onChange={(e) => {
                           setPay(Number(e.target.value));
@@ -257,7 +257,7 @@ export default function OrderEnd() {
                       />
                     </div>
                     <div
-                      className="flex flex-col min-w-[6rem] mr-4 h-full justify-end"
+                      className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
                       onClick={() => {
                         setPay(totalPay - discount);
                       }}
@@ -281,10 +281,10 @@ export default function OrderEnd() {
                       </Border2>
                     </div>
                   </div>
-                  <div className="w-full flex items-end mb-4">
-                    <div className="flex flex-col w-[30rem] mr-4">
+                  <div className="mb-4 flex w-full items-end">
+                    <div className="mr-4 flex w-[30rem] flex-col">
                       <select
-                        className="w-full text-md p-2 rounded-md"
+                        className="text-md w-full rounded-md p-2"
                         onChange={(e) => {
                           if (Number(e.target.value) == 1) {
                             setType2(true);
@@ -304,12 +304,12 @@ export default function OrderEnd() {
                     <div
                       className={
                         type2
-                          ? "flex flex-col w-[30rem] mr-4"
-                          : "flex flex-col w-[30rem] mr-4 grayscale opacity-20"
+                          ? "mr-4 flex w-[30rem] flex-col"
+                          : "mr-4 flex w-[30rem] flex-col opacity-20 grayscale"
                       }
                     >
                       <select
-                        className="w-full text-md p-2 rounded-md"
+                        className="text-md w-full rounded-md p-2"
                         disabled={!type2}
                       >
                         <option disabled selected>
@@ -326,12 +326,12 @@ export default function OrderEnd() {
                     <div
                       className={
                         type2
-                          ? "flex flex-col w-[20rem] mr-4"
-                          : "flex flex-col w-[20rem] mr-4 grayscale opacity-20"
+                          ? "mr-4 flex w-[20rem] flex-col"
+                          : "mr-4 flex w-[20rem] flex-col opacity-20 grayscale"
                       }
                     >
                       <select
-                        className="w-full text-md text-right p-2 rounded-md"
+                        className="text-md w-full rounded-md p-2 text-right"
                         disabled={!type2}
                       >
                         <option selected>0％</option>
@@ -340,9 +340,9 @@ export default function OrderEnd() {
                         <option>15％</option>
                       </select>
                     </div>
-                    <div className="flex flex-col w-[30rem] mr-4">
+                    <div className="mr-4 flex w-[30rem] flex-col">
                       <input
-                        className="w-full border p-[6px] rounded-md text-right"
+                        className="w-full rounded-md border p-[6px] text-right"
                         value={pay}
                         onChange={(e) => {
                           setPay(Number(e.target.value));
@@ -350,7 +350,7 @@ export default function OrderEnd() {
                       />
                     </div>
                     <div
-                      className="flex flex-col min-w-[6rem] mr-4 h-full justify-end"
+                      className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
                       onClick={() => {
                         setPay(totalPay - discount);
                       }}
@@ -407,7 +407,7 @@ export default function OrderEnd() {
               </div>
             </Border>
             <Border
-              className="mt-3 mr-2 h-[200px] w-[146px]"
+              className="mr-2 mt-3 h-[200px] w-[146px]"
               size="h-[190px] w-full flex-col"
             >
               <div className="flex w-full flex-col p-4">

@@ -581,7 +581,7 @@ function Base() {
               className="my-auto flex h-full w-[60px] flex-col items-center justify-center pl-3"
               onClick={(e) => {
                 e.stopPropagation();
-                setIsControl("SET");
+                setIsControl("SETADD");
               }}
             >
               <Border rounded="rounded-full" stroke="lg">

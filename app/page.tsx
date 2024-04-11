@@ -35,6 +35,7 @@ import useSeatPresetGlobal from "@/globalstates/seatPreset";
 import usePurchaseOrderSetGlobal from "@/globalstates/purchaseOrderSet";
 import OrderTimeDesignate from "@/components/templates/controls/orderTimeDesignate";
 import OrderTimeSet from "@/components/templates/controls/orderTimeSet";
+import ControlOrderSetAdd from "@/components/templates/controls/orderSetAdd";
 
 function Control(isControl: any) {
   switch (isControl) {
@@ -55,6 +56,9 @@ function Control(isControl: any) {
     case "SET":
       // 合流コンポーネント
       return <OrderSet />;
+    case "SETADD":
+      // 合流コンポーネント
+      return <ControlOrderSetAdd />;
     case "CAST":
       // セットの追加コンポーネント
       return <OrderCastAdd />;
