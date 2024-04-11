@@ -495,7 +495,7 @@ function Base() {
                     ? [
                         {
                           title: purchaseOrderState[0]?.setName,
-                          lot: purchaseOrderState[0]?.num,
+                          lot: purchaseOrderState[0]?.lot,
                           price: purchaseOrderState[0]?.price,
                           isTax: purchaseOrderState[0]?.priceTax,
                         },
@@ -514,11 +514,12 @@ function Base() {
                           price: Number(purchaseOrderState[0]?.extensionPrice),
                           isTax: false,
                         },
+                        ...purchaseOrderState[0]?.orderSet,
                       ]
                     : [
                         {
                           title: purchaseOrderState[0]?.setName,
-                          lot: purchaseOrderState[0]?.num,
+                          lot: purchaseOrderState[0]?.lot,
                           price: purchaseOrderState[0]?.price,
                           isTax: purchaseOrderState[0]?.priceTax,
                         },
@@ -531,12 +532,13 @@ function Base() {
                           price: purchaseOrderState[0]?.roomCharge,
                           isTax: purchaseOrderState[0]?.roomTax,
                         },
+                        ...purchaseOrderState[0]?.orderSet,
                       ]
                   : Number(purchaseOrderState[0]?.orderExtension) > 0
                   ? [
                       {
                         title: purchaseOrderState[0]?.setName,
-                        lot: purchaseOrderState[0]?.num,
+                        lot: purchaseOrderState[0]?.lot,
                         price: purchaseOrderState[0]?.price,
                         isTax: purchaseOrderState[0]?.priceTax,
                       },
@@ -546,14 +548,16 @@ function Base() {
                         price: Number(purchaseOrderState[0]?.extensionPrice),
                         isTax: false,
                       },
+                      ...purchaseOrderState[0]?.orderSet,
                     ]
                   : [
                       {
                         title: purchaseOrderState[0]?.setName,
-                        lot: purchaseOrderState[0]?.num,
+                        lot: purchaseOrderState[0]?.lot,
                         price: purchaseOrderState[0]?.price,
                         isTax: purchaseOrderState[0]?.priceTax,
                       },
+                      ...purchaseOrderState[0]?.orderSet,
                     ]
                 // {
                 //   title: "メイン",

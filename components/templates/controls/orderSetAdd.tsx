@@ -1578,7 +1578,19 @@ export default function ControlOrderSetAdd() {
                           return {
                             ...orderSet,
                             cast: [...orderSet.cast, ...order.cast],
-                            // orderSet: [...orderSet.orderSet, ]
+                            num:
+                              Number(orderSet.num) +
+                              Number(numResult.replace(/[^0-9]/g, "")),
+                            orderSet: [
+                              ...orderSet.orderSet,
+                              {
+                                title: setName,
+                                subTitle: "",
+                                lot: Number(numResult.replace(/[^0-9]/g, "")),
+                                price: Number(result.replace(/[^0-9]/g, "")),
+                                isTax: result.includes("##"),
+                              },
+                            ],
                           };
                         return orderSet;
                       });
