@@ -26,6 +26,7 @@ import { searchBottle } from "@/gqls/query/bottle";
 import { searchMenu } from "@/gqls/query/menu";
 import usePurchaseOrderItemAddGlobal from "@/globalstates/purchaseOrderItemAdd";
 import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
+import useSeatPresetGlobal from "@/globalstates/seatPreset";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -68,7 +69,11 @@ export default function OrderItemEdit() {
 
   const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
     usePurchaseOrderItemAddGlobal();
+  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+  const purchaseOrderState = purchaseOrder.filter(
+    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  );
 
   let count = 0;
   let count2 = 0;
@@ -141,13 +146,13 @@ export default function OrderItemEdit() {
               </tr>
             </thead>
             <tbody>
-              {purchaseOrder[0]?.orderItem?.map(
+              {purchaseOrderState[0]?.orderItem?.map(
                 (orderItem: any, index: any) => {
                   return (
                     <>
                       <tr key={index}>
                         <td>{orderItem.title}</td>
-                        <td>
+                        <td onClick={() => {}}>
                           {orderItem.price?.toLocaleString()}
                           {orderItem.isTax ? "込" : "円"}
                         </td>
