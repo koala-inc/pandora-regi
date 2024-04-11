@@ -12,7 +12,7 @@ import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsControlGlobal from "@/globalstates/isControl";
 import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import usePurchaseOrderItemAddGlobal from "@/globalstates/purchaseOrderItemAdd";
 
 import client from "@/connection";
@@ -185,6 +185,30 @@ function Base() {
             30
         ) + 1
       : 0) * purchaseOrderState[0]?.num;
+
+  const [countOrderItem, setCountOrderItem] = useState<any>([]);
+  useEffect(() => {
+    const orderData: any = [];
+    purchaseOrderState[0]?.orderItem.map((orderItem: any, index: any) => {
+      const state = purchaseOrderState[0]?.orderItem.filter(
+        (n: any) => n.title === orderItem?.title
+      );
+      let count = 0;
+      state.map((state: any) => (count += state.lot));
+      orderData.push({
+        title: orderItem?.title,
+        subTitle: orderItem?.subTitle,
+        lot: count,
+        price: orderItem?.price,
+        isTax: orderItem?.isTax,
+      });
+    });
+    setCountOrderItem(
+      Array.from(
+        new Map(orderData.map((data: any) => [data.title, data])).values()
+      )
+    );
+  }, [purchaseOrderState]);
 
   return (
     <>
@@ -684,10 +708,7 @@ function Base() {
             <Line ml="ml-10" />
           </div>
           <div className="flex max-h-[130px] min-h-[130px] px-2 text-sm">
-            <Lists
-              setControl="ITEMEDIT"
-              lists={purchaseOrderState[0]?.orderItem || []}
-            />
+            <Lists setControl="ITEMEDIT" lists={countOrderItem || []} />
             <div
               className="my-auto flex w-[60px] flex-col items-center justify-center pl-3"
               onClick={(e) => {
