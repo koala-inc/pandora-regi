@@ -113,7 +113,7 @@ function Base() {
     total += Number(cast.split("##")[1]);
   });
   total +=
-    Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.num);
+    Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.lot);
   total += purchaseOrderState[0]?.isRoomCharge
     ? Number(purchaseOrderState[0]?.roomCharge)
     : 0;
@@ -132,6 +132,13 @@ function Base() {
       total += Number(cast.price) * Number(cast.lot);
     } else {
       taxNoTotal += Number(cast.price) * Number(cast.lot);
+    }
+  });
+  purchaseOrderState[0]?.orderSet?.map((set: any) => {
+    if (!set.isTax) {
+      total += Number(set.price) * Number(set.lot);
+    } else {
+      taxNoTotal += Number(set.price) * Number(set.lot);
     }
   });
 
@@ -184,14 +191,42 @@ function Base() {
             1) /
             30
         ) + 1
-      : 0) * purchaseOrderState[0]?.num;
+      : 0) * purchaseOrderState[0]?.lot;
+
+  const checker_new = (endTime: any, startTime: any, setTime: any, num: any) =>
+    (Math.floor(
+      (Number(
+        dayjs(date(endTime.split(":")[0], endTime.split(":")[1])).diff(
+          date(startTime.split(":")[0], startTime.split(":")[1]),
+          "minute"
+        )
+      ) -
+        Number(setTime) -
+        1) /
+        30
+    ) >= 0
+      ? Math.floor(
+          (Number(
+            dayjs(date(endTime.split(":")[0], endTime.split(":")[1])).diff(
+              date(startTime.split(":")[0], startTime.split(":")[1]),
+              "minute"
+            )
+          ) -
+            Number(setTime) -
+            1) /
+            30
+        ) + 1
+      : 0) * num;
 
   const [countOrderItem, setCountOrderItem] = useState<any>([]);
   useEffect(() => {
     const orderData: any = [];
     purchaseOrderState[0]?.orderItem.map((orderItem: any, index: any) => {
       const state = purchaseOrderState[0]?.orderItem.filter(
-        (n: any) => n.title === orderItem?.title
+        (n: any) =>
+          n.title === orderItem?.title &&
+          n.price === orderItem?.price &&
+          n.isTax === orderItem?.isTax
       );
       let count = 0;
       state.map((state: any) => (count += state.lot));
@@ -205,7 +240,12 @@ function Base() {
     });
     setCountOrderItem(
       Array.from(
-        new Map(orderData.map((data: any) => [data.title, data])).values()
+        new Map(
+          orderData.map((data: any) => [
+            data.title + data.price + data.isTax,
+            data,
+          ])
+        ).values()
       )
     );
   }, [purchaseOrderState]);
@@ -234,7 +274,12 @@ function Base() {
       }),
     ];
     orderCasts.map((orderCast: any, index: any) => {
-      const state = orderCasts.filter((n: any) => n.title === orderCast?.title);
+      const state = orderCasts.filter(
+        (n: any) =>
+          n.title === orderCast?.title &&
+          n.price === orderCast?.price &&
+          n.isTax === orderCast?.isTax
+      );
       let count = 0;
       state.map((state: any) => (count += state.lot));
       orderData.push({
@@ -247,7 +292,129 @@ function Base() {
     });
     setCountOrderCast(
       Array.from(
-        new Map(orderData.map((data: any) => [data.title, data])).values()
+        new Map(
+          orderData.map((data: any) => [
+            data.title + data.price + data.isTax,
+            data,
+          ])
+        ).values()
+      )
+    );
+  }, [purchaseOrderState]);
+
+  const [countOrderSet, setCountOrderSet] = useState<any>([]);
+  useEffect(() => {
+    const orderData: any = [];
+    const orderExtensions: any = [];
+    purchaseOrderState[0].orderSet.map((set: any) => {
+      if (set.orderExtension > 0) {
+        orderExtensions.push({
+          title: "延長料金",
+          lot: Number(set.orderExtension),
+          price: Number(set.extensionPrice),
+          isTax: false,
+        });
+      }
+    });
+    const orderSets = purchaseOrderState[0]?.isRoomCharge
+      ? Number(purchaseOrderState[0]?.orderExtension) > 0
+        ? [
+            {
+              title: purchaseOrderState[0]?.setName,
+              lot: purchaseOrderState[0]?.lot,
+              price: purchaseOrderState[0]?.price,
+              isTax: purchaseOrderState[0]?.priceTax,
+            },
+            ...purchaseOrderState[0]?.orderSet,
+            {
+              title:
+                purchaseOrderState[0]?.roomName == ""
+                  ? "ルームチャージ"
+                  : purchaseOrderState[0]?.roomName,
+              lot: 1,
+              price: purchaseOrderState[0]?.roomCharge,
+              isTax: purchaseOrderState[0]?.roomTax,
+            },
+            {
+              title: "延長料金",
+              lot: Number(purchaseOrderState[0]?.orderExtension),
+              price: Number(purchaseOrderState[0]?.extensionPrice),
+              isTax: false,
+            },
+            ...orderExtensions,
+          ]
+        : [
+            {
+              title: purchaseOrderState[0]?.setName,
+              lot: purchaseOrderState[0]?.lot,
+              price: purchaseOrderState[0]?.price,
+              isTax: purchaseOrderState[0]?.priceTax,
+            },
+            ...purchaseOrderState[0]?.orderSet,
+            {
+              title:
+                purchaseOrderState[0]?.roomName == ""
+                  ? "ルームチャージ"
+                  : purchaseOrderState[0]?.roomName,
+              lot: 1,
+              price: purchaseOrderState[0]?.roomCharge,
+              isTax: purchaseOrderState[0]?.roomTax,
+            },
+            ...orderExtensions,
+          ]
+      : Number(purchaseOrderState[0]?.orderExtension) > 0
+      ? [
+          {
+            title: purchaseOrderState[0]?.setName,
+            lot: purchaseOrderState[0]?.lot,
+            price: purchaseOrderState[0]?.price,
+            isTax: purchaseOrderState[0]?.priceTax,
+          },
+          ...purchaseOrderState[0]?.orderSet,
+          {
+            title: "延長料金",
+            lot: Number(purchaseOrderState[0]?.orderExtension),
+            price: Number(purchaseOrderState[0]?.extensionPrice),
+            isTax: false,
+          },
+          ...orderExtensions,
+        ]
+      : [
+          {
+            title: purchaseOrderState[0]?.setName,
+            lot: purchaseOrderState[0]?.lot,
+            price: purchaseOrderState[0]?.price,
+            isTax: purchaseOrderState[0]?.priceTax,
+          },
+          ...purchaseOrderState[0]?.orderSet,
+          ...orderExtensions,
+        ];
+
+    orderSets.map((orderSet: any, index: any) => {
+      const state = orderSets.filter(
+        (n: any) =>
+          n.title === orderSet?.title &&
+          n.price === orderSet?.price &&
+          n.isTax === orderSet?.isTax
+      );
+      let count = 0;
+      state.map((state: any) => (count += state.lot));
+      orderData.push({
+        title: orderSet?.title,
+        subTitle: "",
+        lot: count,
+        price: orderSet?.price,
+        isTax: orderSet?.isTax,
+      });
+    });
+    setCountOrderSet(
+      Array.from(
+        new Map(
+          orderData.map((data: any) => [
+            data.title + data.price + data.isTax,
+            data,
+          ])
+        ).values()
       )
     );
   }, [purchaseOrderState]);
@@ -312,6 +479,19 @@ function Base() {
                 purchaseOrderState[0].endTime =
                   purchaseOrderState[0]?.mainEndTime;
                 purchaseOrderState[0].orderExtension = checker();
+                purchaseOrderState[0].orderSet.map((set: any) => {
+                  set.endTime = dayjs(
+                    date(set.endTime.split(":")[0], set.endTime.split(":")[1])
+                  )
+                    .subtract(30, "minute")
+                    .format("HH:mm");
+                  set.orderExtension = checker_new(
+                    set.endTime,
+                    set.startTime,
+                    set.setTime,
+                    set.lot
+                  );
+                });
                 if (
                   Number(purchaseOrderState[0]?.callTime.split(":")[0]) <=
                     Number(purchaseOrderState[0]?.mainEndTime.split(":")[0]) &&
@@ -354,6 +534,19 @@ function Base() {
                 purchaseOrderState[0].endTime =
                   purchaseOrderState[0]?.mainEndTime;
                 purchaseOrderState[0].orderExtension = checker();
+                purchaseOrderState[0].orderSet.map((set: any) => {
+                  set.endTime = dayjs(
+                    date(set.endTime.split(":")[0], set.endTime.split(":")[1])
+                  )
+                    .add(30, "minute")
+                    .format("HH:mm");
+                  set.orderExtension = checker_new(
+                    set.endTime,
+                    set.startTime,
+                    set.setTime,
+                    set.lot
+                  );
+                });
                 if (
                   Number(purchaseOrderState[0]?.callTime.split(":")[0]) <=
                     Number(purchaseOrderState[0]?.mainEndTime.split(":")[0]) &&
@@ -487,80 +680,7 @@ function Base() {
             <Line ml="ml-10" />
           </div>
           <div className="flex h-[120px] max-h-[100px] min-h-[100px] px-2 text-sm">
-            <Lists
-              setControl="TIMESET"
-              lists={
-                purchaseOrderState[0]?.isRoomCharge
-                  ? Number(purchaseOrderState[0]?.orderExtension) > 0
-                    ? [
-                        {
-                          title: purchaseOrderState[0]?.setName,
-                          lot: purchaseOrderState[0]?.lot,
-                          price: purchaseOrderState[0]?.price,
-                          isTax: purchaseOrderState[0]?.priceTax,
-                        },
-                        {
-                          title:
-                            purchaseOrderState[0]?.roomName == ""
-                              ? "ルームチャージ"
-                              : purchaseOrderState[0]?.roomName,
-                          lot: 1,
-                          price: purchaseOrderState[0]?.roomCharge,
-                          isTax: purchaseOrderState[0]?.roomTax,
-                        },
-                        {
-                          title: "延長料金",
-                          lot: Number(purchaseOrderState[0]?.orderExtension),
-                          price: Number(purchaseOrderState[0]?.extensionPrice),
-                          isTax: false,
-                        },
-                        ...purchaseOrderState[0]?.orderSet,
-                      ]
-                    : [
-                        {
-                          title: purchaseOrderState[0]?.setName,
-                          lot: purchaseOrderState[0]?.lot,
-                          price: purchaseOrderState[0]?.price,
-                          isTax: purchaseOrderState[0]?.priceTax,
-                        },
-                        {
-                          title:
-                            purchaseOrderState[0]?.roomName == ""
-                              ? "ルームチャージ"
-                              : purchaseOrderState[0]?.roomName,
-                          lot: 1,
-                          price: purchaseOrderState[0]?.roomCharge,
-                          isTax: purchaseOrderState[0]?.roomTax,
-                        },
-                        ...purchaseOrderState[0]?.orderSet,
-                      ]
-                  : Number(purchaseOrderState[0]?.orderExtension) > 0
-                  ? [
-                      {
-                        title: purchaseOrderState[0]?.setName,
-                        lot: purchaseOrderState[0]?.lot,
-                        price: purchaseOrderState[0]?.price,
-                        isTax: purchaseOrderState[0]?.priceTax,
-                      },
-                      {
-                        title: "延長料金",
-                        lot: Number(purchaseOrderState[0]?.orderExtension),
-                        price: Number(purchaseOrderState[0]?.extensionPrice),
-                        isTax: false,
-                      },
-                      ...purchaseOrderState[0]?.orderSet,
-                    ]
-                  : [
-                      {
-                        title: purchaseOrderState[0]?.setName,
-                        lot: purchaseOrderState[0]?.lot,
-                        price: purchaseOrderState[0]?.price,
-                        isTax: purchaseOrderState[0]?.priceTax,
-                      },
-                      ...purchaseOrderState[0]?.orderSet,
-                    ]
-              }
-            />
+            <Lists setControl="TIMESET" lists={countOrderSet || []} />
             <div
               className="my-auto flex h-full w-[60px] flex-col items-center justify-center pl-3"
               onClick={(e) => {
@@ -782,7 +902,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
     total += Number(cast.split("##")[1]);
   });
   total +=
-    Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.num);
+    Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.lot);
   total += purchaseOrderState[0]?.isRoomCharge
     ? Number(purchaseOrderState[0]?.roomCharge)
     : 0;
@@ -1201,7 +1321,7 @@ function CastAdd() {
     total += Number(cast.split("##")[1]);
   });
   total +=
-    Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.num);
+    Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.lot);
   total += purchaseOrderState[0]?.isRoomCharge
     ? Number(purchaseOrderState[0]?.roomCharge)
     : 0;
@@ -1706,7 +1826,32 @@ export default function OrderSheet() {
             1) /
             30
         ) + 1
-      : 0) * purchaseOrderState[0].num;
+      : 0) * purchaseOrderState[0].lot;
+
+  const checker_new = (endTime: any, startTime: any, setTime: any, num: any) =>
+    (Math.floor(
+      (Number(
+        dayjs(date(endTime.split(":")[0], endTime.split(":")[1])).diff(
+          date(startTime.split(":")[0], startTime.split(":")[1]),
+          "minute"
+        )
+      ) -
+        Number(setTime) -
+        1) /
+        30
+    ) >= 0
+      ? Math.floor(
+          (Number(
+            dayjs(date(endTime.split(":")[0], endTime.split(":")[1])).diff(
+              date(startTime.split(":")[0], startTime.split(":")[1]),
+              "minute"
+            )
+          ) -
+            Number(setTime) -
+            1) /
+            30
+        ) + 1
+      : 0) * num;
 
   return (
     <>
@@ -1766,6 +1911,15 @@ export default function OrderSheet() {
             callback={(hour: any, minite: any) => {
               purchaseOrderState[0].mainEndTime = hour + ":" + minite;
               purchaseOrderState[0].endTime = purchaseOrderState[0].mainEndTime;
+              purchaseOrderState[0].orderSet.map((set: any) => {
+                set.endTime = purchaseOrderState[0].mainEndTime;
+                set.orderExtension = checker_new(
+                  set.endTime,
+                  set.startTime,
+                  set.setTime,
+                  set.lot
+                );
+              });
               purchaseOrderState[0].orderExtension = checker();
             }}
             title="終了時間"

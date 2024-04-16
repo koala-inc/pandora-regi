@@ -1694,6 +1694,23 @@ export default function ControlOrderSet() {
                       flag4 = false;
                     }
                     if (flag1 && flag2 && flag3 && flag4) {
+                      const orderSets: any = [];
+                      [
+                        ...Array(Number(numResult.replace(/[^0-9]/g, "")) - 1),
+                      ].map(() =>
+                        orderSets.push({
+                          title: setName,
+                          subTitle: "",
+                          lot: 1,
+                          price: Number(result.replace(/[^0-9]/g, "")),
+                          isTax: result.includes("##"),
+                          setTime: order.setTime,
+                          startTime: order.startTime,
+                          endTime: order.endTime,
+                          orderExtension: order.orderExtension,
+                          extensionPrice: Number(extensionPrice),
+                        })
+                      );
                       setPurchaseOrderSet([
                         ...purchaseOrderSet,
                         {
@@ -1704,12 +1721,12 @@ export default function ControlOrderSet() {
                           setName: setName,
                           roomName: roomName,
                           status: status,
-                          lot: Number(numResult.replace(/[^0-9]/g, "")),
+                          lot: 1,
                           mainStartTime: order.startTime,
                           mainEndTime: order.endTime,
                           orderItem: [],
                           orderCast: [],
-                          orderSet: [],
+                          orderSet: [...orderSets],
                           orderExtension: 0,
                           extensionPrice: Number(extensionPrice),
                           price: Number(result.replace(/[^0-9]/g, "")),

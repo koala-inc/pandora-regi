@@ -666,7 +666,7 @@ export default function ControlOrderSetAdd() {
           duration: 0.15,
           delay: 0.15,
         }}
-        className="absolute left-[390px] top-1/2 z-20 min-w-[calc(100dvw-425px)] -translate-y-1/2"
+        className="absolute left-[390px] top-1/2 z-20 min-w-[calc(100dvw-425px)] -translate-y-1/2 pt-[115px]"
       >
         <div className="tabs mt-3 justify-start">
           {searchData2?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
@@ -819,38 +819,6 @@ export default function ControlOrderSetAdd() {
                     </>
                   )}
                 </select>
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <label className="mb-2 mt-3 text-xs font-bold text-accent">
-                販売促進スタッフ
-              </label>
-              <div className="relative flex">
-                <div className="flex flex-col">
-                  <input
-                    type="text"
-                    className="mr-8 h-[45px] w-[19rem] rounded-md px-2 text-xl"
-                    placeholder="スタッフ"
-                    onClick={() => {}}
-                    readOnly
-                  />
-                </div>
-                {/* <div className="badge badge-info absolute left-[10px] top-[5px] w-[120px] gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    className="inline-block h-4 w-4 stroke-current"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    ></path>
-                  </svg>
-                  スタッフ名
-                </div> */}
               </div>
             </div>
             {/* <div>
@@ -1567,28 +1535,33 @@ export default function ControlOrderSetAdd() {
                     }
                     if (flag1 && flag2 && flag3 && flag4) {
                       const newArr = purchaseOrder.map((orderSet: any) => {
-                        if (orderSet.id === id2 + "#" + id + "#" + id3)
+                        if (orderSet.id === id2 + "#" + id + "#" + id3) {
+                          const orderSets: any = [];
+                          [
+                            ...Array(Number(numResult.replace(/[^0-9]/g, ""))),
+                          ].map(() =>
+                            orderSets.push({
+                              title: setName,
+                              subTitle: "",
+                              lot: 1,
+                              price: Number(result.replace(/[^0-9]/g, "")),
+                              isTax: result.includes("##"),
+                              setTime: order.setTime,
+                              startTime: order.startTime,
+                              endTime: order.endTime,
+                              orderExtension: order.orderExtension,
+                              extensionPrice: Number(extensionPrice),
+                            })
+                          );
                           return {
                             ...orderSet,
                             cast: [...orderSet.cast, ...order.cast],
                             num:
                               Number(orderSet.num) +
                               Number(numResult.replace(/[^0-9]/g, "")),
-                            orderSet: [
-                              ...orderSet.orderSet,
-                              {
-                                title: setName,
-                                subTitle: "",
-                                lot: Number(numResult.replace(/[^0-9]/g, "")),
-                                price: Number(result.replace(/[^0-9]/g, "")),
-                                isTax: result.includes("##"),
-                                setTime: order.setTime,
-                                startTime: order.startTime,
-                                endTime: order.endTime,
-                                orderExtension: order.orderExtension,
-                              },
-                            ],
+                            orderSet: [...orderSet.orderSet, ...orderSets],
                           };
+                        }
                         return orderSet;
                       });
                       setPurchaseOrder(newArr);

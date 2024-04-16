@@ -143,7 +143,7 @@ export default function OrderTimeSet() {
             1) /
             30
         ) + 1
-      : 0) * purchaseOrderState[0].num;
+      : 0) * purchaseOrderState[0].lot;
 
   const checker_new = (endTime: any, startTime: any, setTime: any, num: any) =>
     (Math.floor(
