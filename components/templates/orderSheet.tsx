@@ -309,7 +309,7 @@ function Base() {
     purchaseOrderState[0].orderSet.map((set: any) => {
       if (set.orderExtension > 0) {
         orderExtensions.push({
-          title: "延長料金",
+          title: "延長料金(" + set.title.slice(0, 3) + ")",
           lot: Number(set.orderExtension),
           price: Number(set.extensionPrice),
           isTax: false,
@@ -336,7 +336,8 @@ function Base() {
               isTax: purchaseOrderState[0]?.roomTax,
             },
             {
-              title: "延長料金",
+              title:
+                "延長料金(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
               lot: Number(purchaseOrderState[0]?.orderExtension),
               price: Number(purchaseOrderState[0]?.extensionPrice),
               isTax: false,
@@ -372,7 +373,8 @@ function Base() {
           },
           ...purchaseOrderState[0]?.orderSet,
           {
-            title: "延長料金",
+            title:
+              "延長料金(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
             lot: Number(purchaseOrderState[0]?.orderExtension),
             price: Number(purchaseOrderState[0]?.extensionPrice),
             isTax: false,
