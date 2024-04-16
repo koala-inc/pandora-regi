@@ -253,6 +253,17 @@ function Base() {
   const [countOrderCast, setCountOrderCast] = useState<any>([]);
   useEffect(() => {
     const orderData: any = [];
+    const orderExtensions: any = [];
+    purchaseOrderState[0].orderCast.map((cast: any) => {
+      if (cast.orderExtension > 0) {
+        orderExtensions.push({
+          title: "延長料金",
+          lot: Number(cast.orderExtension),
+          price: Number(cast.extensionPrice),
+          isTax: false,
+        });
+      }
+    });
     const orderCasts = [
       ...purchaseOrderState[0]?.cast?.map((cast: any) => {
         return {
@@ -272,6 +283,7 @@ function Base() {
           isTax: cast.isTax,
         };
       }),
+      ...orderExtensions,
     ];
     orderCasts.map((orderCast: any, index: any) => {
       const state = orderCasts.filter(
@@ -494,6 +506,20 @@ function Base() {
                     set.lot
                   );
                 });
+                purchaseOrderState[0].orderCast.map((cast: any) => {
+                  cast.endTime = dayjs(
+                    date(cast.endTime.split(":")[0], cast.endTime.split(":")[1])
+                  )
+                    .subtract(30, "minute")
+                    .format("HH:mm");
+                  cast.orderExtension = checker_new(
+                    cast.endTime,
+                    cast.startTime,
+                    cast.setTime,
+                    cast.lot
+                  );
+                });
+
                 if (
                   Number(purchaseOrderState[0]?.callTime.split(":")[0]) <=
                     Number(purchaseOrderState[0]?.mainEndTime.split(":")[0]) &&
@@ -547,6 +573,19 @@ function Base() {
                     set.startTime,
                     set.setTime,
                     set.lot
+                  );
+                });
+                purchaseOrderState[0].orderCast.map((cast: any) => {
+                  cast.endTime = dayjs(
+                    date(cast.endTime.split(":")[0], cast.endTime.split(":")[1])
+                  )
+                    .add(30, "minute")
+                    .format("HH:mm");
+                  cast.orderExtension = checker_new(
+                    cast.endTime,
+                    cast.startTime,
+                    cast.setTime,
+                    cast.lot
                   );
                 });
                 if (
@@ -961,7 +1000,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
           >
             <p className="text-[0.8rem] text-accent">時間</p>
             <p>
-              {purchaseOrderState[0]?.StartTime || "00:00"}~
+              {purchaseOrderState[0]?.startTime || "00:00"}~
               {purchaseOrderState[0]?.endTime || "00:00"}
             </p>
           </div>
@@ -1386,7 +1425,7 @@ function CastAdd() {
           >
             <p className="text-[0.8rem] text-accent">時間</p>
             <p>
-              {purchaseOrderState[0]?.StartTime || "00:00"}~
+              {purchaseOrderState[0]?.startTime || "00:00"}~
               {purchaseOrderState[0]?.endTime || "00:00"}
             </p>
           </div>
@@ -1655,7 +1694,7 @@ function CastAdd() {
                     <input
                       type="text"
                       className="h-[44px] rounded-md px-2 text-center text-base text-white"
-                      value={purchaseOrderItem.time}
+                      value={purchaseOrderItem.startTime}
                       onClick={() => {
                         purchaseOrderItem.isTimeCalculator = true;
                       }}
@@ -1920,6 +1959,15 @@ export default function OrderSheet() {
                   set.startTime,
                   set.setTime,
                   set.lot
+                );
+              });
+              purchaseOrderState[0].orderCast.map((cast: any) => {
+                cast.endTime = purchaseOrderState[0].mainEndTime;
+                cast.orderExtension = checker_new(
+                  cast.endTime,
+                  cast.startTime,
+                  cast.setTime,
+                  cast.lot
                 );
               });
               purchaseOrderState[0].orderExtension = checker();

@@ -191,6 +191,15 @@ export default function OrderTimeSet() {
             purchaseOrderState[0].mainStartTime = hour + ":" + minite;
             purchaseOrderState[0].startTime =
               purchaseOrderState[0].mainStartTime;
+            purchaseOrderState[0].orderSet.map((set: any) => {
+              set.startTime = purchaseOrderState[0].startTime;
+              set.orderExtension = checker_new(
+                set.endTime,
+                set.startTime,
+                set.setTime,
+                set.lot
+              );
+            });
             purchaseOrderState[0].orderExtension = checker();
           }}
         />
@@ -202,6 +211,24 @@ export default function OrderTimeSet() {
           callback={(hour: any, minite: any) => {
             purchaseOrderState[0].mainEndTime = hour + ":" + minite;
             purchaseOrderState[0].endTime = purchaseOrderState[0].mainEndTime;
+            purchaseOrderState[0].orderSet.map((set: any) => {
+              set.endTime = purchaseOrderState[0].endTime;
+              set.orderExtension = checker_new(
+                set.endTime,
+                set.startTime,
+                set.setTime,
+                set.lot
+              );
+            });
+            purchaseOrderState[0].orderCast.map((cast: any) => {
+              cast.endTime = purchaseOrderState[0].endTime;
+              cast.orderExtension = checker_new(
+                cast.endTime,
+                cast.startTime,
+                cast.setTime,
+                cast.lot
+              );
+            });
             purchaseOrderState[0].orderExtension = checker();
           }}
         />

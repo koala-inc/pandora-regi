@@ -26,6 +26,7 @@ import usePurchaseOrderItemAddGlobal from "@/globalstates/purchaseOrderItemAdd";
 import { searchDesignate } from "@/gqls/query/designate";
 import dayjs from "dayjs";
 import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
+import useSeatPresetGlobal from "@/globalstates/seatPreset";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -68,14 +69,53 @@ export default function OrderCastAdd() {
   const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
     usePurchaseOrderItemAddGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
+  const purchaseOrderState = purchaseOrder.filter(
+    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  );
 
   const [selectDesignate, setSelectDesignate] = useState(-1);
   const [selectDesignateSymbol, setSelectDesignateSymbol] = useState("");
   const [selectDesignatePrice, setSelectDesignatePrice] = useState(0);
+  const [selectDesignateSet, setSelectDesignateSet] = useState(0);
+  const [selectDesignateExPrice, setSelectDesignateExPrice] = useState(0);
   const [searchType, setSearchType] = useState("全て");
 
   let count = 0;
   let count2 = 0;
+
+  const [nowDate, setNowDate] = useState(dayjs(new Date()));
+
+  const date = (hour: any, minite: any) => {
+    const a = nowDate.hour(Number(hour));
+    const b = a.minute(Number(minite));
+    return b;
+  };
+
+  const checker = (endTime: any, startTime: any, setTime: any, num: any) =>
+    (Math.floor(
+      (Number(
+        dayjs(date(endTime.split(":")[0], endTime.split(":")[1])).diff(
+          date(startTime.split(":")[0], startTime.split(":")[1]),
+          "minute"
+        )
+      ) -
+        Number(setTime) -
+        1) /
+        30
+    ) >= 0
+      ? Math.floor(
+          (Number(
+            dayjs(date(endTime.split(":")[0], endTime.split(":")[1])).diff(
+              date(startTime.split(":")[0], startTime.split(":")[1]),
+              "minute"
+            )
+          ) -
+            Number(setTime) -
+            1) /
+            30
+        ) + 1
+      : 0) * num;
 
   return (
     <>
@@ -111,6 +151,12 @@ export default function OrderCastAdd() {
                         setSelectDesignatePrice(
                           designate.designate_revision.price
                         );
+                        setSelectDesignateSet(
+                          designate.designate_revision.extra_time
+                        );
+                        setSelectDesignateExPrice(
+                          designate.designate_revision.extra_price
+                        );
                       }
                       count2 += 1;
                       return (
@@ -130,6 +176,12 @@ export default function OrderCastAdd() {
                             );
                             setSelectDesignatePrice(
                               designate.designate_revision.price
+                            );
+                            setSelectDesignateSet(
+                              designate.designate_revision.extra_time
+                            );
+                            setSelectDesignateExPrice(
+                              designate.designate_revision.extra_price
                             );
                           }}
                         >
@@ -425,12 +477,20 @@ export default function OrderCastAdd() {
                             title: selectDesignateSymbol + cast.name,
                             lot: 1,
                             price: Number(selectDesignatePrice),
-                            time: nowDate
+                            startTime: nowDate
                               .minute(Math.round(nowDate.minute() / 5) * 5)
                               .format("HH:mm"),
-                            endTime: nowDate
-                              .minute(Math.round(nowDate.minute() / 5) * 5)
-                              .format("HH:mm"),
+                            endTime: purchaseOrderState[0].mainEndTime,
+                            setTime: Number(selectDesignateSet),
+                            orderExtension: checker(
+                              purchaseOrderState[0].mainEndTime,
+                              nowDate
+                                .minute(Math.round(nowDate.minute() / 5) * 5)
+                                .format("HH:mm"),
+                              Number(selectDesignateSet),
+                              1
+                            ),
+                            extensionPrice: Number(selectDesignateExPrice),
                             isCalculator: false,
                             isTax: false,
                             isNumCalculator: false,
