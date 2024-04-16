@@ -5,6 +5,7 @@ import useIsCardGlobal from "@/globalstates/isCard";
 import usePurchaseOrderItemAddGlobal from "@/globalstates/purchaseOrderItemAdd";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
 import useIsControlGlobal from "@/globalstates/isControl";
+import useOrderGlobal from "@/globalstates/order";
 
 export default function HomeButton() {
   const [isCard, setIsCard] = useIsCardGlobal();
@@ -12,6 +13,7 @@ export default function HomeButton() {
   const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
     usePurchaseOrderItemAddGlobal();
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
+  const [order, setOrder] = useOrderGlobal();
 
   return (
     <Link
@@ -21,6 +23,7 @@ export default function HomeButton() {
         setIsControl("");
         setPurchaseOrderItemAdd([]);
         setSeatPreset("");
+        setOrder([]);
       }}
     >
       <nav className="absolute right-[15px] top-[15px] z-30 cursor-pointer">

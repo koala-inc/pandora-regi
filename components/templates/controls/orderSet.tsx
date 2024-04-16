@@ -885,20 +885,13 @@ export default function ControlOrderSet() {
                 販売促進スタッフ
               </label>
               <div className="relative flex">
-                <select className="mr-1 h-[45px] w-[10rem] rounded-md px-2 text-xl">
-                  {staff.map((pref) => {
-                    return (
-                      <option key={pref.prefCode} value={pref.prefCode}>
-                        {pref.prefName}
-                      </option>
-                    );
-                  })}
-                </select>
                 <div className="flex flex-col">
                   <input
                     type="text"
                     className="mr-8 h-[45px] w-[19rem] rounded-md px-2 text-xl"
                     placeholder="スタッフ"
+                    onClick={() => {}}
+                    readOnly
                   />
                 </div>
                 {/* <div className="badge badge-info absolute left-[10px] top-[5px] w-[120px] gap-2">

@@ -46,7 +46,7 @@ export default function Calculator3({ result, callback }: any) {
       }}
     >
       <div
-        className="relative h-[750px] w-[470px] rounded-md border-4 border-secondary bg-primary p-4"
+        className="relative h-[750px] w-[475px] rounded-md border-4 border-secondary bg-primary p-4"
         onClick={(e) => e.stopPropagation()}
       >
         <div

@@ -826,20 +826,13 @@ export default function ControlOrderSetAdd() {
                 販売促進スタッフ
               </label>
               <div className="relative flex">
-                <select className="mr-1 h-[45px] w-[10rem] rounded-md px-2 text-xl">
-                  {staff.map((pref) => {
-                    return (
-                      <option key={pref.prefCode} value={pref.prefCode}>
-                        {pref.prefName}
-                      </option>
-                    );
-                  })}
-                </select>
                 <div className="flex flex-col">
                   <input
                     type="text"
                     className="mr-8 h-[45px] w-[19rem] rounded-md px-2 text-xl"
                     placeholder="スタッフ"
+                    onClick={() => {}}
+                    readOnly
                   />
                 </div>
                 {/* <div className="badge badge-info absolute left-[10px] top-[5px] w-[120px] gap-2">
@@ -1589,6 +1582,10 @@ export default function ControlOrderSetAdd() {
                                 lot: Number(numResult.replace(/[^0-9]/g, "")),
                                 price: Number(result.replace(/[^0-9]/g, "")),
                                 isTax: result.includes("##"),
+                                setTime: order.setTime,
+                                startTime: order.startTime,
+                                endTime: order.endTime,
+                                orderExtension: order.orderExtension,
                               },
                             ],
                           };

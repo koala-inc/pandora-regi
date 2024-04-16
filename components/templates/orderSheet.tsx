@@ -559,26 +559,6 @@ function Base() {
                       },
                       ...purchaseOrderState[0]?.orderSet,
                     ]
-                // {
-                //   title: "メイン",
-                //   lot: 1,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "┗特別クーポン",
-                //   lot: 1,
-                //   price: -1000,
-                // },
-                // {
-                //   title: "メイン",
-                //   lot: 1,
-                //   price: 1000,
-                // },
-                // {
-                //   title: "延長",
-                //   lot: 1,
-                //   price: 1000,
-                // },
               }
             />
             <div
