@@ -267,8 +267,8 @@ export default function OrderTimeDesignate() {
                     </th>
                     <th className="w-[20px] text-left text-accent">延長数</th>
                     <th className="w-[130px] text-center text-accent">延長</th>
-                    <th className="min-w-[3.65em] text-left text-accent">
-                      在店/退店
+                    <th className="min-w-[3.65em] text-center text-accent">
+                      ロック
                     </th>
                     <th className="pl-[12px] text-left text-accent">削除</th>
                   </tr>
@@ -308,7 +308,7 @@ export default function OrderTimeDesignate() {
                             <input
                               type="text"
                               className="h-[40px] w-[60px] rounded-md px-1 pr-[27px] text-right text-sm"
-                              value={0}
+                              value={cast.setTime}
                               onClick={() => {
                                 setIsCalculatorSelect(5);
                                 setIsCalculator(true);
@@ -430,7 +430,7 @@ export default function OrderTimeDesignate() {
                           </th>
                           <th className="w-[80px] text-center text-sm">
                             <Border natural stroke="md">
-                              <p className="text-red-700">退店</p>
+                              <p className="text-red-700">ロック</p>
                             </Border>
                           </th>
                           <th className="w-[20px] text-center text-sm">

@@ -821,148 +821,6 @@ export default function ControlOrderSet() {
             )}
           </div>
           <div className="mb-[30px] mt-[-30px] flex h-[220px] flex-wrap justify-start px-2 py-10">
-            <div className="flex flex-col">
-              <label className="mb-2 mt-3 text-xs font-bold text-accent">
-                区分
-              </label>
-              <div className="flex">
-                <select
-                  className="mr-1 h-[45px] w-[9rem] rounded-md px-2 text-xl"
-                  value={status}
-                  onChange={(e) => {
-                    setStatus(e.target.value);
-                  }}
-                >
-                  {type.map((pref) => {
-                    return (
-                      <option key={pref.prefCode} value={pref.prefCode}>
-                        {pref.prefName}
-                      </option>
-                    );
-                  })}
-                </select>
-                <select
-                  className={
-                    status != "なし"
-                      ? "mr-8 h-[45px] w-[10rem] rounded-md px-2 text-xl"
-                      : "mr-8 h-[45px] w-[10rem] rounded-md px-2 text-xl opacity-0"
-                  }
-                  disabled={status == "なし"}
-                >
-                  {status == "外販" && (
-                    <>
-                      <option>外販を選択</option>
-                      <option>外販１</option>
-                      <option>外販２</option>
-                      <option>外販３</option>
-                    </>
-                  )}
-                  {status == "案内所" && (
-                    <>
-                      <option>案内所を選択</option>
-                      <option>案内所１</option>
-                      <option>案内所２</option>
-                      <option>案内所３</option>
-                    </>
-                  )}
-                  {status == "ジョイント" && (
-                    <>
-                      <option>店舗を選択</option>
-                      {shop.map((pref) => {
-                        return (
-                          <option key={pref.prefCode} value={pref.prefCode}>
-                            {pref.prefName}
-                          </option>
-                        );
-                      })}
-                    </>
-                  )}
-                </select>
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <label className="mb-2 mt-3 text-xs font-bold text-accent">
-                販売促進スタッフ
-              </label>
-              <div className="relative flex">
-                <div className="flex flex-col">
-                  <input
-                    type="text"
-                    className="mr-8 h-[45px] w-[19rem] rounded-md px-2 text-xl"
-                    placeholder="スタッフ"
-                    onClick={() => {}}
-                    readOnly
-                  />
-                </div>
-                {/* <div className="badge badge-info absolute left-[10px] top-[5px] w-[120px] gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    className="inline-block h-4 w-4 stroke-current"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    ></path>
-                  </svg>
-                  スタッフ名
-                </div> */}
-              </div>
-            </div>
-            {/* <div>
-              <input type="checkbox" className="checkbox checkbox-md" />
-            </div> */}
-            <div className="relative flex flex-col">
-              <label className="mb-2 mt-3 text-xs font-bold text-accent">
-                ルームチャージ
-              </label>
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={isRoomCharge}
-                  onChange={() => {
-                    setIsRoomCharge((isRoomCharge) => !isRoomCharge);
-                  }}
-                  className="mr-4 h-[40px] w-[3rem] rounded-md text-right text-xl"
-                />
-                <div className="relative">
-                  <input
-                    type="text"
-                    className={
-                      isRoomCharge
-                        ? "mr-4 h-[45px] w-[8rem] rounded-md px-2 pr-8 text-right text-xl"
-                        : "mr-4 h-[45px] w-[8rem] rounded-md px-2 pr-8 text-right text-xl opacity-50"
-                    }
-                    placeholder="0"
-                    maxLength={7}
-                    // onChange={(e) => {
-                    //   setOrder((order: any) => {
-                    //     return {
-                    //       ...order,
-                    //       roomCharge: Number(e.target.value.replace(/[^0-9]/g, "")),
-                    //     };
-                    //   });
-                    // }}
-                    value={Number(
-                      roomResult.replace(/[^0-9]/g, "")
-                    )?.toLocaleString()}
-                    onClick={() => {
-                      setIsCalculatorSelect(1);
-                      setIsCalculator(true);
-                    }}
-                    readOnly
-                    disabled={!isRoomCharge}
-                  />
-                  <p className="absolute bottom-[8px] right-[25px] text-xl opacity-60">
-                    {roomResult.includes("##") ? "込" : "円"}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <hr className="w-full opacity-0" />
             <div className="relative flex flex-col">
               <label className="mb-2 mt-3 text-xs font-bold text-accent">
                 人数　
@@ -1208,6 +1066,148 @@ export default function ControlOrderSet() {
                   }}
                   readOnly
                 />
+              </div>
+            </div>
+            <hr className="w-full opacity-0" />
+            <div className="flex flex-col">
+              <label className="mb-2 mt-3 text-xs font-bold text-accent">
+                区分
+              </label>
+              <div className="flex">
+                <select
+                  className="mr-1 h-[45px] w-[9rem] rounded-md px-2 text-xl"
+                  value={status}
+                  onChange={(e) => {
+                    setStatus(e.target.value);
+                  }}
+                >
+                  {type.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefCode}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
+                <select
+                  className={
+                    status != "なし"
+                      ? "mr-8 h-[45px] w-[10rem] rounded-md px-2 text-xl"
+                      : "mr-8 h-[45px] w-[10rem] rounded-md px-2 text-xl opacity-0"
+                  }
+                  disabled={status == "なし"}
+                >
+                  {status == "外販" && (
+                    <>
+                      <option>外販を選択</option>
+                      <option>外販１</option>
+                      <option>外販２</option>
+                      <option>外販３</option>
+                    </>
+                  )}
+                  {status == "案内所" && (
+                    <>
+                      <option>案内所を選択</option>
+                      <option>案内所１</option>
+                      <option>案内所２</option>
+                      <option>案内所３</option>
+                    </>
+                  )}
+                  {status == "ジョイント" && (
+                    <>
+                      <option>店舗を選択</option>
+                      {shop.map((pref) => {
+                        return (
+                          <option key={pref.prefCode} value={pref.prefCode}>
+                            {pref.prefName}
+                          </option>
+                        );
+                      })}
+                    </>
+                  )}
+                </select>
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <label className="mb-2 mt-3 text-xs font-bold text-accent">
+                販売促進スタッフ
+              </label>
+              <div className="relative flex">
+                <div className="flex flex-col">
+                  <input
+                    type="text"
+                    className="mr-8 h-[45px] w-[19rem] rounded-md px-2 text-xl"
+                    placeholder="スタッフ"
+                    onClick={() => {}}
+                    readOnly
+                  />
+                </div>
+                {/* <div className="badge badge-info absolute left-[10px] top-[5px] w-[120px] gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    className="inline-block h-4 w-4 stroke-current"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    ></path>
+                  </svg>
+                  スタッフ名
+                </div> */}
+              </div>
+            </div>
+            {/* <div>
+              <input type="checkbox" className="checkbox checkbox-md" />
+            </div> */}
+            <div className="relative flex flex-col">
+              <label className="mb-2 mt-3 text-xs font-bold text-accent">
+                ルームチャージ
+              </label>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={isRoomCharge}
+                  onChange={() => {
+                    setIsRoomCharge((isRoomCharge) => !isRoomCharge);
+                  }}
+                  className="mr-4 h-[40px] w-[3rem] rounded-md text-right text-xl"
+                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    className={
+                      isRoomCharge
+                        ? "mr-4 h-[45px] w-[8rem] rounded-md px-2 pr-8 text-right text-xl"
+                        : "mr-4 h-[45px] w-[8rem] rounded-md px-2 pr-8 text-right text-xl opacity-50"
+                    }
+                    placeholder="0"
+                    maxLength={7}
+                    // onChange={(e) => {
+                    //   setOrder((order: any) => {
+                    //     return {
+                    //       ...order,
+                    //       roomCharge: Number(e.target.value.replace(/[^0-9]/g, "")),
+                    //     };
+                    //   });
+                    // }}
+                    value={Number(
+                      roomResult.replace(/[^0-9]/g, "")
+                    )?.toLocaleString()}
+                    onClick={() => {
+                      setIsCalculatorSelect(1);
+                      setIsCalculator(true);
+                    }}
+                    readOnly
+                    disabled={!isRoomCharge}
+                  />
+                  <p className="absolute bottom-[8px] right-[25px] text-xl opacity-60">
+                    {roomResult.includes("##") ? "込" : "円"}
+                  </p>
+                </div>
               </div>
             </div>
           </div>

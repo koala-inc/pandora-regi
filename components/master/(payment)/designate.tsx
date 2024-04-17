@@ -59,13 +59,13 @@ export default function Designate() {
       >
         <Border2 size="h-full min-h-[calc(98dvh-10px)] max-h-[calc(98dvh-10px)] overflow-scroll w-full px-4 py-4 flex flex-col !justify-start !items-start">
           <div className="flex max-w-full flex-wrap overflow-scroll">
-            <div className="flex w-full flex-col mt-3">
+            <div className="mt-3 flex w-full flex-col">
               <p className="text-accent">指名延長料発生条件</p>
               <div className="flex">
                 <div className="relative">
                   <input
                     type="text"
-                    className="h-[30px] w-[6rem] rounded-md px-2 text-right pr-7 text-sm"
+                    className="h-[30px] w-[6rem] rounded-md px-2 pr-7 text-right text-sm"
                   />
                   <p className="absolute bottom-[4px] right-[7px] opacity-60">
                     分
@@ -119,7 +119,7 @@ export default function Designate() {
                       size="p-4 flex overflow-scroll flex-wrap"
                       black
                     >
-                      <div className="flex flex-col mr-3">
+                      <div className="mr-3 flex flex-col">
                         <p className="text-accent">指名種（入力用）</p>
                         <input
                           type="text"
@@ -147,11 +147,11 @@ export default function Designate() {
                           }}
                         />
                       </div>
-                      <div className="relative flex flex-col mr-3">
+                      <div className="relative mr-3 flex flex-col">
                         <p className="text-accent">指名料</p>
                         <input
                           type="text"
-                          className="h-[30px] w-[6rem] rounded-md px-2 text-right pr-7 text-sm"
+                          className="h-[30px] w-[6rem] rounded-md px-2 pr-7 text-right text-sm"
                           defaultValue={designate.designate_revision.price?.toLocaleString()}
                           onBlur={(e) => {
                             client
@@ -180,22 +180,44 @@ export default function Designate() {
                           円
                         </p>
                       </div>
-                      <div className="relative flex flex-col mr-3">
+                      <div className="relative mr-3 flex flex-col">
                         <p className="text-accent">延長時間</p>
                         <input
                           type="text"
-                          className="h-[30px] w-[6rem] rounded-md px-2 text-right pr-7 text-sm"
-                          placeholder="0"
+                          className="h-[30px] w-[6rem] rounded-md px-2 pr-7 text-right text-sm"
+                          defaultValue={designate.designate_revision.extra_time?.toLocaleString()}
+                          onBlur={(e) => {
+                            client
+                              .request(updateDesignate, {
+                                id: designate.id,
+                                extra_time: Number(
+                                  e.target.value.replace(/[^0-9]/g, "")
+                                ),
+                                ...defaultVariables,
+                              })
+                              .then(() => {
+                                searchData.mutate(
+                                  () =>
+                                    client.request(searchDesignate, {
+                                      ...defaultVariables,
+                                    }),
+                                  {
+                                    populateCache: true,
+                                    revalidate: false,
+                                  }
+                                );
+                              });
+                          }}
                         />
                         <p className="absolute bottom-[2.5px] right-[7px] opacity-60">
                           分
                         </p>
                       </div>
-                      <div className="relative flex flex-col mr-3">
+                      <div className="relative mr-3 flex flex-col">
                         <p className="text-accent">指名延長料</p>
                         <input
                           type="text"
-                          className="h-[30px] w-[6rem] rounded-md px-2 text-right pr-7 text-sm"
+                          className="h-[30px] w-[6rem] rounded-md px-2 pr-7 text-right text-sm"
                           defaultValue={designate.designate_revision.extra_price?.toLocaleString()}
                           onBlur={(e) => {
                             client
@@ -224,7 +246,7 @@ export default function Designate() {
                           円
                         </p>
                       </div>
-                      <div className="flex flex-col mr-3">
+                      <div className="mr-3 flex flex-col">
                         <p className="text-accent">税/サ</p>
                         <input
                           type="checkbox"
@@ -254,7 +276,7 @@ export default function Designate() {
                           }}
                         />
                       </div>
-                      <div className="flex flex-col mr-3">
+                      <div className="mr-3 flex flex-col">
                         <p className="text-accent">指名種判定</p>
                         <select
                           className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
@@ -285,7 +307,7 @@ export default function Designate() {
                           <option value={3}>場内</option>
                         </select>
                       </div>
-                      <div className="flex flex-col mr-3">
+                      <div className="mr-3 flex flex-col">
                         <p className="text-accent">記号表記</p>
                         <input
                           type="text"
@@ -315,27 +337,27 @@ export default function Designate() {
                       </div>
                       {designate.designate_revision.type == 1 && (
                         <>
-                          <div className="flex flex-1 justify-center items-end flex-col mr-5">
+                          <div className="mr-5 flex flex-1 flex-col items-end justify-center">
                             <div className="mt-6 flex flex-col">
                               <p className="text-secondary-accent">
                                 同伴：レシート表記
                               </p>
                               <div className="flex">
-                                <div className="relative flex flex-col mr-3">
+                                <div className="relative mr-3 flex flex-col">
                                   <p className="text-accent">同伴料</p>
                                   <input
                                     type="text"
-                                    className="h-[30px] w-[6rem] rounded-md px-2 text-right pr-7 text-sm"
+                                    className="h-[30px] w-[6rem] rounded-md px-2 pr-7 text-right text-sm"
                                   />
                                   <p className="absolute bottom-[2.5px] right-[7px] opacity-60">
                                     円
                                   </p>
                                 </div>
-                                <div className="relative flex flex-col mr-3">
+                                <div className="relative mr-3 flex flex-col">
                                   <p className="text-accent">指名料</p>
                                   <input
                                     type="text"
-                                    className="h-[30px] w-[6rem] rounded-md px-2 text-right pr-7 text-sm"
+                                    className="h-[30px] w-[6rem] rounded-md px-2 pr-7 text-right text-sm"
                                   />
                                   <p className="absolute bottom-[2.5px] right-[7px] opacity-60">
                                     円
@@ -352,7 +374,7 @@ export default function Designate() {
               }
             )}
             <div
-              className="mt-8 mb-5 ml-[370px] flex"
+              className="mb-5 ml-[370px] mt-8 flex"
               onClick={() => {
                 client
                   .request(createDesignate, {

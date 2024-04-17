@@ -762,69 +762,6 @@ export default function ControlOrderSetAdd() {
             )}
           </div>
           <div className="mb-[30px] mt-[-30px] flex h-[220px] flex-wrap justify-start px-2 py-10">
-            <div className="flex flex-col">
-              <label className="mb-2 mt-3 text-xs font-bold text-accent">
-                区分
-              </label>
-              <div className="flex">
-                <select
-                  className="mr-1 h-[45px] w-[9rem] rounded-md px-2 text-xl"
-                  value={status}
-                  onChange={(e) => {
-                    setStatus(e.target.value);
-                  }}
-                >
-                  {type.map((pref) => {
-                    return (
-                      <option key={pref.prefCode} value={pref.prefCode}>
-                        {pref.prefName}
-                      </option>
-                    );
-                  })}
-                </select>
-                <select
-                  className={
-                    status != "なし"
-                      ? "mr-8 h-[45px] w-[10rem] rounded-md px-2 text-xl"
-                      : "mr-8 h-[45px] w-[10rem] rounded-md px-2 text-xl opacity-0"
-                  }
-                  disabled={status == "なし"}
-                >
-                  {status == "外販" && (
-                    <>
-                      <option>外販を選択</option>
-                      <option>外販１</option>
-                      <option>外販２</option>
-                      <option>外販３</option>
-                    </>
-                  )}
-                  {status == "案内所" && (
-                    <>
-                      <option>案内所を選択</option>
-                      <option>案内所１</option>
-                      <option>案内所２</option>
-                      <option>案内所３</option>
-                    </>
-                  )}
-                  {status == "ジョイント" && (
-                    <>
-                      <option>店舗を選択</option>
-                      {shop.map((pref) => {
-                        return (
-                          <option key={pref.prefCode} value={pref.prefCode}>
-                            {pref.prefName}
-                          </option>
-                        );
-                      })}
-                    </>
-                  )}
-                </select>
-              </div>
-            </div>
-            {/* <div>
-              <input type="checkbox" className="checkbox checkbox-md" />
-            </div> */}
-            <hr className="w-full opacity-0" />
             <div className="relative flex flex-col">
               <label className="mb-2 mt-3 text-xs font-bold text-accent">
                 人数　
@@ -1050,6 +987,69 @@ export default function ControlOrderSetAdd() {
                 />
               </div>
             </div>
+            <hr className="w-full opacity-0" />
+            <div className="flex flex-col">
+              <label className="mb-2 mt-3 text-xs font-bold text-accent">
+                区分
+              </label>
+              <div className="flex">
+                <select
+                  className="mr-1 h-[45px] w-[9rem] rounded-md px-2 text-xl"
+                  value={status}
+                  onChange={(e) => {
+                    setStatus(e.target.value);
+                  }}
+                >
+                  {type.map((pref) => {
+                    return (
+                      <option key={pref.prefCode} value={pref.prefCode}>
+                        {pref.prefName}
+                      </option>
+                    );
+                  })}
+                </select>
+                <select
+                  className={
+                    status != "なし"
+                      ? "mr-8 h-[45px] w-[10rem] rounded-md px-2 text-xl"
+                      : "mr-8 h-[45px] w-[10rem] rounded-md px-2 text-xl opacity-0"
+                  }
+                  disabled={status == "なし"}
+                >
+                  {status == "外販" && (
+                    <>
+                      <option>外販を選択</option>
+                      <option>外販１</option>
+                      <option>外販２</option>
+                      <option>外販３</option>
+                    </>
+                  )}
+                  {status == "案内所" && (
+                    <>
+                      <option>案内所を選択</option>
+                      <option>案内所１</option>
+                      <option>案内所２</option>
+                      <option>案内所３</option>
+                    </>
+                  )}
+                  {status == "ジョイント" && (
+                    <>
+                      <option>店舗を選択</option>
+                      {shop.map((pref) => {
+                        return (
+                          <option key={pref.prefCode} value={pref.prefCode}>
+                            {pref.prefName}
+                          </option>
+                        );
+                      })}
+                    </>
+                  )}
+                </select>
+              </div>
+            </div>
+            {/* <div>
+              <input type="checkbox" className="checkbox checkbox-md" />
+            </div> */}
           </div>
           <div className="mb-6 ml-[20px] mt-[-30px] flex w-full justify-center opacity-50">
             <Line />

@@ -479,8 +479,8 @@ export default function OrderTimeSet() {
                     </th>
                     <th className="w-[20px] text-left text-accent">延長数</th>
                     <th className="w-[130px] text-center text-accent">延長</th>
-                    <th className="min-w-[3.65em] text-left text-accent">
-                      在店/退店
+                    <th className="min-w-[3.65em] text-center text-accent">
+                      ロック
                     </th>
                     <th className="pl-[12px] text-left text-accent">削除</th>
                   </tr>
@@ -707,7 +707,7 @@ export default function OrderTimeSet() {
                     </th>
                     <th className="w-[80px] text-center text-sm">
                       <Border natural stroke="md">
-                        <p className="text-red-700">退店</p>
+                        <p className="text-red-700">ロック</p>
                       </Border>
                     </th>
                     <th className="w-[20px] text-center text-sm">
@@ -904,7 +904,7 @@ export default function OrderTimeSet() {
                         </th>
                         <th className="w-[80px] text-center text-sm">
                           <Border natural stroke="md">
-                            <p className="text-red-700">退店</p>
+                            <p className="text-red-700">ロック</p>
                           </Border>
                         </th>
                         <th className="w-[20px] text-center text-sm">
@@ -930,12 +930,6 @@ export default function OrderTimeSet() {
                   )}
                   {purchaseOrderState[0].isRoomCharge ? (
                     <tr className="h-[80px]">
-                      <th className="w-[20px] text-center text-lg">
-                        <input
-                          type="checkbox"
-                          className="mt-[8px] h-[20px] w-[20px]"
-                        />
-                      </th>
                       <th className="w-[120px] text-left text-sm">
                         <input
                           className="h-[40px] w-[120px] rounded-md px-2 text-left text-sm"
@@ -1043,7 +1037,11 @@ export default function OrderTimeSet() {
                           </Border>
                         </div>
                       </th>
-                      <th className="w-[80px] text-center text-sm"></th>
+                      <th className="w-[80px] text-center text-sm">
+                        <Border natural stroke="md">
+                          <p className="text-red-700">ロック</p>
+                        </Border>
+                      </th>
                       <th className="w-[20px] text-center text-sm">
                         <div
                           className="flex"
