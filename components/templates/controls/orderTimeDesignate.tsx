@@ -25,6 +25,7 @@ import Calculator7 from "@/components/parts/calculator7";
 import Calculator8 from "@/components/parts/calculator8";
 import { searchSeatArea } from "@/gqls/query/seat";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
+import { searchEvent } from "@/gqls/query/event";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -86,6 +87,7 @@ export default function OrderTimeDesignate() {
   const searchData = useSWR<any>(searchCast, fetcher);
   const searchAData = useSWR<any>(searchAttendanceManagementCast, fetcher);
   const searchData2 = useSWR<any>(searchSeatArea, fetcher);
+  const searchData3 = useSWR<any>(searchEvent, fetcher);
 
   const [isCalculator, setIsCalculator] = useState(false);
   const [isCalculatorSelect, setIsCalculatorSelect] = useState(0);
@@ -250,14 +252,13 @@ export default function OrderTimeDesignate() {
                 {/* head */}
                 <thead>
                   <tr>
+                    <th className="w-[150px] text-left text-accent">
+                      対象セット
+                    </th>
                     <th className="w-[60px] text-left text-accent">指名種別</th>
                     <th className="w-[120px] text-left text-accent">
                       指名キャスト
                     </th>
-                    <th className="w-[60px] text-left text-accent">
-                      セット時間
-                    </th>
-                    <th className="w-[60px] text-left text-accent">延長時間</th>
                     <th className="w-[103px] text-left text-accent">料金</th>
                     <th className="w-[80px] text-center text-accent">
                       開始時間
@@ -278,6 +279,26 @@ export default function OrderTimeDesignate() {
                     (cast: any, index: any) => {
                       return (
                         <tr className="h-[80px]" key={index}>
+                          <th className="w-[150px] text-left text-sm">
+                            <select
+                              className="h-[40px] w-[150px] rounded-md px-1 text-left text-sm"
+                              value={cast.targetSet}
+                            >
+                              <option value={""}>選択してください。</option>
+                              {searchData3?.data?.event[0]?.store_event[0]?.event?.map(
+                                (event: any, index: any) => {
+                                  return (
+                                    <option
+                                      key={index}
+                                      value={event.event_revision.name}
+                                    >
+                                      {event.event_revision.name}
+                                    </option>
+                                  );
+                                }
+                              )}
+                            </select>
+                          </th>
                           <th className="w-[60px] text-left text-sm">
                             <select className="h-[40px] w-[60px] rounded-md px-1 text-left text-sm">
                               <option>{cast.symbol.slice(0, 1)}</option>
@@ -288,36 +309,6 @@ export default function OrderTimeDesignate() {
                               className="h-[40px] w-[120px] rounded-md px-1 text-left text-sm"
                               value={cast.title.slice(1)}
                             />
-                          </th>
-                          <th className="relative w-[60px] text-left text-lg">
-                            <input
-                              type="text"
-                              className="h-[40px] w-[60px] rounded-md px-1 pr-[27px] text-right text-sm"
-                              value={0}
-                              onClick={() => {
-                                setIsCalculatorSelect(5);
-                                setIsCalculator(true);
-                              }}
-                              readOnly
-                            />
-                            <p className="absolute bottom-[30.5px] left-[46px] text-sm opacity-60">
-                              分
-                            </p>
-                          </th>
-                          <th className="relative w-[60px] text-left text-lg">
-                            <input
-                              type="text"
-                              className="h-[40px] w-[60px] rounded-md px-1 pr-[27px] text-right text-sm"
-                              value={cast.setTime}
-                              onClick={() => {
-                                setIsCalculatorSelect(5);
-                                setIsCalculator(true);
-                              }}
-                              readOnly
-                            />
-                            <p className="absolute bottom-[30.5px] left-[46px] text-sm opacity-60">
-                              分
-                            </p>
                           </th>
                           <th className="relative w-[103px] text-left text-lg">
                             <input

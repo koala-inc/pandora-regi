@@ -1393,6 +1393,124 @@ function CastAdd() {
   const [selectDesignateSymbol, setSelectDesignateSymbol] = useState("");
   const [selectDesignatePrice, setSelectDesignatePrice] = useState(0);
 
+  const [countOrderSet, setCountOrderSet] = useState<any>([]);
+  useEffect(() => {
+    const orderData: any = [];
+    const orderExtensions: any = [];
+    purchaseOrderState[0].orderSet.map((set: any) => {
+      if (set.orderExtension > 0) {
+        orderExtensions.push({
+          title: "延長料(" + set.title.slice(0, 3) + ")",
+          lot: Number(set.orderExtension),
+          price: Number(set.extensionPrice),
+          isTax: false,
+        });
+      }
+    });
+    const orderSets = purchaseOrderState[0]?.isRoomCharge
+      ? Number(purchaseOrderState[0]?.orderExtension) > 0
+        ? [
+            {
+              title: purchaseOrderState[0]?.setName,
+              lot: purchaseOrderState[0]?.lot,
+              price: purchaseOrderState[0]?.price,
+              isTax: purchaseOrderState[0]?.priceTax,
+            },
+            ...purchaseOrderState[0]?.orderSet,
+            {
+              title:
+                purchaseOrderState[0]?.roomName == ""
+                  ? "ルームチャージ"
+                  : purchaseOrderState[0]?.roomName,
+              lot: 1,
+              price: purchaseOrderState[0]?.roomCharge,
+              isTax: purchaseOrderState[0]?.roomTax,
+            },
+            {
+              title:
+                "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
+              lot: Number(purchaseOrderState[0]?.orderExtension),
+              price: Number(purchaseOrderState[0]?.extensionPrice),
+              isTax: false,
+            },
+            ...orderExtensions,
+          ]
+        : [
+            {
+              title: purchaseOrderState[0]?.setName,
+              lot: purchaseOrderState[0]?.lot,
+              price: purchaseOrderState[0]?.price,
+              isTax: purchaseOrderState[0]?.priceTax,
+            },
+            ...purchaseOrderState[0]?.orderSet,
+            {
+              title:
+                purchaseOrderState[0]?.roomName == ""
+                  ? "ルームチャージ"
+                  : purchaseOrderState[0]?.roomName,
+              lot: 1,
+              price: purchaseOrderState[0]?.roomCharge,
+              isTax: purchaseOrderState[0]?.roomTax,
+            },
+            ...orderExtensions,
+          ]
+      : Number(purchaseOrderState[0]?.orderExtension) > 0
+      ? [
+          {
+            title: purchaseOrderState[0]?.setName,
+            lot: purchaseOrderState[0]?.lot,
+            price: purchaseOrderState[0]?.price,
+            isTax: purchaseOrderState[0]?.priceTax,
+          },
+          ...purchaseOrderState[0]?.orderSet,
+          {
+            title: "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
+            lot: Number(purchaseOrderState[0]?.orderExtension),
+            price: Number(purchaseOrderState[0]?.extensionPrice),
+            isTax: false,
+          },
+          ...orderExtensions,
+        ]
+      : [
+          {
+            title: purchaseOrderState[0]?.setName,
+            lot: purchaseOrderState[0]?.lot,
+            price: purchaseOrderState[0]?.price,
+            isTax: purchaseOrderState[0]?.priceTax,
+          },
+          ...purchaseOrderState[0]?.orderSet,
+          ...orderExtensions,
+        ];
+
+    orderSets.map((orderSet: any, index: any) => {
+      const state = orderSets.filter(
+        (n: any) =>
+          n.title === orderSet?.title &&
+          n.price === orderSet?.price &&
+          n.isTax === orderSet?.isTax
+      );
+      let count = 0;
+      state.map((state: any) => (count += state.lot));
+      orderData.push({
+        title: orderSet?.title,
+        subTitle: "",
+        lot: count,
+        price: orderSet?.price,
+        isTax: orderSet?.isTax,
+      });
+    });
+    setCountOrderSet(
+      Array.from(
+        new Map(
+          orderData.map((data: any) => [
+            data.title + data.price + data.isTax,
+            data,
+          ])
+        ).values()
+      )
+    );
+  }, [purchaseOrderState]);
+
   return (
     <>
       <section className="text-md mb-4 flex items-center justify-around">
@@ -1700,6 +1818,24 @@ function CastAdd() {
                       readOnly
                     />
                   </div>
+                </div>
+                <div className="mb-1 mr-1 flex w-full flex-col text-xs">
+                  <p className="h-[20px] text-xs text-accent">対象セット</p>
+                  <select
+                    className="mr-1 flex h-[44px] items-center rounded-md text-base"
+                    value={purchaseOrderItem.targetSet}
+                    onChange={(e) => {
+                      purchaseOrderItem.targetSet = e.target.value;
+                    }}
+                  >
+                    {countOrderSet.map((orderSet: any, index: any) => {
+                      return (
+                        <option key={index} value={orderSet.title}>
+                          {orderSet.title}
+                        </option>
+                      );
+                    })}
+                  </select>
                 </div>
               </div>
             ))}

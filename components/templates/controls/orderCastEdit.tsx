@@ -96,8 +96,8 @@ export default function OrderCastEdit() {
         }}
       >
         <ContentHeader>
-          <div className="w-full flex justify-start items-center">
-            <div className="w-full flex flex-col">
+          <div className="flex w-full items-center justify-start">
+            <div className="flex w-full flex-col">
               <p className="text-accent">指名種別</p>
               <div className="flex">
                 {searchData2?.data?.designate[0]?.store_designate[0]?.designate?.map(
@@ -116,8 +116,8 @@ export default function OrderCastEdit() {
                       <Button
                         className={
                           designate.id == selectDesignate
-                            ? "min-w-[7rem] mb-2 mr-2"
-                            : "min-w-[7rem] mb-2 mr-2 opacity-60"
+                            ? "mb-2 mr-2 min-w-[7rem]"
+                            : "mb-2 mr-2 min-w-[7rem] opacity-60"
                         }
                         key={index}
                         natural
@@ -141,16 +141,16 @@ export default function OrderCastEdit() {
             </div>
           </div>
         </ContentHeader>
-        <div className="mt-[-1px] flex h-[700px] w-[calc(100vw-405px)] flex-wrap justify-start items-start rounded-xl bg-primary p-4 text-white">
+        <div className="mt-[-1px] flex h-[700px] w-[calc(100vw-405px)] flex-wrap items-start justify-start rounded-xl bg-primary p-4 text-white">
           {purchaseOrder[0]?.cast?.map((cast: any, index: any) => (
             <div
               key={index}
-              className="flex mx-1 flex-col w-full max-w-[340px] max-h-[135px] border border-white justify-start rounded-md bg-black my-3 px-3 py-2"
+              className="mx-1 my-3 flex max-h-[135px] w-full max-w-[340px] flex-col justify-start rounded-md border border-white bg-black px-3 py-2"
             >
-              <div className="flex mb-2">
-                <div className="flex flex-col w-full text-left">
-                  <p className="text-accent h-[20px] text-xs">キャスト名</p>
-                  <div className="h-[20px] text-white text-base justify-start leading-[40px] align-middle flex items-center">
+              <div className="mb-2 flex">
+                <div className="flex w-full flex-col text-left">
+                  <p className="h-[20px] text-xs text-accent">キャスト名</p>
+                  <div className="flex h-[20px] items-center justify-start align-middle text-base leading-[40px] text-white">
                     {cast.split("##")[0].slice(1)}
                   </div>
                 </div>
@@ -179,10 +179,10 @@ export default function OrderCastEdit() {
                 </div>
               </div>
               <div className="mb-1 flex">
-                <div className="flex flex-col w-[88px] text-xs mr-1">
-                  <p className="text-accent h-[20px] text-xs">種別</p>
+                <div className="mr-1 flex w-[88px] flex-col text-xs">
+                  <p className="h-[20px] text-xs text-accent">種別</p>
                   <select
-                    className="h-[44px] flex items-center text-base rounded-md mr-1"
+                    className="mr-1 flex h-[44px] items-center rounded-md text-base"
                     onChange={(e) => {
                       const data = JSON.parse(e.target.value);
                       setSelectDesignate(data.id);
@@ -215,10 +215,10 @@ export default function OrderCastEdit() {
                     )}
                   </select>
                 </div>
-                <div className="flex flex-col w-[40px] mr-2 text-left justify-center">
-                  <p className="text-accent h-[20px] text-xs">数量</p>
+                <div className="mr-2 flex w-[40px] flex-col justify-center text-left">
+                  <p className="h-[20px] text-xs text-accent">数量</p>
                   <input
-                    className="h-[44px] px-2 text-base rounded-md text-center text-white"
+                    className="h-[44px] rounded-md px-2 text-center text-base text-white"
                     placeholder="個"
                     value={cast.lot}
                     // onChange={(e) => {
@@ -232,10 +232,10 @@ export default function OrderCastEdit() {
                     readOnly
                   />
                 </div>
-                <div className="relative flex flex-col w-[110px] text-left justify-center mr-2">
-                  <p className="text-accent h-[20px] text-xs">単価</p>
+                <div className="relative mr-2 flex w-[110px] flex-col justify-center text-left">
+                  <p className="h-[20px] text-xs text-accent">単価</p>
                   <input
-                    className="h-[44px] px-2 text-base  pr-[24px] rounded-md text-right text-white"
+                    className="h-[44px] rounded-md px-2  pr-[24px] text-right text-base text-white"
                     placeholder="金額"
                     value={Number(cast.split("##")[1])?.toLocaleString()}
                     // onChange={(e) => {
@@ -252,11 +252,11 @@ export default function OrderCastEdit() {
                     {cast.isTax ? "込" : "円"}
                   </p>
                 </div>
-                <div className="flex flex-col w-[70px] text-left">
-                  <p className="text-accent h-[20px] text-xs">指名開始時間</p>
+                <div className="flex w-[70px] flex-col text-left">
+                  <p className="h-[20px] text-xs text-accent">指名開始時間</p>
                   <input
                     type="text"
-                    className="h-[44px] px-2 rounded-md text-base text-center text-white"
+                    className="h-[44px] rounded-md px-2 text-center text-base text-white"
                     value={purchaseOrder[0].startTime}
                     onClick={() => {
                       cast.isTimeCalculator = true;
@@ -270,12 +270,12 @@ export default function OrderCastEdit() {
           {purchaseOrder[0]?.orderCast?.map((cast: any, index: any) => (
             <div
               key={index}
-              className="flex mx-1 flex-col w-full max-w-[340px] max-h-[135px] border border-white justify-start rounded-md bg-black my-3 px-3 py-2"
+              className="mx-1 my-3 flex max-h-[135px] w-full max-w-[340px] flex-col justify-start rounded-md border border-white bg-black px-3 py-2"
             >
-              <div className="flex mb-2">
-                <div className="flex flex-col w-full text-left">
-                  <p className="text-accent h-[20px] text-xs">キャスト名</p>
-                  <div className="h-[20px] text-white text-base justify-start leading-[40px] align-middle flex items-center">
+              <div className="mb-2 flex">
+                <div className="flex w-full flex-col text-left">
+                  <p className="h-[20px] text-xs text-accent">キャスト名</p>
+                  <div className="flex h-[20px] items-center justify-start align-middle text-base leading-[40px] text-white">
                     {cast.title.slice(1)}
                   </div>
                 </div>
@@ -303,10 +303,10 @@ export default function OrderCastEdit() {
                 </div>
               </div>
               <div className="mb-1 flex">
-                <div className="flex flex-col w-[88px] text-xs mr-1">
-                  <p className="text-accent h-[20px] text-xs">種別</p>
+                <div className="mr-1 flex w-[88px] flex-col text-xs">
+                  <p className="h-[20px] text-xs text-accent">種別</p>
                   <select
-                    className="h-[44px] flex items-center text-base rounded-md mr-1"
+                    className="mr-1 flex h-[44px] items-center rounded-md text-base"
                     onChange={(e) => {
                       const data = JSON.parse(e.target.value);
                       setSelectDesignate(data.id);
@@ -339,10 +339,10 @@ export default function OrderCastEdit() {
                     )}
                   </select>
                 </div>
-                <div className="flex flex-col w-[40px] mr-2 text-left justify-center">
-                  <p className="text-accent h-[20px] text-xs">数量</p>
+                <div className="mr-2 flex w-[40px] flex-col justify-center text-left">
+                  <p className="h-[20px] text-xs text-accent">数量</p>
                   <input
-                    className="h-[44px] px-2 text-base rounded-md text-center text-white"
+                    className="h-[44px] rounded-md px-2 text-center text-base text-white"
                     placeholder="個"
                     value={cast.lot}
                     // onChange={(e) => {
@@ -356,10 +356,10 @@ export default function OrderCastEdit() {
                     readOnly
                   />
                 </div>
-                <div className="relative flex flex-col w-[110px] text-left justify-center mr-2">
-                  <p className="text-accent h-[20px] text-xs">単価</p>
+                <div className="relative mr-2 flex w-[110px] flex-col justify-center text-left">
+                  <p className="h-[20px] text-xs text-accent">単価</p>
                   <input
-                    className="h-[44px] px-2 text-base  pr-[24px] rounded-md text-right text-white"
+                    className="h-[44px] rounded-md px-2  pr-[24px] text-right text-base text-white"
                     placeholder="金額"
                     value={Number(cast.price)?.toLocaleString()}
                     // onChange={(e) => {
@@ -376,11 +376,11 @@ export default function OrderCastEdit() {
                     {cast.isTax ? "込" : "円"}
                   </p>
                 </div>
-                <div className="flex flex-col w-[70px] text-left">
-                  <p className="text-accent h-[20px] text-xs">指名開始時間</p>
+                <div className="flex w-[70px] flex-col text-left">
+                  <p className="h-[20px] text-xs text-accent">指名開始時間</p>
                   <input
                     type="text"
-                    className="h-[44px] px-2 rounded-md text-base text-center text-white"
+                    className="h-[44px] rounded-md px-2 text-center text-base text-white"
                     value={cast.time}
                     onClick={() => {
                       cast.isTimeCalculator = true;

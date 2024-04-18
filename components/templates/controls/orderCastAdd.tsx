@@ -6,7 +6,7 @@ import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useIsFooterGlobal from "@/globalstates/isFooter";
 import useIsAnimateGlobal from "@/globalstates/settings";
 import Button from "../button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Control from "@/components/master/(component)/control";
 import Toggle from "@/components/templates/toggle4";
 import client from "@/connection";
@@ -30,7 +30,7 @@ import useSeatPresetGlobal from "@/globalstates/seatPreset";
 
 function ContentHeader({ children }: { children: any }) {
   return (
-    <SubBorder size="mt-0 h-[100px] !w-[465px] px-10 py-2">
+    <SubBorder size="mt-0 h-[100px] !w-[565px] px-10 py-2">
       {children}
     </SubBorder>
   );
@@ -117,6 +117,126 @@ export default function OrderCastAdd() {
         ) + 1
       : 0) * num;
 
+  const [targetSet, setTargetSet] = useState(purchaseOrderState[0]?.setName);
+
+  const [countOrderSet, setCountOrderSet] = useState<any>([]);
+  useEffect(() => {
+    const orderData: any = [];
+    const orderExtensions: any = [];
+    purchaseOrderState[0].orderSet.map((set: any) => {
+      if (set.orderExtension > 0) {
+        orderExtensions.push({
+          title: "延長料(" + set.title.slice(0, 3) + ")",
+          lot: Number(set.orderExtension),
+          price: Number(set.extensionPrice),
+          isTax: false,
+        });
+      }
+    });
+    const orderSets = purchaseOrderState[0]?.isRoomCharge
+      ? Number(purchaseOrderState[0]?.orderExtension) > 0
+        ? [
+            {
+              title: purchaseOrderState[0]?.setName,
+              lot: purchaseOrderState[0]?.lot,
+              price: purchaseOrderState[0]?.price,
+              isTax: purchaseOrderState[0]?.priceTax,
+            },
+            ...purchaseOrderState[0]?.orderSet,
+            {
+              title:
+                purchaseOrderState[0]?.roomName == ""
+                  ? "ルームチャージ"
+                  : purchaseOrderState[0]?.roomName,
+              lot: 1,
+              price: purchaseOrderState[0]?.roomCharge,
+              isTax: purchaseOrderState[0]?.roomTax,
+            },
+            {
+              title:
+                "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
+              lot: Number(purchaseOrderState[0]?.orderExtension),
+              price: Number(purchaseOrderState[0]?.extensionPrice),
+              isTax: false,
+            },
+            ...orderExtensions,
+          ]
+        : [
+            {
+              title: purchaseOrderState[0]?.setName,
+              lot: purchaseOrderState[0]?.lot,
+              price: purchaseOrderState[0]?.price,
+              isTax: purchaseOrderState[0]?.priceTax,
+            },
+            ...purchaseOrderState[0]?.orderSet,
+            {
+              title:
+                purchaseOrderState[0]?.roomName == ""
+                  ? "ルームチャージ"
+                  : purchaseOrderState[0]?.roomName,
+              lot: 1,
+              price: purchaseOrderState[0]?.roomCharge,
+              isTax: purchaseOrderState[0]?.roomTax,
+            },
+            ...orderExtensions,
+          ]
+      : Number(purchaseOrderState[0]?.orderExtension) > 0
+      ? [
+          {
+            title: purchaseOrderState[0]?.setName,
+            lot: purchaseOrderState[0]?.lot,
+            price: purchaseOrderState[0]?.price,
+            isTax: purchaseOrderState[0]?.priceTax,
+          },
+          ...purchaseOrderState[0]?.orderSet,
+          {
+            title: "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
+            lot: Number(purchaseOrderState[0]?.orderExtension),
+            price: Number(purchaseOrderState[0]?.extensionPrice),
+            isTax: false,
+          },
+          ...orderExtensions,
+        ]
+      : [
+          {
+            title: purchaseOrderState[0]?.setName,
+            lot: purchaseOrderState[0]?.lot,
+            price: purchaseOrderState[0]?.price,
+            isTax: purchaseOrderState[0]?.priceTax,
+          },
+          ...purchaseOrderState[0]?.orderSet,
+          ...orderExtensions,
+        ];
+
+    orderSets.map((orderSet: any, index: any) => {
+      const state = orderSets.filter(
+        (n: any) =>
+          n.title === orderSet?.title &&
+          n.price === orderSet?.price &&
+          n.isTax === orderSet?.isTax
+      );
+      let count = 0;
+      state.map((state: any) => (count += state.lot));
+      orderData.push({
+        title: orderSet?.title,
+        subTitle: "",
+        lot: count,
+        price: orderSet?.price,
+        isTax: orderSet?.isTax,
+      });
+    });
+    setCountOrderSet(
+      Array.from(
+        new Map(
+          orderData.map((data: any) => [
+            data.title + data.price + data.isTax,
+            data,
+          ])
+        ).values()
+      )
+    );
+  }, [purchaseOrderState]);
+
   return (
     <>
       <motion.div
@@ -191,6 +311,23 @@ export default function OrderCastAdd() {
                     }
                   )}
                 </div>
+              </div>
+              <div className="flex w-full flex-col text-xs">
+                <p className="h-[20px] text-xs text-accent">対象セット</p>
+                <select
+                  className="flex h-[36px] items-center rounded-md px-2 text-base text-white"
+                  onChange={(e) => {
+                    setTargetSet(e.target.value);
+                  }}
+                >
+                  {countOrderSet.map((orderSet: any, index: any) => {
+                    return (
+                      <option key={index} value={orderSet.title}>
+                        {orderSet.title}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
             </div>
           </div>
@@ -468,6 +605,7 @@ export default function OrderCastAdd() {
                       }
                       key={index}
                       onClick={() => {
+                        alert(targetSet);
                         const nowDate = dayjs(new Date());
                         setPurchaseOrderItemAdd([
                           ...purchaseOrderItemAdd,
@@ -494,6 +632,7 @@ export default function OrderCastAdd() {
                             isCalculator: false,
                             isTax: false,
                             isNumCalculator: false,
+                            targetSet: targetSet,
                           },
                         ]);
                       }}
