@@ -1394,6 +1394,7 @@ function CastAdd() {
   const [selectDesignatePrice, setSelectDesignatePrice] = useState(0);
 
   const [countOrderSet, setCountOrderSet] = useState<any>([]);
+  const [orderSets, setOrderSets] = useState<any>([]);
   useEffect(() => {
     const orderData: any = [];
     const orderExtensions: any = [];
@@ -1404,6 +1405,7 @@ function CastAdd() {
           lot: Number(set.orderExtension),
           price: Number(set.extensionPrice),
           isTax: false,
+          startTime: set.startTime,
         });
       }
     });
@@ -1415,6 +1417,7 @@ function CastAdd() {
               lot: purchaseOrderState[0]?.lot,
               price: purchaseOrderState[0]?.price,
               isTax: purchaseOrderState[0]?.priceTax,
+              startTime: purchaseOrderState[0]?.startTime,
             },
             ...purchaseOrderState[0]?.orderSet,
             {
@@ -1441,6 +1444,7 @@ function CastAdd() {
               lot: purchaseOrderState[0]?.lot,
               price: purchaseOrderState[0]?.price,
               isTax: purchaseOrderState[0]?.priceTax,
+              startTime: purchaseOrderState[0]?.startTime,
             },
             ...purchaseOrderState[0]?.orderSet,
             {
@@ -1461,6 +1465,7 @@ function CastAdd() {
             lot: purchaseOrderState[0]?.lot,
             price: purchaseOrderState[0]?.price,
             isTax: purchaseOrderState[0]?.priceTax,
+            startTime: purchaseOrderState[0]?.startTime,
           },
           ...purchaseOrderState[0]?.orderSet,
           {
@@ -1477,6 +1482,7 @@ function CastAdd() {
             lot: purchaseOrderState[0]?.lot,
             price: purchaseOrderState[0]?.price,
             isTax: purchaseOrderState[0]?.priceTax,
+            startTime: purchaseOrderState[0]?.startTime,
           },
           ...purchaseOrderState[0]?.orderSet,
           ...orderExtensions,
@@ -1499,6 +1505,7 @@ function CastAdd() {
         isTax: orderSet?.isTax,
       });
     });
+    setOrderSets(orderSets);
     setCountOrderSet(
       Array.from(
         new Map(
@@ -1828,10 +1835,13 @@ function CastAdd() {
                       purchaseOrderItem.targetSet = e.target.value;
                     }}
                   >
-                    {countOrderSet.map((orderSet: any, index: any) => {
+                    {orderSets.map((orderSet: any, index: any) => {
                       return (
-                        <option key={index} value={orderSet.title}>
-                          {orderSet.title}
+                        <option
+                          key={index}
+                          value={orderSet.title + "/" + orderSet.startTime}
+                        >
+                          {orderSet.title} {orderSet.startTime}
                         </option>
                       );
                     })}

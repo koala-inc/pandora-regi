@@ -117,9 +117,12 @@ export default function OrderCastAdd() {
         ) + 1
       : 0) * num;
 
-  const [targetSet, setTargetSet] = useState(purchaseOrderState[0]?.setName);
+  const [targetSet, setTargetSet] = useState(
+    purchaseOrderState[0]?.setName + "/" + purchaseOrderState[0]?.startTime
+  );
 
   const [countOrderSet, setCountOrderSet] = useState<any>([]);
+  const [orderSets, setOrderSets] = useState<any>([]);
   useEffect(() => {
     const orderData: any = [];
     const orderExtensions: any = [];
@@ -130,6 +133,7 @@ export default function OrderCastAdd() {
           lot: Number(set.orderExtension),
           price: Number(set.extensionPrice),
           isTax: false,
+          startTime: set.startTime,
         });
       }
     });
@@ -141,6 +145,7 @@ export default function OrderCastAdd() {
               lot: purchaseOrderState[0]?.lot,
               price: purchaseOrderState[0]?.price,
               isTax: purchaseOrderState[0]?.priceTax,
+              startTime: purchaseOrderState[0]?.startTime,
             },
             ...purchaseOrderState[0]?.orderSet,
             {
@@ -167,6 +172,7 @@ export default function OrderCastAdd() {
               lot: purchaseOrderState[0]?.lot,
               price: purchaseOrderState[0]?.price,
               isTax: purchaseOrderState[0]?.priceTax,
+              startTime: purchaseOrderState[0]?.startTime,
             },
             ...purchaseOrderState[0]?.orderSet,
             {
@@ -187,6 +193,7 @@ export default function OrderCastAdd() {
             lot: purchaseOrderState[0]?.lot,
             price: purchaseOrderState[0]?.price,
             isTax: purchaseOrderState[0]?.priceTax,
+            startTime: purchaseOrderState[0]?.startTime,
           },
           ...purchaseOrderState[0]?.orderSet,
           {
@@ -203,11 +210,11 @@ export default function OrderCastAdd() {
             lot: purchaseOrderState[0]?.lot,
             price: purchaseOrderState[0]?.price,
             isTax: purchaseOrderState[0]?.priceTax,
+            startTime: purchaseOrderState[0]?.startTime,
           },
           ...purchaseOrderState[0]?.orderSet,
           ...orderExtensions,
         ];
-
     orderSets.map((orderSet: any, index: any) => {
       const state = orderSets.filter(
         (n: any) =>
@@ -225,6 +232,7 @@ export default function OrderCastAdd() {
         isTax: orderSet?.isTax,
       });
     });
+    setOrderSets(orderSets);
     setCountOrderSet(
       Array.from(
         new Map(
@@ -311,23 +319,6 @@ export default function OrderCastAdd() {
                     }
                   )}
                 </div>
-              </div>
-              <div className="flex w-full flex-col text-xs">
-                <p className="h-[20px] text-xs text-accent">対象セット</p>
-                <select
-                  className="flex h-[36px] items-center rounded-md px-2 text-base text-white"
-                  onChange={(e) => {
-                    setTargetSet(e.target.value);
-                  }}
-                >
-                  {countOrderSet.map((orderSet: any, index: any) => {
-                    return (
-                      <option key={index} value={orderSet.title}>
-                        {orderSet.title}
-                      </option>
-                    );
-                  })}
-                </select>
               </div>
             </div>
           </div>
@@ -593,6 +584,26 @@ export default function OrderCastAdd() {
                 わ
               </div>
             </div>
+            <div className="flex w-[300px] flex-col px-2 text-xs">
+              <p className="h-[20px] text-xs text-accent">対象セット</p>
+              <select
+                className="flex h-[50px] items-center rounded-md px-2 text-base text-white"
+                onChange={(e) => {
+                  setTargetSet(e.target.value);
+                }}
+              >
+                {orderSets.map((orderSet: any, index: any) => {
+                  return (
+                    <option
+                      key={index}
+                      value={orderSet.title + "/" + orderSet.startTime}
+                    >
+                      {orderSet.title} {orderSet.startTime}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
           </div>
           <div className="grid min-h-[580px] w-full grid-cols-7 grid-rows-5 content-start items-center justify-center rounded-md border-4 border-white bg-black p-4">
             {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
@@ -605,7 +616,6 @@ export default function OrderCastAdd() {
                       }
                       key={index}
                       onClick={() => {
-                        alert(targetSet);
                         const nowDate = dayjs(new Date());
                         setPurchaseOrderItemAdd([
                           ...purchaseOrderItemAdd,

@@ -9,7 +9,7 @@ import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 import useIsCardGlobal from "@/globalstates/isCard";
 import useIsControlGlobal from "@/globalstates/isControl";
 import useIsPurchaseOrderGlobal from "@/globalstates/isPurchaseOrder";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SubBorder from "../subBorder";
 import { format } from "date-fns";
 import client from "@/connection";
@@ -170,6 +170,132 @@ export default function OrderTimeDesignate() {
         ) + 1
       : 0) * num;
 
+  const [countOrderSet, setCountOrderSet] = useState<any>([]);
+  const [orderSets, setOrderSets] = useState<any>([]);
+  useEffect(() => {
+    const orderData: any = [];
+    const orderExtensions: any = [];
+    purchaseOrderState[0].orderSet.map((set: any) => {
+      if (set.orderExtension > 0) {
+        orderExtensions.push({
+          title: "延長料(" + set.title.slice(0, 3) + ")",
+          lot: Number(set.orderExtension),
+          price: Number(set.extensionPrice),
+          isTax: false,
+          startTime: set.startTime,
+        });
+      }
+    });
+    const orderSets = purchaseOrderState[0]?.isRoomCharge
+      ? Number(purchaseOrderState[0]?.orderExtension) > 0
+        ? [
+            {
+              title: purchaseOrderState[0]?.setName,
+              lot: purchaseOrderState[0]?.lot,
+              price: purchaseOrderState[0]?.price,
+              isTax: purchaseOrderState[0]?.priceTax,
+              startTime: purchaseOrderState[0]?.startTime,
+            },
+            ...purchaseOrderState[0]?.orderSet,
+            {
+              title:
+                purchaseOrderState[0]?.roomName == ""
+                  ? "ルームチャージ"
+                  : purchaseOrderState[0]?.roomName,
+              lot: 1,
+              price: purchaseOrderState[0]?.roomCharge,
+              isTax: purchaseOrderState[0]?.roomTax,
+            },
+            {
+              title:
+                "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
+              lot: Number(purchaseOrderState[0]?.orderExtension),
+              price: Number(purchaseOrderState[0]?.extensionPrice),
+              isTax: false,
+            },
+            ...orderExtensions,
+          ]
+        : [
+            {
+              title: purchaseOrderState[0]?.setName,
+              lot: purchaseOrderState[0]?.lot,
+              price: purchaseOrderState[0]?.price,
+              isTax: purchaseOrderState[0]?.priceTax,
+              startTime: purchaseOrderState[0]?.startTime,
+            },
+            ...purchaseOrderState[0]?.orderSet,
+            {
+              title:
+                purchaseOrderState[0]?.roomName == ""
+                  ? "ルームチャージ"
+                  : purchaseOrderState[0]?.roomName,
+              lot: 1,
+              price: purchaseOrderState[0]?.roomCharge,
+              isTax: purchaseOrderState[0]?.roomTax,
+            },
+            ...orderExtensions,
+          ]
+      : Number(purchaseOrderState[0]?.orderExtension) > 0
+      ? [
+          {
+            title: purchaseOrderState[0]?.setName,
+            lot: purchaseOrderState[0]?.lot,
+            price: purchaseOrderState[0]?.price,
+            isTax: purchaseOrderState[0]?.priceTax,
+            startTime: purchaseOrderState[0]?.startTime,
+          },
+          ...purchaseOrderState[0]?.orderSet,
+          {
+            title: "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
+            lot: Number(purchaseOrderState[0]?.orderExtension),
+            price: Number(purchaseOrderState[0]?.extensionPrice),
+            isTax: false,
+          },
+          ...orderExtensions,
+        ]
+      : [
+          {
+            title: purchaseOrderState[0]?.setName,
+            lot: purchaseOrderState[0]?.lot,
+            price: purchaseOrderState[0]?.price,
+            isTax: purchaseOrderState[0]?.priceTax,
+            startTime: purchaseOrderState[0]?.startTime,
+          },
+          ...purchaseOrderState[0]?.orderSet,
+          ...orderExtensions,
+        ];
+
+    setOrderSets(orderSets);
+
+    orderSets.map((orderSet: any, index: any) => {
+      const state = orderSets.filter(
+        (n: any) =>
+          n.title === orderSet?.title &&
+          n.price === orderSet?.price &&
+          n.isTax === orderSet?.isTax
+      );
+      let count = 0;
+      state.map((state: any) => (count += state.lot));
+      orderData.push({
+        title: orderSet?.title,
+        subTitle: "",
+        lot: count,
+        price: orderSet?.price,
+        isTax: orderSet?.isTax,
+      });
+    });
+    setCountOrderSet(
+      Array.from(
+        new Map(
+          orderData.map((data: any) => [
+            data.title + data.price + data.isTax,
+            data,
+          ])
+        ).values()
+      )
+    );
+  }, [purchaseOrderState]);
+
   return (
     <>
       {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 1 && (
@@ -252,7 +378,7 @@ export default function OrderTimeDesignate() {
                 {/* head */}
                 <thead>
                   <tr>
-                    <th className="w-[150px] text-left text-accent">
+                    <th className="w-[170px] text-left text-accent">
                       対象セット
                     </th>
                     <th className="w-[60px] text-left text-accent">指名種別</th>
@@ -279,24 +405,24 @@ export default function OrderTimeDesignate() {
                     (cast: any, index: any) => {
                       return (
                         <tr className="h-[80px]" key={index}>
-                          <th className="w-[150px] text-left text-sm">
+                          <th className="w-[170px] text-left text-sm">
                             <select
-                              className="h-[40px] w-[150px] rounded-md px-1 text-left text-sm"
+                              className="h-[40px] w-[170px] rounded-md px-1 text-left text-sm"
                               value={cast.targetSet}
                             >
                               <option value={""}>選択してください。</option>
-                              {searchData3?.data?.event[0]?.store_event[0]?.event?.map(
-                                (event: any, index: any) => {
-                                  return (
-                                    <option
-                                      key={index}
-                                      value={event.event_revision.name}
-                                    >
-                                      {event.event_revision.name}
-                                    </option>
-                                  );
-                                }
-                              )}
+                              {orderSets.map((orderSet: any, index: any) => {
+                                return (
+                                  <option
+                                    key={index}
+                                    value={
+                                      orderSet.title + "/" + orderSet.startTime
+                                    }
+                                  >
+                                    {orderSet.title} {orderSet.startTime}
+                                  </option>
+                                );
+                              })}
                             </select>
                           </th>
                           <th className="w-[60px] text-left text-sm">
