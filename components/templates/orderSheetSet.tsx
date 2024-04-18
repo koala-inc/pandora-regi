@@ -83,7 +83,7 @@ export default function OrderSheetSet() {
           {purchaseOrderSet.map((order: any, index: any) => (
             <div
               key={index}
-              className="relative mx-[auto] my-1 mb-6 flex w-[93%] flex-wrap rounded-md border-4 border-white bg-black p-3"
+              className="relative mx-[auto] my-1 mb-6 flex w-[93%] flex-wrap rounded-md border-4 border-white bg-black px-1 py-3"
             >
               <div
                 onClick={() => {
