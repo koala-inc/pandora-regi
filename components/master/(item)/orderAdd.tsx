@@ -37,7 +37,6 @@ export default function OrderAdd() {
       prefCode: 3,
       group_code: 3,
       type: 1,
-
       prefName: "フード",
     },
     {

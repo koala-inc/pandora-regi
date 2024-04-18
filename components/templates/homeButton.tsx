@@ -23,7 +23,26 @@ export default function HomeButton() {
         setIsControl("");
         setPurchaseOrderItemAdd([]);
         setSeatPreset("");
-        setOrder([]);
+        setOrder({
+          startTime: "",
+          endTime: "",
+          callTime: "",
+          num: 0,
+          setTime: 0,
+          price: 0,
+          roomCharge: 0,
+          cast: [],
+          state: {
+            result: "0",
+            selectCast: [],
+            timeResult: "0",
+            numResult: "0",
+            roomResult: "0",
+            setName: "",
+            roomName: "",
+            setStatus: "なし",
+          },
+        });
       }}
     >
       <nav className="absolute right-[15px] top-[15px] z-30 cursor-pointer">

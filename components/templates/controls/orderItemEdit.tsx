@@ -167,9 +167,9 @@ export default function OrderItemEdit() {
                           <button
                             className="btn btn-ghost btn-xs"
                             onClick={() => {
-                              delete purchaseOrder[0].orderItem[index];
-                              purchaseOrder[0].orderItem =
-                                purchaseOrder[0].orderItem.filter(
+                              delete purchaseOrderState[0].orderItem[index];
+                              purchaseOrderState[0].orderItem =
+                                purchaseOrderState[0].orderItem.filter(
                                   (v: any) => v
                                 );
                             }}
