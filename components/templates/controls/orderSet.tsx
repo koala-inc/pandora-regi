@@ -1712,22 +1712,23 @@ export default function ControlOrderSet() {
                         }
                       );
                       const orderCasts: any = [];
-                      order.cast.map((cast: any) =>
-                        orderCasts.push({
-                          symbol: cast.split("##")[0].slice(0, 1),
-                          title: cast.split("##")[0],
-                          subTitle: "",
-                          lot: 1,
-                          price: Number(cast.split("##")[1]),
-                          isTax: false,
-                          setTime: order.setTime,
-                          startTime: order.startTime,
-                          endTime: order.endTime,
-                          orderExtension: order.orderExtension,
-                          extensionPrice: Number(extensionPrice),
-                          targetSet: setName + "/0",
-                        })
-                      );
+                      order.cast &&
+                        order.cast.map((cast: any) =>
+                          orderCasts.push({
+                            symbol: cast.split("##")[0].slice(0, 1),
+                            title: cast.split("##")[0],
+                            subTitle: "",
+                            lot: 1,
+                            price: Number(cast.split("##")[1]),
+                            isTax: false,
+                            setTime: order.setTime,
+                            startTime: order.startTime,
+                            endTime: order.endTime,
+                            orderExtension: order.orderExtension,
+                            extensionPrice: Number(extensionPrice),
+                            targetSet: setName + "/0",
+                          })
+                        );
                       setPurchaseOrderSet([
                         ...purchaseOrderSet,
                         {

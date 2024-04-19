@@ -469,8 +469,8 @@ export default function OrderTimeSet() {
                     <th className="w-[60px] text-left text-accent">
                       セット時間
                     </th>
-                    <th className="w-[103px] text-left text-accent">料金</th>
-                    <th className="w-[210px] text-left text-accent">区分</th>
+                    <th className="w-[93px] text-left text-accent">料金</th>
+                    <th className="w-[220px] text-left text-accent">区分</th>
                     <th className="w-[80px] text-center text-accent">
                       開始時間
                     </th>
@@ -599,9 +599,9 @@ export default function OrderTimeSet() {
                         円
                       </p>
                     </th>
-                    <th className="flex w-[210px] text-left text-sm">
+                    <th className="flex w-[220px] text-left text-sm">
                       <select
-                        className="mr-2 h-[40px] w-[90px] rounded-md px-1 text-left text-sm"
+                        className="mr-2 h-[40px] w-[100px] rounded-md px-1 text-left text-sm"
                         onChange={(e) => {
                           setStatus(e.target.value);
                         }}
@@ -766,7 +766,7 @@ export default function OrderTimeSet() {
                             分
                           </p>
                         </th>
-                        <th className="relative w-[103px] text-left text-lg">
+                        <th className="relative w-[93px] text-left text-lg">
                           <input
                             type="text"
                             className="h-[40px] w-[103px] rounded-md px-2 pr-[26px] text-right text-sm"
@@ -781,9 +781,9 @@ export default function OrderTimeSet() {
                             円
                           </p>
                         </th>
-                        <th className="flex w-[210px] text-left text-sm">
+                        <th className="flex w-[220px] text-left text-sm">
                           <select
-                            className="mr-2 h-[40px] w-[90px] rounded-md px-1 text-left text-sm"
+                            className="mr-2 h-[40px] w-[100px] rounded-md px-1 text-left text-sm"
                             onChange={(e) => {
                               setStatus(e.target.value);
                             }}
