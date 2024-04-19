@@ -371,7 +371,7 @@ export default function OrderTimeDesignate() {
             <Border
               className="my-2 h-[100%] w-full"
               rounded="border-white rounded-md h-[100%] !border-[1px]"
-              size="p-4 !items-start min-h-full max-h-full overflow-scroll"
+              size="py-4 px-2 !items-start min-h-full max-h-full overflow-scroll"
               black
             >
               <table className="table table-xs mt-2">
@@ -382,7 +382,7 @@ export default function OrderTimeDesignate() {
                       対象セット
                     </th>
                     <th className="w-[60px] text-left text-accent">指名種別</th>
-                    <th className="w-[120px] text-left text-accent">
+                    <th className="w-[100px] text-left text-accent">
                       指名キャスト
                     </th>
                     <th className="w-[103px] text-left text-accent">料金</th>
@@ -432,11 +432,8 @@ export default function OrderTimeDesignate() {
                               <option>{cast.symbol.slice(0, 1)}</option>
                             </select>
                           </th>
-                          <th className="w-[120px] text-left text-sm">
-                            <input
-                              className="h-[40px] w-[120px] rounded-md px-1 text-left text-sm"
-                              value={cast.title.slice(1)}
-                            />
+                          <th className="w-[100px] text-left text-sm">
+                            {cast.title.slice(1)}
                           </th>
                           <th className="relative w-[103px] text-left text-lg">
                             <input
