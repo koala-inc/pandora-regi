@@ -469,8 +469,8 @@ export default function OrderTimeSet() {
                     <th className="w-[60px] text-left text-accent">
                       セット時間
                     </th>
-                    <th className="w-[93px] text-left text-accent">料金</th>
-                    <th className="w-[220px] text-left text-accent">区分</th>
+                    <th className="w-[85px] text-left text-accent">料金</th>
+                    <th className="w-[228px] text-left text-accent">区分</th>
                     <th className="w-[80px] text-center text-accent">
                       開始時間
                     </th>
@@ -584,10 +584,10 @@ export default function OrderTimeSet() {
                         分
                       </p>
                     </th>
-                    <th className="relative w-[103px] text-left text-lg">
+                    <th className="relative w-[85px] text-left text-lg">
                       <input
                         type="text"
-                        className="h-[40px] w-[103px] rounded-md px-2 pr-[26px] text-right text-sm"
+                        className="h-[40px] w-[85px] rounded-md px-2 pr-[26px] text-right text-sm"
                         value={purchaseOrderState[0]?.price}
                         onClick={() => {
                           setIsCalculatorSelect(5);
@@ -599,7 +599,7 @@ export default function OrderTimeSet() {
                         円
                       </p>
                     </th>
-                    <th className="flex w-[220px] text-left text-sm">
+                    <th className="flex w-[228px] text-left text-sm">
                       <select
                         className="mr-2 h-[40px] w-[100px] rounded-md px-1 text-left text-sm"
                         onChange={(e) => {
@@ -766,10 +766,10 @@ export default function OrderTimeSet() {
                             分
                           </p>
                         </th>
-                        <th className="relative w-[93px] text-left text-lg">
+                        <th className="relative w-[85px] text-left text-lg">
                           <input
                             type="text"
-                            className="h-[40px] w-[103px] rounded-md px-2 pr-[26px] text-right text-sm"
+                            className="h-[40px] w-[85px] rounded-md px-2 pr-[26px] text-right text-sm"
                             value={set.price}
                             onClick={() => {
                               setIsCalculatorSelect(5);
@@ -781,7 +781,7 @@ export default function OrderTimeSet() {
                             円
                           </p>
                         </th>
-                        <th className="flex w-[220px] text-left text-sm">
+                        <th className="flex w-[228px] text-left text-sm">
                           <select
                             className="mr-2 h-[40px] w-[100px] rounded-md px-1 text-left text-sm"
                             onChange={(e) => {
