@@ -1695,20 +1695,37 @@ export default function ControlOrderSet() {
                     }
                     if (flag1 && flag2 && flag3 && flag4) {
                       const orderSets: any = [];
-                      [
-                        ...Array(Number(numResult.replace(/[^0-9]/g, "")) - 1),
-                      ].map(() =>
-                        orderSets.push({
-                          title: setName,
+                      [...Array(Number(numResult.replace(/[^0-9]/g, "")))].map(
+                        () => {
+                          orderSets.push({
+                            title: setName,
+                            subTitle: "",
+                            lot: 1,
+                            price: Number(result.replace(/[^0-9]/g, "")),
+                            isTax: result.includes("##"),
+                            setTime: order.setTime,
+                            startTime: order.startTime,
+                            endTime: order.endTime,
+                            orderExtension: order.orderExtension,
+                            extensionPrice: Number(extensionPrice),
+                          });
+                        }
+                      );
+                      const orderCasts: any = [];
+                      order.cast.map((cast: any) =>
+                        orderCasts.push({
+                          symbol: cast.split("##")[0].slice(0, 1),
+                          title: cast.split("##")[0],
                           subTitle: "",
                           lot: 1,
-                          price: Number(result.replace(/[^0-9]/g, "")),
-                          isTax: result.includes("##"),
+                          price: Number(cast.split("##")[1]),
+                          isTax: false,
                           setTime: order.setTime,
                           startTime: order.startTime,
                           endTime: order.endTime,
                           orderExtension: order.orderExtension,
                           extensionPrice: Number(extensionPrice),
+                          targetSet: setName + "/0",
                         })
                       );
                       setPurchaseOrderSet([
@@ -1716,7 +1733,7 @@ export default function ControlOrderSet() {
                         {
                           ...order,
                           id: id2 + "#" + id + "#" + id3,
-                          cast: order.cast ? order.cast : [],
+                          // cast: order.cast ? order.cast : [],
                           toggle: toggle,
                           setName: setName,
                           roomName: roomName,
@@ -1725,7 +1742,7 @@ export default function ControlOrderSet() {
                           mainStartTime: order.startTime,
                           mainEndTime: order.endTime,
                           orderItem: [],
-                          orderCast: [],
+                          orderCast: [...orderCasts],
                           orderSet: [...orderSets],
                           orderExtension: 0,
                           extensionPrice: Number(extensionPrice),

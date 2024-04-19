@@ -15,6 +15,7 @@ import client from "@/connection";
 import { RequestDocument } from "graphql-request";
 import useSWR, { preload } from "swr";
 import { searchSeatMap } from "@/gqls/query/seat";
+import dayjs from "dayjs";
 
 const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
@@ -66,7 +67,16 @@ export default function SeatMap() {
                       : purchaseOrder.some(
                           (purchaseOrder: any) => purchaseOrder.id == seat.name
                         )
-                      ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-blue-200 text-2xl font-bold text-accent opacity-90 shadow-md"
+                      ? purchaseOrder.some(
+                          (purchaseOrder: any) =>
+                            purchaseOrder.id == seat.name &&
+                            purchaseOrder.callTime.split(":")[0] <=
+                              dayjs(new Date()).format("HH") &&
+                            purchaseOrder.callTime.split(":")[1] <
+                              dayjs(new Date()).format("mm")
+                        )
+                        ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-rose-300 text-2xl font-bold text-accent opacity-90 shadow-md"
+                        : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-blue-200 text-2xl font-bold text-accent opacity-90 shadow-md"
                       : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-2xl font-bold text-accent shadow-md"
                   }
                   onClick={() => {

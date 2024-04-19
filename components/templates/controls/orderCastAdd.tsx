@@ -117,9 +117,7 @@ export default function OrderCastAdd() {
         ) + 1
       : 0) * num;
 
-  const [targetSet, setTargetSet] = useState(
-    purchaseOrderState[0]?.setName + "/" + purchaseOrderState[0]?.startTime
-  );
+  const [targetSet, setTargetSet] = useState("");
 
   const [countOrderSet, setCountOrderSet] = useState<any>([]);
   const [orderSets, setOrderSets] = useState<any>([]);
@@ -215,7 +213,12 @@ export default function OrderCastAdd() {
           ...purchaseOrderState[0]?.orderSet,
           ...orderExtensions,
         ];
+    let flag = true;
     orderSets.map((orderSet: any, index: any) => {
+      if (flag) {
+        setTargetSet(orderSet.title + "/" + index);
+        flag = false;
+      }
       const state = orderSets.filter(
         (n: any) =>
           n.title === orderSet?.title &&
@@ -593,14 +596,15 @@ export default function OrderCastAdd() {
                 }}
               >
                 {orderSets.map((orderSet: any, index: any) => {
-                  return (
-                    <option
-                      key={index}
-                      value={orderSet.title + "/" + orderSet.startTime}
-                    >
-                      {orderSet.title} {orderSet.startTime}
-                    </option>
-                  );
+                  if (
+                    !orderSet.title.includes("延長") &&
+                    !orderSet.title.includes("ルームチャージ")
+                  )
+                    return (
+                      <option key={index} value={orderSet.title + "/" + index}>
+                        {orderSet.title} {orderSet.startTime}
+                      </option>
+                    );
                 })}
               </select>
             </div>

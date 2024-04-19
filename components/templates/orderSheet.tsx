@@ -265,15 +265,6 @@ function Base() {
       }
     });
     const orderCasts = [
-      ...purchaseOrderState[0]?.cast?.map((cast: any) => {
-        return {
-          title: cast.split("##")[0],
-          subTitle: "",
-          lot: 1,
-          price: Number(cast.split("##")[1]),
-          isTax: cast.isTax,
-        };
-      }),
       ...purchaseOrderState[0]?.orderCast?.map((cast: any) => {
         return {
           title: cast.title,
@@ -331,12 +322,6 @@ function Base() {
     const orderSets = purchaseOrderState[0]?.isRoomCharge
       ? Number(purchaseOrderState[0]?.orderExtension) > 0
         ? [
-            {
-              title: purchaseOrderState[0]?.setName,
-              lot: purchaseOrderState[0]?.lot,
-              price: purchaseOrderState[0]?.price,
-              isTax: purchaseOrderState[0]?.priceTax,
-            },
             ...purchaseOrderState[0]?.orderSet,
             {
               title:
@@ -357,12 +342,6 @@ function Base() {
             ...orderExtensions,
           ]
         : [
-            {
-              title: purchaseOrderState[0]?.setName,
-              lot: purchaseOrderState[0]?.lot,
-              price: purchaseOrderState[0]?.price,
-              isTax: purchaseOrderState[0]?.priceTax,
-            },
             ...purchaseOrderState[0]?.orderSet,
             {
               title:
@@ -377,12 +356,6 @@ function Base() {
           ]
       : Number(purchaseOrderState[0]?.orderExtension) > 0
       ? [
-          {
-            title: purchaseOrderState[0]?.setName,
-            lot: purchaseOrderState[0]?.lot,
-            price: purchaseOrderState[0]?.price,
-            isTax: purchaseOrderState[0]?.priceTax,
-          },
           ...purchaseOrderState[0]?.orderSet,
           {
             title: "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
@@ -392,16 +365,7 @@ function Base() {
           },
           ...orderExtensions,
         ]
-      : [
-          {
-            title: purchaseOrderState[0]?.setName,
-            lot: purchaseOrderState[0]?.lot,
-            price: purchaseOrderState[0]?.price,
-            isTax: purchaseOrderState[0]?.priceTax,
-          },
-          ...purchaseOrderState[0]?.orderSet,
-          ...orderExtensions,
-        ];
+      : [...purchaseOrderState[0]?.orderSet, ...orderExtensions];
 
     orderSets.map((orderSet: any, index: any) => {
       const state = orderSets.filter(
@@ -491,13 +455,17 @@ function Base() {
                   .format("HH:mm");
                 purchaseOrderState[0].endTime =
                   purchaseOrderState[0]?.mainEndTime;
+                purchaseOrderState[0].callTime = dayjs(
+                  date(
+                    purchaseOrderState[0]?.mainEndTime.split(":")[0],
+                    purchaseOrderState[0]?.mainEndTime.split(":")[1]
+                  )
+                )
+                  .subtract(10, "minute")
+                  .format("HH:mm");
                 purchaseOrderState[0].orderExtension = checker();
                 purchaseOrderState[0].orderSet.map((set: any) => {
-                  set.endTime = dayjs(
-                    date(set.endTime.split(":")[0], set.endTime.split(":")[1])
-                  )
-                    .subtract(30, "minute")
-                    .format("HH:mm");
+                  set.endTime = purchaseOrderState[0]?.mainEndTime;
                   set.orderExtension = checker_new(
                     set.endTime,
                     set.startTime,
@@ -506,11 +474,7 @@ function Base() {
                   );
                 });
                 purchaseOrderState[0].orderCast.map((cast: any) => {
-                  cast.endTime = dayjs(
-                    date(cast.endTime.split(":")[0], cast.endTime.split(":")[1])
-                  )
-                    .subtract(30, "minute")
-                    .format("HH:mm");
+                  cast.endTime = purchaseOrderState[0]?.mainEndTime;
                   cast.orderExtension = checker_new(
                     cast.endTime,
                     cast.startTime,
@@ -560,13 +524,17 @@ function Base() {
                   .format("HH:mm");
                 purchaseOrderState[0].endTime =
                   purchaseOrderState[0]?.mainEndTime;
+                purchaseOrderState[0].callTime = dayjs(
+                  date(
+                    purchaseOrderState[0]?.mainEndTime.split(":")[0],
+                    purchaseOrderState[0]?.mainEndTime.split(":")[1]
+                  )
+                )
+                  .subtract(10, "minute")
+                  .format("HH:mm");
                 purchaseOrderState[0].orderExtension = checker();
                 purchaseOrderState[0].orderSet.map((set: any) => {
-                  set.endTime = dayjs(
-                    date(set.endTime.split(":")[0], set.endTime.split(":")[1])
-                  )
-                    .add(30, "minute")
-                    .format("HH:mm");
+                  set.endTime = purchaseOrderState[0]?.mainEndTime;
                   set.orderExtension = checker_new(
                     set.endTime,
                     set.startTime,
@@ -575,11 +543,7 @@ function Base() {
                   );
                 });
                 purchaseOrderState[0].orderCast.map((cast: any) => {
-                  cast.endTime = dayjs(
-                    date(cast.endTime.split(":")[0], cast.endTime.split(":")[1])
-                  )
-                    .add(30, "minute")
-                    .format("HH:mm");
+                  cast.endTime = purchaseOrderState[0]?.mainEndTime;
                   cast.orderExtension = checker_new(
                     cast.endTime,
                     cast.startTime,
@@ -1836,14 +1800,18 @@ function CastAdd() {
                     }}
                   >
                     {orderSets.map((orderSet: any, index: any) => {
-                      return (
-                        <option
-                          key={index}
-                          value={orderSet.title + "/" + orderSet.startTime}
-                        >
-                          {orderSet.title} {orderSet.startTime}
-                        </option>
-                      );
+                      if (
+                        !orderSet.title.includes("延長") &&
+                        !orderSet.title.includes("ルームチャージ")
+                      )
+                        return (
+                          <option
+                            key={index}
+                            value={orderSet.title + "/" + index}
+                          >
+                            {orderSet.title} {orderSet.startTime}
+                          </option>
+                        );
                     })}
                   </select>
                 </div>

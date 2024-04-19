@@ -520,18 +520,129 @@ export default function ControlOrderSetAdd() {
     setSelectCast(order.cast ? order.cast : []);
   }
 
-  console.log(
-    JSON.stringify({
-      setName: setName,
-      result: result,
-      setTimeResult: setTimeResult,
-      roomResult: roomResult,
-      roomName: roomName,
-      status: status,
-      extensionPrice: extensionPrice,
-      numResult: numResult,
-    })
+  const [targetSet, setTargetSet] = useState("");
+
+  const purchaseOrderState = purchaseOrder.filter(
+    (purchaseOrder: any) => purchaseOrder.id == seatPreset
   );
+
+  const [orderSets2, setOrderSets2] = useState<any>([]);
+  useEffect(() => {
+    const orderData: any = [];
+    const orderExtensions: any = [];
+    purchaseOrderState[0].orderSet.map((set: any) => {
+      if (set.orderExtension > 0) {
+        orderExtensions.push({
+          title: "延長料(" + set.title.slice(0, 3) + ")",
+          lot: Number(set.orderExtension),
+          price: Number(set.extensionPrice),
+          isTax: false,
+          startTime: set.startTime,
+        });
+      }
+    });
+    const orderSets2 = purchaseOrderState[0]?.isRoomCharge
+      ? Number(purchaseOrderState[0]?.orderExtension) > 0
+        ? [
+            {
+              title: purchaseOrderState[0]?.setName,
+              lot: purchaseOrderState[0]?.lot,
+              price: purchaseOrderState[0]?.price,
+              isTax: purchaseOrderState[0]?.priceTax,
+              startTime: purchaseOrderState[0]?.startTime,
+            },
+            ...purchaseOrderState[0]?.orderSet,
+            {
+              title:
+                purchaseOrderState[0]?.roomName == ""
+                  ? "ルームチャージ"
+                  : purchaseOrderState[0]?.roomName,
+              lot: 1,
+              price: purchaseOrderState[0]?.roomCharge,
+              isTax: purchaseOrderState[0]?.roomTax,
+            },
+            {
+              title:
+                "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
+              lot: Number(purchaseOrderState[0]?.orderExtension),
+              price: Number(purchaseOrderState[0]?.extensionPrice),
+              isTax: false,
+            },
+            ...orderExtensions,
+          ]
+        : [
+            {
+              title: purchaseOrderState[0]?.setName,
+              lot: purchaseOrderState[0]?.lot,
+              price: purchaseOrderState[0]?.price,
+              isTax: purchaseOrderState[0]?.priceTax,
+              startTime: purchaseOrderState[0]?.startTime,
+            },
+            ...purchaseOrderState[0]?.orderSet,
+            {
+              title:
+                purchaseOrderState[0]?.roomName == ""
+                  ? "ルームチャージ"
+                  : purchaseOrderState[0]?.roomName,
+              lot: 1,
+              price: purchaseOrderState[0]?.roomCharge,
+              isTax: purchaseOrderState[0]?.roomTax,
+            },
+            ...orderExtensions,
+          ]
+      : Number(purchaseOrderState[0]?.orderExtension) > 0
+      ? [
+          {
+            title: purchaseOrderState[0]?.setName,
+            lot: purchaseOrderState[0]?.lot,
+            price: purchaseOrderState[0]?.price,
+            isTax: purchaseOrderState[0]?.priceTax,
+            startTime: purchaseOrderState[0]?.startTime,
+          },
+          ...purchaseOrderState[0]?.orderSet,
+          {
+            title: "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
+            lot: Number(purchaseOrderState[0]?.orderExtension),
+            price: Number(purchaseOrderState[0]?.extensionPrice),
+            isTax: false,
+          },
+          ...orderExtensions,
+        ]
+      : [
+          {
+            title: purchaseOrderState[0]?.setName,
+            lot: purchaseOrderState[0]?.lot,
+            price: purchaseOrderState[0]?.price,
+            isTax: purchaseOrderState[0]?.priceTax,
+            startTime: purchaseOrderState[0]?.startTime,
+          },
+          ...purchaseOrderState[0]?.orderSet,
+          ...orderExtensions,
+        ];
+    let flag = true;
+    orderSets2.map((orderSet: any, index: any) => {
+      if (flag) {
+        setTargetSet(orderSet.title + "/" + index);
+        flag = false;
+      }
+      const state = orderSets2.filter(
+        (n: any) =>
+          n.title === orderSet?.title &&
+          n.price === orderSet?.price &&
+          n.isTax === orderSet?.isTax
+      );
+      let count = 0;
+      state.map((state: any) => (count += state.lot));
+      orderData.push({
+        title: orderSet?.title,
+        subTitle: "",
+        lot: count,
+        price: orderSet?.price,
+        isTax: orderSet?.isTax,
+      });
+    });
+    setOrderSets2(orderSets2);
+  }, [purchaseOrderState]);
 
   return (
     <>
@@ -1553,9 +1664,32 @@ export default function ControlOrderSetAdd() {
                               extensionPrice: Number(extensionPrice),
                             })
                           );
+                          let targetSetName = "";
+                          orderSets2.map((orderSet: any, index: any) => {
+                            if (orderSet.title == setName) {
+                              setTargetSet(setName + "/" + index);
+                            }
+                          });
+                          const orderCasts: any = [];
+                          order.cast.map((cast: any) =>
+                            orderCasts.push({
+                              symbol: cast.split("##")[0].slice(0, 1),
+                              title: cast.split("##")[0],
+                              subTitle: "",
+                              lot: 1,
+                              price: Number(cast.split("##")[1]),
+                              isTax: false,
+                              setTime: order.setTime,
+                              startTime: order.startTime,
+                              endTime: order.endTime,
+                              orderExtension: order.orderExtension,
+                              extensionPrice: Number(extensionPrice),
+                              targetSet: targetSet,
+                            })
+                          );
                           return {
                             ...orderSet,
-                            cast: [...orderSet.cast, ...order.cast],
+                            orderCast: [...orderSet.orderCast, ...orderCasts],
                             num:
                               Number(orderSet.num) +
                               Number(numResult.replace(/[^0-9]/g, "")),

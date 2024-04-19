@@ -412,16 +412,18 @@ export default function OrderTimeDesignate() {
                             >
                               <option value={""}>選択してください。</option>
                               {orderSets.map((orderSet: any, index: any) => {
-                                return (
-                                  <option
-                                    key={index}
-                                    value={
-                                      orderSet.title + "/" + orderSet.startTime
-                                    }
-                                  >
-                                    {orderSet.title} {orderSet.startTime}
-                                  </option>
-                                );
+                                if (
+                                  !orderSet.title.includes("延長") &&
+                                  !orderSet.title.includes("ルームチャージ")
+                                )
+                                  return (
+                                    <option
+                                      key={index}
+                                      value={orderSet.title + "/" + index}
+                                    >
+                                      {orderSet.title} {orderSet.startTime}
+                                    </option>
+                                  );
                               })}
                             </select>
                           </th>
@@ -478,10 +480,20 @@ export default function OrderTimeDesignate() {
                           <th className="w-[20px] text-center text-sm">
                             {checker_new(
                               cast.endTime,
-                              cast.startTime,
+                              purchaseOrderState[0].orderSet[
+                                cast.targetSet.split("/")[1]
+                              ].startTime,
                               cast.setTime,
                               cast.lot
-                            )}
+                            ) -
+                              checker_new(
+                                cast.startTime,
+                                purchaseOrderState[0].orderSet[
+                                  cast.targetSet.split("/")[1]
+                                ].startTime,
+                                cast.setTime,
+                                cast.lot
+                              )}
                           </th>
                           <th className="flex h-[80px] w-[130px] items-center text-center text-sm">
                             <div
@@ -494,12 +506,23 @@ export default function OrderTimeDesignate() {
                                 )
                                   .subtract(30, "minute")
                                   .format("HH:mm");
-                                cast.orderExtension = checker_new(
-                                  cast.endTime,
-                                  cast.startTime,
-                                  cast.setTime,
-                                  cast.lot
-                                );
+                                cast.orderExtension =
+                                  checker_new(
+                                    cast.endTime,
+                                    purchaseOrderState[0].orderSet[
+                                      cast.targetSet.split("/")[1]
+                                    ].startTime,
+                                    cast.setTime,
+                                    cast.lot
+                                  ) -
+                                  checker_new(
+                                    cast.startTime,
+                                    purchaseOrderState[0].orderSet[
+                                      cast.targetSet.split("/")[1]
+                                    ].startTime,
+                                    cast.setTime,
+                                    cast.lot
+                                  );
                               }}
                             >
                               <Border
@@ -524,12 +547,23 @@ export default function OrderTimeDesignate() {
                                 )
                                   .add(30, "minute")
                                   .format("HH:mm");
-                                cast.orderExtension = checker_new(
-                                  cast.endTime,
-                                  cast.startTime,
-                                  cast.setTime,
-                                  cast.lot
-                                );
+                                cast.orderExtension =
+                                  checker_new(
+                                    cast.endTime,
+                                    purchaseOrderState[0].orderSet[
+                                      cast.targetSet.split("/")[1]
+                                    ].startTime,
+                                    cast.setTime,
+                                    cast.lot
+                                  ) -
+                                  checker_new(
+                                    cast.startTime,
+                                    purchaseOrderState[0].orderSet[
+                                      cast.targetSet.split("/")[1]
+                                    ].startTime,
+                                    cast.setTime,
+                                    cast.lot
+                                  );
                               }}
                             >
                               <Border
