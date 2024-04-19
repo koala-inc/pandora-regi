@@ -612,7 +612,7 @@ export default function OrderTimeSet() {
                         <option value={"ジョイント"}>ジョイント</option>
                       </select>
                       {status != "なし" && (
-                        <select className="mr-2 h-[40px] w-[128px] rounded-md px-1 text-left text-sm">
+                        <select className="mr-2 h-[40px] w-[120px] rounded-md px-1 text-left text-sm">
                           <option>選択してください</option>
                           {status == "外販" ? (
                             <option>外販1</option>
@@ -794,7 +794,7 @@ export default function OrderTimeSet() {
                             <option value={"ジョイント"}>ジョイント</option>
                           </select>
                           {status != "なし" && (
-                            <select className="mr-2 h-[40px] w-[128px] rounded-md px-1 text-left text-sm">
+                            <select className="mr-2 h-[40px] w-[120px] rounded-md px-1 text-left text-sm">
                               <option>選択してください</option>
                               {status == "外販" ? (
                                 <option>外販1</option>
