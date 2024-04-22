@@ -1358,83 +1358,20 @@ function CastAdd() {
       }
     });
     const orderSets = purchaseOrderState[0]?.isRoomCharge
-      ? Number(purchaseOrderState[0]?.orderExtension) > 0
-        ? [
-            {
-              title: purchaseOrderState[0]?.setName,
-              lot: purchaseOrderState[0]?.lot,
-              price: purchaseOrderState[0]?.price,
-              isTax: purchaseOrderState[0]?.priceTax,
-              startTime: purchaseOrderState[0]?.startTime,
-            },
-            ...purchaseOrderState[0]?.orderSet,
-            {
-              title:
-                purchaseOrderState[0]?.roomName == ""
-                  ? "ルームチャージ"
-                  : purchaseOrderState[0]?.roomName,
-              lot: 1,
-              price: purchaseOrderState[0]?.roomCharge,
-              isTax: purchaseOrderState[0]?.roomTax,
-            },
-            {
-              title:
-                "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
-              lot: Number(purchaseOrderState[0]?.orderExtension),
-              price: Number(purchaseOrderState[0]?.extensionPrice),
-              isTax: false,
-            },
-            ...orderExtensions,
-          ]
-        : [
-            {
-              title: purchaseOrderState[0]?.setName,
-              lot: purchaseOrderState[0]?.lot,
-              price: purchaseOrderState[0]?.price,
-              isTax: purchaseOrderState[0]?.priceTax,
-              startTime: purchaseOrderState[0]?.startTime,
-            },
-            ...purchaseOrderState[0]?.orderSet,
-            {
-              title:
-                purchaseOrderState[0]?.roomName == ""
-                  ? "ルームチャージ"
-                  : purchaseOrderState[0]?.roomName,
-              lot: 1,
-              price: purchaseOrderState[0]?.roomCharge,
-              isTax: purchaseOrderState[0]?.roomTax,
-            },
-            ...orderExtensions,
-          ]
-      : Number(purchaseOrderState[0]?.orderExtension) > 0
       ? [
-          {
-            title: purchaseOrderState[0]?.setName,
-            lot: purchaseOrderState[0]?.lot,
-            price: purchaseOrderState[0]?.price,
-            isTax: purchaseOrderState[0]?.priceTax,
-            startTime: purchaseOrderState[0]?.startTime,
-          },
           ...purchaseOrderState[0]?.orderSet,
           {
-            title: "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
-            lot: Number(purchaseOrderState[0]?.orderExtension),
-            price: Number(purchaseOrderState[0]?.extensionPrice),
-            isTax: false,
+            title:
+              purchaseOrderState[0]?.roomName == ""
+                ? "ルームチャージ"
+                : purchaseOrderState[0]?.roomName,
+            lot: 1,
+            price: purchaseOrderState[0]?.roomCharge,
+            isTax: purchaseOrderState[0]?.roomTax,
           },
           ...orderExtensions,
         ]
-      : [
-          {
-            title: purchaseOrderState[0]?.setName,
-            lot: purchaseOrderState[0]?.lot,
-            price: purchaseOrderState[0]?.price,
-            isTax: purchaseOrderState[0]?.priceTax,
-            startTime: purchaseOrderState[0]?.startTime,
-          },
-          ...purchaseOrderState[0]?.orderSet,
-          ...orderExtensions,
-        ];
+      : [...purchaseOrderState[0]?.orderSet, ...orderExtensions];
 
     orderSets.map((orderSet: any, index: any) => {
       const state = orderSets.filter(

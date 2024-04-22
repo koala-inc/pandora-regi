@@ -179,7 +179,7 @@ export default function OrderTimeDesignate() {
     purchaseOrderState[0].orderSet.map((set: any) => {
       if (set.orderExtension > 0) {
         orderExtensions.push({
-          title: "延長料(" + set.title.slice(0, 3) + ")",
+          title: "延長料(" + set.categoryTitle.slice(0, 3) + ")",
           lot: Number(set.orderExtension),
           price: Number(set.extensionPrice),
           isTax: false,
@@ -200,13 +200,6 @@ export default function OrderTimeDesignate() {
               price: purchaseOrderState[0]?.roomCharge,
               isTax: purchaseOrderState[0]?.roomTax,
             },
-            {
-              title:
-                "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
-              lot: Number(purchaseOrderState[0]?.orderExtension),
-              price: Number(purchaseOrderState[0]?.extensionPrice),
-              isTax: false,
-            },
             ...orderExtensions,
           ]
         : [
@@ -223,16 +216,7 @@ export default function OrderTimeDesignate() {
             ...orderExtensions,
           ]
       : Number(purchaseOrderState[0]?.orderExtension) > 0
-      ? [
-          ...purchaseOrderState[0]?.orderSet,
-          {
-            title: "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
-            lot: Number(purchaseOrderState[0]?.orderExtension),
-            price: Number(purchaseOrderState[0]?.extensionPrice),
-            isTax: false,
-          },
-          ...orderExtensions,
-        ]
+      ? [...purchaseOrderState[0]?.orderSet, ...orderExtensions]
       : [...purchaseOrderState[0]?.orderSet, ...orderExtensions];
 
     setOrderSets(orderSets);

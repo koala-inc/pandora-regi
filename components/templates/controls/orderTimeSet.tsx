@@ -180,7 +180,7 @@ export default function OrderTimeSet() {
     purchaseOrderState[0].orderSet.map((set: any) => {
       if (set.orderExtension > 0) {
         orderExtensions.push({
-          title: "延長料(" + set.title.slice(0, 3) + ")",
+          title: "延長料(" + set.categoryTitle.slice(0, 3) + ")",
           lot: Number(set.orderExtension),
           price: Number(set.extensionPrice),
           isTax: false,
@@ -189,48 +189,16 @@ export default function OrderTimeSet() {
       }
     });
     const orderSets = purchaseOrderState[0]?.isRoomCharge
-      ? Number(purchaseOrderState[0]?.orderExtension) > 0
-        ? [
-            ...purchaseOrderState[0]?.orderSet,
-            {
-              title:
-                purchaseOrderState[0]?.roomName == ""
-                  ? "ルームチャージ"
-                  : purchaseOrderState[0]?.roomName,
-              lot: 1,
-              price: purchaseOrderState[0]?.roomCharge,
-              isTax: purchaseOrderState[0]?.roomTax,
-            },
-            {
-              title:
-                "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
-              lot: Number(purchaseOrderState[0]?.orderExtension),
-              price: Number(purchaseOrderState[0]?.extensionPrice),
-              isTax: false,
-            },
-            ...orderExtensions,
-          ]
-        : [
-            ...purchaseOrderState[0]?.orderSet,
-            {
-              title:
-                purchaseOrderState[0]?.roomName == ""
-                  ? "ルームチャージ"
-                  : purchaseOrderState[0]?.roomName,
-              lot: 1,
-              price: purchaseOrderState[0]?.roomCharge,
-              isTax: purchaseOrderState[0]?.roomTax,
-            },
-            ...orderExtensions,
-          ]
-      : Number(purchaseOrderState[0]?.orderExtension) > 0
       ? [
           ...purchaseOrderState[0]?.orderSet,
           {
-            title: "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
-            lot: Number(purchaseOrderState[0]?.orderExtension),
-            price: Number(purchaseOrderState[0]?.extensionPrice),
-            isTax: false,
+            title:
+              purchaseOrderState[0]?.roomName == ""
+                ? "ルームチャージ"
+                : purchaseOrderState[0]?.roomName,
+            lot: 1,
+            price: purchaseOrderState[0]?.roomCharge,
+            isTax: purchaseOrderState[0]?.roomTax,
           },
           ...orderExtensions,
         ]
@@ -656,6 +624,17 @@ export default function OrderTimeSet() {
                                   ) {
                                     set.title = event.event_revision.name;
                                     set.price = event.event_revision.price;
+                                    set.setTime = event.event_revision.set_time;
+                                    searchData2?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
+                                      (area: any, index: any) => {
+                                        if (
+                                          area.id ==
+                                          event.event_revision.seat_area_id
+                                        ) {
+                                          set.categoryTitle = area.name;
+                                        }
+                                      }
+                                    );
                                   }
                                 }
                               );
