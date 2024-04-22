@@ -26,6 +26,10 @@ import Calculator8 from "@/components/parts/calculator8";
 import { searchSeatArea } from "@/gqls/query/seat";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
 import { searchEvent } from "@/gqls/query/event";
+import Calculator5 from "@/components/parts/calculator5";
+import Calculator6 from "@/components/parts/calculator6";
+import Calculator13 from "@/components/parts/calculator13";
+import Calculator14 from "@/components/parts/calculator14";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -306,14 +310,18 @@ export default function OrderTimeSet() {
           }}
         />
       )}
+      {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 6 && (
+        <Calculator14
+          result={
+            purchaseOrderState[0].orderSet[purchaseOrderState[0].orderSetIndex]
+          }
+        />
+      )}
       {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 5 && (
-        <Calculator8
-          result={purchaseOrderState[0]}
-          time={purchaseOrderState[0].endTime}
-          callback={(hour: any, minite: any) => {
-            purchaseOrderState[0].endTime = hour + ":" + minite;
-            purchaseOrderState[0].orderExtension = checker();
-          }}
+        <Calculator13
+          result={
+            purchaseOrderState[0].orderSet[purchaseOrderState[0].orderSetIndex]
+          }
         />
       )}
       {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 8 && (
@@ -662,7 +670,8 @@ export default function OrderTimeSet() {
                             value={set.setTime}
                             onClick={() => {
                               setIsCalculatorSelect(5);
-                              setIsCalculator(true);
+                              purchaseOrderState[0].isTimeCalculator = true;
+                              purchaseOrderState[0].orderSetIndex = index;
                             }}
                             readOnly
                           />
@@ -676,8 +685,9 @@ export default function OrderTimeSet() {
                             className="h-[40px] w-[85px] rounded-md px-2 pr-[26px] text-right text-sm"
                             value={set.price}
                             onClick={() => {
-                              setIsCalculatorSelect(5);
-                              setIsCalculator(true);
+                              setIsCalculatorSelect(6);
+                              purchaseOrderState[0].isTimeCalculator = true;
+                              purchaseOrderState[0].orderSetIndex = index;
                             }}
                             readOnly
                           />
