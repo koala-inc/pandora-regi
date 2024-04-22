@@ -761,10 +761,10 @@ export default function OrderTimeSet() {
                         />
                       </th>
                       <th className="relative w-[60px] text-left text-lg"></th>
-                      <th className="relative w-[103px] text-left text-lg">
+                      <th className="relative w-[85px] text-left text-lg">
                         <input
                           type="text"
-                          className="h-[40px] w-[103px] rounded-md px-2 pr-[26px] text-right text-sm"
+                          className="h-[40px] w-[85px] rounded-md px-2 pr-[26px] text-right text-sm"
                           value={purchaseOrderState[0]?.roomCharge}
                           onClick={() => {
                             setIsCalculatorSelect(5);
@@ -772,11 +772,11 @@ export default function OrderTimeSet() {
                           }}
                           readOnly
                         />
-                        <p className="absolute bottom-[30.5px] left-[90px] text-sm opacity-60">
+                        <p className="absolute bottom-[30.5px] left-[73px] text-sm opacity-60">
                           円
                         </p>
                       </th>
-                      <th className="flex w-[210px] text-left text-sm"></th>
+                      <th className="flex w-[228px] text-left text-sm"></th>
                       <th className="w-[80px] text-center text-lg">
                         <input
                           type="text"
