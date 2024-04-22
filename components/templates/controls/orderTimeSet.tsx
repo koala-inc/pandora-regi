@@ -632,6 +632,7 @@ export default function OrderTimeSet() {
                                           event.event_revision.seat_area_id
                                         ) {
                                           set.categoryTitle = area.name;
+                                          set.extensionPrice = area.extra_price;
                                         }
                                       }
                                     );
