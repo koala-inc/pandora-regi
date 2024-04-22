@@ -644,6 +644,12 @@ export default function OrderTimeSet() {
                                         }
                                       }
                                     );
+                                    set.orderExtension = checker_new(
+                                      set.endTime,
+                                      set.startTime,
+                                      set.setTime,
+                                      set.lot
+                                    );
                                   }
                                 }
                               );
