@@ -106,6 +106,8 @@ export default function ControlOrderSetAdd() {
     order.price ? order.state?.setName : ""
   );
 
+  const [setCategoryName, setSetCategoryName] = useState("");
+
   const [roomName, setRoomName] = useState(
     order.state?.roomName ? order.state?.roomName : ""
   );
@@ -788,6 +790,7 @@ export default function ControlOrderSetAdd() {
                 setExtensionPrice(area.extra_price);
                 setServiceTax(area.service_tax);
                 setRoomName(area.room_name);
+                setSetCategoryName(area.name);
               }
               count += 1;
               return (
@@ -804,6 +807,7 @@ export default function ControlOrderSetAdd() {
                     setExtensionPrice(area.extra_price);
                     setServiceTax(area.service_tax);
                     setRoomName(area.room_name);
+                    setSetCategoryName(area.name);
                   }}
                 >
                   {area.name}
@@ -1662,6 +1666,7 @@ export default function ControlOrderSetAdd() {
                               endTime: order.endTime,
                               orderExtension: order.orderExtension,
                               extensionPrice: Number(extensionPrice),
+                              categoryTitle: setCategoryName,
                             })
                           );
                           let targetSetName = "";

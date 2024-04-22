@@ -106,6 +106,8 @@ export default function ControlOrderSet() {
     order.price ? order.state?.setName : ""
   );
 
+  const [setCategoryName, setSetCategoryName] = useState("");
+
   const [roomName, setRoomName] = useState(
     order.state?.roomName ? order.state?.roomName : ""
   );
@@ -737,6 +739,7 @@ export default function ControlOrderSet() {
                 setExtensionPrice(area.extra_price);
                 setServiceTax(area.service_tax);
                 setRoomName(area.room_name);
+                setSetCategoryName(area.name);
               }
               count += 1;
               return (
@@ -753,6 +756,7 @@ export default function ControlOrderSet() {
                     setExtensionPrice(area.extra_price);
                     setServiceTax(area.service_tax);
                     setRoomName(area.room_name);
+                    setSetCategoryName(area.name);
                   }}
                 >
                   {area.name}
@@ -1714,7 +1718,8 @@ export default function ControlOrderSet() {
                             startTime: order.startTime,
                             endTime: order.endTime,
                             orderExtension: order.orderExtension,
-                            extensionPrice: Number(selectDesignateExPrice),
+                            extensionPrice: Number(extensionPrice),
+                            categoryTitle: setCategoryName,
                           });
                         }
                       );
@@ -1763,6 +1768,7 @@ export default function ControlOrderSet() {
                           roomTax: roomResult.includes("##"),
                           num: Number(numResult.replace(/[^0-9]/g, "")),
                           order: order,
+                          categoryTitle: setCategoryName,
                         },
                       ]);
                       setOrder({
