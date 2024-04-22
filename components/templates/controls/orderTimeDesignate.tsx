@@ -599,7 +599,7 @@ export default function OrderTimeDesignate() {
                               onClick={() => {
                                 setIsCalculatorSelect(8);
                                 purchaseOrderState[0].isTimeCalculator = true;
-                                setIsCalculatorSelectData(cast);
+                                purchaseOrderState[0].orderCastIndex = index;
                               }}
                               readOnly
                             />
