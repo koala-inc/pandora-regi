@@ -190,13 +190,6 @@ export default function OrderTimeDesignate() {
     const orderSets = purchaseOrderState[0]?.isRoomCharge
       ? Number(purchaseOrderState[0]?.orderExtension) > 0
         ? [
-            {
-              title: purchaseOrderState[0]?.setName,
-              lot: purchaseOrderState[0]?.lot,
-              price: purchaseOrderState[0]?.price,
-              isTax: purchaseOrderState[0]?.priceTax,
-              startTime: purchaseOrderState[0]?.startTime,
-            },
             ...purchaseOrderState[0]?.orderSet,
             {
               title:
@@ -217,13 +210,6 @@ export default function OrderTimeDesignate() {
             ...orderExtensions,
           ]
         : [
-            {
-              title: purchaseOrderState[0]?.setName,
-              lot: purchaseOrderState[0]?.lot,
-              price: purchaseOrderState[0]?.price,
-              isTax: purchaseOrderState[0]?.priceTax,
-              startTime: purchaseOrderState[0]?.startTime,
-            },
             ...purchaseOrderState[0]?.orderSet,
             {
               title:
@@ -238,13 +224,6 @@ export default function OrderTimeDesignate() {
           ]
       : Number(purchaseOrderState[0]?.orderExtension) > 0
       ? [
-          {
-            title: purchaseOrderState[0]?.setName,
-            lot: purchaseOrderState[0]?.lot,
-            price: purchaseOrderState[0]?.price,
-            isTax: purchaseOrderState[0]?.priceTax,
-            startTime: purchaseOrderState[0]?.startTime,
-          },
           ...purchaseOrderState[0]?.orderSet,
           {
             title: "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
@@ -254,17 +233,7 @@ export default function OrderTimeDesignate() {
           },
           ...orderExtensions,
         ]
-      : [
-          {
-            title: purchaseOrderState[0]?.setName,
-            lot: purchaseOrderState[0]?.lot,
-            price: purchaseOrderState[0]?.price,
-            isTax: purchaseOrderState[0]?.priceTax,
-            startTime: purchaseOrderState[0]?.startTime,
-          },
-          ...purchaseOrderState[0]?.orderSet,
-          ...orderExtensions,
-        ];
+      : [...purchaseOrderState[0]?.orderSet, ...orderExtensions];
 
     setOrderSets(orderSets);
 
@@ -536,6 +505,9 @@ export default function OrderTimeDesignate() {
                             <select
                               className="h-[40px] w-[170px] rounded-md px-1 text-left text-sm"
                               value={cast.targetSet}
+                              onChange={(e) => {
+                                cast.targetSet = e.target.value;
+                              }}
                             >
                               <option value={""}>選択してください。</option>
                               {orderSets.map((orderSet: any, index: any) => {
