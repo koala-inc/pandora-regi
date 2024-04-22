@@ -1667,6 +1667,7 @@ export default function ControlOrderSetAdd() {
                               orderExtension: order.orderExtension,
                               extensionPrice: Number(extensionPrice),
                               categoryTitle: setCategoryName,
+                              isLock: false,
                             })
                           );
                           let targetSetName = "";
@@ -1690,6 +1691,7 @@ export default function ControlOrderSetAdd() {
                               orderExtension: order.orderExtension,
                               extensionPrice: Number(extensionPrice),
                               targetSet: targetSet,
+                              isLock: false,
                             })
                           );
                           return {

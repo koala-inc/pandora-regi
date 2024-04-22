@@ -647,6 +647,7 @@ export default function OrderCastAdd() {
                             isTax: false,
                             isNumCalculator: false,
                             targetSet: targetSet,
+                            isLock: false,
                           },
                         ]);
                       }}

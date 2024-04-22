@@ -26,6 +26,7 @@ import Calculator8 from "@/components/parts/calculator8";
 import { searchSeatArea } from "@/gqls/query/seat";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
 import { searchEvent } from "@/gqls/query/event";
+import Calculator14 from "@/components/parts/calculator14";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -304,6 +305,15 @@ export default function OrderTimeDesignate() {
           }}
         />
       )}
+      {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 9 && (
+        <Calculator14
+          result={
+            purchaseOrderState[0].orderCast[
+              purchaseOrderState[0].orderCastIndex
+            ]
+          }
+        />
+      )}
       {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 6 && (
         <Calculator8
           result={isCalculatorSelectData}
@@ -522,16 +532,20 @@ export default function OrderTimeDesignate() {
                             <input
                               type="text"
                               className="h-[40px] w-[103px] rounded-md px-2 pr-[26px] text-right text-sm"
-                              value={cast.price}
+                              value={
+                                String(cast.price).includes("##")
+                                  ? Number(String(cast.price).split("##")[0])
+                                  : Number(cast.price)
+                              }
                               onClick={() => {
-                                setIsCalculatorSelect(6);
-                                setIsCalculator(true);
+                                setIsCalculatorSelect(9);
+                                purchaseOrderState[0].isTimeCalculator = true;
                                 purchaseOrderState[0].orderCastIndex = index;
                               }}
                               readOnly
                             />
                             <p className="absolute bottom-[30.5px] left-[90px] text-sm opacity-60">
-                              {cast.isTax ? "込" : "円"}
+                              {String(cast.price).includes("##") ? "込" : "円"}
                             </p>
                           </th>
                           <th className="w-[80px] text-center text-lg">
@@ -578,34 +592,42 @@ export default function OrderTimeDesignate() {
                                 cast.lot
                               )}
                           </th>
-                          <th className="flex h-[80px] w-[130px] items-center text-center text-sm">
+                          <th
+                            className={
+                              cast.isLock
+                                ? "flex h-[80px] w-[130px] items-center text-center text-sm grayscale"
+                                : "flex h-[80px] w-[130px] items-center text-center text-sm"
+                            }
+                          >
                             <div
                               onClick={() => {
-                                cast.endTime = dayjs(
-                                  date(
-                                    cast.endTime.split(":")[0],
-                                    cast.endTime.split(":")[1]
+                                if (!cast.isLock) {
+                                  cast.endTime = dayjs(
+                                    date(
+                                      cast.endTime.split(":")[0],
+                                      cast.endTime.split(":")[1]
+                                    )
                                   )
-                                )
-                                  .subtract(30, "minute")
-                                  .format("HH:mm");
-                                cast.orderExtension =
-                                  checker_new(
-                                    cast.endTime,
-                                    purchaseOrderState[0].orderSet[
-                                      cast.targetSet.split("/")[1]
-                                    ].startTime,
-                                    cast.setTime,
-                                    cast.lot
-                                  ) -
-                                  checker_new(
-                                    cast.startTime,
-                                    purchaseOrderState[0].orderSet[
-                                      cast.targetSet.split("/")[1]
-                                    ].startTime,
-                                    cast.setTime,
-                                    cast.lot
-                                  );
+                                    .subtract(30, "minute")
+                                    .format("HH:mm");
+                                  cast.orderExtension =
+                                    checker_new(
+                                      cast.endTime,
+                                      purchaseOrderState[0].orderSet[
+                                        cast.targetSet.split("/")[1]
+                                      ].startTime,
+                                      cast.setTime,
+                                      cast.lot
+                                    ) -
+                                    checker_new(
+                                      cast.startTime,
+                                      purchaseOrderState[0].orderSet[
+                                        cast.targetSet.split("/")[1]
+                                      ].startTime,
+                                      cast.setTime,
+                                      cast.lot
+                                    );
+                                }
                               }}
                             >
                               <Border
@@ -622,31 +644,33 @@ export default function OrderTimeDesignate() {
                             </div>
                             <div
                               onClick={() => {
-                                cast.endTime = dayjs(
-                                  date(
-                                    cast.endTime.split(":")[0],
-                                    cast.endTime.split(":")[1]
+                                if (!cast.isLock) {
+                                  cast.endTime = dayjs(
+                                    date(
+                                      cast.endTime.split(":")[0],
+                                      cast.endTime.split(":")[1]
+                                    )
                                   )
-                                )
-                                  .add(30, "minute")
-                                  .format("HH:mm");
-                                cast.orderExtension =
-                                  checker_new(
-                                    cast.endTime,
-                                    purchaseOrderState[0].orderSet[
-                                      cast.targetSet.split("/")[1]
-                                    ].startTime,
-                                    cast.setTime,
-                                    cast.lot
-                                  ) -
-                                  checker_new(
-                                    cast.startTime,
-                                    purchaseOrderState[0].orderSet[
-                                      cast.targetSet.split("/")[1]
-                                    ].startTime,
-                                    cast.setTime,
-                                    cast.lot
-                                  );
+                                    .add(30, "minute")
+                                    .format("HH:mm");
+                                  cast.orderExtension =
+                                    checker_new(
+                                      cast.endTime,
+                                      purchaseOrderState[0].orderSet[
+                                        cast.targetSet.split("/")[1]
+                                      ].startTime,
+                                      cast.setTime,
+                                      cast.lot
+                                    ) -
+                                    checker_new(
+                                      cast.startTime,
+                                      purchaseOrderState[0].orderSet[
+                                        cast.targetSet.split("/")[1]
+                                      ].startTime,
+                                      cast.setTime,
+                                      cast.lot
+                                    );
+                                }
                               }}
                             >
                               <Border
@@ -662,13 +686,30 @@ export default function OrderTimeDesignate() {
                               </Border>
                             </div>
                           </th>
-                          <th className="w-[80px] text-center text-sm">
+                          <th
+                            className="w-[80px] text-center text-sm"
+                            onClick={() => {
+                              cast.isLock = !cast.isLock;
+                              cast.endTime = purchaseOrderState[0]?.mainEndTime;
+                            }}
+                          >
                             <Border natural stroke="md">
-                              <p className="text-red-700">ロック</p>
+                              <p className="text-red-700">
+                                {cast.isLock ? "解除" : "ロック"}
+                              </p>
                             </Border>
                           </th>
                           <th className="w-[20px] text-center text-sm">
-                            <div className="flex">
+                            <div
+                              className="flex"
+                              onClick={() => {
+                                delete purchaseOrderState[0].orderCast[index];
+                                purchaseOrderState[0].orderCast =
+                                  purchaseOrderState[0].orderCast.filter(
+                                    (v: any) => v
+                                  );
+                              }}
+                            >
                               <Border2
                                 rounded="rounded-full"
                                 size="h-[28px] w-[28px] p-[6px]"

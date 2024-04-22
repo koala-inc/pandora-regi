@@ -68,9 +68,13 @@ function Lists({
             {list.title ? list.title.slice(0, 9) : ""}
           </div>
           {/* <div className="w-[10%] text-left">{list.subTitle || ""}</div> */}
-          <div className="w-[10%] text-right">{list.lot}</div>
+          <div className="w-[10%] text-right">{Number(list.lot)}</div>
           <div className="w-[40%] text-right">
-            {(list.price * list.lot)?.toLocaleString()}
+            {(list.isTax
+              ? Number(String(list.price).replace(/[^0-9]/g, "")) *
+                Number(list.lot)
+              : Number(list.price) * Number(list.lot)
+            )?.toLocaleString()}
             {list.isTax ? "込" : "円"}
           </div>
         </li>
@@ -124,21 +128,25 @@ function Base() {
     if (!orderItem.isTax) {
       total += Number(orderItem.price) * Number(orderItem.lot);
     } else {
-      taxNoTotal += Number(orderItem.price) * Number(orderItem.lot);
+      taxNoTotal +=
+        Number(String(orderItem.price).replace(/[^0-9]/g, "")) *
+        Number(orderItem.lot);
     }
   });
   purchaseOrderState[0]?.orderCast?.map((cast: any) => {
     if (!cast.isTax) {
       total += Number(cast.price) * Number(cast.lot);
     } else {
-      taxNoTotal += Number(cast.price) * Number(cast.lot);
+      taxNoTotal +=
+        Number(String(cast.price).replace(/[^0-9]/g, "")) * Number(cast.lot);
     }
   });
   purchaseOrderState[0]?.orderSet?.map((set: any) => {
     if (!set.isTax) {
       total += Number(set.price) * Number(set.lot);
     } else {
-      taxNoTotal += Number(set.price) * Number(set.lot);
+      taxNoTotal +=
+        Number(String(set.price).replace(/[^0-9]/g, "")) * Number(set.lot);
     }
   });
 
@@ -270,7 +278,9 @@ function Base() {
           title: cast.title,
           subTitle: "",
           lot: Number(cast.lot),
-          price: Number(cast.price),
+          price: cast.isTax
+            ? Number(String(cast.price).replace(/[^0-9]/g, ""))
+            : Number(cast.price),
           isTax: cast.isTax,
         };
       }),
@@ -449,22 +459,26 @@ function Base() {
                   .format("HH:mm");
                 purchaseOrderState[0].orderExtension = checker();
                 purchaseOrderState[0].orderSet.map((set: any) => {
-                  set.endTime = purchaseOrderState[0]?.mainEndTime;
-                  set.orderExtension = checker_new(
-                    set.endTime,
-                    set.startTime,
-                    set.setTime,
-                    set.lot
-                  );
+                  if (!set.isLock) {
+                    set.endTime = purchaseOrderState[0]?.mainEndTime;
+                    set.orderExtension = checker_new(
+                      set.endTime,
+                      set.startTime,
+                      set.setTime,
+                      set.lot
+                    );
+                  }
                 });
                 purchaseOrderState[0].orderCast.map((cast: any) => {
-                  cast.endTime = purchaseOrderState[0]?.mainEndTime;
-                  cast.orderExtension = checker_new(
-                    cast.endTime,
-                    cast.startTime,
-                    cast.setTime,
-                    cast.lot
-                  );
+                  if (!cast.isLock) {
+                    cast.endTime = purchaseOrderState[0]?.mainEndTime;
+                    cast.orderExtension = checker_new(
+                      cast.endTime,
+                      cast.startTime,
+                      cast.setTime,
+                      cast.lot
+                    );
+                  }
                 });
 
                 if (
@@ -518,22 +532,26 @@ function Base() {
                   .format("HH:mm");
                 purchaseOrderState[0].orderExtension = checker();
                 purchaseOrderState[0].orderSet.map((set: any) => {
-                  set.endTime = purchaseOrderState[0]?.mainEndTime;
-                  set.orderExtension = checker_new(
-                    set.endTime,
-                    set.startTime,
-                    set.setTime,
-                    set.lot
-                  );
+                  if (!set.isLock) {
+                    set.endTime = purchaseOrderState[0]?.mainEndTime;
+                    set.orderExtension = checker_new(
+                      set.endTime,
+                      set.startTime,
+                      set.setTime,
+                      set.lot
+                    );
+                  }
                 });
                 purchaseOrderState[0].orderCast.map((cast: any) => {
-                  cast.endTime = purchaseOrderState[0]?.mainEndTime;
-                  cast.orderExtension = checker_new(
-                    cast.endTime,
-                    cast.startTime,
-                    cast.setTime,
-                    cast.lot
-                  );
+                  if (!cast.isLock) {
+                    cast.endTime = purchaseOrderState[0]?.mainEndTime;
+                    cast.orderExtension = checker_new(
+                      cast.endTime,
+                      cast.startTime,
+                      cast.setTime,
+                      cast.lot
+                    );
+                  }
                 });
                 if (
                   Number(purchaseOrderState[0]?.callTime.split(":")[0]) <=

@@ -689,7 +689,11 @@ export default function OrderTimeSet() {
                           <input
                             type="text"
                             className="h-[40px] w-[85px] rounded-md px-2 pr-[26px] text-right text-sm"
-                            value={set.price}
+                            value={
+                              String(set.price).includes("##")
+                                ? Number(String(set.price).split("##")[0])
+                                : Number(set.price)
+                            }
                             onClick={() => {
                               setIsCalculatorSelect(6);
                               purchaseOrderState[0].isTimeCalculator = true;
@@ -698,7 +702,7 @@ export default function OrderTimeSet() {
                             readOnly
                           />
                           <p className="absolute bottom-[30.5px] left-[73px] text-sm opacity-60">
-                            円
+                            {String(set.price).includes("##") ? "込" : "円"}
                           </p>
                         </th>
                         <th className="flex w-[228px] text-left text-sm">
@@ -762,23 +766,31 @@ export default function OrderTimeSet() {
                             set.lot
                           )}
                         </th>
-                        <th className="flex h-[80px] w-[130px] items-center text-center text-sm">
+                        <th
+                          className={
+                            set.isLock
+                              ? "flex h-[80px] w-[130px] items-center text-center text-sm grayscale"
+                              : "flex h-[80px] w-[130px] items-center text-center text-sm"
+                          }
+                        >
                           <div
                             onClick={() => {
-                              set.endTime = dayjs(
-                                date(
-                                  set.endTime.split(":")[0],
-                                  set.endTime.split(":")[1]
+                              if (!set.isLock) {
+                                set.endTime = dayjs(
+                                  date(
+                                    set.endTime.split(":")[0],
+                                    set.endTime.split(":")[1]
+                                  )
                                 )
-                              )
-                                .subtract(30, "minute")
-                                .format("HH:mm");
-                              set.orderExtension = checker_new(
-                                set.endTime,
-                                set.startTime,
-                                set.setTime,
-                                set.lot
-                              );
+                                  .subtract(30, "minute")
+                                  .format("HH:mm");
+                                set.orderExtension = checker_new(
+                                  set.endTime,
+                                  set.startTime,
+                                  set.setTime,
+                                  set.lot
+                                );
+                              }
                             }}
                           >
                             <Border
@@ -795,20 +807,22 @@ export default function OrderTimeSet() {
                           </div>
                           <div
                             onClick={() => {
-                              set.endTime = dayjs(
-                                date(
-                                  set.endTime.split(":")[0],
-                                  set.endTime.split(":")[1]
+                              if (!set.isLock) {
+                                set.endTime = dayjs(
+                                  date(
+                                    set.endTime.split(":")[0],
+                                    set.endTime.split(":")[1]
+                                  )
                                 )
-                              )
-                                .add(30, "minute")
-                                .format("HH:mm");
-                              set.orderExtension = checker_new(
-                                set.endTime,
-                                set.startTime,
-                                set.setTime,
-                                set.lot
-                              );
+                                  .add(30, "minute")
+                                  .format("HH:mm");
+                                set.orderExtension = checker_new(
+                                  set.endTime,
+                                  set.startTime,
+                                  set.setTime,
+                                  set.lot
+                                );
+                              }
                             }}
                           >
                             <Border
@@ -824,13 +838,30 @@ export default function OrderTimeSet() {
                             </Border>
                           </div>
                         </th>
-                        <th className="w-[80px] text-center text-sm">
+                        <th
+                          className="w-[80px] text-center text-sm"
+                          onClick={() => {
+                            set.isLock = !set.isLock;
+                            set.endTime = purchaseOrderState[0]?.mainEndTime;
+                          }}
+                        >
                           <Border natural stroke="md">
-                            <p className="text-red-700">ロック</p>
+                            <p className="text-red-700">
+                              {set.isLock ? "解除" : "ロック"}
+                            </p>
                           </Border>
                         </th>
                         <th className="w-[20px] text-center text-sm">
-                          <div className="flex">
+                          <div
+                            className="flex"
+                            onClick={() => {
+                              delete purchaseOrderState[0].orderSet[index];
+                              purchaseOrderState[0].orderSet =
+                                purchaseOrderState[0].orderSet.filter(
+                                  (v: any) => v
+                                );
+                            }}
+                          >
                             <Border2
                               rounded="rounded-full"
                               size="h-[28px] w-[28px] p-[6px]"

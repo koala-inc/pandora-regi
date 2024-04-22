@@ -44,11 +44,14 @@ export default function Calculator14({ key, result, callback }: any) {
           </span>
         </div>
         <div className="flex h-[60px] w-full items-center justify-end rounded-md bg-neutral-900 px-3 text-4xl text-white">
-          {Number(result.price) != 0 && Number(result2) == 0
-            ? Number(result.price).toLocaleString()
+          {result2 == ""
+            ? !String(result.price).includes("##")
+              ? Number(result.price).toLocaleString()
+              : Number(String(result.price).replace("##", "")).toLocaleString()
             : Number(result2).toLocaleString()}
+          {tax ? "込" : "円"}
         </div>
-        <div className="mt-4 grid grid-cols-3 grid-rows-4 content-center items-center justify-center gap-4 text-3xl font-bold">
+        <div className="mt-4 grid grid-cols-4 grid-rows-4 content-center items-center justify-center gap-4 text-3xl font-bold">
           <div className="flex items-center justify-center">
             <div
               className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-natural text-black shadow-2xl"
@@ -87,6 +90,16 @@ export default function Calculator14({ key, result, callback }: any) {
           </div>
           <div className="flex items-center justify-center">
             <div
+              className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-green-200 text-black shadow-2xl"
+              onClick={() => {
+                setTax((tax) => !tax);
+              }}
+            >
+              込
+            </div>
+          </div>
+          <div className="flex items-center justify-center">
+            <div
               className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-natural text-black shadow-2xl"
               onClick={() => {
                 if (Number(result2 + "4") < max) {
@@ -121,7 +134,16 @@ export default function Calculator14({ key, result, callback }: any) {
               6
             </div>
           </div>
-
+          <div className="col-start-4 row-start-2 row-end-4 flex items-center justify-center">
+            <div
+              className="flex h-[138px] w-[60px] items-center justify-center rounded-md border border-white bg-accent text-black shadow-2xl"
+              onClick={() => {
+                setResult2("0");
+              }}
+            >
+              C
+            </div>
+          </div>
           <div className="flex items-center justify-center">
             <div
               className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-natural text-black shadow-2xl"
@@ -163,7 +185,7 @@ export default function Calculator14({ key, result, callback }: any) {
             <div
               className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-natural text-black shadow-2xl"
               onClick={() => {
-                if (Number(result2) > 0) {
+                if (Number(result2) > 0 || result2 == "") {
                   if (Number(result2 + "0") < max) {
                     setResult2((result: any) => result + "0");
                   }
@@ -175,12 +197,30 @@ export default function Calculator14({ key, result, callback }: any) {
           </div>
           <div className="flex items-center justify-center">
             <div
-              className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-accent text-2xl text-black shadow-2xl"
+              className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-blue-200 text-2xl text-black shadow-2xl"
               onClick={() => {
-                setResult2("0");
+                if (Number(result2) > 0) {
+                  if (Number(result2 + "00") < max) {
+                    setResult2((result: any) => result + "00");
+                  }
+                }
               }}
             >
-              C
+              00
+            </div>
+          </div>
+          <div className="flex items-center justify-center">
+            <div
+              className="flex h-[60px] w-[60px] items-center justify-center rounded-md border border-white bg-blue-200 text-2xl text-black shadow-2xl"
+              onClick={() => {
+                if (Number(result2) > 0) {
+                  if (Number(result2 + "000") < max) {
+                    setResult2((result: any) => result + "000");
+                  }
+                }
+              }}
+            >
+              000
             </div>
           </div>
           <div className="flex items-center justify-center text-2xl">
@@ -188,9 +228,23 @@ export default function Calculator14({ key, result, callback }: any) {
               className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white bg-neutral-700 text-black shadow-2xl"
               onClick={() => {
                 if (result2 != "") {
-                  result.price = Number(result2);
+                  result.price = tax
+                    ? result2 + "##"
+                    : result2.replace("##", "");
+                  if (callback) {
+                    callback(tax ? result2 + "##" : result2.replace("##", ""));
+                  }
+                } else {
+                  result.price = tax
+                    ? result.price + "##"
+                    : result.price.replace("##", "");
+                  if (callback) {
+                    callback(
+                      tax ? result.price + "##" : result.price.replace("##", "")
+                    );
+                  }
                 }
-                if (callback) callback(result2);
+                result.isTax = tax;
                 purchaseOrderState[0].isTimeCalculator = false;
               }}
             >

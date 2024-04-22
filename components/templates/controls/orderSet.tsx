@@ -1720,6 +1720,7 @@ export default function ControlOrderSet() {
                             orderExtension: order.orderExtension,
                             extensionPrice: Number(extensionPrice),
                             categoryTitle: setCategoryName,
+                            isLock: false,
                           });
                         }
                       );
@@ -1739,6 +1740,7 @@ export default function ControlOrderSet() {
                             orderExtension: order.orderExtension,
                             extensionPrice: Number(selectDesignateExPrice),
                             targetSet: setName + "/0",
+                            isLock: false,
                           })
                         );
                       setPurchaseOrderSet([
