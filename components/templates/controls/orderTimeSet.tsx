@@ -846,37 +846,43 @@ export default function OrderTimeSet() {
                           }}
                         >
                           <Border natural stroke="md">
-                            <p className="text-red-700">
+                            <p
+                              className={
+                                set.isLock ? "text-blue-700" : "text-red-700"
+                              }
+                            >
                               {set.isLock ? "解除" : "ロック"}
                             </p>
                           </Border>
                         </th>
                         <th className="w-[20px] text-center text-sm">
-                          <div
-                            className="flex"
-                            onClick={() => {
-                              delete purchaseOrderState[0].orderSet[index];
-                              purchaseOrderState[0].orderSet =
-                                purchaseOrderState[0].orderSet.filter(
-                                  (v: any) => v
-                                );
-                            }}
-                          >
-                            <Border2
-                              rounded="rounded-full"
-                              size="h-[28px] w-[28px] p-[6px]"
+                          {purchaseOrderState[0].orderSet.length != 1 && (
+                            <div
+                              className="flex"
+                              onClick={() => {
+                                delete purchaseOrderState[0].orderSet[index];
+                                purchaseOrderState[0].orderSet =
+                                  purchaseOrderState[0].orderSet.filter(
+                                    (v: any) => v
+                                  );
+                              }}
                             >
-                              <div>
-                                <Image
-                                  src={"/assets/close.svg"}
-                                  width={26}
-                                  height={26}
-                                  className="!h-full !w-full"
-                                  alt=""
-                                />
-                              </div>
-                            </Border2>
-                          </div>
+                              <Border2
+                                rounded="rounded-full"
+                                size="h-[28px] w-[28px] p-[6px]"
+                              >
+                                <div>
+                                  <Image
+                                    src={"/assets/close.svg"}
+                                    width={26}
+                                    height={26}
+                                    className="!h-full !w-full"
+                                    alt=""
+                                  />
+                                </div>
+                              </Border2>
+                            </div>
+                          )}
                         </th>
                       </tr>
                     )

@@ -579,7 +579,7 @@ export default function OrderTimeDesignate() {
                               cast.endTime,
                               purchaseOrderState[0].orderSet[
                                 cast.targetSet.split("/")[1]
-                              ].startTime,
+                              ]?.startTime || "00:00",
                               cast.setTime,
                               cast.lot
                             ) -
@@ -587,7 +587,7 @@ export default function OrderTimeDesignate() {
                                 cast.startTime,
                                 purchaseOrderState[0].orderSet[
                                   cast.targetSet.split("/")[1]
-                                ].startTime,
+                                ]?.startTime || "00:00",
                                 cast.setTime,
                                 cast.lot
                               )}
@@ -615,7 +615,7 @@ export default function OrderTimeDesignate() {
                                       cast.endTime,
                                       purchaseOrderState[0].orderSet[
                                         cast.targetSet.split("/")[1]
-                                      ].startTime,
+                                      ]?.startTime || "00:00",
                                       cast.setTime,
                                       cast.lot
                                     ) -
@@ -623,7 +623,7 @@ export default function OrderTimeDesignate() {
                                       cast.startTime,
                                       purchaseOrderState[0].orderSet[
                                         cast.targetSet.split("/")[1]
-                                      ].startTime,
+                                      ]?.startTime || "00:00",
                                       cast.setTime,
                                       cast.lot
                                     );
@@ -658,7 +658,7 @@ export default function OrderTimeDesignate() {
                                       cast.endTime,
                                       purchaseOrderState[0].orderSet[
                                         cast.targetSet.split("/")[1]
-                                      ].startTime,
+                                      ]?.startTime || "00:00",
                                       cast.setTime,
                                       cast.lot
                                     ) -
@@ -666,7 +666,7 @@ export default function OrderTimeDesignate() {
                                       cast.startTime,
                                       purchaseOrderState[0].orderSet[
                                         cast.targetSet.split("/")[1]
-                                      ].startTime,
+                                      ]?.startTime || "00:00",
                                       cast.setTime,
                                       cast.lot
                                     );
@@ -694,7 +694,11 @@ export default function OrderTimeDesignate() {
                             }}
                           >
                             <Border natural stroke="md">
-                              <p className="text-red-700">
+                              <p
+                                className={
+                                  cast.isLock ? "text-blue-700" : "text-red-700"
+                                }
+                              >
                                 {cast.isLock ? "解除" : "ロック"}
                               </p>
                             </Border>
