@@ -382,8 +382,8 @@ export default function OrderTimeSet() {
                                 purchaseOrderState[0].categoryTitle = area.name;
                                 purchaseOrderState[0].roomCharge =
                                   area.charge_price;
-                                purchaseOrderState[0].extensionPrice =
-                                  area.extra_price;
+                                // purchaseOrderState[0].extensionPrice =
+                                //   area.extra_price;
                                 purchaseOrderState[0].serviceTax =
                                   area.service_tax;
                               }

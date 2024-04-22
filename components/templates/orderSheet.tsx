@@ -1517,15 +1517,15 @@ function CastAdd() {
           >
             <Lists
               lists={[
-                ...purchaseOrderState[0]?.cast?.map((cast: any) => {
-                  return {
-                    title: cast.split("##")[0],
-                    subTitle: "",
-                    lot: 1,
-                    price: Number(cast.split("##")[1]),
-                    isTax: cast.isTax,
-                  };
-                }),
+                // ...purchaseOrderState[0]?.cast?.map((cast: any) => {
+                //   return {
+                //     title: cast.split("##")[0],
+                //     subTitle: "",
+                //     lot: 1,
+                //     price: Number(cast.split("##")[1]),
+                //     isTax: cast.isTax,
+                //   };
+                // }),
                 ...purchaseOrderState[0]?.orderCast?.map((cast: any) => {
                   return {
                     title: cast.title,
