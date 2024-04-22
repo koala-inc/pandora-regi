@@ -473,6 +473,7 @@ export default function ControlOrderSet() {
   const [selectDesignate, setSelectDesignate] = useState(-1);
   const [selectDesignateSymbol, setSelectDesignateSymbol] = useState("");
   const [selectDesignatePrice, setSelectDesignatePrice] = useState(0);
+  const [selectDesignateExPrice, setSelectDesignateExPrice] = useState(0);
 
   let count = 0;
   let count2 = 0;
@@ -1228,6 +1229,9 @@ export default function ControlOrderSet() {
                       setSelectDesignatePrice(
                         designate.designate_revision.price
                       );
+                      setSelectDesignateExPrice(
+                        designate.designate_revision.extra_price
+                      );
                     }
                     count2 += 1;
                     return (
@@ -1246,6 +1250,9 @@ export default function ControlOrderSet() {
                           );
                           setSelectDesignatePrice(
                             designate.designate_revision.price
+                          );
+                          setSelectDesignateExPrice(
+                            designate.designate_revision.extra_price
                           );
                         }}
                       >
@@ -1707,7 +1714,7 @@ export default function ControlOrderSet() {
                             startTime: order.startTime,
                             endTime: order.endTime,
                             orderExtension: order.orderExtension,
-                            extensionPrice: Number(extensionPrice),
+                            extensionPrice: Number(selectDesignateExPrice),
                           });
                         }
                       );
@@ -1725,7 +1732,7 @@ export default function ControlOrderSet() {
                             startTime: order.startTime,
                             endTime: order.endTime,
                             orderExtension: order.orderExtension,
-                            extensionPrice: Number(extensionPrice),
+                            extensionPrice: Number(selectDesignateExPrice),
                             targetSet: setName + "/0",
                           })
                         );
@@ -1746,12 +1753,13 @@ export default function ControlOrderSet() {
                           orderCast: [...orderCasts],
                           orderSet: [...orderSets],
                           orderExtension: 0,
-                          extensionPrice: Number(extensionPrice),
+                          extensionPrice: Number(selectDesignateExPrice),
                           price: Number(result.replace(/[^0-9]/g, "")),
                           priceTax: result.includes("##"),
                           roomCharge: isRoomCharge
                             ? Number(roomResult.replace(/[^0-9]/g, ""))
                             : "0",
+                          isRoomCharge: isRoomCharge,
                           roomTax: roomResult.includes("##"),
                           num: Number(numResult.replace(/[^0-9]/g, "")),
                           order: order,

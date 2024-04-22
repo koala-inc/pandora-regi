@@ -91,6 +91,7 @@ export default function OrderTimeDesignate() {
 
   const [isCalculator, setIsCalculator] = useState(false);
   const [isCalculatorSelect, setIsCalculatorSelect] = useState(0);
+  const [isCalculatorSelectData, setIsCalculatorSelectData] = useState<any>("");
 
   const [setTimeResult, setSetTimeResult] = useState("");
 
@@ -350,6 +351,132 @@ export default function OrderTimeDesignate() {
           }}
         />
       )}
+      {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 6 && (
+        <Calculator8
+          result={isCalculatorSelectData}
+          time={isCalculatorSelectData.startTime}
+          callback={(hour: any, minite: any) => {
+            isCalculatorSelectData.startTime = hour + ":" + minite;
+            isCalculatorSelectData.orderExtension =
+              checker_new(
+                isCalculatorSelectData.endTime,
+                purchaseOrderState[0].orderSet[
+                  isCalculatorSelectData.targetSet.split("/")[1]
+                ].startTime,
+                isCalculatorSelectData.setTime,
+                isCalculatorSelectData.lot
+              ) -
+              checker_new(
+                isCalculatorSelectData.startTime,
+                purchaseOrderState[0].orderSet[
+                  isCalculatorSelectData.targetSet.split("/")[1]
+                ].startTime,
+                isCalculatorSelectData.setTime,
+                isCalculatorSelectData.lot
+              );
+          }}
+        />
+      )}
+      {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 8 && (
+        <Calculator8
+          result={purchaseOrderState[0]}
+          time={
+            purchaseOrderState[0].orderCast[
+              purchaseOrderState[0].orderCastIndex
+            ].endTime
+          }
+          callback={(hour: any, minite: any) => {
+            purchaseOrderState[0].orderCast[
+              purchaseOrderState[0].orderCastIndex
+            ].endTime = hour + ":" + minite;
+            purchaseOrderState[0].orderCast[
+              purchaseOrderState[0].orderCastIndex
+            ].orderExtension =
+              checker_new(
+                purchaseOrderState[0].orderCast[
+                  purchaseOrderState[0].orderCastIndex
+                ].endTime,
+                purchaseOrderState[0].orderSet[
+                  purchaseOrderState[0].orderCast[
+                    purchaseOrderState[0].orderCastIndex
+                  ].targetSet.split("/")[1]
+                ].startTime,
+                purchaseOrderState[0].orderCast[
+                  purchaseOrderState[0].orderCastIndex
+                ].setTime,
+                purchaseOrderState[0].orderCast[
+                  purchaseOrderState[0].orderCastIndex
+                ].lot
+              ) -
+              checker_new(
+                purchaseOrderState[0].orderCast[
+                  purchaseOrderState[0].orderCastIndex
+                ].startTime,
+                purchaseOrderState[0].orderSet[
+                  purchaseOrderState[0].orderCast[
+                    purchaseOrderState[0].orderCastIndex
+                  ].targetSet.split("/")[1]
+                ].startTime,
+                purchaseOrderState[0].orderCast[
+                  purchaseOrderState[0].orderCastIndex
+                ].setTime,
+                purchaseOrderState[0].orderCast[
+                  purchaseOrderState[0].orderCastIndex
+                ].lot
+              );
+          }}
+        />
+      )}
+      {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 7 && (
+        <Calculator8
+          result={purchaseOrderState[0]}
+          time={
+            purchaseOrderState[0].orderCast[
+              purchaseOrderState[0].orderCastIndex
+            ].startTime
+          }
+          callback={(hour: any, minite: any) => {
+            purchaseOrderState[0].orderCast[
+              purchaseOrderState[0].orderCastIndex
+            ].startTime = hour + ":" + minite;
+            purchaseOrderState[0].orderCast[
+              purchaseOrderState[0].orderCastIndex
+            ].orderExtension =
+              checker_new(
+                purchaseOrderState[0].orderCast[
+                  purchaseOrderState[0].orderCastIndex
+                ].endTime,
+                purchaseOrderState[0].orderSet[
+                  purchaseOrderState[0].orderCast[
+                    purchaseOrderState[0].orderCastIndex
+                  ].targetSet.split("/")[1]
+                ].startTime,
+                purchaseOrderState[0].orderCast[
+                  purchaseOrderState[0].orderCastIndex
+                ].setTime,
+                purchaseOrderState[0].orderCast[
+                  purchaseOrderState[0].orderCastIndex
+                ].lot
+              ) -
+              checker_new(
+                purchaseOrderState[0].orderCast[
+                  purchaseOrderState[0].orderCastIndex
+                ].startTime,
+                purchaseOrderState[0].orderSet[
+                  purchaseOrderState[0].orderCast[
+                    purchaseOrderState[0].orderCastIndex
+                  ].targetSet.split("/")[1]
+                ].startTime,
+                purchaseOrderState[0].orderCast[
+                  purchaseOrderState[0].orderCastIndex
+                ].setTime,
+                purchaseOrderState[0].orderCast[
+                  purchaseOrderState[0].orderCastIndex
+                ].lot
+              );
+          }}
+        />
+      )}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 100 }}
@@ -441,8 +568,9 @@ export default function OrderTimeDesignate() {
                               className="h-[40px] w-[103px] rounded-md px-2 pr-[26px] text-right text-sm"
                               value={cast.price}
                               onClick={() => {
-                                setIsCalculatorSelect(5);
+                                setIsCalculatorSelect(6);
                                 setIsCalculator(true);
+                                purchaseOrderState[0].orderCastIndex = index;
                               }}
                               readOnly
                             />
@@ -456,8 +584,9 @@ export default function OrderTimeDesignate() {
                               className="h-[40px] w-[70px] rounded-md px-2 text-center text-sm"
                               value={cast.startTime}
                               onClick={() => {
-                                setIsCalculatorSelect(4);
+                                setIsCalculatorSelect(7);
                                 purchaseOrderState[0].isTimeCalculator = true;
+                                purchaseOrderState[0].orderCastIndex = index;
                               }}
                               readOnly
                             />
@@ -468,8 +597,9 @@ export default function OrderTimeDesignate() {
                               className="h-[40px] w-[70px] rounded-md px-2 text-center text-sm"
                               value={cast.endTime}
                               onClick={() => {
-                                setIsCalculatorSelect(5);
+                                setIsCalculatorSelect(8);
                                 purchaseOrderState[0].isTimeCalculator = true;
+                                setIsCalculatorSelectData(cast);
                               }}
                               readOnly
                             />
