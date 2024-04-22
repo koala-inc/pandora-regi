@@ -373,13 +373,13 @@ export default function OrderTimeSet() {
                     </label>
                     <select
                       className="mr-8 h-[40px] w-[120px] rounded-md px-2 text-left text-xl"
-                      value={purchaseOrderState[0].room_name}
+                      value={purchaseOrderState[0].categoryTitle}
                       onChange={(e) => {
                         {
                           searchData2?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
                             (area: any, index: any) => {
-                              if (area.room_name == e.target.value) {
-                                purchaseOrderState[0].roomName = area.room_name;
+                              if (area.name == e.target.value) {
+                                purchaseOrderState[0].categoryTitle = area.name;
                                 purchaseOrderState[0].roomCharge =
                                   area.charge_price;
                                 purchaseOrderState[0].extensionPrice =
@@ -395,7 +395,7 @@ export default function OrderTimeSet() {
                       {searchData2?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
                         (area: any, index: any) => {
                           return (
-                            <option key={index} value={area.room_name}>
+                            <option key={index} value={area.name}>
                               {area.name}
                             </option>
                           );
