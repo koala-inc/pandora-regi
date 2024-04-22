@@ -253,6 +253,66 @@ export default function OrderTimeSet() {
           }}
         />
       )}
+      {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 8 && (
+        <Calculator8
+          result={purchaseOrderState[0]}
+          time={
+            purchaseOrderState[0].orderSet[purchaseOrderState[0].orderSetIndex]
+              .endTime
+          }
+          callback={(hour: any, minite: any) => {
+            purchaseOrderState[0].orderSet[
+              purchaseOrderState[0].orderSetIndex
+            ].endTime = hour + ":" + minite;
+            purchaseOrderState[0].orderSet[
+              purchaseOrderState[0].orderSetIndex
+            ].orderExtension = checker_new(
+              purchaseOrderState[0].orderSet[
+                purchaseOrderState[0].orderSetIndex
+              ].endTime,
+              purchaseOrderState[0].orderSet[
+                purchaseOrderState[0].orderSetIndex
+              ].startTime,
+              purchaseOrderState[0].orderSet[
+                purchaseOrderState[0].orderSetIndex
+              ].setTime,
+              purchaseOrderState[0].orderSet[
+                purchaseOrderState[0].orderSetIndex
+              ].lot
+            );
+          }}
+        />
+      )}
+      {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 7 && (
+        <Calculator8
+          result={purchaseOrderState[0]}
+          time={
+            purchaseOrderState[0].orderSet[purchaseOrderState[0].orderSetIndex]
+              .startTime
+          }
+          callback={(hour: any, minite: any) => {
+            purchaseOrderState[0].orderSet[
+              purchaseOrderState[0].orderSetIndex
+            ].startTime = hour + ":" + minite;
+            purchaseOrderState[0].orderSet[
+              purchaseOrderState[0].orderSetIndex
+            ].orderExtension = checker_new(
+              purchaseOrderState[0].orderSet[
+                purchaseOrderState[0].orderSetIndex
+              ].endTime,
+              purchaseOrderState[0].orderSet[
+                purchaseOrderState[0].orderSetIndex
+              ].startTime,
+              purchaseOrderState[0].orderSet[
+                purchaseOrderState[0].orderSetIndex
+              ].setTime,
+              purchaseOrderState[0].orderSet[
+                purchaseOrderState[0].orderSetIndex
+              ].lot
+            );
+          }}
+        />
+      )}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 100 }}
@@ -486,249 +546,6 @@ export default function OrderTimeSet() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="h-[80px]">
-                    <th className="w-[120px] text-left text-sm">
-                      <select
-                        className="h-[40px] w-[120px] rounded-md px-1 text-left text-sm"
-                        defaultValue={purchaseOrderState[0]?.setName}
-                        // onChange={(e) => {
-                        //   {
-                        //     searchData3?.data?.event[0]?.store_event[0]?.event?.map(
-                        //       (event: any, index: any) => {
-                        //         if (
-                        //           event.event_revision.name == e.target.value
-                        //         ) {
-                        //           setSetName(event.event_revision.name);
-                        //           if (
-                        //             event.event_revision
-                        //               .is_information_center == 1
-                        //           ) {
-                        //             setStatus("案内所");
-                        //           } else {
-                        //             setStatus("なし");
-                        //           }
-                        //           const date = dayjs(new Date()).minute(
-                        //             Math.round(nowDate.minute() / 5) * 5
-                        //           );
-                        //           setOrder((order: any) => {
-                        //             return {
-                        //               ...order,
-                        //               setTime: Number(
-                        //                 event.event_revision.set_time
-                        //               ),
-                        //               price: Number(
-                        //                 event.event_revision.price
-                        //               ),
-                        //               roomCharge: Number(activeTabRC),
-                        //               startTime: date.format("HH:mm"),
-                        //               endTime: date
-                        //                 .add(
-                        //                   Number(
-                        //                     event.event_revision.set_time
-                        //                   ),
-                        //                   "minute"
-                        //                 )
-                        //                 .format("HH:mm"),
-                        //               callTime: date
-                        //                 .add(
-                        //                   Number(
-                        //                     event.event_revision.set_time
-                        //                   ) - 10,
-                        //                   "minute"
-                        //                 )
-                        //                 .format("HH:mm"),
-                        //             };
-                        //           });
-                        //           setResult(
-                        //             String(Number(event.event_revision.price))
-                        //           );
-                        //           setSetTimeResult(
-                        //             String(
-                        //               Number(event.event_revision.set_time)
-                        //             )
-                        //           );
-                        //           setNowDate(date);
-                        //           setRoomResult(String(Number(activeTabRC)));
-                        //         }
-                        //       }
-                        //     );
-                        //   }
-                        // }}
-                      >
-                        {searchData3?.data?.event[0]?.store_event[0]?.event?.map(
-                          (event: any, index: any) => {
-                            return (
-                              <option
-                                key={index}
-                                value={event.event_revision.name}
-                              >
-                                {event.event_revision.name}
-                              </option>
-                            );
-                          }
-                        )}
-                      </select>
-                    </th>
-                    <th className="relative w-[60px] text-left text-lg">
-                      <input
-                        type="text"
-                        className="h-[40px] w-[60px] rounded-md px-1 pr-[27px] text-right text-sm"
-                        value={purchaseOrderState[0]?.setTime}
-                        onClick={() => {
-                          setIsCalculatorSelect(5);
-                          setIsCalculator(true);
-                        }}
-                        readOnly
-                      />
-                      <p className="absolute bottom-[30.5px] left-[46px] text-sm opacity-60">
-                        分
-                      </p>
-                    </th>
-                    <th className="relative w-[85px] text-left text-lg">
-                      <input
-                        type="text"
-                        className="h-[40px] w-[85px] rounded-md px-2 pr-[26px] text-right text-sm"
-                        value={purchaseOrderState[0]?.price}
-                        onClick={() => {
-                          setIsCalculatorSelect(5);
-                          setIsCalculator(true);
-                        }}
-                        readOnly
-                      />
-                      <p className="absolute bottom-[30.5px] left-[73px] text-sm opacity-60">
-                        円
-                      </p>
-                    </th>
-                    <th className="flex w-[228px] text-left text-sm">
-                      <select
-                        className="mr-2 h-[40px] w-[100px] rounded-md px-1 text-left text-sm"
-                        onChange={(e) => {
-                          setStatus(e.target.value);
-                        }}
-                      >
-                        <option value={"なし"}>なし</option>
-                        <option value={"外販"}>外販</option>
-                        <option value={"案内所"}>案内所</option>
-                        <option value={"ジョイント"}>ジョイント</option>
-                      </select>
-                      {status != "なし" && (
-                        <select className="mr-2 h-[40px] w-[120px] rounded-md px-1 text-left text-sm">
-                          <option>選択してください</option>
-                          {status == "外販" ? (
-                            <option>外販1</option>
-                          ) : status == "案内所" ? (
-                            <option>案内所1</option>
-                          ) : status == "ジョイント" ? (
-                            <option>ジョイント1</option>
-                          ) : (
-                            <></>
-                          )}
-                        </select>
-                      )}
-                    </th>
-                    <th className="w-[80px] text-center text-lg">
-                      <input
-                        type="text"
-                        className="h-[40px] w-[70px] rounded-md px-2 text-center text-sm"
-                        value={purchaseOrderState[0]?.startTime}
-                        onClick={() => {
-                          setIsCalculatorSelect(4);
-                          purchaseOrderState[0].isTimeCalculator = true;
-                        }}
-                        readOnly
-                      />
-                    </th>
-                    <th className="w-[80px] text-center text-lg">
-                      <input
-                        type="text"
-                        className="h-[40px] w-[70px] rounded-md px-2 text-center text-sm"
-                        value={purchaseOrderState[0]?.endTime}
-                        onClick={() => {
-                          setIsCalculatorSelect(5);
-                          purchaseOrderState[0].isTimeCalculator = true;
-                        }}
-                        readOnly
-                      />
-                    </th>
-                    <th className="w-[20px] text-center text-sm">
-                      {checker()}
-                    </th>
-                    <th className="flex h-[80px] w-[130px] items-center text-center text-sm">
-                      <div
-                        onClick={() => {
-                          purchaseOrderState[0].endTime = dayjs(
-                            date(
-                              purchaseOrderState[0]?.endTime.split(":")[0],
-                              purchaseOrderState[0]?.endTime.split(":")[1]
-                            )
-                          )
-                            .subtract(30, "minute")
-                            .format("HH:mm");
-                          purchaseOrderState[0].orderExtension = checker();
-                        }}
-                      >
-                        <Border
-                          className="mr-1 w-[3.8rem]"
-                          size="px-2 text-red-700 flex justify-center items-center align-middle"
-                          natural
-                          stroke="md"
-                        >
-                          <div className="mr-[1px] mt-[-2px] flex h-full items-center justify-center">
-                            -
-                          </div>
-                          <span>30</span>
-                        </Border>
-                      </div>
-                      <div
-                        onClick={() => {
-                          purchaseOrderState[0].endTime = dayjs(
-                            date(
-                              purchaseOrderState[0]?.endTime.split(":")[0],
-                              purchaseOrderState[0]?.endTime.split(":")[1]
-                            )
-                          )
-                            .add(30, "minute")
-                            .format("HH:mm");
-                          purchaseOrderState[0].orderExtension = checker();
-                        }}
-                      >
-                        <Border
-                          className="w-[3.8rem]"
-                          size="px-2 text-blue-700 flex justify-center items-center align-middle"
-                          natural
-                          stroke="md"
-                        >
-                          <div className="mt-[-3px] flex h-full items-center justify-center">
-                            +
-                          </div>
-                          <span>30</span>
-                        </Border>
-                      </div>
-                    </th>
-                    <th className="w-[80px] text-center text-sm">
-                      <Border natural stroke="md">
-                        <p className="text-red-700">ロック</p>
-                      </Border>
-                    </th>
-                    <th className="w-[20px] text-center text-sm">
-                      <div className="flex">
-                        <Border2
-                          rounded="rounded-full"
-                          size="h-[28px] w-[28px] p-[6px]"
-                        >
-                          <div>
-                            <Image
-                              src={"/assets/close.svg"}
-                              width={26}
-                              height={26}
-                              className="!h-full !w-full"
-                              alt=""
-                            />
-                          </div>
-                        </Border2>
-                      </div>
-                    </th>
-                  </tr>
                   {purchaseOrderState[0].orderSet.map(
                     (set: any, index: any) => (
                       <tr className="h-[80px]" key={index}>
@@ -814,8 +631,9 @@ export default function OrderTimeSet() {
                             className="h-[40px] w-[70px] rounded-md px-2 text-center text-sm"
                             value={set.startTime}
                             onClick={() => {
-                              setIsCalculatorSelect(4);
+                              setIsCalculatorSelect(7);
                               purchaseOrderState[0].isTimeCalculator = true;
+                              purchaseOrderState[0].orderSetIndex = index;
                             }}
                             readOnly
                           />
@@ -826,8 +644,9 @@ export default function OrderTimeSet() {
                             className="h-[40px] w-[70px] rounded-md px-2 text-center text-sm"
                             value={set.endTime}
                             onClick={() => {
-                              setIsCalculatorSelect(5);
+                              setIsCalculatorSelect(8);
                               purchaseOrderState[0].isTimeCalculator = true;
+                              purchaseOrderState[0].orderSetIndex = index;
                             }}
                             readOnly
                           />
