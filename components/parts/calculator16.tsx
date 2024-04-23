@@ -11,7 +11,7 @@ export default function Calculator16({
   callback,
 }: any) {
   const [result2, setResult2] = useState("");
-  const [tax, setTax] = useState(false);
+  const [tax, setTax] = useState(String(result.price).includes("##"));
   const max = 999999999;
 
   return (
@@ -235,11 +235,13 @@ export default function Calculator16({
                   }
                 } else {
                   result.price = tax
-                    ? result.price + "##"
-                    : result.price.replace("##", "");
+                    ? String(result.price).replace("##", "") + "##"
+                    : String(result.price).replace("##", "");
                   if (callback) {
                     callback(
-                      tax ? result.price + "##" : result.price.replace("##", "")
+                      tax
+                        ? String(result.price).replace("##", "") + "##"
+                        : String(result.price).replace("##", "")
                     );
                   }
                 }

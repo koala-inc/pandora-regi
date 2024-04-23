@@ -335,6 +335,17 @@ export default function OrderTimeSet() {
                 );
               }
             });
+            purchaseOrderState[0].orderSet.map((set: any) => {
+              if (!set.isLock) {
+                set.endTime = purchaseOrderState[0]?.mainEndTime;
+                set.orderExtension = checker_new(
+                  set.endTime,
+                  set.startTime,
+                  set.setTime,
+                  set.lot
+                );
+              }
+            });
           }}
         />
       )}
@@ -365,6 +376,17 @@ export default function OrderTimeSet() {
                 purchaseOrderState[0].orderSetIndex
               ].lot
             );
+            purchaseOrderState[0].orderSet.map((set: any) => {
+              if (!set.isLock) {
+                set.endTime = purchaseOrderState[0]?.mainEndTime;
+                set.orderExtension = checker_new(
+                  set.endTime,
+                  set.startTime,
+                  set.setTime,
+                  set.lot
+                );
+              }
+            });
           }}
         />
       )}
@@ -404,6 +426,17 @@ export default function OrderTimeSet() {
                   purchaseOrderState[0].orderSet[cast.targetSet.split("/")[1]]
                     .setTime,
                   cast.lot
+                );
+              }
+            });
+            purchaseOrderState[0].orderSet.map((set: any) => {
+              if (!set.isLock) {
+                set.endTime = purchaseOrderState[0]?.mainEndTime;
+                set.orderExtension = checker_new(
+                  set.endTime,
+                  set.startTime,
+                  set.setTime,
+                  set.lot
                 );
               }
             });
@@ -695,6 +728,16 @@ export default function OrderTimeSet() {
                                   }
                                 }
                               );
+                              purchaseOrderState[0].orderSet.map((set: any) => {
+                                if (!set.isLock) {
+                                  set.orderExtension = checker_new(
+                                    set.endTime,
+                                    set.startTime,
+                                    set.setTime,
+                                    set.lot
+                                  );
+                                }
+                              });
                             }}
                           >
                             {searchData3?.data?.event[0]?.store_event[0]?.event?.map(

@@ -230,9 +230,17 @@ export default function Calculator({
                     callback(tax ? result2 + "##" : result2.replace("##", ""));
                   }
                 } else {
-                  setResult(tax ? result + "##" : result.replace("##", ""));
+                  setResult(
+                    tax
+                      ? String(result).replace("##", "") + "##"
+                      : result.replace("##", "")
+                  );
                   if (callback) {
-                    callback(tax ? result + "##" : result.replace("##", ""));
+                    callback(
+                      tax
+                        ? String(result).replace("##", "") + "##"
+                        : result.replace("##", "")
+                    );
                   }
                 }
                 setIsCalculator(false);
