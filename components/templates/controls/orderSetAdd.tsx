@@ -1534,7 +1534,9 @@ export default function ControlOrderSetAdd() {
                       <input
                         type="text"
                         className="ml-5 h-[25px] w-[90px] rounded-md px-2 pr-[25px] text-right"
-                        value={Number(cast.split("##")[1]).toLocaleString()}
+                        value={Number(
+                          String(cast.price).replace(/[^0-9]/g, "")
+                        ).toLocaleString()}
                         onClick={() => {
                           setIsCalculator(true);
                           setIsCalculatorSelect(1);
@@ -1683,7 +1685,9 @@ export default function ControlOrderSetAdd() {
                               title: cast.split("##")[0],
                               subTitle: "",
                               lot: 1,
-                              price: Number(cast.split("##")[1]),
+                              price: Number(
+                                String(cast.price).replace(/[^0-9]/g, "")
+                              ),
                               isTax: false,
                               setTime: order.setTime,
                               startTime: order.startTime,

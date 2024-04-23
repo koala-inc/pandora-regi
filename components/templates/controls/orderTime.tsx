@@ -59,7 +59,7 @@ export default function OrderTime() {
 
   let total = 0;
   purchaseOrderState[0]?.cast?.map((cast: any) => {
-    total += Number(cast.split("##")[1]);
+    total += Number(String(cast.price).replace(/[^0-9]/g, ""));
   });
   total +=
     Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.num);
@@ -215,15 +215,15 @@ export default function OrderTime() {
       >
         <div className="w-[calc(100%+50px)]">
           <ContentHeader>
-            <div className="flex flex-col flex-start w-full text-white">
+            <div className="flex-start flex w-full flex-col text-white">
               <div className="flex w-full">
                 <div className="flex flex-col">
-                  <label className="mt-3 mb-2 text-xs font-bold text-accent">
+                  <label className="mb-2 mt-3 text-xs font-bold text-accent">
                     開始時間
                   </label>
                   <input
                     type="text"
-                    className="mr-4 h-[45px] w-[80px] rounded-md px-2 text-xl text-center"
+                    className="mr-4 h-[45px] w-[80px] rounded-md px-2 text-center text-xl"
                     value={purchaseOrderState[0]?.mainStartTime}
                     onClick={() => {
                       setIsCalculatorSelect(2);
@@ -233,14 +233,14 @@ export default function OrderTime() {
                     readOnly
                   />
                 </div>
-                <p className="text-sm mr-4 mt-[50px]">〜</p>
+                <p className="mr-4 mt-[50px] text-sm">〜</p>
                 <div className="flex flex-col">
-                  <label className="mt-3 mb-2 text-xs font-bold text-accent">
+                  <label className="mb-2 mt-3 text-xs font-bold text-accent">
                     終了時間
                   </label>
                   <input
                     type="text"
-                    className="mr-8 h-[45px] w-[80px] rounded-md px-2 text-xl text-center"
+                    className="mr-8 h-[45px] w-[80px] rounded-md px-2 text-center text-xl"
                     value={purchaseOrderState[0]?.mainEndTime}
                     onClick={() => {
                       setIsCalculatorSelect(3);
@@ -251,11 +251,11 @@ export default function OrderTime() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label className="mt-3 mb-2 text-xs font-bold text-accent">
+                  <label className="mb-2 mt-3 text-xs font-bold text-accent">
                     席カテゴリー
                   </label>
                   <select
-                    className="mr-8 h-[45px] w-[120px] rounded-md px-2 text-xl text-center"
+                    className="mr-8 h-[45px] w-[120px] rounded-md px-2 text-center text-xl"
                     value={purchaseOrderState[0].room_name}
                     onChange={(e) => {
                       {
@@ -287,7 +287,7 @@ export default function OrderTime() {
                   </select>
                 </div>
                 <div className="flex flex-col">
-                  <label className="mt-3 mb-6 text-xs font-bold text-accent"></label>
+                  <label className="mb-6 mt-3 text-xs font-bold text-accent"></label>
                   <div
                     className={"my-auto"}
                     onClick={() => {
@@ -442,14 +442,14 @@ export default function OrderTime() {
                       />
                     </th>
                     <th className="w-[120px] text-left text-sm">
-                      <select className="h-[40px] w-[120px] rounded-md text-left px-1 text-sm">
+                      <select className="h-[40px] w-[120px] rounded-md px-1 text-left text-sm">
                         <option>{purchaseOrderState[0]?.setName}</option>
                       </select>
                     </th>
                     <th className="relative w-[60px] text-left text-lg">
                       <input
                         type="text"
-                        className="h-[40px] w-[60px] text-right rounded-md px-1 pr-[27px] text-sm"
+                        className="h-[40px] w-[60px] rounded-md px-1 pr-[27px] text-right text-sm"
                         value={purchaseOrderState[0]?.setTime}
                         onClick={() => {
                           setIsCalculatorSelect(5);
@@ -457,14 +457,14 @@ export default function OrderTime() {
                         }}
                         readOnly
                       />
-                      <p className="absolute bottom-[30.5px] text-sm left-[46px] opacity-60">
+                      <p className="absolute bottom-[30.5px] left-[46px] text-sm opacity-60">
                         分
                       </p>
                     </th>
                     <th className="relative w-[103px] text-left text-lg">
                       <input
                         type="text"
-                        className="h-[40px] w-[103px] text-right rounded-md px-2 pr-[26px] text-sm"
+                        className="h-[40px] w-[103px] rounded-md px-2 pr-[26px] text-right text-sm"
                         value={purchaseOrderState[0]?.price}
                         onClick={() => {
                           setIsCalculatorSelect(5);
@@ -472,22 +472,22 @@ export default function OrderTime() {
                         }}
                         readOnly
                       />
-                      <p className="absolute bottom-[30.5px] text-sm left-[90px] opacity-60">
+                      <p className="absolute bottom-[30.5px] left-[90px] text-sm opacity-60">
                         円
                       </p>
                     </th>
-                    <th className="w-[210px] flex text-left text-sm">
-                      <select className="h-[40px] w-[90px] rounded-md text-left px-1 text-sm mr-2">
+                    <th className="flex w-[210px] text-left text-sm">
+                      <select className="mr-2 h-[40px] w-[90px] rounded-md px-1 text-left text-sm">
                         <option>案内所</option>
                       </select>
-                      <select className="h-[40px] w-[120px] rounded-md text-left px-1 text-sm">
+                      <select className="h-[40px] w-[120px] rounded-md px-1 text-left text-sm">
                         <option>案内所１</option>
                       </select>
                     </th>
                     <th className="w-[80px] text-center text-lg">
                       <input
                         type="text"
-                        className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
+                        className="h-[40px] w-[70px] rounded-md px-2 text-center text-sm"
                         value={purchaseOrderState[0]?.startTime}
                         onClick={() => {
                           setIsCalculatorSelect(4);
@@ -499,7 +499,7 @@ export default function OrderTime() {
                     <th className="w-[80px] text-center text-lg">
                       <input
                         type="text"
-                        className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
+                        className="h-[40px] w-[70px] rounded-md px-2 text-center text-sm"
                         value={purchaseOrderState[0]?.endTime}
                         onClick={() => {
                           setIsCalculatorSelect(5);
@@ -511,7 +511,7 @@ export default function OrderTime() {
                     <th className="w-[20px] text-center text-sm">
                       {checker()}
                     </th>
-                    <th className="w-[130px] text-center items-center h-[80px] flex text-sm">
+                    <th className="flex h-[80px] w-[130px] items-center text-center text-sm">
                       <div
                         onClick={() => {
                           purchaseOrderState[0].endTime = dayjs(
@@ -531,7 +531,7 @@ export default function OrderTime() {
                           natural
                           stroke="md"
                         >
-                          <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
+                          <div className="mr-[1px] mt-[-2px] flex h-full items-center justify-center">
                             -
                           </div>
                           <span>30</span>
@@ -556,7 +556,7 @@ export default function OrderTime() {
                           natural
                           stroke="md"
                         >
-                          <div className="flex justify-center items-center h-full mt-[-3px]">
+                          <div className="mt-[-3px] flex h-full items-center justify-center">
                             +
                           </div>
                           <span>30</span>
@@ -597,7 +597,7 @@ export default function OrderTime() {
                       </th>
                       <th className="w-[120px] text-left text-sm">
                         <input
-                          className="h-[40px] w-[120px] rounded-md text-left px-2 text-sm"
+                          className="h-[40px] w-[120px] rounded-md px-2 text-left text-sm"
                           value={
                             purchaseOrderState[0]?.roomName == ""
                               ? "ルームチャージ"
@@ -610,7 +610,7 @@ export default function OrderTime() {
                       <th className="relative w-[103px] text-left text-lg">
                         <input
                           type="text"
-                          className="h-[40px] w-[103px] text-right rounded-md px-2 pr-[26px] text-sm"
+                          className="h-[40px] w-[103px] rounded-md px-2 pr-[26px] text-right text-sm"
                           value={purchaseOrderState[0]?.roomCharge}
                           onClick={() => {
                             setIsCalculatorSelect(5);
@@ -618,15 +618,15 @@ export default function OrderTime() {
                           }}
                           readOnly
                         />
-                        <p className="absolute bottom-[30.5px] text-sm left-[90px] opacity-60">
+                        <p className="absolute bottom-[30.5px] left-[90px] text-sm opacity-60">
                           円
                         </p>
                       </th>
-                      <th className="w-[210px] flex text-left text-sm"></th>
+                      <th className="flex w-[210px] text-left text-sm"></th>
                       <th className="w-[80px] text-center text-lg">
                         <input
                           type="text"
-                          className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
+                          className="h-[40px] w-[70px] rounded-md px-2 text-center text-sm"
                           value={purchaseOrderState[0]?.startTime}
                           onClick={() => {
                             setIsCalculatorSelect(4);
@@ -638,7 +638,7 @@ export default function OrderTime() {
                       <th className="w-[80px] text-center text-lg">
                         <input
                           type="text"
-                          className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
+                          className="h-[40px] w-[70px] rounded-md px-2 text-center text-sm"
                           value={purchaseOrderState[0]?.endTime}
                           onClick={() => {
                             setIsCalculatorSelect(5);
@@ -650,7 +650,7 @@ export default function OrderTime() {
                       <th className="w-[20px] text-center text-sm">
                         {checker()}
                       </th>
-                      <th className="w-[130px] text-center items-center h-[80px] flex text-sm">
+                      <th className="flex h-[80px] w-[130px] items-center text-center text-sm">
                         <div
                           onClick={() => {
                             purchaseOrderState[0].endTime = dayjs(
@@ -670,7 +670,7 @@ export default function OrderTime() {
                             natural
                             stroke="md"
                           >
-                            <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
+                            <div className="mr-[1px] mt-[-2px] flex h-full items-center justify-center">
                               -
                             </div>
                             <span>30</span>
@@ -695,7 +695,7 @@ export default function OrderTime() {
                             natural
                             stroke="md"
                           >
-                            <div className="flex justify-center items-center h-full mt-[-3px]">
+                            <div className="mt-[-3px] flex h-full items-center justify-center">
                               +
                             </div>
                             <span>30</span>
@@ -782,14 +782,14 @@ export default function OrderTime() {
                           />
                         </th>
                         <th className="w-[120px] text-left text-sm">
-                          <select className="h-[40px] w-[120px] rounded-md text-left px-1 text-sm">
+                          <select className="h-[40px] w-[120px] rounded-md px-1 text-left text-sm">
                             <option>{cast.split("##")[0]}</option>
                           </select>
                         </th>
                         <th className="relative w-[60px] text-left text-lg">
                           <input
                             type="text"
-                            className="h-[40px] w-[60px] text-right rounded-md px-1 pr-[27px] text-sm"
+                            className="h-[40px] w-[60px] rounded-md px-1 pr-[27px] text-right text-sm"
                             value={0}
                             onClick={() => {
                               setIsCalculatorSelect(5);
@@ -797,30 +797,30 @@ export default function OrderTime() {
                             }}
                             readOnly
                           />
-                          <p className="absolute bottom-[30.5px] text-sm left-[46px] opacity-60">
+                          <p className="absolute bottom-[30.5px] left-[46px] text-sm opacity-60">
                             分
                           </p>
                         </th>
                         <th className="relative w-[103px] text-left text-lg">
                           <input
                             type="text"
-                            className="h-[40px] w-[103px] text-right rounded-md px-2 pr-[26px] text-sm"
-                            value={cast.split("##")[1]}
+                            className="h-[40px] w-[103px] rounded-md px-2 pr-[26px] text-right text-sm"
+                            value={String(cast.price).replace(/[^0-9]/g, "")}
                             onClick={() => {
                               setIsCalculatorSelect(5);
                               setIsCalculator(true);
                             }}
                             readOnly
                           />
-                          <p className="absolute bottom-[30.5px] text-sm left-[90px] opacity-60">
+                          <p className="absolute bottom-[30.5px] left-[90px] text-sm opacity-60">
                             {cast.isTax ? "込" : "円"}
                           </p>
                         </th>
-                        <th className="w-[210px] flex text-left text-sm"></th>
+                        <th className="flex w-[210px] text-left text-sm"></th>
                         <th className="w-[80px] text-center text-lg">
                           <input
                             type="text"
-                            className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
+                            className="h-[40px] w-[70px] rounded-md px-2 text-center text-sm"
                             value={purchaseOrderState[0]?.startTime}
                             onClick={() => {
                               setIsCalculatorSelect(4);
@@ -832,7 +832,7 @@ export default function OrderTime() {
                         <th className="w-[80px] text-center text-lg">
                           <input
                             type="text"
-                            className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
+                            className="h-[40px] w-[70px] rounded-md px-2 text-center text-sm"
                             value={purchaseOrderState[0]?.endTime}
                             onClick={() => {
                               setIsCalculatorSelect(5);
@@ -844,7 +844,7 @@ export default function OrderTime() {
                         <th className="w-[20px] text-center text-sm">
                           {checker()}
                         </th>
-                        <th className="w-[130px] text-center items-center h-[80px] flex text-sm">
+                        <th className="flex h-[80px] w-[130px] items-center text-center text-sm">
                           <div
                             onClick={() => {
                               purchaseOrderState[0].endTime = dayjs(
@@ -864,7 +864,7 @@ export default function OrderTime() {
                               natural
                               stroke="md"
                             >
-                              <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
+                              <div className="mr-[1px] mt-[-2px] flex h-full items-center justify-center">
                                 -
                               </div>
                               <span>30</span>
@@ -889,7 +889,7 @@ export default function OrderTime() {
                               natural
                               stroke="md"
                             >
-                              <div className="flex justify-center items-center h-full mt-[-3px]">
+                              <div className="mt-[-3px] flex h-full items-center justify-center">
                                 +
                               </div>
                               <span>30</span>
@@ -933,14 +933,14 @@ export default function OrderTime() {
                             />
                           </th>
                           <th className="w-[120px] text-left text-sm">
-                            <select className="h-[40px] w-[120px] rounded-md text-left px-1 text-sm">
+                            <select className="h-[40px] w-[120px] rounded-md px-1 text-left text-sm">
                               <option>{cast.title}</option>
                             </select>
                           </th>
                           <th className="relative w-[60px] text-left text-lg">
                             <input
                               type="text"
-                              className="h-[40px] w-[60px] text-right rounded-md px-1 pr-[27px] text-sm"
+                              className="h-[40px] w-[60px] rounded-md px-1 pr-[27px] text-right text-sm"
                               value={0}
                               onClick={() => {
                                 setIsCalculatorSelect(5);
@@ -948,14 +948,14 @@ export default function OrderTime() {
                               }}
                               readOnly
                             />
-                            <p className="absolute bottom-[30.5px] text-sm left-[46px] opacity-60">
+                            <p className="absolute bottom-[30.5px] left-[46px] text-sm opacity-60">
                               分
                             </p>
                           </th>
                           <th className="relative w-[103px] text-left text-lg">
                             <input
                               type="text"
-                              className="h-[40px] w-[103px] text-right rounded-md px-2 pr-[26px] text-sm"
+                              className="h-[40px] w-[103px] rounded-md px-2 pr-[26px] text-right text-sm"
                               value={cast.price}
                               onClick={() => {
                                 setIsCalculatorSelect(5);
@@ -963,15 +963,15 @@ export default function OrderTime() {
                               }}
                               readOnly
                             />
-                            <p className="absolute bottom-[30.5px] text-sm left-[90px] opacity-60">
+                            <p className="absolute bottom-[30.5px] left-[90px] text-sm opacity-60">
                               {cast.isTax ? "込" : "円"}
                             </p>
                           </th>
-                          <th className="w-[210px] flex text-left text-sm"></th>
+                          <th className="flex w-[210px] text-left text-sm"></th>
                           <th className="w-[80px] text-center text-lg">
                             <input
                               type="text"
-                              className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
+                              className="h-[40px] w-[70px] rounded-md px-2 text-center text-sm"
                               value={purchaseOrderState[0]?.startTime}
                               onClick={() => {
                                 setIsCalculatorSelect(4);
@@ -983,7 +983,7 @@ export default function OrderTime() {
                           <th className="w-[80px] text-center text-lg">
                             <input
                               type="text"
-                              className="h-[40px] w-[70px] text-center rounded-md px-2 text-sm"
+                              className="h-[40px] w-[70px] rounded-md px-2 text-center text-sm"
                               value={purchaseOrderState[0]?.endTime}
                               onClick={() => {
                                 setIsCalculatorSelect(5);
@@ -995,7 +995,7 @@ export default function OrderTime() {
                           <th className="w-[20px] text-center text-sm">
                             {checker()}
                           </th>
-                          <th className="w-[130px] text-center items-center h-[80px] flex text-sm">
+                          <th className="flex h-[80px] w-[130px] items-center text-center text-sm">
                             <div
                               onClick={() => {
                                 purchaseOrderState[0].endTime = dayjs(
@@ -1018,7 +1018,7 @@ export default function OrderTime() {
                                 natural
                                 stroke="md"
                               >
-                                <div className="flex justify-center items-center h-full mt-[-2px] mr-[1px]">
+                                <div className="mr-[1px] mt-[-2px] flex h-full items-center justify-center">
                                   -
                                 </div>
                                 <span>30</span>
@@ -1046,7 +1046,7 @@ export default function OrderTime() {
                                 natural
                                 stroke="md"
                               >
-                                <div className="flex justify-center items-center h-full mt-[-3px]">
+                                <div className="mt-[-3px] flex h-full items-center justify-center">
                                   +
                                 </div>
                                 <span>30</span>

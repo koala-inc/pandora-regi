@@ -237,7 +237,9 @@ export default function OrderCastEdit() {
                   <input
                     className="h-[44px] rounded-md px-2  pr-[24px] text-right text-base text-white"
                     placeholder="金額"
-                    value={Number(cast.split("##")[1])?.toLocaleString()}
+                    value={Number(
+                      String(cast.price).replace(/[^0-9]/g, "")
+                    )?.toLocaleString()}
                     // onChange={(e) => {
                     //   cast.price = Number(
                     //     e.target.value.replace(/[^0-9]/g, "")

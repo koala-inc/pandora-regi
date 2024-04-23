@@ -28,7 +28,7 @@ export default function OrderEnd() {
   );
   let total = 0;
   purchaseOrderState[0]?.cast?.map((cast: any) => {
-    total += Number(cast.split("##")[1]);
+    total += Number(String(cast.price).replace(/[^0-9]/g, ""));
   });
   total +=
     Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.num);

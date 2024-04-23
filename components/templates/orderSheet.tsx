@@ -203,7 +203,7 @@ function Base() {
   let total = 0;
   let taxNoTotal = 0;
   purchaseOrderState[0]?.cast?.map((cast: any) => {
-    total += Number(cast.split("##")[1]);
+    total += Number(String(cast.price).replace(/[^0-9]/g, ""));
   });
   total +=
     Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.lot);
@@ -994,7 +994,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
 
   let total = 0;
   purchaseOrderState[0]?.cast?.map((cast: any) => {
-    total += Number(cast.split("##")[1]);
+    total += Number(String(cast.price).replace(/[^0-9]/g, ""));
   });
   total +=
     Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.lot);
@@ -1413,7 +1413,7 @@ function CastAdd() {
 
   let total = 0;
   purchaseOrderState[0]?.cast?.map((cast: any) => {
-    total += Number(cast.split("##")[1]);
+    total += Number(String(cast.price).replace(/[^0-9]/g, ""));
   });
   total +=
     Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.lot);
@@ -1566,7 +1566,7 @@ function CastAdd() {
                 //     title: cast.split("##")[0],
                 //     subTitle: "",
                 //     lot: 1,
-                //     price: Number(cast.split("##")[1]),
+                //     price: Number(String(cast.price).replace(/[^0-9]/g, "")),
                 //     isTax: cast.isTax,
                 //   };
                 // }),
@@ -1898,21 +1898,28 @@ function CastAdd() {
           className="flex w-[150px] items-center justify-center"
           onClick={(e) => {
             e.stopPropagation();
+            const orderItemAdd: any = [];
+            purchaseOrderItemAdd.map((item: any, index: any) => {
+              if (item.lot > 1) {
+                let lot = item.lot - 1;
+                item.lot = 1;
+                [...Array(lot)].map((_, i) =>
+                  orderItemAdd.push({ ...item, id: item.id + "-" + i })
+                );
+              }
+            });
             if (purchaseOrderItemAdd.length >= 1) {
               if (purchaseOrderState[0]?.orderCast) {
-                purchaseOrderItemAdd.map((item: any, index: any) => {
-                  if (item.lot > 1) {
-                    let lot = item.lot - 1;
-                    item.lot = 1;
-                    [...Array(lot)].map(() => purchaseOrderItemAdd.push(item));
-                  }
-                });
                 setPurchaseOrder(
                   purchaseOrder.map((e: any) => {
                     if (e.id == seatPreset) {
                       return {
                         ...e,
-                        orderCast: [...e?.orderCast, ...purchaseOrderItemAdd],
+                        orderCast: [
+                          ...e?.orderCast,
+                          ...purchaseOrderItemAdd,
+                          ...orderItemAdd,
+                        ],
                       };
                     }
                     return e;
@@ -1924,7 +1931,7 @@ function CastAdd() {
                     if (e.id == seatPreset) {
                       return {
                         ...e,
-                        orderCast: purchaseOrderItemAdd,
+                        orderCast: [...purchaseOrderItemAdd, ...orderItemAdd],
                       };
                     }
                     return e;

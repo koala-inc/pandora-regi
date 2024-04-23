@@ -22,6 +22,8 @@ import Calculator2 from "@/components/parts/calculator2";
 import useOrderGlobal from "@/globalstates/order";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
 import usePurchaseOrderSetGlobal from "@/globalstates/purchaseOrderSet";
+import Calculator15 from "@/components/parts/calculator15";
+import Calculator16 from "@/components/parts/calculator16";
 
 dayjs.locale(ja);
 
@@ -101,6 +103,8 @@ export default function ControlOrderSet() {
 
   const searchData = useSWR<any>(searchCast, fetcher);
   const [selectCast, setSelectCast] = useState<any>([]);
+
+  const [selectCastData, setSelectCastData] = useState<any>([]);
 
   const [setName, setSetName] = useState(
     order.price ? order.state?.setName : ""
@@ -657,6 +661,18 @@ export default function ControlOrderSet() {
               };
             });
           }}
+        />
+      )}
+      {isCalculator && isCalculatorSelect == 10 && (
+        <Calculator15
+          setIsCalculator={setIsCalculator}
+          result={selectCast[selectCastData]}
+        />
+      )}
+      {isCalculator && isCalculatorSelect == 11 && (
+        <Calculator16
+          setIsCalculator={setIsCalculator}
+          result={selectCast[selectCastData]}
         />
       )}
       <motion.div
@@ -1531,20 +1547,26 @@ export default function ControlOrderSet() {
                             onClick={() => {
                               setSelectCast((selectCast: any) => [
                                 ...selectCast,
-                                selectDesignateSymbol +
-                                  cast.name +
-                                  "##" +
-                                  selectDesignatePrice,
+                                {
+                                  symbol: selectDesignateSymbol,
+                                  name: selectDesignateSymbol + cast.name,
+                                  lot: 1,
+                                  price: selectDesignatePrice,
+                                  isTax: false,
+                                },
                               ]);
                               setOrder((order: any) => {
                                 return {
                                   ...order,
                                   cast: [
                                     ...selectCast,
-                                    selectDesignateSymbol +
-                                      cast.name +
-                                      "##" +
-                                      selectDesignatePrice,
+                                    {
+                                      symbol: selectDesignateSymbol,
+                                      name: selectDesignateSymbol + cast.name,
+                                      lot: 1,
+                                      price: selectDesignatePrice,
+                                      isTax: false,
+                                    },
                                   ],
                                 };
                               });
@@ -1575,14 +1597,15 @@ export default function ControlOrderSet() {
                 </div>
                 {selectCast.map((cast: any, index: any) => (
                   <div className="text-md mb-2 flex px-2" key={index}>
-                    <p className="w-[140px]">{cast.split("##")[0]}</p>
+                    <p className="w-[140px]">{cast.name}</p>
                     <input
                       type="text"
                       className="mx-2 h-[25px] w-[30px] rounded-md text-center"
-                      defaultValue={1}
+                      value={cast.lot}
                       onClick={() => {
                         setIsCalculator(true);
-                        setIsCalculatorSelect(2);
+                        setIsCalculatorSelect(10);
+                        setSelectCastData(index);
                       }}
                       readOnly
                     />
@@ -1590,15 +1613,18 @@ export default function ControlOrderSet() {
                       <input
                         type="text"
                         className="ml-5 h-[25px] w-[90px] rounded-md px-2 pr-[25px] text-right"
-                        value={Number(cast.split("##")[1]).toLocaleString()}
+                        value={Number(
+                          String(cast.price).replace(/[^0-9]/g, "")
+                        ).toLocaleString()}
                         onClick={() => {
                           setIsCalculator(true);
-                          setIsCalculatorSelect(1);
+                          setIsCalculatorSelect(11);
+                          setSelectCastData(index);
                         }}
                         readOnly
                       />
                       <p className="text-md absolute bottom-[0.5px] right-[5px] opacity-60">
-                        円
+                        {cast.isTax ? "込" : "円"}
                       </p>
                     </div>
                     <Border2
@@ -1725,24 +1751,51 @@ export default function ControlOrderSet() {
                         }
                       );
                       const orderCasts: any = [];
-                      order.cast &&
-                        order.cast.map((cast: any) =>
-                          orderCasts.push({
-                            symbol: cast.split("##")[0].slice(0, 1),
-                            title: cast.split("##")[0],
-                            subTitle: "",
-                            lot: 1,
-                            price: Number(cast.split("##")[1]),
-                            isTax: false,
-                            setTime: order.setTime,
-                            startTime: order.startTime,
-                            endTime: order.endTime,
-                            orderExtension: order.orderExtension,
-                            extensionPrice: Number(selectDesignateExPrice),
-                            targetSet: setName + "/0",
-                            isLock: false,
-                          })
-                        );
+                      const orderItemAdd: any = [];
+                      selectCast.map((cast: any, index: any) => {
+                        if (cast.lot > 1) {
+                          let lot = cast.lot - 1;
+                          cast.lot = 1;
+                          [...Array(lot)].map((_, i) =>
+                            orderItemAdd.push({
+                              symbol: cast.symbol,
+                              title: cast.name,
+                              subTitle: "",
+                              lot: cast.lot,
+                              price: Number(
+                                String(cast.price).replace(/[^0-9]/g, "")
+                              ),
+                              isTax: cast.isTax,
+                              setTime: order.setTime,
+                              startTime: order.startTime,
+                              endTime: order.endTime,
+                              orderExtension: order.orderExtension,
+                              extensionPrice: Number(selectDesignateExPrice),
+                              targetSet: setName + "/0",
+                              isLock: false,
+                            })
+                          );
+                        }
+                      });
+                      selectCast.map((cast: any) =>
+                        orderCasts.push({
+                          symbol: cast.symbol,
+                          title: cast.name,
+                          subTitle: "",
+                          lot: 1,
+                          price: Number(
+                            String(cast.price).replace(/[^0-9]/g, "")
+                          ),
+                          isTax: cast.isTax,
+                          setTime: order.setTime,
+                          startTime: order.startTime,
+                          endTime: order.endTime,
+                          orderExtension: order.orderExtension,
+                          extensionPrice: Number(selectDesignateExPrice),
+                          targetSet: setName + "/0",
+                          isLock: false,
+                        })
+                      );
                       setPurchaseOrderSet([
                         ...purchaseOrderSet,
                         {
@@ -1757,7 +1810,7 @@ export default function ControlOrderSet() {
                           mainStartTime: order.startTime,
                           mainEndTime: order.endTime,
                           orderItem: [],
-                          orderCast: [...orderCasts],
+                          orderCast: [...orderCasts, ...orderItemAdd],
                           orderSet: [...orderSets],
                           orderExtension: 0,
                           extensionPrice: Number(selectDesignateExPrice),
