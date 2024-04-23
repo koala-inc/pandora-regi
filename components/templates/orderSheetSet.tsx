@@ -84,9 +84,17 @@ export default function OrderSheetSet() {
             <div
               key={index}
               className="relative mx-[auto] my-1 mb-6 flex w-[93%] flex-wrap rounded-md border-4 border-white bg-black px-1 py-3"
+              onClick={() => {
+                setOrder(order);
+                delete purchaseOrderSet[index];
+                setPurchaseOrderSet(() =>
+                  purchaseOrderSet.filter((v: any) => v)
+                );
+              }}
             >
               <div
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   delete purchaseOrderSet[index];
                   setPurchaseOrderSet(() =>
                     purchaseOrderSet.filter((v: any) => v)
@@ -100,29 +108,6 @@ export default function OrderSheetSet() {
                 >
                   <Image
                     src={"/assets/close.svg"}
-                    width={26}
-                    height={26}
-                    className="!h-full !w-full"
-                    alt=""
-                  />
-                </Border2>
-              </div>
-              <div
-                onClick={() => {
-                  setOrder(order);
-                  delete purchaseOrderSet[index];
-                  setPurchaseOrderSet(() =>
-                    purchaseOrderSet.filter((v: any) => v)
-                  );
-                }}
-              >
-                <Border2
-                  className="absolute right-[25px] top-[-20px]"
-                  rounded="rounded-full"
-                  size="h-[28px] w-[28px] p-[6px]"
-                >
-                  <Image
-                    src={"/assets/reset.svg"}
                     width={26}
                     height={26}
                     className="!h-full !w-full"
