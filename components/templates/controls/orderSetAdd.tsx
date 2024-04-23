@@ -22,6 +22,8 @@ import Calculator2 from "@/components/parts/calculator2";
 import useOrderGlobal from "@/globalstates/order";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
 import usePurchaseOrderSetGlobal from "@/globalstates/purchaseOrderSet";
+import Calculator15 from "@/components/parts/calculator15";
+import Calculator16 from "@/components/parts/calculator16";
 
 dayjs.locale(ja);
 
@@ -476,6 +478,8 @@ export default function ControlOrderSetAdd() {
   const [selectDesignateSymbol, setSelectDesignateSymbol] = useState("");
   const [selectDesignatePrice, setSelectDesignatePrice] = useState(0);
 
+  const [selectCastData, setSelectCastData] = useState<any>([]);
+
   let count = 0;
   let count2 = 0;
 
@@ -767,6 +771,18 @@ export default function ControlOrderSetAdd() {
               };
             });
           }}
+        />
+      )}
+      {isCalculator && isCalculatorSelect == 10 && (
+        <Calculator15
+          setIsCalculator={setIsCalculator}
+          result={selectCast[selectCastData]}
+        />
+      )}
+      {isCalculator && isCalculatorSelect == 11 && (
+        <Calculator16
+          setIsCalculator={setIsCalculator}
+          result={selectCast[selectCastData]}
         />
       )}
       <motion.div
@@ -1475,20 +1491,26 @@ export default function ControlOrderSetAdd() {
                             onClick={() => {
                               setSelectCast((selectCast: any) => [
                                 ...selectCast,
-                                selectDesignateSymbol +
-                                  cast.name +
-                                  "##" +
-                                  selectDesignatePrice,
+                                {
+                                  symbol: selectDesignateSymbol,
+                                  name: selectDesignateSymbol + cast.name,
+                                  lot: 1,
+                                  price: selectDesignatePrice,
+                                  isTax: false,
+                                },
                               ]);
                               setOrder((order: any) => {
                                 return {
                                   ...order,
                                   cast: [
                                     ...selectCast,
-                                    selectDesignateSymbol +
-                                      cast.name +
-                                      "##" +
-                                      selectDesignatePrice,
+                                    {
+                                      symbol: selectDesignateSymbol,
+                                      name: selectDesignateSymbol + cast.name,
+                                      lot: 1,
+                                      price: selectDesignatePrice,
+                                      isTax: false,
+                                    },
                                   ],
                                 };
                               });
@@ -1526,7 +1548,8 @@ export default function ControlOrderSetAdd() {
                       defaultValue={1}
                       onClick={() => {
                         setIsCalculator(true);
-                        setIsCalculatorSelect(2);
+                        setIsCalculatorSelect(10);
+                        setSelectCastData(index);
                       }}
                       readOnly
                     />
@@ -1539,12 +1562,13 @@ export default function ControlOrderSetAdd() {
                         ).toLocaleString()}
                         onClick={() => {
                           setIsCalculator(true);
-                          setIsCalculatorSelect(1);
+                          setIsCalculatorSelect(11);
+                          setSelectCastData(index);
                         }}
                         readOnly
                       />
                       <p className="text-md absolute bottom-[0.5px] right-[5px] opacity-60">
-                        円
+                        {cast.isTax ? "込" : "円"}
                       </p>
                     </div>
                     <Border2
@@ -1679,22 +1703,48 @@ export default function ControlOrderSetAdd() {
                             }
                           });
                           const orderCasts: any = [];
-                          order.cast.map((cast: any) =>
+                          const orderItemAdd: any = [];
+                          selectCast.map((cast: any, index: any) => {
+                            if (cast.lot > 1) {
+                              let lot = cast.lot - 1;
+                              cast.lot = 1;
+                              [...Array(lot)].map((_, i) =>
+                                orderItemAdd.push({
+                                  symbol: cast.symbol,
+                                  title: cast.name,
+                                  subTitle: "",
+                                  lot: cast.lot,
+                                  price: Number(
+                                    String(cast.price).replace(/[^0-9]/g, "")
+                                  ),
+                                  isTax: cast.isTax,
+                                  setTime: order.setTime,
+                                  startTime: order.startTime,
+                                  endTime: order.endTime,
+                                  orderExtension: order.orderExtension,
+                                  extensionPrice: Number(extensionPrice),
+                                  targetSet: setName + "/0",
+                                  isLock: false,
+                                })
+                              );
+                            }
+                          });
+                          selectCast.map((cast: any) =>
                             orderCasts.push({
-                              symbol: cast.split("##")[0].slice(0, 1),
-                              title: cast.split("##")[0],
+                              symbol: cast.symbol,
+                              title: cast.name,
                               subTitle: "",
                               lot: 1,
                               price: Number(
                                 String(cast.price).replace(/[^0-9]/g, "")
                               ),
-                              isTax: false,
+                              isTax: cast.isTax,
                               setTime: order.setTime,
                               startTime: order.startTime,
                               endTime: order.endTime,
                               orderExtension: order.orderExtension,
                               extensionPrice: Number(extensionPrice),
-                              targetSet: targetSet,
+                              targetSet: setName + "/0",
                               isLock: false,
                             })
                           );
