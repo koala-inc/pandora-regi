@@ -127,7 +127,7 @@ export default function OrderCastAdd() {
     purchaseOrderState[0].orderSet.map((set: any) => {
       if (set.orderExtension > 0) {
         orderExtensions.push({
-          title: "延長料(" + set.title.slice(0, 3) + ")",
+          title: "延長料(" + set.categoryTitle.slice(0, 3) + ")",
           lot: Number(set.orderExtension),
           price: Number(set.extensionPrice),
           isTax: false,
@@ -136,83 +136,20 @@ export default function OrderCastAdd() {
       }
     });
     const orderSets = purchaseOrderState[0]?.isRoomCharge
-      ? Number(purchaseOrderState[0]?.orderExtension) > 0
-        ? [
-            {
-              title: purchaseOrderState[0]?.setName,
-              lot: purchaseOrderState[0]?.lot,
-              price: purchaseOrderState[0]?.price,
-              isTax: purchaseOrderState[0]?.priceTax,
-              startTime: purchaseOrderState[0]?.startTime,
-            },
-            ...purchaseOrderState[0]?.orderSet,
-            {
-              title:
-                purchaseOrderState[0]?.roomName == ""
-                  ? "ルームチャージ"
-                  : purchaseOrderState[0]?.roomName,
-              lot: 1,
-              price: purchaseOrderState[0]?.roomCharge,
-              isTax: purchaseOrderState[0]?.roomTax,
-            },
-            {
-              title:
-                "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
-              lot: Number(purchaseOrderState[0]?.orderExtension),
-              price: Number(purchaseOrderState[0]?.extensionPrice),
-              isTax: false,
-            },
-            ...orderExtensions,
-          ]
-        : [
-            {
-              title: purchaseOrderState[0]?.setName,
-              lot: purchaseOrderState[0]?.lot,
-              price: purchaseOrderState[0]?.price,
-              isTax: purchaseOrderState[0]?.priceTax,
-              startTime: purchaseOrderState[0]?.startTime,
-            },
-            ...purchaseOrderState[0]?.orderSet,
-            {
-              title:
-                purchaseOrderState[0]?.roomName == ""
-                  ? "ルームチャージ"
-                  : purchaseOrderState[0]?.roomName,
-              lot: 1,
-              price: purchaseOrderState[0]?.roomCharge,
-              isTax: purchaseOrderState[0]?.roomTax,
-            },
-            ...orderExtensions,
-          ]
-      : Number(purchaseOrderState[0]?.orderExtension) > 0
       ? [
-          {
-            title: purchaseOrderState[0]?.setName,
-            lot: purchaseOrderState[0]?.lot,
-            price: purchaseOrderState[0]?.price,
-            isTax: purchaseOrderState[0]?.priceTax,
-            startTime: purchaseOrderState[0]?.startTime,
-          },
           ...purchaseOrderState[0]?.orderSet,
           {
-            title: "延長料(" + purchaseOrderState[0]?.setName.slice(0, 3) + ")",
-            lot: Number(purchaseOrderState[0]?.orderExtension),
-            price: Number(purchaseOrderState[0]?.extensionPrice),
-            isTax: false,
+            title:
+              purchaseOrderState[0]?.roomName == ""
+                ? "ルームチャージ"
+                : purchaseOrderState[0]?.roomName,
+            lot: 1,
+            price: purchaseOrderState[0]?.roomCharge,
+            isTax: purchaseOrderState[0]?.roomTax,
           },
           ...orderExtensions,
         ]
-      : [
-          {
-            title: purchaseOrderState[0]?.setName,
-            lot: purchaseOrderState[0]?.lot,
-            price: purchaseOrderState[0]?.price,
-            isTax: purchaseOrderState[0]?.priceTax,
-            startTime: purchaseOrderState[0]?.startTime,
-          },
-          ...purchaseOrderState[0]?.orderSet,
-          ...orderExtensions,
-        ];
+      : [...purchaseOrderState[0]?.orderSet, ...orderExtensions];
     let flag = true;
     orderSets.map((orderSet: any, index: any) => {
       if (flag) {
@@ -591,6 +528,7 @@ export default function OrderCastAdd() {
               <p className="h-[20px] text-xs text-accent">対象セット</p>
               <select
                 className="flex h-[50px] items-center rounded-md px-2 text-base text-white"
+                value={targetSet}
                 onChange={(e) => {
                   setTargetSet(e.target.value);
                 }}
