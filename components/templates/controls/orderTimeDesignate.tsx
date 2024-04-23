@@ -27,6 +27,7 @@ import { searchSeatArea } from "@/gqls/query/seat";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
 import { searchEvent } from "@/gqls/query/event";
 import Calculator14 from "@/components/parts/calculator14";
+import { searchDesignate } from "@/gqls/query/designate";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -82,6 +83,7 @@ export default function OrderTimeDesignate() {
     client.request(q, { ...defaultVariables });
 
   preload(searchCast, fetcher);
+  const searchData4 = useSWR<any>(searchDesignate, fetcher);
 
   const [searchForm, setSearchForm] = useState<any>({});
 
@@ -521,8 +523,29 @@ export default function OrderTimeDesignate() {
                             </select>
                           </th>
                           <th className="w-[60px] text-left text-sm">
-                            <select className="h-[40px] w-[60px] rounded-md px-1 text-left text-sm">
-                              <option>{cast.symbol.slice(0, 1)}</option>
+                            <select
+                              className="h-[40px] w-[60px] rounded-md px-1 text-left text-sm"
+                              value={cast.symbol}
+                              onChange={(e) => {
+                                cast.symbol = e.target.value;
+                                cast.title =
+                                  e.target.value + cast.title.slice(1);
+                              }}
+                            >
+                              {searchData4?.data?.designate[0]?.store_designate[0]?.designate?.map(
+                                (designate: any, index: any) => {
+                                  return (
+                                    <option
+                                      key={index}
+                                      value={
+                                        designate.designate_revision.symbol
+                                      }
+                                    >
+                                      {designate.designate_revision.symbol}
+                                    </option>
+                                  );
+                                }
+                              )}
                             </select>
                           </th>
                           <th className="w-[100px] text-left text-sm">

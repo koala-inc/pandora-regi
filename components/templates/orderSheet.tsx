@@ -1734,7 +1734,7 @@ function CastAdd() {
                   <div className="mr-1 flex w-[88px] flex-col text-xs">
                     <p className="h-[20px] text-xs text-accent">種別</p>
                     <select
-                      className="mr-1 flex h-[44px] items-center rounded-md text-base"
+                      className="mr-1 flex h-[44px] items-center rounded-md text-center text-base"
                       onChange={(e) => {
                         const data = JSON.parse(e.target.value);
                         setSelectDesignate(data.id);
@@ -1761,7 +1761,7 @@ function CastAdd() {
                                 price: designate.designate_revision.price,
                               })}
                             >
-                              {designate.designate_revision.name}
+                              {designate.designate_revision.symbol}
                             </option>
                           );
                         }
