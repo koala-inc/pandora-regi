@@ -119,7 +119,7 @@ function Lists({
     );
   }, [purchaseOrderState]);
 
-  let flag = false;
+  let mainFlag = false;
 
   return (
     <ul
@@ -130,19 +130,22 @@ function Lists({
       }}
     >
       {purchaseOrderState[0]?.orderCast?.map((cast: any, index: any) => {
-        {
-          orderSets.map((orderSet: any, index: any) => {
-            if (
-              !orderSet.title.includes("延長") &&
-              !orderSet.title.includes("ルームチャージ")
-            )
-              if (orderSet.title + "/" + index != cast.targetSet) {
-                flag = true;
-              }
-          });
+        let flag = true;
+        orderSets.map((orderSet: any, index: any) => {
+          if (
+            !orderSet.title.includes("延長") &&
+            !orderSet.title.includes("ルームチャージ")
+          ) {
+            if (orderSet.title + "/" + index == cast.targetSet) {
+              flag = false;
+            }
+          }
+        });
+        if (flag) {
+          mainFlag = true;
         }
       })}
-      {flag && setControl == "TIMEDESIGNATE" && (
+      {mainFlag && setControl == "TIMEDESIGNATE" && (
         <p className="text-red-500">セットが紐づいていない指名があります。</p>
       )}
       {lists?.map((list, index) => (
