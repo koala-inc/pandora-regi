@@ -1541,7 +1541,7 @@ export default function ControlOrderSetAdd() {
                 </div>
                 {selectCast.map((cast: any, index: any) => (
                   <div className="text-md mb-2 flex px-2" key={index}>
-                    <p className="w-[140px]">{cast.split("##")[0]}</p>
+                    <p className="w-[140px]">{cast.name}</p>
                     <input
                       type="text"
                       className="mx-2 h-[25px] w-[30px] rounded-md text-center"
