@@ -10,6 +10,7 @@ import { useState } from "react";
 import Control from "@/components/master/(component)/control";
 import Toggle from "@/components/templates/toggle4";
 import Toggle3 from "@/components/templates/toggle3";
+import Toggle5 from "@/components/templates/toggle5";
 import client from "@/connection";
 import {
   createCategory,
@@ -26,7 +27,7 @@ import usePurchaseOrderItemAddGlobal from "@/globalstates/purchaseOrderItemAdd";
 
 function ContentHeader({ children }: { children: any }) {
   return (
-    <SubBorder size="mt-0 h-[100px] !w-[350px] px-10 py-2">
+    <SubBorder size="mt-0 h-[100px] !w-[500px] px-10 py-2">
       {children}
     </SubBorder>
   );
@@ -109,12 +110,12 @@ export default function OrderItemAdd() {
                 </Border>
               </div>
             </div>
+            <div className="ml-4 items-center justify-center rounded-md backdrop:flex">
+              <Toggle5 />
+            </div>
           </div>
         </ContentHeader>
         <div className="flex py-2">
-          <div className="mr-4 flex items-center justify-center rounded-md bg-primary p-2">
-            <Toggle3 />
-          </div>
           {searchData?.data?.category[0]?.store_category[0]?.category?.map(
             (category: any, index: any) => {
               if (category.category_revision.parent_id == 0) {
