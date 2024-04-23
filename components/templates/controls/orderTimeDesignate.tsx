@@ -525,11 +525,13 @@ export default function OrderTimeDesignate() {
                           <th className="w-[60px] text-left text-sm">
                             <select
                               className="h-[40px] w-[60px] rounded-md px-1 text-left text-sm"
-                              value={cast.symbol}
+                              value={cast.symbol + cast.price}
                               onChange={(e) => {
-                                cast.symbol = e.target.value;
+                                cast.symbol = e.target.value.slice(0, 1);
                                 cast.title =
-                                  e.target.value + cast.title.slice(1);
+                                  e.target.value.slice(0, 1) +
+                                  cast.title.slice(1);
+                                cast.price = e.target.value.slice(1);
                               }}
                             >
                               {searchData4?.data?.designate[0]?.store_designate[0]?.designate?.map(
@@ -538,7 +540,8 @@ export default function OrderTimeDesignate() {
                                     <option
                                       key={index}
                                       value={
-                                        designate.designate_revision.symbol
+                                        designate.designate_revision.symbol +
+                                        designate.designate_revision.price
                                       }
                                     >
                                       {designate.designate_revision.symbol}
