@@ -515,6 +515,27 @@ export default function OrderTimeDesignate() {
                               value={cast.targetSet}
                               onChange={(e) => {
                                 cast.targetSet = e.target.value;
+                                cast.orderExtension =
+                                  checker_new(
+                                    cast.endTime,
+                                    purchaseOrderState[0].orderSet[
+                                      cast.targetSet.split("/")[1]
+                                    ]?.startTime || "00:00",
+                                    purchaseOrderState[0].orderSet[
+                                      cast.targetSet.split("/")[1]
+                                    ]?.setTime || "00:00",
+                                    cast.lot
+                                  ) -
+                                  checker_new(
+                                    cast.startTime,
+                                    purchaseOrderState[0].orderSet[
+                                      cast.targetSet.split("/")[1]
+                                    ]?.startTime || "00:00",
+                                    purchaseOrderState[0].orderSet[
+                                      cast.targetSet.split("/")[1]
+                                    ]?.setTime || "00:00",
+                                    cast.lot
+                                  );
                               }}
                             >
                               <option value={""}>選択してください。</option>
@@ -537,13 +558,23 @@ export default function OrderTimeDesignate() {
                           <th className="w-[60px] text-left text-sm">
                             <select
                               className="h-[40px] w-[60px] rounded-md px-1 text-left text-sm"
-                              value={cast.symbol + cast.price}
+                              value={
+                                cast.symbol +
+                                cast.price +
+                                "/" +
+                                cast.extensionPrice
+                              }
                               onChange={(e) => {
                                 cast.symbol = e.target.value.slice(0, 1);
                                 cast.title =
                                   e.target.value.slice(0, 1) +
                                   cast.title.slice(1);
-                                cast.price = e.target.value.slice(1);
+                                cast.price = e.target.value
+                                  .slice(1)
+                                  .split("/")[0];
+                                cast.extensionPrice = e.target.value
+                                  .slice(1)
+                                  .split("/")[1];
                               }}
                             >
                               {searchData4?.data?.designate[0]?.store_designate[0]?.designate?.map(
@@ -553,7 +584,9 @@ export default function OrderTimeDesignate() {
                                       key={index}
                                       value={
                                         designate.designate_revision.symbol +
-                                        designate.designate_revision.price
+                                        designate.designate_revision.price +
+                                        "/" +
+                                        designate.designate_revision.extra_price
                                       }
                                     >
                                       {designate.designate_revision.symbol}

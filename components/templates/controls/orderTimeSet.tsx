@@ -322,6 +322,20 @@ export default function OrderTimeSet() {
           result={
             purchaseOrderState[0].orderSet[purchaseOrderState[0].orderSetIndex]
           }
+          callback={() => {
+            purchaseOrderState[0].orderCast.map((cast: any) => {
+              if (!cast.isLock) {
+                cast.orderExtension = checker_new(
+                  cast.endTime,
+                  purchaseOrderState[0].orderSet[cast.targetSet.split("/")[1]]
+                    .startTime,
+                  purchaseOrderState[0].orderSet[cast.targetSet.split("/")[1]]
+                    .setTime,
+                  cast.lot
+                );
+              }
+            });
+          }}
         />
       )}
       {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 8 && (
@@ -381,6 +395,18 @@ export default function OrderTimeSet() {
                 purchaseOrderState[0].orderSetIndex
               ].lot
             );
+            purchaseOrderState[0].orderCast.map((cast: any) => {
+              if (!cast.isLock) {
+                cast.orderExtension = checker_new(
+                  cast.endTime,
+                  purchaseOrderState[0].orderSet[cast.targetSet.split("/")[1]]
+                    .startTime,
+                  purchaseOrderState[0].orderSet[cast.targetSet.split("/")[1]]
+                    .setTime,
+                  cast.lot
+                );
+              }
+            });
           }}
         />
       )}
@@ -649,6 +675,22 @@ export default function OrderTimeSet() {
                                       set.startTime,
                                       set.setTime,
                                       set.lot
+                                    );
+                                  }
+                                }
+                              );
+                              purchaseOrderState[0].orderCast.map(
+                                (cast: any) => {
+                                  if (!cast.isLock) {
+                                    cast.orderExtension = checker_new(
+                                      cast.endTime,
+                                      purchaseOrderState[0].orderSet[
+                                        cast.targetSet.split("/")[1]
+                                      ].startTime,
+                                      purchaseOrderState[0].orderSet[
+                                        cast.targetSet.split("/")[1]
+                                      ].setTime,
+                                      cast.lot
                                     );
                                   }
                                 }

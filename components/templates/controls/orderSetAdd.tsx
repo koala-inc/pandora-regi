@@ -477,6 +477,7 @@ export default function ControlOrderSetAdd() {
   const [selectDesignate, setSelectDesignate] = useState(-1);
   const [selectDesignateSymbol, setSelectDesignateSymbol] = useState("");
   const [selectDesignatePrice, setSelectDesignatePrice] = useState(0);
+  const [selectDesignateExPrice, setSelectDesignateExPrice] = useState(0);
 
   const [selectCastData, setSelectCastData] = useState<any>([]);
 
@@ -1199,6 +1200,9 @@ export default function ControlOrderSetAdd() {
                       setSelectDesignatePrice(
                         designate.designate_revision.price
                       );
+                      setSelectDesignateExPrice(
+                        designate.designate_revision.extra_price
+                      );
                     }
                     count2 += 1;
                     return (
@@ -1497,6 +1501,7 @@ export default function ControlOrderSetAdd() {
                                   lot: 1,
                                   price: selectDesignatePrice,
                                   isTax: false,
+                                  exPrice: selectDesignateExPrice,
                                 },
                               ]);
                               setOrder((order: any) => {
@@ -1510,6 +1515,7 @@ export default function ControlOrderSetAdd() {
                                       lot: 1,
                                       price: selectDesignatePrice,
                                       isTax: false,
+                                      exPrice: selectDesignateExPrice,
                                     },
                                   ],
                                 };
@@ -1722,7 +1728,7 @@ export default function ControlOrderSetAdd() {
                                   startTime: order.startTime,
                                   endTime: order.endTime,
                                   orderExtension: order.orderExtension,
-                                  extensionPrice: Number(extensionPrice),
+                                  extensionPrice: Number(cast.exPrice),
                                   targetSet: setName + "/0",
                                   isLock: false,
                                 })
@@ -1743,7 +1749,7 @@ export default function ControlOrderSetAdd() {
                               startTime: order.startTime,
                               endTime: order.endTime,
                               orderExtension: order.orderExtension,
-                              extensionPrice: Number(extensionPrice),
+                              extensionPrice: Number(cast.exPrice),
                               targetSet: setName + "/0",
                               isLock: false,
                             })

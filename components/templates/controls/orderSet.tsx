@@ -1553,6 +1553,7 @@ export default function ControlOrderSet() {
                                   lot: 1,
                                   price: selectDesignatePrice,
                                   isTax: false,
+                                  exPrice: selectDesignateExPrice,
                                 },
                               ]);
                               setOrder((order: any) => {
@@ -1566,6 +1567,7 @@ export default function ControlOrderSet() {
                                       lot: 1,
                                       price: selectDesignatePrice,
                                       isTax: false,
+                                      exPrice: selectDesignateExPrice,
                                     },
                                   ],
                                 };
@@ -1770,7 +1772,7 @@ export default function ControlOrderSet() {
                               startTime: order.startTime,
                               endTime: order.endTime,
                               orderExtension: order.orderExtension,
-                              extensionPrice: Number(selectDesignateExPrice),
+                              extensionPrice: Number(cast.exPrice),
                               targetSet: setName + "/0",
                               isLock: false,
                             })
@@ -1791,7 +1793,7 @@ export default function ControlOrderSet() {
                           startTime: order.startTime,
                           endTime: order.endTime,
                           orderExtension: order.orderExtension,
-                          extensionPrice: Number(selectDesignateExPrice),
+                          extensionPrice: Number(cast.exPrice),
                           targetSet: setName + "/0",
                           isLock: false,
                         })
