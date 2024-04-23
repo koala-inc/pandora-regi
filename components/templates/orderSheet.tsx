@@ -1900,6 +1900,13 @@ function CastAdd() {
             e.stopPropagation();
             if (purchaseOrderItemAdd.length >= 1) {
               if (purchaseOrderState[0]?.orderCast) {
+                purchaseOrderItemAdd.map((item: any, index: any) => {
+                  if (item.lot > 1) {
+                    let lot = item.lot - 1;
+                    item.lot = 1;
+                    [...Array(lot)].map(() => purchaseOrderItemAdd.push(item));
+                  }
+                });
                 setPurchaseOrder(
                   purchaseOrder.map((e: any) => {
                     if (e.id == seatPreset) {

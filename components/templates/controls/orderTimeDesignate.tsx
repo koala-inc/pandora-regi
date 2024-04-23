@@ -328,7 +328,9 @@ export default function OrderTimeDesignate() {
                 purchaseOrderState[0].orderSet[
                   isCalculatorSelectData.targetSet.split("/")[1]
                 ].startTime,
-                isCalculatorSelectData.setTime,
+                purchaseOrderState[0].orderSet[
+                  isCalculatorSelectData.targetSet.split("/")[1]
+                ].setTime,
                 isCalculatorSelectData.lot
               ) -
               checker_new(
@@ -336,7 +338,9 @@ export default function OrderTimeDesignate() {
                 purchaseOrderState[0].orderSet[
                   isCalculatorSelectData.targetSet.split("/")[1]
                 ].startTime,
-                isCalculatorSelectData.setTime,
+                purchaseOrderState[0].orderSet[
+                  isCalculatorSelectData.targetSet.split("/")[1]
+                ].setTime,
                 isCalculatorSelectData.lot
               );
           }}
@@ -366,8 +370,10 @@ export default function OrderTimeDesignate() {
                     purchaseOrderState[0].orderCastIndex
                   ].targetSet.split("/")[1]
                 ].startTime,
-                purchaseOrderState[0].orderCast[
-                  purchaseOrderState[0].orderCastIndex
+                purchaseOrderState[0].orderSet[
+                  purchaseOrderState[0].orderCast[
+                    purchaseOrderState[0].orderCastIndex
+                  ].targetSet.split("/")[1]
                 ].setTime,
                 purchaseOrderState[0].orderCast[
                   purchaseOrderState[0].orderCastIndex
@@ -382,8 +388,10 @@ export default function OrderTimeDesignate() {
                     purchaseOrderState[0].orderCastIndex
                   ].targetSet.split("/")[1]
                 ].startTime,
-                purchaseOrderState[0].orderCast[
-                  purchaseOrderState[0].orderCastIndex
+                purchaseOrderState[0].orderSet[
+                  purchaseOrderState[0].orderCast[
+                    purchaseOrderState[0].orderCastIndex
+                  ].targetSet.split("/")[1]
                 ].setTime,
                 purchaseOrderState[0].orderCast[
                   purchaseOrderState[0].orderCastIndex
@@ -416,8 +424,10 @@ export default function OrderTimeDesignate() {
                     purchaseOrderState[0].orderCastIndex
                   ].targetSet.split("/")[1]
                 ].startTime,
-                purchaseOrderState[0].orderCast[
-                  purchaseOrderState[0].orderCastIndex
+                purchaseOrderState[0].orderSet[
+                  purchaseOrderState[0].orderCast[
+                    purchaseOrderState[0].orderCastIndex
+                  ].targetSet.split("/")[1]
                 ].setTime,
                 purchaseOrderState[0].orderCast[
                   purchaseOrderState[0].orderCastIndex
@@ -432,8 +442,10 @@ export default function OrderTimeDesignate() {
                     purchaseOrderState[0].orderCastIndex
                   ].targetSet.split("/")[1]
                 ].startTime,
-                purchaseOrderState[0].orderCast[
-                  purchaseOrderState[0].orderCastIndex
+                purchaseOrderState[0].orderSet[
+                  purchaseOrderState[0].orderCast[
+                    purchaseOrderState[0].orderCastIndex
+                  ].targetSet.split("/")[1]
                 ].setTime,
                 purchaseOrderState[0].orderCast[
                   purchaseOrderState[0].orderCastIndex
@@ -606,7 +618,9 @@ export default function OrderTimeDesignate() {
                               purchaseOrderState[0].orderSet[
                                 cast.targetSet.split("/")[1]
                               ]?.startTime || "00:00",
-                              cast.setTime,
+                              purchaseOrderState[0].orderSet[
+                                cast.targetSet.split("/")[1]
+                              ]?.setTime || "00:00",
                               cast.lot
                             ) -
                               checker_new(
@@ -614,7 +628,9 @@ export default function OrderTimeDesignate() {
                                 purchaseOrderState[0].orderSet[
                                   cast.targetSet.split("/")[1]
                                 ]?.startTime || "00:00",
-                                cast.setTime,
+                                purchaseOrderState[0].orderSet[
+                                  cast.targetSet.split("/")[1]
+                                ]?.setTime || "00:00",
                                 cast.lot
                               )}
                           </th>
@@ -642,7 +658,9 @@ export default function OrderTimeDesignate() {
                                       purchaseOrderState[0].orderSet[
                                         cast.targetSet.split("/")[1]
                                       ]?.startTime || "00:00",
-                                      cast.setTime,
+                                      purchaseOrderState[0].orderSet[
+                                        cast.targetSet.split("/")[1]
+                                      ]?.setTime || "00:00",
                                       cast.lot
                                     ) -
                                     checker_new(
@@ -650,7 +668,9 @@ export default function OrderTimeDesignate() {
                                       purchaseOrderState[0].orderSet[
                                         cast.targetSet.split("/")[1]
                                       ]?.startTime || "00:00",
-                                      cast.setTime,
+                                      purchaseOrderState[0].orderSet[
+                                        cast.targetSet.split("/")[1]
+                                      ]?.setTime || "00:00",
                                       cast.lot
                                     );
                                 }
@@ -685,7 +705,9 @@ export default function OrderTimeDesignate() {
                                       purchaseOrderState[0].orderSet[
                                         cast.targetSet.split("/")[1]
                                       ]?.startTime || "00:00",
-                                      cast.setTime,
+                                      purchaseOrderState[0].orderSet[
+                                        cast.targetSet.split("/")[1]
+                                      ]?.setTime || "00:00",
                                       cast.lot
                                     ) -
                                     checker_new(
@@ -693,7 +715,9 @@ export default function OrderTimeDesignate() {
                                       purchaseOrderState[0].orderSet[
                                         cast.targetSet.split("/")[1]
                                       ]?.startTime || "00:00",
-                                      cast.setTime,
+                                      purchaseOrderState[0].orderSet[
+                                        cast.targetSet.split("/")[1]
+                                      ]?.setTime || "00:00",
                                       cast.lot
                                     );
                                 }
