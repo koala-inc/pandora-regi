@@ -202,11 +202,6 @@ function Base() {
 
   let total = 0;
   let taxNoTotal = 0;
-  purchaseOrderState[0]?.cast?.map((cast: any) => {
-    total += Number(String(cast.price).replace(/[^0-9]/g, ""));
-  });
-  total +=
-    Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.lot);
   total += purchaseOrderState[0]?.isRoomCharge
     ? Number(purchaseOrderState[0]?.roomCharge)
     : 0;
@@ -563,8 +558,12 @@ function Base() {
                     cast.endTime = purchaseOrderState[0]?.mainEndTime;
                     cast.orderExtension = checker_new(
                       cast.endTime,
-                      cast.startTime,
-                      cast.setTime,
+                      purchaseOrderState[0].orderSet[
+                        cast.targetSet.split("/")[1]
+                      ].startTime,
+                      purchaseOrderState[0].orderSet[
+                        cast.targetSet.split("/")[1]
+                      ].setTime,
                       cast.lot
                     );
                   }
@@ -636,8 +635,12 @@ function Base() {
                     cast.endTime = purchaseOrderState[0]?.mainEndTime;
                     cast.orderExtension = checker_new(
                       cast.endTime,
-                      cast.startTime,
-                      cast.setTime,
+                      purchaseOrderState[0].orderSet[
+                        cast.targetSet.split("/")[1]
+                      ].startTime,
+                      purchaseOrderState[0].orderSet[
+                        cast.targetSet.split("/")[1]
+                      ].setTime,
                       cast.lot
                     );
                   }
@@ -868,7 +871,7 @@ function Base() {
             <div className="mt-1 flex w-full items-center justify-between text-sm">
               <div>サービス</div>
               <div>
-                {(
+                {Math.floor(
                   Math.floor(
                     totalPay -
                       (purchaseOrderState[0]?.priceTax
@@ -880,7 +883,7 @@ function Base() {
                           : 0
                         : 0)
                   ) *
-                  (Number(purchaseOrderState[0]?.serviceTax) / 100)
+                    (Number(purchaseOrderState[0]?.serviceTax) / 100)
                 ).toLocaleString()}
                 円
               </div>
@@ -888,7 +891,7 @@ function Base() {
             <div className="mt-1 flex w-full items-center justify-between text-sm">
               <div>税</div>
               <div>
-                {(
+                {Math.floor(
                   Math.floor(
                     totalPay -
                       (purchaseOrderState[0]?.priceTax
@@ -900,8 +903,8 @@ function Base() {
                           : 0
                         : 0)
                   ) *
-                  (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
-                  0.1
+                    (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
+                    0.1
                 ).toLocaleString()}
                 円
               </div>
@@ -909,7 +912,7 @@ function Base() {
             <div className="mt-2 flex w-full items-center justify-between text-2xl text-accent">
               <div>合計</div>
               <div className="flex-1 text-right">
-                {(
+                {Math.floor(
                   Math.ceil(
                     Math.floor(
                       (totalPay -
@@ -993,11 +996,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
   );
 
   let total = 0;
-  purchaseOrderState[0]?.cast?.map((cast: any) => {
-    total += Number(String(cast.price).replace(/[^0-9]/g, ""));
-  });
-  total +=
-    Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.lot);
+  let taxNoTotal = 0;
   total += purchaseOrderState[0]?.isRoomCharge
     ? Number(purchaseOrderState[0]?.roomCharge)
     : 0;
@@ -1005,10 +1004,29 @@ function Add({ isCalculator, setIsCalculator }: any) {
     Number(purchaseOrderState[0]?.extensionPrice) *
     Number(purchaseOrderState[0]?.orderExtension);
   purchaseOrderState[0]?.orderItem?.map((orderItem: any) => {
-    total += Number(orderItem.price) * Number(orderItem.lot);
+    if (!orderItem.isTax) {
+      total += Number(orderItem.price) * Number(orderItem.lot);
+    } else {
+      taxNoTotal +=
+        Number(String(orderItem.price).replace(/[^0-9]/g, "")) *
+        Number(orderItem.lot);
+    }
   });
   purchaseOrderState[0]?.orderCast?.map((cast: any) => {
-    total += Number(cast.price) * Number(cast.lot);
+    if (!cast.isTax) {
+      total += Number(cast.price) * Number(cast.lot);
+    } else {
+      taxNoTotal +=
+        Number(String(cast.price).replace(/[^0-9]/g, "")) * Number(cast.lot);
+    }
+  });
+  purchaseOrderState[0]?.orderSet?.map((set: any) => {
+    if (!set.isTax) {
+      total += Number(set.price) * Number(set.lot);
+    } else {
+      taxNoTotal +=
+        Number(String(set.price).replace(/[^0-9]/g, "")) * Number(set.lot);
+    }
   });
 
   const totalPay = total;
@@ -1022,6 +1040,170 @@ function Add({ isCalculator, setIsCalculator }: any) {
   const totalPay2 = total2 + totalPay;
 
   // const [isCalculator, setIsCalculator] = useState(false);
+
+  const [countOrderItem, setCountOrderItem] = useState<any>([]);
+  useEffect(() => {
+    const orderData: any = [];
+    purchaseOrderState[0]?.orderItem.map((orderItem: any, index: any) => {
+      const state = purchaseOrderState[0]?.orderItem.filter(
+        (n: any) =>
+          n.title === orderItem?.title &&
+          n.price === orderItem?.price &&
+          n.isTax === orderItem?.isTax
+      );
+      let count = 0;
+      state.map((state: any) => (count += state.lot));
+      orderData.push({
+        title: orderItem?.title,
+        subTitle: orderItem?.subTitle,
+        lot: count,
+        price: orderItem?.price,
+        isTax: orderItem?.isTax,
+      });
+    });
+    setCountOrderItem(
+      Array.from(
+        new Map(
+          orderData.map((data: any) => [
+            data.title + data.price + data.isTax,
+            data,
+          ])
+        ).values()
+      )
+    );
+  }, [purchaseOrderState]);
+
+  const [countOrderCast, setCountOrderCast] = useState<any>([]);
+  useEffect(() => {
+    const orderData: any = [];
+    const orderExtensions: any = [];
+    purchaseOrderState[0].orderCast.map((cast: any) => {
+      if (cast.orderExtension > 0) {
+        orderExtensions.push({
+          title: "指名延長料",
+          lot: Number(cast.orderExtension),
+          price: Number(cast.extensionPrice),
+          isTax: false,
+        });
+      }
+    });
+    const orderCasts = [
+      ...purchaseOrderState[0]?.orderCast?.map((cast: any) => {
+        return {
+          title: cast.title,
+          subTitle: "",
+          lot: Number(cast.lot),
+          price: cast.isTax
+            ? Number(String(cast.price).replace(/[^0-9]/g, ""))
+            : Number(cast.price),
+          isTax: cast.isTax,
+        };
+      }),
+      ...orderExtensions,
+    ];
+    orderCasts.map((orderCast: any, index: any) => {
+      const state = orderCasts.filter(
+        (n: any) =>
+          n.title === orderCast?.title &&
+          n.price === orderCast?.price &&
+          n.isTax === orderCast?.isTax
+      );
+      let count = 0;
+      state.map((state: any) => (count += state.lot));
+      orderData.push({
+        title: orderCast?.title,
+        subTitle: orderCast?.subTitle,
+        lot: count,
+        price: orderCast?.price,
+        isTax: orderCast?.isTax,
+      });
+    });
+    setCountOrderCast(
+      Array.from(
+        new Map(
+          orderData.map((data: any) => [
+            data.title + data.price + data.isTax,
+            data,
+          ])
+        ).values()
+      )
+    );
+  }, [purchaseOrderState]);
+
+  const [countOrderSet, setCountOrderSet] = useState<any>([]);
+  useEffect(() => {
+    const orderData: any = [];
+    const orderExtensions: any = [];
+    purchaseOrderState[0].orderSet.map((set: any) => {
+      if (set.orderExtension > 0) {
+        orderExtensions.push({
+          title: "延長料(" + set.categoryTitle.slice(0, 3) + ")",
+          lot: Number(set.orderExtension),
+          price: Number(set.extensionPrice),
+          isTax: false,
+        });
+      }
+    });
+    const orderSets = purchaseOrderState[0]?.isRoomCharge
+      ? Number(purchaseOrderState[0]?.orderExtension) > 0
+        ? [
+            ...purchaseOrderState[0]?.orderSet,
+            {
+              title:
+                purchaseOrderState[0]?.roomName == ""
+                  ? "ルームチャージ"
+                  : purchaseOrderState[0]?.roomName,
+              lot: 1,
+              price: purchaseOrderState[0]?.roomCharge,
+              isTax: purchaseOrderState[0]?.roomTax,
+            },
+            ...orderExtensions,
+          ]
+        : [
+            ...purchaseOrderState[0]?.orderSet,
+            {
+              title:
+                purchaseOrderState[0]?.roomName == ""
+                  ? "ルームチャージ"
+                  : purchaseOrderState[0]?.roomName,
+              lot: 1,
+              price: purchaseOrderState[0]?.roomCharge,
+              isTax: purchaseOrderState[0]?.roomTax,
+            },
+            ...orderExtensions,
+          ]
+      : Number(purchaseOrderState[0]?.orderExtension) > 0
+      ? [...purchaseOrderState[0]?.orderSet, ...orderExtensions]
+      : [...purchaseOrderState[0]?.orderSet, ...orderExtensions];
+
+    orderSets.map((orderSet: any, index: any) => {
+      const state = orderSets.filter(
+        (n: any) =>
+          n.title === orderSet?.title &&
+          n.price === orderSet?.price &&
+          n.isTax === orderSet?.isTax
+      );
+      let count = 0;
+      state.map((state: any) => (count += state.lot));
+      orderData.push({
+        title: orderSet?.title,
+        subTitle: "",
+        lot: count,
+        price: orderSet?.price,
+        isTax: orderSet?.isTax,
+      });
+    });
+    setCountOrderSet(
+      Array.from(
+        new Map(
+          orderData.map((data: any) => [
+            data.title + data.price + data.isTax,
+            data,
+          ])
+        ).values()
+      )
+    );
+  }, [purchaseOrderState]);
 
   return (
     <>
@@ -1072,7 +1254,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
               setIsControl("ITEMEDIT");
             }}
           >
-            <Lists lists={purchaseOrderState[0]?.orderItem || []} />
+            <Lists lists={countOrderItem || []} />
           </div>
           <div className="flex w-full">
             <Line />
@@ -1092,7 +1274,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                     : "flex h-[40px] items-center justify-end text-xl text-accent"
                 }
               >
-                {Math.floor(totalPay).toLocaleString()}円
+                {Math.floor(totalPay + taxNoTotal).toLocaleString()}円
               </p>
               <p
                 className={
@@ -1101,7 +1283,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                     : "flex h-[40px] items-center justify-end text-xl text-accent"
                 }
               >
-                {(
+                {Math.floor(
                   Math.ceil(
                     Math.floor(
                       (totalPay -
@@ -1122,7 +1304,8 @@ function Add({ isCalculator, setIsCalculator }: any) {
                           ? purchaseOrderState[0]?.roomTax
                             ? purchaseOrderState[0]?.roomCharge
                             : 0
-                          : 0)
+                          : 0) +
+                        taxNoTotal
                     ) / 100
                   ) * 100
                 ).toLocaleString()}
@@ -1152,7 +1335,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                     : "flex h-[40px] items-center justify-end text-xl text-accent"
                 }
               >
-                {(
+                {Math.floor(
                   Math.ceil(
                     Math.floor(
                       (totalPay2 -
@@ -1412,22 +1595,37 @@ function CastAdd() {
   );
 
   let total = 0;
-  purchaseOrderState[0]?.cast?.map((cast: any) => {
-    total += Number(String(cast.price).replace(/[^0-9]/g, ""));
-  });
-  total +=
-    Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.lot);
+  let taxNoTotal = 0;
   total += purchaseOrderState[0]?.isRoomCharge
     ? Number(purchaseOrderState[0]?.roomCharge)
     : 0;
   total +=
     Number(purchaseOrderState[0]?.extensionPrice) *
     Number(purchaseOrderState[0]?.orderExtension);
-  purchaseOrderState[0]?.orderCast?.map((orderCast: any) => {
-    total += Number(orderCast.price) * Number(orderCast.lot);
+  purchaseOrderState[0]?.orderItem?.map((orderItem: any) => {
+    if (!orderItem.isTax) {
+      total += Number(orderItem.price) * Number(orderItem.lot);
+    } else {
+      taxNoTotal +=
+        Number(String(orderItem.price).replace(/[^0-9]/g, "")) *
+        Number(orderItem.lot);
+    }
   });
   purchaseOrderState[0]?.orderCast?.map((cast: any) => {
-    total += Number(cast.price) * Number(cast.lot);
+    if (!cast.isTax) {
+      total += Number(cast.price) * Number(cast.lot);
+    } else {
+      taxNoTotal +=
+        Number(String(cast.price).replace(/[^0-9]/g, "")) * Number(cast.lot);
+    }
+  });
+  purchaseOrderState[0]?.orderSet?.map((set: any) => {
+    if (!set.isTax) {
+      total += Number(set.price) * Number(set.lot);
+    } else {
+      taxNoTotal +=
+        Number(String(set.price).replace(/[^0-9]/g, "")) * Number(set.lot);
+    }
   });
 
   const totalPay = total;
@@ -1448,8 +1646,97 @@ function CastAdd() {
   const [selectDesignateSymbol, setSelectDesignateSymbol] = useState("");
   const [selectDesignatePrice, setSelectDesignatePrice] = useState(0);
 
-  const [countOrderSet, setCountOrderSet] = useState<any>([]);
+  const [countOrderItem, setCountOrderItem] = useState<any>([]);
+  useEffect(() => {
+    const orderData: any = [];
+    purchaseOrderState[0]?.orderItem.map((orderItem: any, index: any) => {
+      const state = purchaseOrderState[0]?.orderItem.filter(
+        (n: any) =>
+          n.title === orderItem?.title &&
+          n.price === orderItem?.price &&
+          n.isTax === orderItem?.isTax
+      );
+      let count = 0;
+      state.map((state: any) => (count += state.lot));
+      orderData.push({
+        title: orderItem?.title,
+        subTitle: orderItem?.subTitle,
+        lot: count,
+        price: orderItem?.price,
+        isTax: orderItem?.isTax,
+      });
+    });
+    setCountOrderItem(
+      Array.from(
+        new Map(
+          orderData.map((data: any) => [
+            data.title + data.price + data.isTax,
+            data,
+          ])
+        ).values()
+      )
+    );
+  }, [purchaseOrderState]);
+
+  const [countOrderCast, setCountOrderCast] = useState<any>([]);
+  useEffect(() => {
+    const orderData: any = [];
+    const orderExtensions: any = [];
+    purchaseOrderState[0].orderCast.map((cast: any) => {
+      if (cast.orderExtension > 0) {
+        orderExtensions.push({
+          title: "指名延長料",
+          lot: Number(cast.orderExtension),
+          price: Number(cast.extensionPrice),
+          isTax: false,
+        });
+      }
+    });
+    const orderCasts = [
+      ...purchaseOrderState[0]?.orderCast?.map((cast: any) => {
+        return {
+          title: cast.title,
+          subTitle: "",
+          lot: Number(cast.lot),
+          price: cast.isTax
+            ? Number(String(cast.price).replace(/[^0-9]/g, ""))
+            : Number(cast.price),
+          isTax: cast.isTax,
+        };
+      }),
+      ...orderExtensions,
+    ];
+    orderCasts.map((orderCast: any, index: any) => {
+      const state = orderCasts.filter(
+        (n: any) =>
+          n.title === orderCast?.title &&
+          n.price === orderCast?.price &&
+          n.isTax === orderCast?.isTax
+      );
+      let count = 0;
+      state.map((state: any) => (count += state.lot));
+      orderData.push({
+        title: orderCast?.title,
+        subTitle: orderCast?.subTitle,
+        lot: count,
+        price: orderCast?.price,
+        isTax: orderCast?.isTax,
+      });
+    });
+    setCountOrderCast(
+      Array.from(
+        new Map(
+          orderData.map((data: any) => [
+            data.title + data.price + data.isTax,
+            data,
+          ])
+        ).values()
+      )
+    );
+  }, [purchaseOrderState]);
+
   const [orderSets, setOrderSets] = useState<any>([]);
+  const [countOrderSet, setCountOrderSet] = useState<any>([]);
   useEffect(() => {
     const orderData: any = [];
     const orderExtensions: any = [];
@@ -1460,28 +1747,43 @@ function CastAdd() {
           lot: Number(set.orderExtension),
           price: Number(set.extensionPrice),
           isTax: false,
-          startTime: set.startTime,
         });
       }
     });
-    const orderSets = purchaseOrderState[0]?.isRoomCharge
-      ? [
-          ...purchaseOrderState[0]?.orderSet,
-          {
-            title:
-              purchaseOrderState[0]?.roomName == ""
-                ? "ルームチャージ"
-                : purchaseOrderState[0]?.roomName,
-            lot: 1,
-            price: purchaseOrderState[0]?.roomCharge,
-            isTax: purchaseOrderState[0]?.roomTax,
-          },
-          ...orderExtensions,
-        ]
+    const orderSets2 = purchaseOrderState[0]?.isRoomCharge
+      ? Number(purchaseOrderState[0]?.orderExtension) > 0
+        ? [
+            ...purchaseOrderState[0]?.orderSet,
+            {
+              title:
+                purchaseOrderState[0]?.roomName == ""
+                  ? "ルームチャージ"
+                  : purchaseOrderState[0]?.roomName,
+              lot: 1,
+              price: purchaseOrderState[0]?.roomCharge,
+              isTax: purchaseOrderState[0]?.roomTax,
+            },
+            ...orderExtensions,
+          ]
+        : [
+            ...purchaseOrderState[0]?.orderSet,
+            {
+              title:
+                purchaseOrderState[0]?.roomName == ""
+                  ? "ルームチャージ"
+                  : purchaseOrderState[0]?.roomName,
+              lot: 1,
+              price: purchaseOrderState[0]?.roomCharge,
+              isTax: purchaseOrderState[0]?.roomTax,
+            },
+            ...orderExtensions,
+          ]
+      : Number(purchaseOrderState[0]?.orderExtension) > 0
+      ? [...purchaseOrderState[0]?.orderSet, ...orderExtensions]
       : [...purchaseOrderState[0]?.orderSet, ...orderExtensions];
-
-    orderSets.map((orderSet: any, index: any) => {
-      const state = orderSets.filter(
+    setOrderSets(orderSets2);
+    orderSets2.map((orderSet: any, index: any) => {
+      const state = orderSets2.filter(
         (n: any) =>
           n.title === orderSet?.title &&
           n.price === orderSet?.price &&
@@ -1497,7 +1799,6 @@ function CastAdd() {
         isTax: orderSet?.isTax,
       });
     });
-    setOrderSets(orderSets);
     setCountOrderSet(
       Array.from(
         new Map(
@@ -1559,28 +1860,7 @@ function CastAdd() {
               setIsControl("CASTEDIT");
             }}
           >
-            <Lists
-              lists={[
-                // ...purchaseOrderState[0]?.cast?.map((cast: any) => {
-                //   return {
-                //     title: cast.split("##")[0],
-                //     subTitle: "",
-                //     lot: 1,
-                //     price: Number(String(cast.price).replace(/[^0-9]/g, "")),
-                //     isTax: cast.isTax,
-                //   };
-                // }),
-                ...purchaseOrderState[0]?.orderCast?.map((cast: any) => {
-                  return {
-                    title: cast.title,
-                    subTitle: "",
-                    lot: 1,
-                    price: Number(cast.price),
-                    isTax: cast.isTax,
-                  };
-                }),
-              ]}
-            />
+            <Lists lists={countOrderCast || []} />
           </div>
           <div className="flex w-full">
             <Line />
@@ -1600,7 +1880,7 @@ function CastAdd() {
                     : "flex h-[40px] items-center justify-end text-xl text-accent"
                 }
               >
-                {Math.floor(totalPay).toLocaleString()}円
+                {Math.floor(totalPay + taxNoTotal).toLocaleString()}円
               </p>
               <p
                 className={
@@ -1609,7 +1889,7 @@ function CastAdd() {
                     : "flex h-[40px] items-center justify-end text-xl text-accent"
                 }
               >
-                {(
+                {Math.floor(
                   Math.ceil(
                     Math.floor(
                       (totalPay -
@@ -1630,7 +1910,8 @@ function CastAdd() {
                           ? purchaseOrderState[0]?.roomTax
                             ? purchaseOrderState[0]?.roomCharge
                             : 0
-                          : 0)
+                          : 0) +
+                        taxNoTotal
                     ) / 100
                   ) * 100
                 ).toLocaleString()}
@@ -1660,7 +1941,7 @@ function CastAdd() {
                     : "flex h-[40px] items-center justify-end text-xl text-accent"
                 }
               >
-                {(
+                {Math.floor(
                   Math.ceil(
                     Math.floor(
                       (totalPay2 -
