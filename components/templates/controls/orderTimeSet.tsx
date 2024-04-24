@@ -690,7 +690,9 @@ export default function OrderTimeSet() {
                                     event.event_revision.name == e.target.value
                                   ) {
                                     set.title = event.event_revision.name;
-                                    set.price = event.event_revision.price;
+                                    set.price = set.isTax
+                                      ? event.event_revision.price + "##"
+                                      : event.event_revision.price;
                                     set.setTime = event.event_revision.set_time;
                                     searchData2?.data?.seatArea[0]?.store_seat_area[0]?.seat_area?.map(
                                       (area: any, index: any) => {

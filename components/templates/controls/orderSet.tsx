@@ -1765,7 +1765,7 @@ export default function ControlOrderSet() {
                               title: setName,
                               subTitle: "",
                               lot: 1,
-                              price: Number(result.replace(/[^0-9]/g, "")),
+                              price: result,
                               isTax: result.includes("##"),
                               setTime: order.setTime,
                               startTime: order.startTime,
@@ -1788,9 +1788,7 @@ export default function ControlOrderSet() {
                                   title: cast.name,
                                   subTitle: "",
                                   lot: cast.lot,
-                                  price: Number(
-                                    String(cast.price).replace(/[^0-9]/g, "")
-                                  ),
+                                  price: cast.price,
                                   isTax: cast.isTax,
                                   setTime: order.setTime,
                                   startTime: order.startTime,
@@ -1809,9 +1807,7 @@ export default function ControlOrderSet() {
                               title: cast.name,
                               subTitle: "",
                               lot: 1,
-                              price: Number(
-                                String(cast.price).replace(/[^0-9]/g, "")
-                              ),
+                              price: cast.price,
                               isTax: cast.isTax,
                               setTime: order.setTime,
                               startTime: order.startTime,
