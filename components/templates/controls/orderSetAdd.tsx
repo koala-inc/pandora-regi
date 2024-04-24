@@ -1650,7 +1650,7 @@ export default function ControlOrderSetAdd() {
                         <input
                           type="text"
                           className="mx-2 h-[25px] w-[30px] rounded-md text-center"
-                          defaultValue={1}
+                          value={cast.lot}
                           onClick={() => {
                             setIsCalculator(true);
                             setIsCalculatorSelect(10);
