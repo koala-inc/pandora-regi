@@ -12,13 +12,13 @@ export default function Calculator7({ result, callback }: any) {
   const [isHour, setIsHour] = useState(false);
   const [isHourTrue, setIsHourTrue] = useState(false);
   const [hour, setHour] = useState(
-    result.time ? result.time.split(":")[0] : "00"
+    result.startTime ? result.startTime.split(":")[0] : "00"
   );
 
   const [isMinite, setIsMinite] = useState(true);
   const [isMiniteTrue, setIsMiniteTrue] = useState(false);
   const [minite, setMinite] = useState(
-    result.time ? result.time.split(":")[1] : "00"
+    result.startTime ? result.startTime.split(":")[1] : "00"
   );
 
   const [miniteType, setMiniteType] = useState(5);
