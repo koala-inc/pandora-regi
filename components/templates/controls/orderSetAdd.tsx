@@ -1869,35 +1869,7 @@ export default function ControlOrderSetAdd() {
                             return orderSet;
                           });
                           setPurchaseOrder(newArr);
-                          const purchaseOrderState2 = purchaseOrder.filter(
-                            (purchaseOrder: any) =>
-                              purchaseOrder.id == seatPreset
-                          );
-                          purchaseOrderState2[0].orderExtension = checker();
-                          purchaseOrderState2[0].orderSet.map((set: any) => {
-                            if (!set.isLock) {
-                              set.orderExtension = checker_new(
-                                set.endTime,
-                                set.startTime,
-                                set.setTime,
-                                set.lot
-                              );
-                            }
-                          });
-                          purchaseOrderState2[0].orderCast.map((cast: any) => {
-                            if (!cast.isLock) {
-                              cast.orderExtension = checker_new(
-                                cast.endTime,
-                                purchaseOrderState2[0].orderSet[
-                                  cast.targetSet.split("/")[1]
-                                ].startTime,
-                                purchaseOrderState2[0].orderSet[
-                                  cast.targetSet.split("/")[1]
-                                ].setTime,
-                                cast.lot
-                              );
-                            }
-                          });
+
                           // setPurchaseOrderSet([
                           //   ...purchaseOrderSet,
                           //   {

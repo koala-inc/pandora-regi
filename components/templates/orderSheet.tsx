@@ -35,6 +35,7 @@ import Calculator from "../parts/calculator";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
 import Calculator11 from "../parts/calculator11";
 import Calculator12 from "../parts/calculator12";
+import useOrderGlobal from "@/globalstates/order";
 
 function Lists({
   setControl,
@@ -473,6 +474,33 @@ function Base() {
       )
     );
   }, [purchaseOrderState]);
+
+  const [order, setOrder] = useOrderGlobal();
+
+  if (!order.startTime) {
+    purchaseOrderState[0].orderExtension = checker();
+    purchaseOrderState[0].orderSet.map((set: any) => {
+      if (!set.isLock) {
+        set.orderExtension = checker_new(
+          set.endTime,
+          set.startTime,
+          set.setTime,
+          set.lot
+        );
+      }
+    });
+    purchaseOrderState[0].orderCast.map((cast: any) => {
+      if (!cast.isLock) {
+        cast.orderExtension = checker_new(
+          cast.endTime,
+          purchaseOrderState[0].orderSet[cast.targetSet.split("/")[1]]
+            .startTime,
+          purchaseOrderState[0].orderSet[cast.targetSet.split("/")[1]].setTime,
+          cast.lot
+        );
+      }
+    });
+  }
 
   return (
     <>
