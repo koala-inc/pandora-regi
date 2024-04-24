@@ -2235,7 +2235,7 @@ export default function OrderSheet() {
               key={index}
               result={purchaseOrderItem}
               callback={(hour: any, minite: any) => {
-                purchaseOrderItem.time = hour + ":" + minite;
+                purchaseOrderItem.startTime = hour + ":" + minite;
               }}
             />
           );
