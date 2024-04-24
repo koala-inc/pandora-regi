@@ -60,64 +60,9 @@ function Lists({
     (purchaseOrder: any) => purchaseOrder.id == seatPreset
   );
   useEffect(() => {
-    const orderData: any = [];
-    const orderExtensions: any = [];
-    purchaseOrderState[0].orderSet.map((set: any) => {
-      if (set.orderExtension > 0) {
-        orderExtensions.push({
-          title: "延長料(" + set.categoryTitle.slice(0, 3) + ")",
-          lot: Number(set.orderExtension),
-          price: Number(set.extensionPrice),
-          isTax: false,
-          startTime: set.startTime,
-        });
-      }
-    });
-    const orderSets = purchaseOrderState[0]?.isRoomCharge
-      ? [
-          ...purchaseOrderState[0]?.orderSet,
-          {
-            title:
-              purchaseOrderState[0]?.roomName == ""
-                ? "ルームチャージ"
-                : purchaseOrderState[0]?.roomName,
-            lot: 1,
-            price: purchaseOrderState[0]?.roomCharge,
-            isTax: purchaseOrderState[0]?.roomTax,
-          },
-          ...orderExtensions,
-        ]
-      : [...purchaseOrderState[0]?.orderSet, ...orderExtensions];
+    const orderSets = [...purchaseOrderState[0]?.orderSet];
 
     setOrderSets(orderSets);
-
-    orderSets.map((orderSet: any, index: any) => {
-      const state = orderSets.filter(
-        (n: any) =>
-          n.title === orderSet?.title &&
-          n.price === orderSet?.price &&
-          n.isTax === orderSet?.isTax
-      );
-      let count = 0;
-      state.map((state: any) => (count += state.lot));
-      orderData.push({
-        title: orderSet?.title,
-        subTitle: "",
-        lot: count,
-        price: orderSet?.price,
-        isTax: orderSet?.isTax,
-      });
-    });
-    setCountOrderSet(
-      Array.from(
-        new Map(
-          orderData.map((data: any) => [
-            data.title + data.price + data.isTax,
-            data,
-          ])
-        ).values()
-      )
-    );
   }, [purchaseOrderState]);
 
   let mainFlag = false;
@@ -135,13 +80,8 @@ function Lists({
           if (orderSets.length > Number(cast.targetSet.split("/")[1])) {
             let flag = true;
             orderSets.map((orderSet: any, index: any) => {
-              if (
-                !orderSet.title.includes("延長") &&
-                !orderSet.title.includes("ルームチャージ")
-              ) {
-                if (orderSet.title + "/" + index == cast.targetSet) {
-                  flag = false;
-                }
+              if (orderSet.title + "/" + index == cast.targetSet) {
+                flag = false;
               }
             });
             if (flag) {

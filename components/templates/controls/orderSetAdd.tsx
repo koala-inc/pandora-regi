@@ -535,34 +535,7 @@ export default function ControlOrderSetAdd() {
 
   const [orderSets2, setOrderSets2] = useState<any>([]);
   useEffect(() => {
-    const orderData: any = [];
-    const orderExtensions: any = [];
-    purchaseOrderState[0].orderSet.map((set: any) => {
-      if (set.orderExtension > 0) {
-        orderExtensions.push({
-          title: "延長料(" + set.categoryTitle.slice(0, 3) + ")",
-          lot: Number(set.orderExtension),
-          price: Number(set.extensionPrice),
-          isTax: false,
-          startTime: set.startTime,
-        });
-      }
-    });
-    const orderSets2 = purchaseOrderState[0]?.isRoomCharge
-      ? [
-          ...purchaseOrderState[0]?.orderSet,
-          {
-            title:
-              purchaseOrderState[0]?.roomName == ""
-                ? "ルームチャージ"
-                : purchaseOrderState[0]?.roomName,
-            lot: 1,
-            price: purchaseOrderState[0]?.roomCharge,
-            isTax: purchaseOrderState[0]?.roomTax,
-          },
-          ...orderExtensions,
-        ]
-      : [...purchaseOrderState[0]?.orderSet, ...orderExtensions];
+    const orderSets2 = [...purchaseOrderState[0]?.orderSet];
 
     setOrderSets2(orderSets2);
   }, [purchaseOrderState]);
