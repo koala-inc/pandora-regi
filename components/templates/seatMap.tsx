@@ -16,6 +16,7 @@ import { RequestDocument } from "graphql-request";
 import useSWR, { preload } from "swr";
 import { searchSeatMap } from "@/gqls/query/seat";
 import dayjs from "dayjs";
+import { useState } from "react";
 
 const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
@@ -35,6 +36,14 @@ export default function SeatMap() {
     client.request(q, { ...defaultVariables });
 
   const searchData = useSWR<any>(searchSeatMap, fetcher);
+
+  const [nowDate, setNowDate] = useState(dayjs(new Date()));
+
+  const date = (hour: any, minite: any) => {
+    const a = nowDate.hour(Number(hour));
+    const b = a.minute(Number(minite));
+    return b;
+  };
 
   return (
     <>
@@ -83,6 +92,130 @@ export default function SeatMap() {
                     setSeatPreset(seat.name);
                     if (isLock < 2) {
                       setIsCard(true);
+
+                      const purchaseOrderState = purchaseOrder.filter(
+                        (purchaseOrder: any) => purchaseOrder.id == seat.name
+                      );
+
+                      const checker = () =>
+                        (Math.floor(
+                          (Number(
+                            dayjs(
+                              date(
+                                purchaseOrderState[0]?.endTime.split(":")[0],
+                                purchaseOrderState[0]?.endTime.split(":")[1]
+                              )
+                            ).diff(
+                              date(
+                                purchaseOrderState[0]?.startTime.split(":")[0],
+                                purchaseOrderState[0]?.startTime.split(":")[1]
+                              ),
+                              "minute"
+                            )
+                          ) -
+                            Number(purchaseOrderState[0]?.setTime) -
+                            1) /
+                            30
+                        ) >= 0
+                          ? Math.floor(
+                              (Number(
+                                dayjs(
+                                  date(
+                                    purchaseOrderState[0]?.endTime.split(
+                                      ":"
+                                    )[0],
+                                    purchaseOrderState[0]?.endTime.split(":")[1]
+                                  )
+                                ).diff(
+                                  date(
+                                    purchaseOrderState[0]?.startTime.split(
+                                      ":"
+                                    )[0],
+                                    purchaseOrderState[0]?.startTime.split(
+                                      ":"
+                                    )[1]
+                                  ),
+                                  "minute"
+                                )
+                              ) -
+                                Number(purchaseOrderState[0]?.setTime) -
+                                1) /
+                                30
+                            ) + 1
+                          : 0) * purchaseOrderState[0]?.lot;
+
+                      const checker_new = (
+                        endTime: any,
+                        startTime: any,
+                        setTime: any,
+                        num: any
+                      ) =>
+                        (Math.floor(
+                          (Number(
+                            dayjs(
+                              date(endTime.split(":")[0], endTime.split(":")[1])
+                            ).diff(
+                              date(
+                                startTime.split(":")[0],
+                                startTime.split(":")[1]
+                              ),
+                              "minute"
+                            )
+                          ) -
+                            Number(setTime) -
+                            1) /
+                            30
+                        ) >= 0
+                          ? Math.floor(
+                              (Number(
+                                dayjs(
+                                  date(
+                                    endTime.split(":")[0],
+                                    endTime.split(":")[1]
+                                  )
+                                ).diff(
+                                  date(
+                                    startTime.split(":")[0],
+                                    startTime.split(":")[1]
+                                  ),
+                                  "minute"
+                                )
+                              ) -
+                                Number(setTime) -
+                                1) /
+                                30
+                            ) + 1
+                          : 0) * num;
+
+                      if (purchaseOrderState[0]) {
+                        purchaseOrderState[0].orderExtension = checker();
+                        purchaseOrderState[0].orderSet.map((set: any) => {
+                          if (!set.isLock) {
+                            set.endTime = purchaseOrderState[0]?.mainEndTime;
+                            set.orderExtension = checker_new(
+                              set.endTime,
+                              set.startTime,
+                              set.setTime,
+                              set.lot
+                            );
+                          }
+                        });
+                        purchaseOrderState[0].orderCast.map((cast: any) => {
+                          if (!cast.isLock) {
+                            cast.endTime = purchaseOrderState[0]?.mainEndTime;
+                            cast.orderExtension = checker_new(
+                              cast.endTime,
+                              purchaseOrderState[0].orderSet[
+                                cast.targetSet.split("/")[1]
+                              ].startTime,
+                              purchaseOrderState[0].orderSet[
+                                cast.targetSet.split("/")[1]
+                              ].setTime,
+                              cast.lot
+                            );
+                          }
+                        });
+                      }
                     } else if (isLock == 2) {
                       setIsLock(3);
                     }
