@@ -826,7 +826,13 @@ export default function ControlOrderSet() {
                           };
                         });
                         setIsRoomCharge(Number(activeTabRC) > 0);
-                        setResult(String(Number(event.event_revision.price)));
+                        if (event.event_revision.is_tax_service == 1) {
+                          setResult(
+                            String(Number(event.event_revision.price)) + "##"
+                          );
+                        } else {
+                          setResult(String(Number(event.event_revision.price)));
+                        }
                         setSetTimeResult(
                           String(Number(event.event_revision.set_time))
                         );
@@ -925,9 +931,16 @@ export default function ControlOrderSet() {
                                     .format("HH:mm"),
                                 };
                               });
-                              setResult(
-                                String(Number(event.event_revision.price))
-                              );
+                              if (event.event_revision.is_tax_service == 1) {
+                                setResult(
+                                  String(Number(event.event_revision.price)) +
+                                    "##"
+                                );
+                              } else {
+                                setResult(
+                                  String(Number(event.event_revision.price))
+                                );
+                              }
                               setSetTimeResult(
                                 String(Number(event.event_revision.set_time))
                               );
