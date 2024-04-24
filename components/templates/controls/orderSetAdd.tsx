@@ -651,6 +651,78 @@ export default function ControlOrderSetAdd() {
     setOrderSets2(orderSets2);
   }, [purchaseOrderState]);
 
+  const date = (hour: any, minite: any) => {
+    const a = nowDate.hour(Number(hour));
+    const b = a.minute(Number(minite));
+    return b;
+  };
+
+  const checker = () =>
+    (Math.floor(
+      (Number(
+        dayjs(
+          date(
+            purchaseOrderState[0]?.endTime.split(":")[0],
+            purchaseOrderState[0]?.endTime.split(":")[1]
+          )
+        ).diff(
+          date(
+            purchaseOrderState[0]?.startTime.split(":")[0],
+            purchaseOrderState[0]?.startTime.split(":")[1]
+          ),
+          "minute"
+        )
+      ) -
+        Number(purchaseOrderState[0]?.setTime) -
+        1) /
+        30
+    ) >= 0
+      ? Math.floor(
+          (Number(
+            dayjs(
+              date(
+                purchaseOrderState[0]?.endTime.split(":")[0],
+                purchaseOrderState[0]?.endTime.split(":")[1]
+              )
+            ).diff(
+              date(
+                purchaseOrderState[0]?.startTime.split(":")[0],
+                purchaseOrderState[0]?.startTime.split(":")[1]
+              ),
+              "minute"
+            )
+          ) -
+            Number(purchaseOrderState[0]?.setTime) -
+            1) /
+            30
+        ) + 1
+      : 0) * purchaseOrderState[0]?.lot;
+
+  const checker_new = (endTime: any, startTime: any, setTime: any, num: any) =>
+    (Math.floor(
+      (Number(
+        dayjs(date(endTime.split(":")[0], endTime.split(":")[1])).diff(
+          date(startTime.split(":")[0], startTime.split(":")[1]),
+          "minute"
+        )
+      ) -
+        Number(setTime) -
+        1) /
+        30
+    ) >= 0
+      ? Math.floor(
+          (Number(
+            dayjs(date(endTime.split(":")[0], endTime.split(":")[1])).diff(
+              date(startTime.split(":")[0], startTime.split(":")[1]),
+              "minute"
+            )
+          ) -
+            Number(setTime) -
+            1) /
+            30
+        ) + 1
+      : 0) * num;
+
   return (
     <>
       {isCalculator && isCalculatorSelect == 0 && (
@@ -1797,6 +1869,35 @@ export default function ControlOrderSetAdd() {
                             return orderSet;
                           });
                           setPurchaseOrder(newArr);
+                          const purchaseOrderState2 = purchaseOrder.filter(
+                            (purchaseOrder: any) =>
+                              purchaseOrder.id == seatPreset
+                          );
+                          purchaseOrderState2[0].orderExtension = checker();
+                          purchaseOrderState2[0].orderSet.map((set: any) => {
+                            if (!set.isLock) {
+                              set.orderExtension = checker_new(
+                                set.endTime,
+                                set.startTime,
+                                set.setTime,
+                                set.lot
+                              );
+                            }
+                          });
+                          purchaseOrderState2[0].orderCast.map((cast: any) => {
+                            if (!cast.isLock) {
+                              cast.orderExtension = checker_new(
+                                cast.endTime,
+                                purchaseOrderState2[0].orderSet[
+                                  cast.targetSet.split("/")[1]
+                                ].startTime,
+                                purchaseOrderState2[0].orderSet[
+                                  cast.targetSet.split("/")[1]
+                                ].setTime,
+                                cast.lot
+                              );
+                            }
+                          });
                           // setPurchaseOrderSet([
                           //   ...purchaseOrderSet,
                           //   {
