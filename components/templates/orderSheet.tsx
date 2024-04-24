@@ -1022,9 +1022,15 @@ function Add({ isCalculator, setIsCalculator }: any) {
   const totalPay = total;
 
   let total2 = 0;
+  let total2noTax = 0;
   purchaseOrderItemAdd.map((purchaseOrderItemAdd: any) => {
-    total2 +=
-      Number(purchaseOrderItemAdd.price) * Number(purchaseOrderItemAdd.lot);
+    if (purchaseOrderItemAdd.isTax) {
+      total2noTax +=
+        Number(purchaseOrderItemAdd.price) * Number(purchaseOrderItemAdd.lot);
+    } else {
+      total2 +=
+        Number(purchaseOrderItemAdd.price) * Number(purchaseOrderItemAdd.lot);
+    }
   });
 
   const totalPay2 = total2 + totalPay;
@@ -1299,7 +1305,10 @@ function Add({ isCalculator, setIsCalculator }: any) {
                     : "flex h-[40px] items-center justify-end text-xl text-accent"
                 }
               >
-                {Math.floor(totalPay2).toLocaleString()}円
+                {Math.floor(
+                  totalPay2 + taxNoTotal + total2noTax
+                ).toLocaleString()}
+                円
               </p>
               <p
                 className={
@@ -1312,7 +1321,9 @@ function Add({ isCalculator, setIsCalculator }: any) {
                   Math.ceil(
                     (totalPay2 *
                       (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
-                      1.1) /
+                      1.1 +
+                      taxNoTotal +
+                      total2noTax) /
                       100
                   ) * 100
                 ).toLocaleString()}
@@ -1587,9 +1598,15 @@ function CastAdd() {
   const totalPay = total;
 
   let total2 = 0;
+  let total2noTax = 0;
   purchaseOrderItemAdd.map((purchaseOrderItemAdd: any) => {
-    total2 +=
-      Number(purchaseOrderItemAdd.price) * Number(purchaseOrderItemAdd.lot);
+    if (purchaseOrderItemAdd.isTax) {
+      total2noTax +=
+        Number(purchaseOrderItemAdd.price) * Number(purchaseOrderItemAdd.lot);
+    } else {
+      total2 +=
+        Number(purchaseOrderItemAdd.price) * Number(purchaseOrderItemAdd.lot);
+    }
   });
 
   const totalPay2 = total2 + totalPay;
@@ -1871,7 +1888,10 @@ function CastAdd() {
                     : "flex h-[40px] items-center justify-end text-xl text-accent"
                 }
               >
-                {Math.floor(totalPay2).toLocaleString()}円
+                {Math.floor(
+                  totalPay2 + taxNoTotal + total2noTax
+                ).toLocaleString()}
+                円
               </p>
               <p
                 className={
@@ -1884,7 +1904,9 @@ function CastAdd() {
                   Math.ceil(
                     (totalPay2 *
                       (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
-                      1.1) /
+                      1.1 +
+                      taxNoTotal +
+                      total2noTax) /
                       100
                   ) * 100
                 ).toLocaleString()}
