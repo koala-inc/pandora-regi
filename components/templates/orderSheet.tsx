@@ -900,18 +900,7 @@ function Base() {
               <div>サービス</div>
               <div>
                 {Math.floor(
-                  Math.floor(
-                    totalPay -
-                      (purchaseOrderState[0]?.priceTax
-                        ? purchaseOrderState[0]?.price
-                        : 0) -
-                      (purchaseOrderState[0]?.isRoomCharge
-                        ? purchaseOrderState[0]?.roomTax
-                          ? purchaseOrderState[0]?.roomCharge
-                          : 0
-                        : 0)
-                  ) *
-                    (Number(purchaseOrderState[0]?.serviceTax) / 100)
+                  totalPay * (Number(purchaseOrderState[0]?.serviceTax) / 100)
                 ).toLocaleString()}
                 円
               </div>
@@ -920,17 +909,7 @@ function Base() {
               <div>税</div>
               <div>
                 {Math.floor(
-                  Math.floor(
-                    totalPay -
-                      (purchaseOrderState[0]?.priceTax
-                        ? purchaseOrderState[0]?.price
-                        : 0) -
-                      (purchaseOrderState[0]?.isRoomCharge
-                        ? purchaseOrderState[0]?.roomTax
-                          ? purchaseOrderState[0]?.roomCharge
-                          : 0
-                        : 0)
-                  ) *
+                  totalPay *
                     (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
                     0.1
                 ).toLocaleString()}
@@ -942,28 +921,11 @@ function Base() {
               <div className="flex-1 text-right">
                 {Math.floor(
                   Math.ceil(
-                    Math.floor(
-                      (totalPay -
-                        (purchaseOrderState[0]?.priceTax
-                          ? purchaseOrderState[0]?.price
-                          : 0) -
-                        (purchaseOrderState[0]?.isRoomCharge
-                          ? purchaseOrderState[0]?.roomTax
-                            ? purchaseOrderState[0]?.roomCharge
-                            : 0
-                          : 0)) *
-                        (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
-                        1.1 +
-                        (purchaseOrderState[0]?.priceTax
-                          ? purchaseOrderState[0]?.price
-                          : 0) +
-                        (purchaseOrderState[0]?.isRoomCharge
-                          ? purchaseOrderState[0]?.roomTax
-                            ? purchaseOrderState[0]?.roomCharge
-                            : 0
-                          : 0) +
-                        taxNoTotal
-                    ) / 100
+                    (totalPay *
+                      (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
+                      1.1 +
+                      taxNoTotal) /
+                      100
                   ) * 100
                 ).toLocaleString()}
                 円
@@ -1313,28 +1275,11 @@ function Add({ isCalculator, setIsCalculator }: any) {
               >
                 {Math.floor(
                   Math.ceil(
-                    Math.floor(
-                      (totalPay -
-                        (purchaseOrderState[0]?.priceTax
-                          ? purchaseOrderState[0]?.price
-                          : 0) -
-                        (purchaseOrderState[0]?.isRoomCharge
-                          ? purchaseOrderState[0]?.roomTax
-                            ? purchaseOrderState[0]?.roomCharge
-                            : 0
-                          : 0)) *
-                        (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
-                        1.1 +
-                        (purchaseOrderState[0]?.priceTax
-                          ? purchaseOrderState[0]?.price
-                          : 0) +
-                        (purchaseOrderState[0]?.isRoomCharge
-                          ? purchaseOrderState[0]?.roomTax
-                            ? purchaseOrderState[0]?.roomCharge
-                            : 0
-                          : 0) +
-                        taxNoTotal
-                    ) / 100
+                    (totalPay *
+                      (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
+                      1.1 +
+                      taxNoTotal) /
+                      100
                   ) * 100
                 ).toLocaleString()}
                 円
@@ -1365,27 +1310,10 @@ function Add({ isCalculator, setIsCalculator }: any) {
               >
                 {Math.floor(
                   Math.ceil(
-                    Math.floor(
-                      (totalPay2 -
-                        (purchaseOrderState[0]?.priceTax
-                          ? purchaseOrderState[0]?.price
-                          : 0) -
-                        (purchaseOrderState[0]?.isRoomCharge
-                          ? purchaseOrderState[0]?.roomTax
-                            ? purchaseOrderState[0]?.roomCharge
-                            : 0
-                          : 0)) *
-                        (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
-                        1.1 +
-                        (purchaseOrderState[0]?.priceTax
-                          ? purchaseOrderState[0]?.price
-                          : 0) +
-                        (purchaseOrderState[0]?.isRoomCharge
-                          ? purchaseOrderState[0]?.roomTax
-                            ? purchaseOrderState[0]?.roomCharge
-                            : 0
-                          : 0)
-                    ) / 100
+                    (totalPay2 *
+                      (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
+                      1.1) /
+                      100
                   ) * 100
                 ).toLocaleString()}
                 円
@@ -1664,11 +1592,11 @@ function CastAdd() {
       Number(purchaseOrderItemAdd.price) * Number(purchaseOrderItemAdd.lot);
   });
 
+  const totalPay2 = total2 + totalPay;
+
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
   const searchData4 = useSWR<any>(searchDesignate, fetcher);
-
-  const totalPay2 = total2 + totalPay;
 
   const [selectDesignate, setSelectDesignate] = useState(-1);
   const [selectDesignateSymbol, setSelectDesignateSymbol] = useState("");
@@ -1919,28 +1847,11 @@ function CastAdd() {
               >
                 {Math.floor(
                   Math.ceil(
-                    Math.floor(
-                      (totalPay -
-                        (purchaseOrderState[0]?.priceTax
-                          ? purchaseOrderState[0]?.price
-                          : 0) -
-                        (purchaseOrderState[0]?.isRoomCharge
-                          ? purchaseOrderState[0]?.roomTax
-                            ? purchaseOrderState[0]?.roomCharge
-                            : 0
-                          : 0)) *
-                        (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
-                        1.1 +
-                        (purchaseOrderState[0]?.priceTax
-                          ? purchaseOrderState[0]?.price
-                          : 0) +
-                        (purchaseOrderState[0]?.isRoomCharge
-                          ? purchaseOrderState[0]?.roomTax
-                            ? purchaseOrderState[0]?.roomCharge
-                            : 0
-                          : 0) +
-                        taxNoTotal
-                    ) / 100
+                    (totalPay *
+                      (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
+                      1.1 +
+                      taxNoTotal) /
+                      100
                   ) * 100
                 ).toLocaleString()}
                 円
@@ -1971,27 +1882,10 @@ function CastAdd() {
               >
                 {Math.floor(
                   Math.ceil(
-                    Math.floor(
-                      (totalPay2 -
-                        (purchaseOrderState[0]?.priceTax
-                          ? purchaseOrderState[0]?.price
-                          : 0) -
-                        (purchaseOrderState[0]?.isRoomCharge
-                          ? purchaseOrderState[0]?.roomTax
-                            ? purchaseOrderState[0]?.roomCharge
-                            : 0
-                          : 0)) *
-                        (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
-                        1.1 +
-                        (purchaseOrderState[0]?.priceTax
-                          ? purchaseOrderState[0]?.price
-                          : 0) +
-                        (purchaseOrderState[0]?.isRoomCharge
-                          ? purchaseOrderState[0]?.roomTax
-                            ? purchaseOrderState[0]?.roomCharge
-                            : 0
-                          : 0)
-                    ) / 100
+                    (totalPay2 *
+                      (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) *
+                      1.1) /
+                      100
                   ) * 100
                 ).toLocaleString()}
                 円
