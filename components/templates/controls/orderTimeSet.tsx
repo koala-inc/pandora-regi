@@ -787,7 +787,7 @@ export default function OrderTimeSet() {
                             readOnly
                           />
                           <p className="absolute bottom-[30.5px] left-[73px] text-sm opacity-60">
-                            {String(set.price).includes("##") ? "込" : "円"}
+                            {set.isTax ? "込" : "円"}
                           </p>
                         </th>
                         <th className="flex w-[228px] text-left text-sm">

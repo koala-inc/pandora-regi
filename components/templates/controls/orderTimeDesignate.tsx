@@ -616,7 +616,7 @@ export default function OrderTimeDesignate() {
                               readOnly
                             />
                             <p className="absolute bottom-[30.5px] left-[90px] text-sm opacity-60">
-                              {String(cast.price).includes("##") ? "込" : "円"}
+                              {cast.isTax ? "込" : "円"}
                             </p>
                           </th>
                           <th className="w-[80px] text-center text-lg">
