@@ -130,23 +130,26 @@ function Lists({
         if (setControl) setIsControl(setControl);
       }}
     >
-      {purchaseOrderState[0]?.orderCast?.map((cast: any, index: any) => {
-        let flag = true;
-        orderSets.map((orderSet: any, index: any) => {
-          if (
-            !orderSet.title.includes("延長") &&
-            !orderSet.title.includes("ルームチャージ")
-          ) {
-            if (orderSet.title + "/" + index == cast.targetSet) {
-              flag = false;
+      {setControl == "TIMEDESIGNATE" &&
+        purchaseOrderState[0]?.orderCast?.map((cast: any, index: any) => {
+          if (orderSets.length > Number(cast.targetSet.split("/")[1])) {
+            let flag = true;
+            orderSets.map((orderSet: any, index: any) => {
+              if (
+                !orderSet.title.includes("延長") &&
+                !orderSet.title.includes("ルームチャージ")
+              ) {
+                if (orderSet.title + "/" + index == cast.targetSet) {
+                  flag = false;
+                }
+              }
+            });
+            if (flag) {
+              mainFlag = true;
             }
           }
-        });
-        if (flag) {
-          mainFlag = true;
-        }
-      })}
-      {mainFlag && setControl == "TIMEDESIGNATE" && (
+        })}
+      {mainFlag && (
         <p className="text-red-500">セットが紐づいていない指名があります。</p>
       )}
       {lists?.map((list, index) => (
@@ -493,9 +496,10 @@ function Base() {
       if (!cast.isLock) {
         cast.orderExtension = checker_new(
           cast.endTime,
-          purchaseOrderState[0].orderSet[cast.targetSet.split("/")[1]]
-            .startTime,
-          purchaseOrderState[0].orderSet[cast.targetSet.split("/")[1]].setTime,
+          purchaseOrderState[0]?.orderSet[cast.targetSet.split("/")[1]]
+            ?.startTime || "00:00",
+          purchaseOrderState[0]?.orderSet[cast.targetSet.split("/")[1]]
+            ?.setTime || "1440",
           cast.lot
         );
       }

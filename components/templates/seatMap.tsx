@@ -81,7 +81,7 @@ export default function SeatMap() {
                             purchaseOrder.id == seat.name &&
                             purchaseOrder.callTime.split(":")[0] <=
                               dayjs(new Date()).format("HH") &&
-                            purchaseOrder.callTime.split(":")[1] <
+                            purchaseOrder.callTime.split(":")[1] <=
                               dayjs(new Date()).format("mm")
                         )
                         ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-rose-300 text-2xl font-bold text-accent opacity-90 shadow-md"
