@@ -131,4 +131,5 @@ input,
 select {
   --tw-bg-opacity: 1;
   background-color: rgb(23 23 23 / var(--tw-bg-opacity));
+  accent-color: rgb(23 23 23 / var(--tw-bg-opacity));
 }
