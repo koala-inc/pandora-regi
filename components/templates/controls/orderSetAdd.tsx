@@ -24,6 +24,7 @@ import useSeatPresetGlobal from "@/globalstates/seatPreset";
 import usePurchaseOrderSetGlobal from "@/globalstates/purchaseOrderSet";
 import Calculator15 from "@/components/parts/calculator15";
 import Calculator16 from "@/components/parts/calculator16";
+import useIsControlGlobal from "@/globalstates/isControl";
 
 dayjs.locale(ja);
 
@@ -472,6 +473,7 @@ export default function ControlOrderSetAdd() {
     order.price ? order.state?.status : "なし"
   );
   const [activeTabRC, setActiveTabRC] = useState(0);
+  const [isControl, setIsControl] = useIsControlGlobal();
 
   const [searchType, setSearchType] = useState("全て");
   const [selectDesignate, setSelectDesignate] = useState(-1);
@@ -794,7 +796,7 @@ export default function ControlOrderSetAdd() {
             }
           )}
         </div>
-        <div className="mt-[-1px] flex min-h-[670px] min-w-[920px] max-w-[calc(100dvw-405px)] flex-wrap rounded-b-xl rounded-r-xl bg-primary px-4 pb-0 pt-6 text-white">
+        <div className="relative mt-[-1px] flex min-h-[670px] min-w-[920px] max-w-[calc(100dvw-405px)] flex-wrap rounded-b-xl rounded-r-xl bg-primary px-4 pb-0 pt-6 text-white">
           <div className="mt-2 flex h-[110px] min-w-full items-center justify-start overflow-x-scroll rounded-md border-4 border-white bg-black p-4">
             {searchData3?.data?.event[0]?.store_event[0]?.event?.map(
               (event: any, index: any) => {
@@ -1180,7 +1182,7 @@ export default function ControlOrderSetAdd() {
           <div className="flex w-full justify-around">
             {order.startTime && (
               <>
-                <div className="flex flex-col">
+                <div className="mb-[50px] flex flex-col">
                   <p className="mb-1 text-xs font-bold text-accent">指名種</p>
                   <div className="flex h-[235px] flex-col overflow-scroll rounded-md border-4 border-white bg-black p-4">
                     {searchData4?.data?.designate[0]?.store_designate[0]?.designate?.map(
@@ -1613,128 +1615,158 @@ export default function ControlOrderSetAdd() {
                       </div>
                     ))}
                   </div>
-                  <div className="flex w-full justify-end p-4">
-                    <div
-                      className="mr-4"
-                      onClick={() => {
-                        setOrder({
-                          startTime: "",
-                          endTime: "",
-                          callTime: "",
-                          num: 0,
-                          setTime: 0,
-                          price: 0,
-                          roomCharge: 0,
-                          cast: [],
-                          state: {
-                            result: "0",
-                            selectCast: [],
-                            timeResult: "0",
-                            numResult: "0",
-                            roomResult: "0",
-                            setName: "",
-                            roomName: "",
-                            setStatus: "なし",
-                          },
-                        });
-                        setResult("0");
-                        setSelectCast([]);
-                        setSetTimeResult("0");
-                        setNumResult("0");
-                        setRoomResult("0");
-                        setSetName("");
-                        setStatus("なし");
-                      }}
-                    >
-                      <Border
-                        rounded="rounded-full"
-                        size="h-[36px] w-[36px] p-[6px] bg-reset"
-                      >
-                        <Image
-                          src={"/assets/reset.svg"}
-                          width={26}
-                          height={26}
-                          className="!h-full !w-full"
-                          alt=""
-                        />
-                      </Border>
-                    </div>
-                    <div
-                      onClick={() => {
-                        let flag1 = true;
-                        let flag2 = true;
-                        let flag3 = true;
-                        let flag4 = true;
-                        if (Number(numResult) <= 0 || !numResult) {
-                          alert("人数を正しく入力してください");
-                          flag1 = false;
-                        }
-                        if (Number(setTimeResult) <= 0 || !setTimeResult) {
-                          alert("セット時間を正しく入力してください");
-                          flag2 = false;
-                        }
-                        if (!(order.startTime && order.endTime)) {
-                          alert("時間を入力してください");
-                          flag4 = false;
-                        }
-                        if (flag1 && flag2 && flag4) {
-                          const newArr = purchaseOrder.map((orderSet: any) => {
-                            if (orderSet.id === id2 + "#" + id + "#" + id3) {
-                              const orderSets: any = [];
-                              [
-                                ...Array(
-                                  Number(numResult.replace(/[^0-9]/g, ""))
-                                ),
-                              ].map(() =>
-                                orderSets.push({
-                                  title: setName,
-                                  subTitle: "",
-                                  lot: 1,
-                                  price: result,
-                                  isTax: result.includes("##"),
-                                  setTime: order.setTime,
-                                  startTime: order.startTime,
-                                  endTime: order.endTime,
-                                  orderExtension: order.orderExtension,
-                                  extensionPrice: Number(extensionPrice),
-                                  categoryTitle: setCategoryName,
-                                  isLock: false,
-                                })
-                              );
-                              const orderCasts: any = [];
-                              const orderItemAdd: any = [];
-                              selectCast.map((cast: any, index: any) => {
-                                if (cast.lot > 1) {
-                                  let lot = cast.lot - 1;
-                                  cast.lot = 1;
-                                  [...Array(lot)].map((_, i) =>
-                                    orderItemAdd.push({
-                                      symbol: cast.symbol,
-                                      title: cast.name,
-                                      subTitle: "",
-                                      lot: cast.lot,
-                                      price: cast.price,
-                                      isTax: cast.isTax,
-                                      setTime: order.setTime,
-                                      startTime: order.startTime,
-                                      endTime: order.endTime,
-                                      orderExtension: order.orderExtension,
-                                      extensionPrice: Number(cast.exPrice),
-                                      targetSet:
-                                        setName +
-                                        "/" +
-                                        String(orderSets2.length),
-                                      isLock: false,
-                                    })
-                                  );
-                                }
-                              });
-                              selectCast.map((cast: any) =>
-                                orderCasts.push({
+                </div>
+              </>
+            )}
+            <div className="fixed bottom-[10px] right-[50px] flex w-full justify-end p-4">
+              <div
+                className="mr-4"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setOrder({
+                    startTime: "",
+                    endTime: "",
+                    callTime: "",
+                    num: 0,
+                    setTime: 0,
+                    price: 0,
+                    roomCharge: 0,
+                    cast: [],
+                    state: {
+                      result: "0",
+                      selectCast: [],
+                      timeResult: "0",
+                      numResult: "0",
+                      roomResult: "0",
+                      setName: "",
+                      roomName: "",
+                      setStatus: "なし",
+                    },
+                  });
+                  setResult("0");
+                  setSelectCast([]);
+                  setSetTimeResult("0");
+                  setNumResult("0");
+                  setRoomResult("0");
+                  setSetName("");
+                  setStatus("なし");
+                  setFlag(false);
+                  setIsControl("");
+                }}
+              >
+                <Border
+                  rounded="rounded-full"
+                  size="h-[36px] w-[36px] p-[6px]"
+                  natural
+                >
+                  <Image
+                    src={"/assets/arrow-left.svg"}
+                    width={26}
+                    height={26}
+                    className="!h-full !w-full"
+                    alt=""
+                  />
+                </Border>
+              </div>
+              <div
+                className={order.startTime ? "mr-4" : "mr-4 grayscale"}
+                onClick={() => {
+                  setOrder({
+                    startTime: "",
+                    endTime: "",
+                    callTime: "",
+                    num: 0,
+                    setTime: 0,
+                    price: 0,
+                    roomCharge: 0,
+                    cast: [],
+                    state: {
+                      result: "0",
+                      selectCast: [],
+                      timeResult: "0",
+                      numResult: "0",
+                      roomResult: "0",
+                      setName: "",
+                      roomName: "",
+                      setStatus: "なし",
+                    },
+                  });
+                  setResult("0");
+                  setSelectCast([]);
+                  setSetTimeResult("0");
+                  setNumResult("0");
+                  setRoomResult("0");
+                  setSetName("");
+                  setStatus("なし");
+                }}
+              >
+                <Border
+                  rounded="rounded-full"
+                  size="h-[36px] w-[36px] p-[6px] bg-reset"
+                >
+                  <Image
+                    src={"/assets/reset.svg"}
+                    width={26}
+                    height={26}
+                    className="!h-full !w-full"
+                    alt=""
+                  />
+                </Border>
+              </div>
+              <div
+                className={order.startTime ? "" : "grayscale"}
+                onClick={() => {
+                  if (order.startTime) {
+                    let flag1 = true;
+                    let flag2 = true;
+                    let flag3 = true;
+                    let flag4 = true;
+                    if (Number(numResult) <= 0 || !numResult) {
+                      alert("人数を正しく入力してください");
+                      flag1 = false;
+                    }
+                    if (Number(setTimeResult) <= 0 || !setTimeResult) {
+                      alert("セット時間を正しく入力してください");
+                      flag2 = false;
+                    }
+                    if (!(order.startTime && order.endTime)) {
+                      alert("時間を入力してください");
+                      flag4 = false;
+                    }
+                    if (flag1 && flag2 && flag4) {
+                      const newArr = purchaseOrder.map((orderSet: any) => {
+                        if (orderSet.id === id2 + "#" + id + "#" + id3) {
+                          const orderSets: any = [];
+                          [
+                            ...Array(Number(numResult.replace(/[^0-9]/g, ""))),
+                          ].map(() =>
+                            orderSets.push({
+                              title: setName,
+                              subTitle: "",
+                              lot: 1,
+                              price: result,
+                              isTax: result.includes("##"),
+                              setTime: order.setTime,
+                              startTime: order.startTime,
+                              endTime: order.endTime,
+                              orderExtension: order.orderExtension,
+                              extensionPrice: Number(extensionPrice),
+                              categoryTitle: setCategoryName,
+                              isLock: false,
+                            })
+                          );
+                          const orderCasts: any = [];
+                          const orderItemAdd: any = [];
+                          selectCast.map((cast: any, index: any) => {
+                            if (cast.lot > 1) {
+                              let lot = cast.lot - 1;
+                              cast.lot = 1;
+                              [...Array(lot)].map((_, i) =>
+                                orderItemAdd.push({
                                   symbol: cast.symbol,
                                   title: cast.name,
                                   subTitle: "",
-                                  lot: 1,
+                                  lot: cast.lot,
                                   price: cast.price,
                                   isTax: cast.isTax,
                                   setTime: order.setTime,
@@ -1747,97 +1779,112 @@ export default function ControlOrderSetAdd() {
                                   isLock: false,
                                 })
                               );
-                              return {
-                                ...orderSet,
-                                orderCast: [
-                                  ...orderSet.orderCast,
-                                  ...orderCasts,
-                                ],
-                                num:
-                                  Number(orderSet.num) +
-                                  Number(numResult.replace(/[^0-9]/g, "")),
-                                orderSet: [...orderSet.orderSet, ...orderSets],
-                              };
                             }
-                            return orderSet;
                           });
-                          setPurchaseOrder(newArr);
-
-                          // setPurchaseOrderSet([
-                          //   ...purchaseOrderSet,
-                          //   {
-                          //     ...order,
-                          //     id: id2 + "#" + id + "#" + id3,
-                          //     cast: order.cast ? order.cast : [],
-                          //     toggle: toggle,
-                          //     setName: setName,
-                          //     roomName: roomName,
-                          //     status: status,
-                          //     mainStartTime: order.startTime,
-                          //     mainEndTime: order.endTime,
-                          //     orderItem: [],
-                          //     orderCast: [],
-                          //     orderExtension: 0,
-                          //     extensionPrice: Number(extensionPrice),
-                          //     price: Number(result.replace(/[^0-9]/g, "")),
-                          //     priceTax: result.includes("##"),
-                          //     roomCharge: isRoomCharge
-                          //       ? Number(roomResult.replace(/[^0-9]/g, ""))
-                          //       : "0",
-                          //     roomTax: roomResult.includes("##"),
-                          //     num: Number(numResult.replace(/[^0-9]/g, "")),
-                          //     order: order,
-                          //   },
-                          // ]);
-                          setOrder({
-                            startTime: "",
-                            endTime: "",
-                            callTime: "",
-                            num: 0,
-                            setTime: 0,
-                            price: 0,
-                            roomCharge: 0,
-                            cast: [],
-                            state: {
-                              result: "0",
-                              selectCast: [],
-                              timeResult: "0",
-                              numResult: "0",
-                              roomResult: "0",
-                              setName: "",
-                              roomName: "",
-                              setStatus: "なし",
-                            },
-                          });
-                          setResult("0");
-                          setSelectCast([]);
-                          setSetTimeResult("0");
-                          setNumResult("0");
-                          setRoomResult("0");
-                          setSetName("");
-                          setStatus("なし");
-                          setFlag(false);
+                          selectCast.map((cast: any) =>
+                            orderCasts.push({
+                              symbol: cast.symbol,
+                              title: cast.name,
+                              subTitle: "",
+                              lot: 1,
+                              price: cast.price,
+                              isTax: cast.isTax,
+                              setTime: order.setTime,
+                              startTime: order.startTime,
+                              endTime: order.endTime,
+                              orderExtension: order.orderExtension,
+                              extensionPrice: Number(cast.exPrice),
+                              targetSet:
+                                setName + "/" + String(orderSets2.length),
+                              isLock: false,
+                            })
+                          );
+                          return {
+                            ...orderSet,
+                            orderCast: [...orderSet.orderCast, ...orderCasts],
+                            num:
+                              Number(orderSet.num) +
+                              Number(numResult.replace(/[^0-9]/g, "")),
+                            orderSet: [...orderSet.orderSet, ...orderSets],
+                          };
                         }
-                      }}
-                    >
-                      <Border
-                        complate
-                        rounded="rounded-full"
-                        size="h-[36px] w-[36px] p-[6px]"
-                      >
-                        <Image
-                          src={"/assets/complate.svg"}
-                          width={26}
-                          height={26}
-                          className="!h-full !w-full"
-                          alt=""
-                        />
-                      </Border>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
+                        return orderSet;
+                      });
+                      setPurchaseOrder(newArr);
+
+                      // setPurchaseOrderSet([
+                      //   ...purchaseOrderSet,
+                      //   {
+                      //     ...order,
+                      //     id: id2 + "#" + id + "#" + id3,
+                      //     cast: order.cast ? order.cast : [],
+                      //     toggle: toggle,
+                      //     setName: setName,
+                      //     roomName: roomName,
+                      //     status: status,
+                      //     mainStartTime: order.startTime,
+                      //     mainEndTime: order.endTime,
+                      //     orderItem: [],
+                      //     orderCast: [],
+                      //     orderExtension: 0,
+                      //     extensionPrice: Number(extensionPrice),
+                      //     price: Number(result.replace(/[^0-9]/g, "")),
+                      //     priceTax: result.includes("##"),
+                      //     roomCharge: isRoomCharge
+                      //       ? Number(roomResult.replace(/[^0-9]/g, ""))
+                      //       : "0",
+                      //     roomTax: roomResult.includes("##"),
+                      //     num: Number(numResult.replace(/[^0-9]/g, "")),
+                      //     order: order,
+                      //   },
+                      // ]);
+                      setOrder({
+                        startTime: "",
+                        endTime: "",
+                        callTime: "",
+                        num: 0,
+                        setTime: 0,
+                        price: 0,
+                        roomCharge: 0,
+                        cast: [],
+                        state: {
+                          result: "0",
+                          selectCast: [],
+                          timeResult: "0",
+                          numResult: "0",
+                          roomResult: "0",
+                          setName: "",
+                          roomName: "",
+                          setStatus: "なし",
+                        },
+                      });
+                      setResult("0");
+                      setSelectCast([]);
+                      setSetTimeResult("0");
+                      setNumResult("0");
+                      setRoomResult("0");
+                      setSetName("");
+                      setStatus("なし");
+                      setFlag(false);
+                    }
+                  }
+                }}
+              >
+                <Border
+                  complate
+                  rounded="rounded-full"
+                  size="h-[36px] w-[36px] p-[6px]"
+                >
+                  <Image
+                    src={"/assets/complate.svg"}
+                    width={26}
+                    height={26}
+                    className="!h-full !w-full"
+                    alt=""
+                  />
+                </Border>
+              </div>
+            </div>
           </div>
         </div>
       </motion.div>
