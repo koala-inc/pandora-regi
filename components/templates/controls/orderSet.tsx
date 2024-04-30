@@ -888,81 +888,72 @@ export default function ControlOrderSet() {
                   <label className="mb-2 mt-3 text-xs font-bold text-accent">
                     セット名
                   </label>
-                  <select
-                    className="mr-8 h-[45px] w-[10rem] rounded-md px-1 text-left text-base"
-                    value={setName}
-                    onChange={(e) => {
-                      {
-                        searchData3?.data?.event[0]?.store_event[0]?.event?.map(
-                          (event: any, index: any) => {
-                            if (event.event_revision.name == e.target.value) {
-                              setSetName(event.event_revision.name);
-                              if (
-                                event.event_revision.is_information_center == 1
-                              ) {
-                                setStatus("案内所");
-                              } else {
-                                setStatus("なし");
-                              }
-                              const date = dayjs(new Date()).minute(
-                                Math.round(nowDate.minute() / 5) * 5
-                              );
-                              setOrder((order: any) => {
-                                return {
-                                  ...order,
-                                  setTime: Number(
-                                    event.event_revision.set_time
-                                  ),
-                                  price: Number(event.event_revision.price),
-                                  roomCharge: Number(activeTabRC),
-                                  startTime: date.format("HH:mm"),
-                                  endTime: date
-                                    .add(
-                                      Number(event.event_revision.set_time),
-                                      "minute"
-                                    )
-                                    .format("HH:mm"),
-                                  callTime: date
-                                    .add(
-                                      Number(event.event_revision.set_time) -
-                                        10,
-                                      "minute"
-                                    )
-                                    .format("HH:mm"),
-                                };
-                              });
-                              if (event.event_revision.is_tax_service == 1) {
-                                setResult(
-                                  String(Number(event.event_revision.price)) +
-                                    "##"
-                                );
-                              } else {
-                                setResult(
-                                  String(Number(event.event_revision.price))
-                                );
-                              }
-                              setSetTimeResult(
-                                String(Number(event.event_revision.set_time))
-                              );
-                              setNowDate(date);
-                              setRoomResult(String(Number(activeTabRC)));
-                            }
-                          }
-                        );
-                      }
-                    }}
+                  <div
+                    className="mr-8 flex h-[45px] w-[10rem] items-center justify-start rounded-md bg-neutral-900 px-3 text-left text-base"
+                    // value={setName}
+                    // onChange={(e) => {
+                    //   {
+                    //     searchData3?.data?.event[0]?.store_event[0]?.event?.map(
+                    //       (event: any, index: any) => {
+                    //         if (event.event_revision.name == e.target.value) {
+                    //           setSetName(event.event_revision.name);
+                    //           if (
+                    //             event.event_revision.is_information_center == 1
+                    //           ) {
+                    //             setStatus("案内所");
+                    //           } else {
+                    //             setStatus("なし");
+                    //           }
+                    //           const date = dayjs(new Date()).minute(
+                    //             Math.round(nowDate.minute() / 5) * 5
+                    //           );
+                    //           setOrder((order: any) => {
+                    //             return {
+                    //               ...order,
+                    //               setTime: Number(
+                    //                 event.event_revision.set_time
+                    //               ),
+                    //               price: Number(event.event_revision.price),
+                    //               roomCharge: Number(activeTabRC),
+                    //               startTime: date.format("HH:mm"),
+                    //               endTime: date
+                    //                 .add(
+                    //                   Number(event.event_revision.set_time),
+                    //                   "minute"
+                    //                 )
+                    //                 .format("HH:mm"),
+                    //               callTime: date
+                    //                 .add(
+                    //                   Number(event.event_revision.set_time) -
+                    //                     10,
+                    //                   "minute"
+                    //                 )
+                    //                 .format("HH:mm"),
+                    //             };
+                    //           });
+                    //           if (event.event_revision.is_tax_service == 1) {
+                    //             setResult(
+                    //               String(Number(event.event_revision.price)) +
+                    //                 "##"
+                    //             );
+                    //           } else {
+                    //             setResult(
+                    //               String(Number(event.event_revision.price))
+                    //             );
+                    //           }
+                    //           setSetTimeResult(
+                    //             String(Number(event.event_revision.set_time))
+                    //           );
+                    //           setNowDate(date);
+                    //           setRoomResult(String(Number(activeTabRC)));
+                    //         }
+                    //       }
+                    //     );
+                    //   }
+                    // }}
                   >
-                    <option selected={setName == ""}>選択してください。</option>
-                    {searchData3?.data?.event[0]?.store_event[0]?.event?.map(
-                      (event: any, index: any) => {
-                        return (
-                          <option key={index} value={event.event_revision.name}>
-                            {event.event_revision.name}
-                          </option>
-                        );
-                      }
-                    )}
-                  </select>
+                    {setName}
+                  </div>
                 </div>
                 <div className="relative flex flex-col">
                   <label className="mb-2 mt-3 text-xs font-bold text-accent">

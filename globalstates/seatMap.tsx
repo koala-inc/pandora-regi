@@ -19,7 +19,6 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { useLongPress } from "use-long-press";
 import useIsSeatExModeGlobal from "@/globalstates/isSeatExMode";
-import useExSeatGlobal from "@/globalstates/exSeat";
 
 const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
@@ -36,8 +35,6 @@ export default function SeatMap() {
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
   const [isSeatExMode, setIsSeatExMode] = useIsSeatExModeGlobal();
   const [exSeat, setExSeat] = useExSeatGlobal();
-  const [myExSeat, setMyExSeat] = useState<any>([]);
-  const [longFlag, setLongFlag] = useState(false);
 
   const fetcher = (q: RequestDocument) =>
     client.request(q, { ...defaultVariables });
@@ -54,42 +51,16 @@ export default function SeatMap() {
 
   const editMode = useLongPress(
     (e, { context }) => {
-      setLongFlag(true);
       setSeatPreset(context);
       setIsSeatExMode(!isSeatExMode);
-      if (exSeat.length == 0) {
-        setExSeat([[context]]);
-        setMyExSeat([context]);
-      } else {
-        let flag = false;
-        exSeat.map((ex: any) => {
-          if (ex.includes(context)) {
-            setMyExSeat(ex);
-            flag = true;
-          }
-        });
-        if (!flag) {
-          setExSeat([...exSeat, [context]]);
-          setMyExSeat([context]);
-        }
-      }
     },
     {
       threshold: Number(process.env.NEXT_PUBLIC_LONG_TAP_MILLI_SECOND) || 1000,
     }
   );
 
-  console.log("//////");
-  console.log(JSON.stringify(exSeat));
-  console.log(JSON.stringify(myExSeat));
-
   return (
-    <div
-      className="!h-[100dvh] !w-[100dvw]"
-      onClick={() => {
-        setIsSeatExMode(false);
-      }}
-    >
+    <>
       <GridLayout
         className="layout absolute left-0 top-0 z-10 !h-[100dvh]"
         cols={133}
@@ -113,201 +84,25 @@ export default function SeatMap() {
                     h: 4,
                   }}
                   className={
-                    !myExSeat.includes(seat.name)
-                      ? isLock > 1
-                        ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-green-200 text-2xl font-bold text-accent opacity-90 shadow-md"
-                        : purchaseOrder.some(
-                            (purchaseOrder: any) =>
-                              purchaseOrder.id == seat.name
-                          )
-                        ? !isSeatExMode
-                          ? purchaseOrder.some(
-                              (purchaseOrder: any) =>
-                                purchaseOrder.id == seat.name &&
-                                purchaseOrder.callTime.split(":")[0] <=
-                                  dayjs(new Date()).format("HH") &&
-                                purchaseOrder.callTime.split(":")[1] <=
-                                  dayjs(new Date()).format("mm")
-                            )
-                            ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-rose-300 text-2xl font-bold text-accent opacity-90 shadow-md"
-                            : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-blue-200 text-2xl font-bold text-accent opacity-90 shadow-md"
-                          : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-4 border-orange-500 bg-natural text-2xl font-bold text-accent opacity-90 shadow-md"
-                        : isSeatExMode
-                        ? seatPreset == seat.name
-                          ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-4 border-orange-500 bg-natural text-2xl font-bold text-accent opacity-90 shadow-md"
-                          : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-4 border-black bg-natural text-2xl font-bold text-accent opacity-90 shadow-md"
-                        : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-2xl font-bold text-accent opacity-90 shadow-md"
-                      : isSeatExMode
-                      ? seatPreset == seat.name
-                        ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-4 border-orange-500 bg-amber-800 text-2xl font-bold text-accent opacity-90 shadow-md"
-                        : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-amber-800 text-2xl font-bold text-accent opacity-90 shadow-md"
-                      : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-2xl font-bold text-accent opacity-90 shadow-md"
-                  }
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (!longFlag) {
-                      if (isSeatExMode) {
-                        if (myExSeat.includes(seat.name)) {
-                          if (myExSeat.length > 1) {
-                            setMyExSeat(
-                              myExSeat.filter((n: any) => n != seat.name)
-                            );
-                          }
-                        } else {
-                          setMyExSeat([...myExSeat, seat.name]);
-                        }
-                        setExSeat(
-                          exSeat.map((ex: any) => {
-                            if (ex.includes(seat.name)) {
-                              return myExSeat;
-                            }
-                            return ex;
-                          })
-                        );
-                      }
-                    } else {
-                      setLongFlag(false);
-                    }
-                    if (!isSeatExMode) {
-                      setSeatPreset(seat.name);
-                      if (isLock < 2) {
-                        setIsCard(true);
-
-                        const purchaseOrderState = purchaseOrder.filter(
+                    isLock > 1
+                      ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-green-200 text-2xl font-bold text-accent opacity-90 shadow-md"
+                      : purchaseOrder.some(
                           (purchaseOrder: any) => purchaseOrder.id == seat.name
-                        );
-
-                        const checker = () =>
-                          (Math.floor(
-                            (Number(
-                              dayjs(
-                                date(
-                                  purchaseOrderState[0]?.endTime.split(":")[0],
-                                  purchaseOrderState[0]?.endTime.split(":")[1]
-                                )
-                              ).diff(
-                                date(
-                                  purchaseOrderState[0]?.startTime.split(
-                                    ":"
-                                  )[0],
-                                  purchaseOrderState[0]?.startTime.split(":")[1]
-                                ),
-                                "minute"
-                              )
-                            ) -
-                              Number(purchaseOrderState[0]?.setTime) -
-                              1) /
-                              30
-                          ) >= 0
-                            ? Math.floor(
-                                (Number(
-                                  dayjs(
-                                    date(
-                                      purchaseOrderState[0]?.endTime.split(
-                                        ":"
-                                      )[0],
-                                      purchaseOrderState[0]?.endTime.split(
-                                        ":"
-                                      )[1]
-                                    )
-                                  ).diff(
-                                    date(
-                                      purchaseOrderState[0]?.startTime.split(
-                                        ":"
-                                      )[0],
-                                      purchaseOrderState[0]?.startTime.split(
-                                        ":"
-                                      )[1]
-                                    ),
-                                    "minute"
-                                  )
-                                ) -
-                                  Number(purchaseOrderState[0]?.setTime) -
-                                  1) /
-                                  30
-                              ) + 1
-                            : 0) * purchaseOrderState[0]?.lot;
-
-                        const checker_new = (
-                          endTime: any,
-                          startTime: any,
-                          setTime: any,
-                          num: any
-                        ) =>
-                          (Math.floor(
-                            (Number(
-                              dayjs(
-                                date(
-                                  endTime.split(":")[0],
-                                  endTime.split(":")[1]
-                                )
-                              ).diff(
-                                date(
-                                  startTime.split(":")[0],
-                                  startTime.split(":")[1]
-                                ),
-                                "minute"
-                              )
-                            ) -
-                              Number(setTime) -
-                              1) /
-                              30
-                          ) >= 0
-                            ? Math.floor(
-                                (Number(
-                                  dayjs(
-                                    date(
-                                      endTime.split(":")[0],
-                                      endTime.split(":")[1]
-                                    )
-                                  ).diff(
-                                    date(
-                                      startTime.split(":")[0],
-                                      startTime.split(":")[1]
-                                    ),
-                                    "minute"
-                                  )
-                                ) -
-                                  Number(setTime) -
-                                  1) /
-                                  30
-                              ) + 1
-                            : 0) * num;
-
-                        if (purchaseOrderState[0]) {
-                          purchaseOrderState[0].orderExtension = checker();
-                          purchaseOrderState[0].orderSet.map((set: any) => {
-                            if (!set.isLock) {
-                              set.endTime = purchaseOrderState[0]?.mainEndTime;
-                              set.orderExtension = checker_new(
-                                set.endTime,
-                                set.startTime,
-                                set.setTime,
-                                set.lot
-                              );
-                            }
-                          });
-                          purchaseOrderState[0].orderCast.map((cast: any) => {
-                            if (!cast.isLock) {
-                              cast.endTime = purchaseOrderState[0]?.mainEndTime;
-                              cast.orderExtension = checker_new(
-                                cast.endTime,
-                                purchaseOrderState[0].orderSet[
-                                  cast.targetSet.split("/")[1]
-                                ].startTime,
-                                purchaseOrderState[0].orderSet[
-                                  cast.targetSet.split("/")[1]
-                                ].setTime,
-                                cast.lot
-                              );
-                            }
-                          });
-                        }
-                      } else if (isLock == 2) {
-                        setIsLock(3);
-                      }
-                    }
-                    // setSeatPreset(seat.name);
+                        )
+                      ? purchaseOrder.some(
+                          (purchaseOrder: any) =>
+                            purchaseOrder.id == seat.name &&
+                            purchaseOrder.callTime.split(":")[0] <=
+                              dayjs(new Date()).format("HH") &&
+                            purchaseOrder.callTime.split(":")[1] <=
+                              dayjs(new Date()).format("mm")
+                        )
+                        ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-rose-300 text-2xl font-bold text-accent opacity-90 shadow-md"
+                        : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-blue-200 text-2xl font-bold text-accent opacity-90 shadow-md"
+                      : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-2xl font-bold text-accent shadow-md"
+                  }
+                  onClick={() => {
+                    setSeatPreset(seat.name);
                     // if (isLock < 2) {
                     //   setIsCard(true);
 
@@ -448,11 +243,7 @@ export default function SeatMap() {
         )}
       </GridLayout>
       <GridLayout
-        className={
-          isSeatExMode
-            ? "layout absolute left-0 top-0 !h-[100dvh] opacity-20 grayscale"
-            : "layout absolute left-0 top-0 !h-[100dvh]"
-        }
+        className="layout absolute left-0 top-0 !h-[100dvh]"
         cols={133}
         compactType={null}
         width={2000}
@@ -531,11 +322,7 @@ export default function SeatMap() {
         )}
       </GridLayout>
       <GridLayout
-        className={
-          isSeatExMode
-            ? "layout absolute left-0 top-0 !h-[100dvh] opacity-30 grayscale"
-            : "layout absolute left-0 top-0 !h-[100dvh] opacity-30"
-        }
+        className="layout absolute left-0 top-0 !h-[100dvh] opacity-30"
         cols={133}
         compactType={null}
         width={2000}
@@ -593,6 +380,6 @@ export default function SeatMap() {
           }
         )}
       </GridLayout>
-    </div>
+    </>
   );
 }

@@ -1211,7 +1211,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                 className={
                   totalPay > 9999999
                     ? "flex h-[40px] items-center justify-end text-[15px] text-accent"
-                    : "flex h-[40px] items-center justify-end text-xl text-accent"
+                    : "flex h-[40px] items-center justify-end text-[18px] text-accent"
                 }
               >
                 {Math.floor(totalPay + taxNoTotal).toLocaleString()}円
@@ -1220,7 +1220,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                 className={
                   totalPay > 9999999
                     ? "flex h-[40px] items-center justify-end text-[15px] text-accent"
-                    : "flex h-[40px] items-center justify-end text-xl text-accent"
+                    : "flex h-[40px] items-center justify-end text-[18px] text-accent"
                 }
               >
                 {Math.floor(
@@ -1246,7 +1246,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                 className={
                   totalPay2 > 9999999
                     ? "flex h-[40px] items-center justify-end text-[15px] text-accent"
-                    : "flex h-[40px] items-center justify-end text-xl text-accent"
+                    : "flex h-[40px] items-center justify-end text-[18px] text-accent"
                 }
               >
                 {Math.floor(
@@ -1258,7 +1258,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                 className={
                   totalPay2 > 9999999
                     ? "flex h-[40px] items-center justify-end text-[15px] text-accent"
-                    : "flex h-[40px] items-center justify-end text-xl text-accent"
+                    : "flex h-[40px] items-center justify-end text-[18px] text-accent"
                 }
               >
                 {Math.floor(
@@ -1287,14 +1287,14 @@ function Add({ isCalculator, setIsCalculator }: any) {
                 <div className="flex w-full">
                   <div className="flex w-[200px] flex-col text-left">
                     <p className="h-[20px] text-xs text-accent">オーダー名</p>
-                    <p className="mb-2 flex h-[40px] items-center text-left text-base leading-5 text-white">
+                    <p className="mb-2 flex h-[40px] items-center text-left text-[14px] leading-5 text-white">
                       {purchaseOrderItem.title}
                     </p>
                   </div>
                   <div className="mx-2 flex w-[32px] flex-col text-left">
                     <p className="h-[20px] text-xs text-accent">数量</p>
                     <input
-                      className="h-[40px] rounded-md px-2 text-center text-white"
+                      className="h-[40px] rounded-md px-2 text-center text-[14px] text-white"
                       placeholder="個"
                       value={purchaseOrderItem.lot}
                       // onChange={(e) => {
@@ -1309,7 +1309,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                   <div className="relative flex w-[110px] flex-col text-left">
                     <p className="h-[20px] text-xs text-accent">金額</p>
                     <input
-                      className="mb-2 h-[40px] rounded-md px-2 pr-[22px] text-right text-xs text-white"
+                      className="mb-2 h-[40px] rounded-md px-2 pr-[22px] text-right text-[14px] text-white"
                       placeholder="金額"
                       value={purchaseOrderItem.price?.toLocaleString()}
                       onClick={() => {
@@ -1794,7 +1794,7 @@ function CastAdd() {
                 className={
                   totalPay > 9999999
                     ? "flex h-[40px] items-center justify-end text-[15px] text-accent"
-                    : "flex h-[40px] items-center justify-end text-xl text-accent"
+                    : "flex h-[40px] items-center justify-end text-[18px] text-accent"
                 }
               >
                 {Math.floor(totalPay + taxNoTotal).toLocaleString()}円
@@ -1803,7 +1803,7 @@ function CastAdd() {
                 className={
                   totalPay > 9999999
                     ? "flex h-[40px] items-center justify-end text-[15px] text-accent"
-                    : "flex h-[40px] items-center justify-end text-xl text-accent"
+                    : "flex h-[40px] items-center justify-end text-[18px] text-accent"
                 }
               >
                 {Math.floor(
@@ -1829,7 +1829,7 @@ function CastAdd() {
                 className={
                   totalPay2 > 9999999
                     ? "flex h-[40px] items-center justify-end text-[15px] text-accent"
-                    : "flex h-[40px] items-center justify-end text-xl text-accent"
+                    : "flex h-[40px] items-center justify-end text-[18px] text-accent"
                 }
               >
                 {Math.floor(
@@ -1841,7 +1841,7 @@ function CastAdd() {
                 className={
                   totalPay2 > 9999999
                     ? "flex h-[40px] items-center justify-end text-[15px] text-accent"
-                    : "flex h-[40px] items-center justify-end text-xl text-accent"
+                    : "flex h-[40px] items-center justify-end text-[18px] text-accent"
                 }
               >
                 {Math.floor(

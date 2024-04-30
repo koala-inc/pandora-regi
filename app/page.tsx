@@ -120,35 +120,35 @@ export default function Home() {
       }}
     >
       <AnimatePresence>
-        {isLock == 3 && <Lock2 />}
+        {isLock == 3 && <Lock2 key={1} />}
         {purchaseOrder.some(
           (purchaseOrder: any) => purchaseOrder.id == seatPreset
         ) ? (
-          isControl == "" && <SeatMap />
+          isControl == "" && <SeatMap key={2} />
         ) : isCard ? (
           <></>
         ) : (
-          <SeatMap />
+          <SeatMap key={3} />
         )}
-        {isHeader && !isCard && <Header datetime={datetime} />}
-        {isFooter && !isCard && <Footer />}
+        {isHeader && !isCard && <Header datetime={datetime} key={4} />}
+        {isFooter && !isCard && <Footer key={5} />}
         {purchaseOrder.length != 0 && seatPreset != "" ? (
           purchaseOrder.some(
             (purchaseOrder: any) => purchaseOrder.id == seatPreset
           ) ? (
             isCard && (
               <>
-                <OrderSheet />
+                <OrderSheet key={6} />
                 {Control(isControl)}
-                {isControl != "" && <HomeButton />}
+                {isControl != "" && <HomeButton key={7} />}
               </>
             )
           ) : (
             isCard && (
               <>
-                <OrderSheetSet />
-                <OrderSet />
-                <HomeButton />
+                <OrderSheetSet key={8} />
+                <OrderSet key={9} />
+                <HomeButton key={10} />
               </>
             )
           )
@@ -156,9 +156,9 @@ export default function Home() {
           <>
             {isCard ? (
               <>
-                <OrderSheetSet />
-                <OrderSet />
-                <HomeButton />
+                <OrderSheetSet key={11} />
+                <OrderSet key={12} />
+                <HomeButton key={13} />
               </>
             ) : (
               <></>

@@ -306,13 +306,14 @@ export default function Calculator3({ result, callback }: any) {
         <div className="flex h-[360px] flex-wrap justify-start overflow-scroll">
           <>
             {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
-              (cast: any) => {
+              (cast: any, index: any) => {
                 if (cast.leaving_date == null) {
                   const size = cast.name.length > 4 ? "text-xs" : "text-lg";
                   return (
                     <>
                       {cast.cast_code != 0 && (
                         <div
+                          key={index}
                           className={
                             "mx-1 my-2 flex w-[100px] h-[56px] cursor-pointer items-center justify-center rounded-xl bg-blue-500 bg-gradient-to-b from-[#c9f3f3] from-5% via-[#86b2b2] via-10% to-[#597777] px-1 py-4 leading-4 tracking-wider " +
                             size
