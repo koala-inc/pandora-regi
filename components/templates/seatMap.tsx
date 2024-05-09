@@ -20,6 +20,7 @@ import { useState } from "react";
 import { useLongPress } from "use-long-press";
 import useIsSeatExModeGlobal from "@/globalstates/isSeatExMode";
 import useExSeatGlobal from "@/globalstates/exSeat";
+import useMyExSeatGlobal from "@/globalstates/myExSeat";
 
 const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
@@ -36,7 +37,7 @@ export default function SeatMap() {
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
   const [isSeatExMode, setIsSeatExMode] = useIsSeatExModeGlobal();
   const [exSeat, setExSeat] = useExSeatGlobal();
-  const [myExSeat, setMyExSeat] = useState<any>([]);
+  const [myExSeat, setMyExSeat] = useMyExSeatGlobal();
   const [longFlag, setLongFlag] = useState(false);
 
   const fetcher = (q: RequestDocument) =>
@@ -60,21 +61,17 @@ export default function SeatMap() {
         setLongFlag(true);
         setSeatPreset(context);
         setIsSeatExMode(!isSeatExMode);
-        if (exSeat.length == 0) {
-          setExSeat([[context]]);
-          setMyExSeat([context]);
-        } else {
-          let flag = false;
-          exSeat.map((ex: any) => {
-            if (ex.includes(context)) {
-              setMyExSeat(ex);
-              flag = true;
-            }
-          });
-          if (!flag) {
-            setExSeat([...exSeat, [context]]);
-            setMyExSeat([context]);
+        let flag = false;
+        exSeat.map((ex: any) => {
+          if (ex.includes(context)) {
+            setMyExSeat(ex);
+            flag = true;
           }
+        });
+
+        if (!flag) {
+          setExSeat([...exSeat, [context]]);
+          setMyExSeat([context]);
         }
       }
     },
@@ -106,12 +103,11 @@ export default function SeatMap() {
         {searchData?.data?.seatMap[0]?.store_seat_map[0]?.seat_map?.map(
           (seat: any, index: any) => {
             let flag = true;
+
             exSeat.map((ex: any) => {
-              if (ex.length >= 2) {
-                if (ex != myExSeat) {
-                  if (ex.includes(seat.name)) {
-                    flag = false;
-                  }
+              if (ex.includes(myExSeat[0])) {
+                if (ex.includes(seat.name)) {
+                  flag = false;
                 }
               }
             });
@@ -152,8 +148,16 @@ export default function SeatMap() {
                   }
                   onClick={(e) => {
                     e.stopPropagation();
-                    let mySeat: any = myExSeat;
                     if (isSeatExMode) {
+                      let mySeat: any = myExSeat;
+                      flag = true;
+                      exSeat.map((ex: any) => {
+                        if (!ex.includes(mySeat[0])) {
+                          if (ex.includes(seat.name)) {
+                            flag = false;
+                          }
+                        }
+                      });
                       if (flag) {
                         if (myExSeat.includes(seat.name)) {
                           if (myExSeat.length > 1) {
@@ -163,8 +167,8 @@ export default function SeatMap() {
                             setMyExSeat(mySeat);
                           }
                         } else {
-                          setMyExSeat([...myExSeat, seat.name]);
-                          mySeat = [...myExSeat, seat.name];
+                          mySeat.push(seat.name);
+                          setMyExSeat(mySeat);
                         }
                         setExSeat(
                           exSeat.map((ex: any) => {
@@ -174,9 +178,6 @@ export default function SeatMap() {
                             return ex;
                           })
                         );
-                        if (myExSeat.length < 1) {
-                          setMyExSeat([seat.name]);
-                        }
                       }
                     }
                     if (!isSeatExMode) {
