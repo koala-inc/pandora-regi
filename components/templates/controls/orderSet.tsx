@@ -1604,6 +1604,11 @@ export default function ControlOrderSet() {
                                   });
                                 }}
                               >
+                                {cast.section == 2
+                                  ? "体"
+                                  : cast.section == 3
+                                  ? "H"
+                                  : ""}
                                 {cast.name}
                               </div>
                             </div>

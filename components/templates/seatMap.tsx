@@ -54,23 +54,27 @@ export default function SeatMap() {
 
   const editMode = useLongPress(
     (e, { context }) => {
-      setLongFlag(true);
-      setSeatPreset(context);
-      setIsSeatExMode(!isSeatExMode);
-      if (exSeat.length == 0) {
-        setExSeat([[context]]);
-        setMyExSeat([context]);
-      } else {
-        let flag = false;
-        exSeat.map((ex: any) => {
-          if (ex.includes(context)) {
-            setMyExSeat(ex);
-            flag = true;
-          }
-        });
-        if (!flag) {
-          setExSeat([...exSeat, [context]]);
+      if (
+        purchaseOrder.some((purchaseOrder: any) => purchaseOrder.id == context)
+      ) {
+        setLongFlag(true);
+        setSeatPreset(context);
+        setIsSeatExMode(!isSeatExMode);
+        if (exSeat.length == 0) {
+          setExSeat([[context]]);
           setMyExSeat([context]);
+        } else {
+          let flag = false;
+          exSeat.map((ex: any) => {
+            if (ex.includes(context)) {
+              setMyExSeat(ex);
+              flag = true;
+            }
+          });
+          if (!flag) {
+            setExSeat([...exSeat, [context]]);
+            setMyExSeat([context]);
+          }
         }
       }
     },
@@ -79,7 +83,6 @@ export default function SeatMap() {
     }
   );
 
-  console.log("//////");
   console.log(JSON.stringify(exSeat));
   console.log(JSON.stringify(myExSeat));
 
@@ -102,6 +105,16 @@ export default function SeatMap() {
       >
         {searchData?.data?.seatMap[0]?.store_seat_map[0]?.seat_map?.map(
           (seat: any, index: any) => {
+            let flag = true;
+            exSeat.map((ex: any) => {
+              if (ex.length >= 2) {
+                if (ex != myExSeat) {
+                  if (ex.includes(seat.name)) {
+                    flag = false;
+                  }
+                }
+              }
+            });
             if (seat.layer == 3) {
               return (
                 <div
@@ -113,60 +126,58 @@ export default function SeatMap() {
                     h: 4,
                   }}
                   className={
-                    !myExSeat.includes(seat.name)
-                      ? isLock > 1
-                        ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-green-200 text-2xl font-bold text-accent opacity-90 shadow-md"
-                        : purchaseOrder.some(
+                    !isSeatExMode
+                      ? purchaseOrder.some(
+                          (purchaseOrder: any) => purchaseOrder.id == seat.name
+                        ) ||
+                        exSeat.some((exSeat: any) => exSeat.includes(seat.name))
+                        ? purchaseOrder.some(
                             (purchaseOrder: any) =>
-                              purchaseOrder.id == seat.name
+                              purchaseOrder.id == seat.name &&
+                              purchaseOrder.callTime.split(":")[0] <=
+                                dayjs(new Date()).format("HH") &&
+                              purchaseOrder.callTime.split(":")[1] <=
+                                dayjs(new Date()).format("mm")
                           )
-                        ? !isSeatExMode
-                          ? purchaseOrder.some(
-                              (purchaseOrder: any) =>
-                                purchaseOrder.id == seat.name &&
-                                purchaseOrder.callTime.split(":")[0] <=
-                                  dayjs(new Date()).format("HH") &&
-                                purchaseOrder.callTime.split(":")[1] <=
-                                  dayjs(new Date()).format("mm")
-                            )
-                            ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-rose-300 text-2xl font-bold text-accent opacity-90 shadow-md"
-                            : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-blue-200 text-2xl font-bold text-accent opacity-90 shadow-md"
-                          : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-4 border-orange-500 bg-natural text-2xl font-bold text-accent opacity-90 shadow-md"
-                        : isSeatExMode
-                        ? seatPreset == seat.name
-                          ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-4 border-orange-500 bg-natural text-2xl font-bold text-accent opacity-90 shadow-md"
-                          : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-4 border-black bg-natural text-2xl font-bold text-accent opacity-90 shadow-md"
+                          ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-rose-300 text-2xl font-bold text-accent opacity-90 shadow-md"
+                          : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-blue-200 text-2xl font-bold text-accent opacity-90 shadow-md"
                         : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-2xl font-bold text-accent opacity-90 shadow-md"
-                      : isSeatExMode
-                      ? seatPreset == seat.name
-                        ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-4 border-orange-500 bg-amber-800 text-2xl font-bold text-accent opacity-90 shadow-md"
-                        : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-amber-800 text-2xl font-bold text-accent opacity-90 shadow-md"
-                      : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-2xl font-bold text-accent opacity-90 shadow-md"
+                      : seatPreset == seat.name
+                      ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-4 border-orange-500 bg-amber-800 text-2xl font-bold text-white opacity-90 shadow-md"
+                      : myExSeat.includes(seat.name)
+                      ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-amber-800 text-2xl font-bold text-white opacity-90 shadow-md"
+                      : flag
+                      ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-2xl font-bold text-accent opacity-90 shadow-md"
+                      : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-2xl font-bold text-accent opacity-20 shadow-md"
                   }
                   onClick={(e) => {
                     e.stopPropagation();
-                    if (!longFlag) {
-                      if (isSeatExMode) {
+                    let mySeat: any = myExSeat;
+                    if (isSeatExMode) {
+                      if (flag) {
                         if (myExSeat.includes(seat.name)) {
                           if (myExSeat.length > 1) {
-                            setMyExSeat(
-                              myExSeat.filter((n: any) => n != seat.name)
+                            mySeat = myExSeat.filter(
+                              (n: any) => n != seat.name
                             );
+                            setMyExSeat(mySeat);
                           }
                         } else {
                           setMyExSeat([...myExSeat, seat.name]);
+                          mySeat = [...myExSeat, seat.name];
                         }
                         setExSeat(
                           exSeat.map((ex: any) => {
-                            if (ex.includes(seat.name)) {
-                              return myExSeat;
+                            if (ex.includes(mySeat[0])) {
+                              return mySeat;
                             }
                             return ex;
                           })
                         );
+                        if (myExSeat.length < 1) {
+                          setMyExSeat([seat.name]);
+                        }
                       }
-                    } else {
-                      setLongFlag(false);
                     }
                     if (!isSeatExMode) {
                       setSeatPreset(seat.name);
