@@ -60,7 +60,7 @@ export default function SeatMap() {
       ) {
         setLongFlag(true);
         setSeatPreset(context);
-        setIsSeatExMode(!isSeatExMode);
+        setIsSeatExMode(true);
         let flag = false;
         exSeat.map((ex: any) => {
           if (ex.includes(context)) {
