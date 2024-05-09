@@ -91,6 +91,7 @@ export default function SeatMap() {
     <div
       className="!h-[100dvh] !w-[100dvw]"
       onClick={() => {
+        setLongFlag(false);
         setIsSeatExMode(false);
       }}
     >
