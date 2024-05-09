@@ -151,7 +151,7 @@ export default function SeatMap() {
                   }
                   onClick={(e) => {
                     e.stopPropagation();
-                    if (isSeatExMode) {
+                    if (isSeatExMode && seat.name != seatPreset) {
                       let mySeat: any = myExSeat;
                       let flag2 = true;
                       exSeat.map((ex: any) => {
@@ -182,7 +182,8 @@ export default function SeatMap() {
                           })
                         );
                       }
-                    } else {
+                    }
+                    if (!isSeatExMode) {
                       setSeatPreset(seat.name);
                       if (isLock < 2) {
                         setIsCard(true);

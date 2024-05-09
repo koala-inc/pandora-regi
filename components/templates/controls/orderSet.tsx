@@ -24,6 +24,7 @@ import useSeatPresetGlobal from "@/globalstates/seatPreset";
 import usePurchaseOrderSetGlobal from "@/globalstates/purchaseOrderSet";
 import Calculator15 from "@/components/parts/calculator15";
 import Calculator16 from "@/components/parts/calculator16";
+import useExSeatGlobal from "@/globalstates/exSeat";
 
 dayjs.locale(ja);
 
@@ -65,6 +66,7 @@ export default function ControlOrderSet() {
   const [toggle, setToggle] = useState(false);
   const [order, setOrder] = useOrderGlobal();
   const [flag, setFlag] = useState(false);
+  const [exSeat, setExSeat] = useExSeatGlobal();
 
   // if (!order.price) {
   //   setOrder({
@@ -1766,6 +1768,7 @@ export default function ControlOrderSet() {
                           flag4 = false;
                         }
                         if (flag1 && flag2 && flag4) {
+                          setExSeat([...exSeat, [id2 + "#" + id + "#" + id3]]);
                           const orderSets: any = [];
                           [
                             ...Array(Number(numResult.replace(/[^0-9]/g, ""))),
