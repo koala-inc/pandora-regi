@@ -110,10 +110,8 @@ export default function SeatMap() {
             let flag = true;
 
             exSeat.map((ex: any) => {
-              if (ex.includes(myExSeat[0])) {
-                if (ex.includes(seat.name)) {
-                  flag = false;
-                }
+              if (ex.includes(seat.name)) {
+                flag = false;
               }
             });
             if (seat.layer == 3) {
@@ -143,10 +141,10 @@ export default function SeatMap() {
                           ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-rose-300 text-2xl font-bold text-accent opacity-90 shadow-md"
                           : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-blue-200 text-2xl font-bold text-accent opacity-90 shadow-md"
                         : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-2xl font-bold text-accent opacity-90 shadow-md"
-                      : seatPreset == seat.name
-                      ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-4 border-orange-500 bg-amber-800 text-2xl font-bold text-white opacity-90 shadow-md"
                       : myExSeat.includes(seat.name)
-                      ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-amber-800 text-2xl font-bold text-white opacity-90 shadow-md"
+                      ? seatPreset == seat.name
+                        ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-4 border-orange-500 bg-amber-800 text-2xl font-bold text-white opacity-90 shadow-md"
+                        : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-amber-800 text-2xl font-bold text-white opacity-90 shadow-md"
                       : flag
                       ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-2xl font-bold text-accent opacity-90 shadow-md"
                       : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-2xl font-bold text-accent opacity-20 shadow-md"
@@ -155,15 +153,15 @@ export default function SeatMap() {
                     e.stopPropagation();
                     if (isSeatExMode) {
                       let mySeat: any = myExSeat;
-                      flag = true;
+                      let flag2 = true;
                       exSeat.map((ex: any) => {
                         if (!ex.includes(mySeat[0])) {
                           if (ex.includes(seat.name)) {
-                            flag = false;
+                            flag2 = false;
                           }
                         }
                       });
-                      if (flag) {
+                      if (flag2) {
                         if (myExSeat.includes(seat.name)) {
                           if (myExSeat.length > 1) {
                             mySeat = myExSeat.filter(
