@@ -56,7 +56,10 @@ export default function SeatMap() {
   const editMode = useLongPress(
     (e, { context }) => {
       if (
-        purchaseOrder.some((purchaseOrder: any) => purchaseOrder.id == context)
+        purchaseOrder.some(
+          (purchaseOrder: any) => purchaseOrder.id == context
+        ) &&
+        !longFlag
       ) {
         setLongFlag(true);
         setSeatPreset(context);
@@ -82,6 +85,7 @@ export default function SeatMap() {
 
   console.log(JSON.stringify(exSeat));
   console.log(JSON.stringify(myExSeat));
+  console.log(JSON.stringify(isSeatExMode));
 
   return (
     <div
@@ -179,8 +183,7 @@ export default function SeatMap() {
                           })
                         );
                       }
-                    }
-                    if (!isSeatExMode) {
+                    } else {
                       setSeatPreset(seat.name);
                       if (isLock < 2) {
                         setIsCard(true);
