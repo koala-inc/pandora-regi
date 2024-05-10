@@ -516,7 +516,7 @@ export default function SeatMap() {
                                 .map((cast: any, index: any) => {
                                   return (
                                     <>
-                                      {cast.title.slice(1, 4)}
+                                      {cast.title.slice(1, 5)}
                                       <br />
                                     </>
                                   );

@@ -23,54 +23,65 @@ function Content({ datetime }: { datetime: any }) {
             {format(datetime, "HH:mm", { locale: ja })}
           </div>
         </div>
-        <Button
-          className={"mr-[1em] w-[8em]"}
-          onClick={() => {
-            setSeatViewMode(0);
-          }}
-        >
-          コール
-        </Button>
-        <Button
-          className={"mr-[1em] w-[8em]"}
-          onClick={() => {
-            setSeatViewMode(4);
-          }}
-        >
-          開始終了
-        </Button>
-        <Button
-          className={"mr-[1em] w-[8em]"}
-          onClick={() => {
-            setSeatViewMode(1);
-          }}
-        >
-          人数
-        </Button>
-        <Button
-          className={"mr-[1em] w-[8em]"}
-          onClick={() => {
-            setSeatViewMode(2);
-          }}
-        >
-          指名
-        </Button>
-        <Button
-          className={"mr-[1em] w-[8em]"}
-          onClick={() => {
-            setSeatViewMode(3);
-          }}
-        >
-          セット名
-        </Button>
-        <Button
-          className={"w-[8em]"}
-          onClick={() => {
-            setSeatViewMode(5);
-          }}
-        >
-          卓番
-        </Button>
+        <div className="px-6">
+          <div className="text-accent">モード変更</div>
+          <div className="flex">
+            <Button
+              className={"mr-[0.5em] w-[6em]"}
+              onClick={() => {
+                setSeatViewMode(0);
+              }}
+              natural
+            >
+              コール
+            </Button>
+            <Button
+              className={"mr-[0.5em] w-[6em]"}
+              onClick={() => {
+                setSeatViewMode(4);
+              }}
+              natural
+            >
+              開始終了
+            </Button>
+            <Button
+              className={"mr-[0.5em] w-[6em]"}
+              onClick={() => {
+                setSeatViewMode(1);
+              }}
+              natural
+            >
+              人数
+            </Button>
+            <Button
+              className={"mr-[0.5em] w-[6em]"}
+              onClick={() => {
+                setSeatViewMode(2);
+              }}
+              natural
+            >
+              指名
+            </Button>
+            <Button
+              className={"mr-[0.5em] w-[6em]"}
+              onClick={() => {
+                setSeatViewMode(3);
+              }}
+              natural
+            >
+              セット名
+            </Button>
+            <Button
+              className={"w-[6em]"}
+              onClick={() => {
+                setSeatViewMode(5);
+              }}
+              natural
+            >
+              卓番
+            </Button>
+          </div>
+        </div>
         <nav
           className="absolute right-[25px] top-[23px] cursor-pointer rounded-full border border-black"
           onClick={() => setIsHeader(false)}
