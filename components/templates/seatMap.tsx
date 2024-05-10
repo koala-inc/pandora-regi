@@ -500,7 +500,7 @@ export default function SeatMap() {
                     </>
                   ) : seatViewMode == 2 ? (
                     <>
-                      <div className="absolute w-[200%] scale-[0.5] px-[10px] text-left text-[1.3rem] font-bold leading-[1.5rem] text-black">
+                      <div className="absolute w-[200%] scale-[0.5] px-[10px] text-left text-[1.4rem] font-bold leading-[1.5rem] text-black">
                         {purchaseOrder.map((purchaseOrder: any) => {
                           if (purchaseOrder.id.includes(seat.name)) {
                             if (purchaseOrder.orderCast.length != 0) {
@@ -516,14 +516,17 @@ export default function SeatMap() {
                                 .map((cast: any, index: any) => {
                                   return (
                                     <>
-                                      {cast.title.slice(1, 5)}
+                                      {cast.title.slice(1, 4)}
                                       <br />
                                     </>
                                   );
                                 });
                             } else {
                               return (
-                                <p className="text-[2rem]" key={index}>
+                                <p
+                                  className="text-center text-[1.6rem]"
+                                  key={index}
+                                >
                                   フリー
                                 </p>
                               );
