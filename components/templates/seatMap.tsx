@@ -503,27 +503,33 @@ export default function SeatMap() {
                       <div className="absolute w-[200%] scale-[0.5] text-center text-[1.3rem] font-bold leading-[1.5rem] text-black">
                         {purchaseOrder.map((purchaseOrder: any) => {
                           if (purchaseOrder.id.includes(seat.name)) {
-                            return purchaseOrder.orderCast.map((cast: any) => {
-                              return (
-                                <>
-                                  {cast.title}
-                                  <br />
-                                </>
+                            if (purchaseOrder.orderCast.length != 0) {
+                              return purchaseOrder.orderCast.map(
+                                (cast: any) => {
+                                  return (
+                                    <>
+                                      {cast.title.slice(1, 5)}
+                                      <br />
+                                    </>
+                                  );
+                                }
                               );
-                            });
+                            } else {
+                              return "フリー";
+                            }
                           }
                         })}
                       </div>
                     </>
                   ) : seatViewMode == 3 ? (
                     <>
-                      <div className="absolute w-[200%] scale-[0.4] text-center text-[1.2rem] font-bold leading-[1.5rem] text-black">
+                      <div className="absolute w-[200%] scale-[0.5] text-center text-[1.3rem] font-bold leading-[1.5rem] text-black">
                         {purchaseOrder.map((purchaseOrder: any) => {
                           if (purchaseOrder.id.includes(seat.name)) {
                             return purchaseOrder.orderSet.map((set: any) => {
                               return (
                                 <>
-                                  {set.title}
+                                  {set.title.slice(0, 5)}
                                   <br />
                                 </>
                               );
