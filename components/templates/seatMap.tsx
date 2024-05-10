@@ -116,6 +116,7 @@ export default function SeatMap() {
                 flag = false;
               }
             });
+            let colormode = "border-black";
             if (seat.layer == 3) {
               return (
                 <div
@@ -131,7 +132,10 @@ export default function SeatMap() {
                       ? purchaseOrder.some((purchaseOrder: any) =>
                           purchaseOrder.id.includes(seat.name)
                         ) ||
-                        exSeat.some((exSeat: any) => exSeat.includes(seat.name))
+                        exSeat.some((exSeat: any, index: any) => {
+                          colormode = "border-[#ff0000]";
+                          return exSeat.includes(seat.name);
+                        })
                         ? purchaseOrder.some(
                             (purchaseOrder: any) =>
                               purchaseOrder.id.includes(seat.name) &&
@@ -141,7 +145,8 @@ export default function SeatMap() {
                                 dayjs(new Date()).format("mm")
                           )
                           ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-rose-300 text-2xl font-bold text-accent opacity-90 shadow-md"
-                          : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-blue-200 text-2xl font-bold text-accent opacity-90 shadow-md"
+                          : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border bg-blue-200 text-2xl font-bold text-accent opacity-90 shadow-md " +
+                            colormode
                         : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-2xl font-bold text-accent opacity-90 shadow-md"
                       : myExSeat.includes(seat.name)
                       ? seatPreset == seat.name
