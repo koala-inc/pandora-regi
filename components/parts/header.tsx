@@ -7,9 +7,12 @@ import { format } from "date-fns";
 import { ja } from "date-fns/locale/ja";
 
 import useIsHeaderGlobal from "@/globalstates/isHeader";
+import useSeatViewModeGlobal from "@/globalstates/seatViewMode";
+import Button from "../templates/button";
 
 function Content({ datetime }: { datetime: any }) {
   const [, setIsHeader] = useIsHeaderGlobal();
+  const [seatViewMode, setSeatViewMode] = useSeatViewModeGlobal();
 
   return (
     <div className="h-full w-full border-y-4 border-secondary bg-primary">
@@ -20,6 +23,54 @@ function Content({ datetime }: { datetime: any }) {
             {format(datetime, "HH:mm", { locale: ja })}
           </div>
         </div>
+        <Button
+          className={"mr-[1em] w-[8em]"}
+          onClick={() => {
+            setSeatViewMode(0);
+          }}
+        >
+          コール時間
+        </Button>
+        <Button
+          className={"mr-[1em] w-[8em]"}
+          onClick={() => {
+            setSeatViewMode(4);
+          }}
+        >
+          開始終了時間
+        </Button>
+        <Button
+          className={"mr-[1em] w-[8em]"}
+          onClick={() => {
+            setSeatViewMode(1);
+          }}
+        >
+          人数
+        </Button>
+        <Button
+          className={"mr-[1em] w-[8em]"}
+          onClick={() => {
+            setSeatViewMode(2);
+          }}
+        >
+          指名
+        </Button>
+        <Button
+          className={"mr-[1em] w-[8em]"}
+          onClick={() => {
+            setSeatViewMode(3);
+          }}
+        >
+          セット名
+        </Button>
+        <Button
+          className={"w-[8em]"}
+          onClick={() => {
+            setSeatViewMode(5);
+          }}
+        >
+          卓番
+        </Button>
         <nav
           className="absolute right-[25px] top-[23px] cursor-pointer rounded-full border border-black"
           onClick={() => setIsHeader(false)}

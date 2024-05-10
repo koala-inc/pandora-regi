@@ -21,6 +21,7 @@ import { useLongPress } from "use-long-press";
 import useIsSeatExModeGlobal from "@/globalstates/isSeatExMode";
 import useExSeatGlobal from "@/globalstates/exSeat";
 import useMyExSeatGlobal from "@/globalstates/myExSeat";
+import useSeatViewModeGlobal from "@/globalstates/seatViewMode";
 
 const defaultVariables = {
   store_code: process.env.NEXT_PUBLIC_STORE_CODE || "",
@@ -37,6 +38,7 @@ export default function SeatMap() {
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
   const [isSeatExMode, setIsSeatExMode] = useIsSeatExModeGlobal();
   const [exSeat, setExSeat] = useExSeatGlobal();
+  const [seatViewMode, setSeatViewMode] = useSeatViewModeGlobal();
   const [myExSeat, setMyExSeat] = useMyExSeatGlobal();
   const [longFlag, setLongFlag] = useState(false);
 
@@ -467,12 +469,17 @@ export default function SeatMap() {
                   ) : !purchaseOrder.some((purchaseOrder: any) =>
                       purchaseOrder.id.includes(seat.name)
                     ) ? (
-                    <>{seat.name.split("#")[1] + seat.name.split("#")[2]}</>
-                  ) : (
+                    seatViewMode == 5 ? (
+                      <>
+                        {seat.name.split("#")[0] +
+                          seat.name.split("#")[1] +
+                          seat.name.split("#")[2]}
+                      </>
+                    ) : (
+                      <>{seat.name.split("#")[1] + seat.name.split("#")[2]}</>
+                    )
+                  ) : seatViewMode == 0 ? (
                     <>
-                      <div className="absolute opacity-20">
-                        {seat.name.split("#")[1] + seat.name.split("#")[2]}
-                      </div>
                       <div className="absolute w-[200%] scale-[0.65] text-center text-[1.5rem] font-bold leading-[1.5rem] text-black">
                         {purchaseOrder.map((purchaseOrder: any) => {
                           if (purchaseOrder.id.includes(seat.name)) {
@@ -481,6 +488,76 @@ export default function SeatMap() {
                         })}
                       </div>
                     </>
+                  ) : seatViewMode == 1 ? (
+                    <>
+                      <div className="absolute w-[200%] scale-[0.8] text-center text-[1.5rem] font-bold leading-[1.5rem] text-black">
+                        {purchaseOrder.map((purchaseOrder: any) => {
+                          if (purchaseOrder.id.includes(seat.name)) {
+                            return purchaseOrder.num + "名";
+                          }
+                        })}
+                      </div>
+                    </>
+                  ) : seatViewMode == 2 ? (
+                    <>
+                      <div className="absolute w-[200%] scale-[0.5] text-center text-[1.3rem] font-bold leading-[1.5rem] text-black">
+                        {purchaseOrder.map((purchaseOrder: any) => {
+                          if (purchaseOrder.id.includes(seat.name)) {
+                            return purchaseOrder.orderCast.map((cast: any) => {
+                              return (
+                                <>
+                                  {cast.title}
+                                  <br />
+                                </>
+                              );
+                            });
+                          }
+                        })}
+                      </div>
+                    </>
+                  ) : seatViewMode == 3 ? (
+                    <>
+                      <div className="absolute w-[200%] scale-[0.4] text-center text-[1.2rem] font-bold leading-[1.5rem] text-black">
+                        {purchaseOrder.map((purchaseOrder: any) => {
+                          if (purchaseOrder.id.includes(seat.name)) {
+                            return purchaseOrder.orderSet.map((set: any) => {
+                              return (
+                                <>
+                                  {set.title}
+                                  <br />
+                                </>
+                              );
+                            });
+                          }
+                        })}
+                      </div>
+                    </>
+                  ) : seatViewMode == 4 ? (
+                    <>
+                      <div className="absolute w-[200%] scale-[0.65] text-center text-[1.5rem] font-bold leading-[1.5rem] text-black">
+                        {purchaseOrder.map((purchaseOrder: any) => {
+                          if (purchaseOrder.id.includes(seat.name)) {
+                            return (
+                              <>
+                                {purchaseOrder.mainStartTime}
+                                <br />
+                                ~
+                                <br />
+                                {purchaseOrder.mainEndTime}
+                              </>
+                            );
+                          }
+                        })}
+                      </div>
+                    </>
+                  ) : seatViewMode == 5 ? (
+                    <>
+                      {seat.name.split("#")[0] +
+                        seat.name.split("#")[1] +
+                        seat.name.split("#")[2]}
+                    </>
+                  ) : (
+                    <></>
                   )}
                 </div>
               );
