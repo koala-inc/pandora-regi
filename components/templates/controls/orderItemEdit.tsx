@@ -71,8 +71,8 @@ export default function OrderItemEdit() {
     usePurchaseOrderItemAddGlobal();
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
-  const purchaseOrderState = purchaseOrder.filter(
-    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  const purchaseOrderState = purchaseOrder.filter((purchaseOrder: any) =>
+    purchaseOrder.id.includes(seatPreset)
   );
 
   let count = 0;

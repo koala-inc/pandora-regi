@@ -531,8 +531,8 @@ export default function ControlOrderSetAdd() {
 
   const [targetSet, setTargetSet] = useState("");
 
-  const purchaseOrderState = purchaseOrder.filter(
-    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  const purchaseOrderState = purchaseOrder.filter((purchaseOrder: any) =>
+    purchaseOrder.id.includes(seatPreset)
   );
 
   const [orderSets2, setOrderSets2] = useState<any>([]);

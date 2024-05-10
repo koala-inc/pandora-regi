@@ -117,9 +117,9 @@ export default function OrderSheetSet() {
               </div>
               <div className="mx-2 flex flex-col">
                 <p>
-                  {order?.id.split("#")[0] +
-                    order?.id.split("#")[1] +
-                    order?.id.split("#")[2]}
+                  {order?.id[0].split("#")[0] +
+                    order?.id[0].split("#")[1] +
+                    order?.id[0].split("#")[2]}
                 </p>
               </div>
               <div className="mx-2 flex flex-col">

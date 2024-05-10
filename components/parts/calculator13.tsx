@@ -11,8 +11,8 @@ export default function Calculator13({ key, result, callback }: any) {
   const max = 999999999;
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
-  const purchaseOrderState = purchaseOrder.filter(
-    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  const purchaseOrderState = purchaseOrder.filter((purchaseOrder: any) =>
+    purchaseOrder.id.includes(seatPreset)
   );
 
   return (

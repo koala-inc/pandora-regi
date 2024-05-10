@@ -1834,7 +1834,7 @@ export default function ControlOrderSet() {
                             ...purchaseOrderSet,
                             {
                               ...order,
-                              id: id2 + "#" + id + "#" + id3,
+                              id: [id2 + "#" + id + "#" + id3],
                               // cast: order.cast ? order.cast : [],
                               toggle: toggle,
                               setName: setName,

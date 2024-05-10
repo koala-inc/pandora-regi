@@ -23,8 +23,8 @@ export default function OrderEnd() {
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
-  const purchaseOrderState = purchaseOrder.filter(
-    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  const purchaseOrderState = purchaseOrder.filter((purchaseOrder: any) =>
+    purchaseOrder.id.includes(seatPreset)
   );
   let total = 0;
   purchaseOrderState[0]?.cast?.map((cast: any) => {

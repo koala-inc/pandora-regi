@@ -56,8 +56,8 @@ export default function SeatMap() {
   const editMode = useLongPress(
     (e, { context }) => {
       if (
-        purchaseOrder.some(
-          (purchaseOrder: any) => purchaseOrder.id == context
+        purchaseOrder.some((purchaseOrder: any) =>
+          purchaseOrder.id.includes(context)
         ) &&
         !longFlag
       ) {
@@ -126,13 +126,13 @@ export default function SeatMap() {
                   }}
                   className={
                     !isSeatExMode
-                      ? purchaseOrder.some(
-                          (purchaseOrder: any) => purchaseOrder.id == seat.name
+                      ? purchaseOrder.some((purchaseOrder: any) =>
+                          purchaseOrder.id.includes(seat.name)
                         ) ||
                         exSeat.some((exSeat: any) => exSeat.includes(seat.name))
                         ? purchaseOrder.some(
                             (purchaseOrder: any) =>
-                              purchaseOrder.id == seat.name &&
+                              purchaseOrder.id.includes(seat.name) &&
                               purchaseOrder.callTime.split(":")[0] <=
                                 dayjs(new Date()).format("HH") &&
                               purchaseOrder.callTime.split(":")[1] <=
@@ -151,7 +151,7 @@ export default function SeatMap() {
                   }
                   onClick={(e) => {
                     e.stopPropagation();
-                    if (isSeatExMode && seat.name != seatPreset) {
+                    if (isSeatExMode) {
                       let mySeat: any = myExSeat;
                       let flag2 = true;
                       exSeat.map((ex: any) => {
@@ -181,6 +181,11 @@ export default function SeatMap() {
                             return ex;
                           })
                         );
+                        purchaseOrder.map((purchaseOrder: any) => {
+                          if (purchaseOrder.id.includes(mySeat[0])) {
+                            purchaseOrder.id = mySeat;
+                          }
+                        });
                       }
                     }
                     if (!isSeatExMode) {
@@ -189,7 +194,8 @@ export default function SeatMap() {
                         setIsCard(true);
 
                         const purchaseOrderState = purchaseOrder.filter(
-                          (purchaseOrder: any) => purchaseOrder.id == seat.name
+                          (purchaseOrder: any) =>
+                            purchaseOrder.id.includes(seat.name)
                         );
 
                         const checker = () =>
@@ -327,7 +333,7 @@ export default function SeatMap() {
                     //   setIsCard(true);
 
                     //   const purchaseOrderState = purchaseOrder.filter(
-                    //     (purchaseOrder: any) => purchaseOrder.id == seat.name
+                    //     (purchaseOrder: any) => purchaseOrder.id.includes(seat.name)
                     //   );
 
                     //   const checker = () =>

@@ -109,8 +109,8 @@ export default function Home() {
           isCard &&
           isControl == "" &&
           seatPreset != "" &&
-          purchaseOrder.some(
-            (purchaseOrder: any) => purchaseOrder.id == seatPreset
+          purchaseOrder.some((purchaseOrder: any) =>
+            purchaseOrder.id.includes(seatPreset)
           ) &&
           isLock == 0
         ) {
@@ -121,8 +121,8 @@ export default function Home() {
     >
       <AnimatePresence>
         {isLock == 3 && <Lock2 key={1} />}
-        {purchaseOrder.some(
-          (purchaseOrder: any) => purchaseOrder.id == seatPreset
+        {purchaseOrder.some((purchaseOrder: any) =>
+          purchaseOrder.id.includes(seatPreset)
         ) ? (
           isControl == "" && <SeatMap key={2} />
         ) : isCard ? (
@@ -133,8 +133,8 @@ export default function Home() {
         {isHeader && !isCard && <Header datetime={datetime} key={4} />}
         {isFooter && !isCard && <Footer key={5} />}
         {purchaseOrder.length != 0 && seatPreset != "" ? (
-          purchaseOrder.some(
-            (purchaseOrder: any) => purchaseOrder.id == seatPreset
+          purchaseOrder.some((purchaseOrder: any) =>
+            purchaseOrder.id.includes(seatPreset)
           ) ? (
             isCard && (
               <>

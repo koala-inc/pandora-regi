@@ -56,8 +56,8 @@ function Lists({
   const [orderSets, setOrderSets] = useState<any>([]);
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
-  const purchaseOrderState = purchaseOrder.filter(
-    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  const purchaseOrderState = purchaseOrder.filter((purchaseOrder: any) =>
+    purchaseOrder.id.includes(seatPreset)
   );
   useEffect(() => {
     const orderSets = [...purchaseOrderState[0]?.orderSet];
@@ -138,8 +138,8 @@ function Base() {
   const [isControl, setIsControl] = useIsControlGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
-  const purchaseOrderState = purchaseOrder.filter(
-    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  const purchaseOrderState = purchaseOrder.filter((purchaseOrder: any) =>
+    purchaseOrder.id.includes(seatPreset)
   );
   const [toggle, setToggle] = useState(purchaseOrderState[0]?.toggle || false);
   const [isLock, setIsLock] = useIsLockGlobal();
@@ -925,8 +925,8 @@ function Add({ isCalculator, setIsCalculator }: any) {
   const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
     usePurchaseOrderItemAddGlobal();
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
-  const purchaseOrderState = purchaseOrder.filter(
-    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  const purchaseOrderState = purchaseOrder.filter((purchaseOrder: any) =>
+    purchaseOrder.id.includes(seatPreset)
   );
 
   let total = 0;
@@ -1501,8 +1501,8 @@ function CastAdd() {
   const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
     usePurchaseOrderItemAddGlobal();
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
-  const purchaseOrderState = purchaseOrder.filter(
-    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  const purchaseOrderState = purchaseOrder.filter((purchaseOrder: any) =>
+    purchaseOrder.id.includes(seatPreset)
   );
 
   let total = 0;
@@ -2141,8 +2141,8 @@ export default function OrderSheet() {
   const [purchaseOrderItemAdd, setPurchaseOrderItemAdd] =
     usePurchaseOrderItemAddGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
-  const purchaseOrderState = purchaseOrder.filter(
-    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  const purchaseOrderState = purchaseOrder.filter((purchaseOrder: any) =>
+    purchaseOrder.id.includes(seatPreset)
   );
 
   const [nowDate, setNowDate] = useState(dayjs(new Date()));

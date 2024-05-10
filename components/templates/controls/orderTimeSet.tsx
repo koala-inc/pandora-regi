@@ -57,8 +57,8 @@ export default function OrderTimeSet() {
   const [isPurchaseOrder, setIsPurchaseOrder] = useIsPurchaseOrderGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
-  const purchaseOrderState = purchaseOrder.filter(
-    (purchaseOrder: any) => purchaseOrder.id == seatPreset
+  const purchaseOrderState = purchaseOrder.filter((purchaseOrder: any) =>
+    purchaseOrder.id.includes(seatPreset)
   );
   const [toggle, setToggle] = useState(purchaseOrderState[0]?.toggle || false);
 
