@@ -29,7 +29,7 @@ function Content({ datetime }: { datetime: any }) {
             setSeatViewMode(0);
           }}
         >
-          コール時間
+          コール
         </Button>
         <Button
           className={"mr-[1em] w-[8em]"}
@@ -37,7 +37,7 @@ function Content({ datetime }: { datetime: any }) {
             setSeatViewMode(4);
           }}
         >
-          開始終了時間
+          開始終了
         </Button>
         <Button
           className={"mr-[1em] w-[8em]"}
