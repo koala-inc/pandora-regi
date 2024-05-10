@@ -462,7 +462,26 @@ export default function SeatMap() {
                   }}
                   {...editMode(seat.name)}
                 >
-                  {seat.name.split("#")[1] + seat.name.split("#")[2]}
+                  {isSeatExMode ? (
+                    <>{seat.name.split("#")[1] + seat.name.split("#")[2]}</>
+                  ) : !purchaseOrder.some((purchaseOrder: any) =>
+                      purchaseOrder.id.includes(seat.name)
+                    ) ? (
+                    <>{seat.name.split("#")[1] + seat.name.split("#")[2]}</>
+                  ) : (
+                    <>
+                      <div className="absolute opacity-20">
+                        {seat.name.split("#")[1] + seat.name.split("#")[2]}
+                      </div>
+                      <div className="absolute w-[200%] scale-[0.65] text-center text-[1.5rem] font-bold leading-[1.5rem] text-black">
+                        {purchaseOrder.map((purchaseOrder: any) => {
+                          if (purchaseOrder.id.includes(seat.name)) {
+                            return purchaseOrder.callTime;
+                          }
+                        })}
+                      </div>
+                    </>
+                  )}
                 </div>
               );
             }
