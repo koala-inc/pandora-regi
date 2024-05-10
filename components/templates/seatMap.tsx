@@ -112,12 +112,19 @@ export default function SeatMap() {
             let flag = true;
 
             let colormode = "border-black";
-            exSeat.map((ex: any) => {
+            let indexColor = "";
+            exSeat.map((ex: any, index: any) => {
               if (ex.includes(seat.name)) {
                 flag = false;
-                colormode = "border-[#ff0000]";
+                indexColor = index;
               }
             });
+            let r = Math.floor(Math.random() * 255).toString(16);
+            let g = Math.floor(Math.random() * 255).toString(16);
+            let b = Math.floor(Math.random() * 255).toString(16);
+            let color = "#" + r + g + b;
+            colormode = "border-[#ff0000]";
+
             if (seat.layer == 3) {
               return (
                 <div
