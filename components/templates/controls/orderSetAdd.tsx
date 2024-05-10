@@ -1726,7 +1726,7 @@ export default function ControlOrderSetAdd() {
                     }
                     if (flag1 && flag2 && flag4) {
                       const newArr = purchaseOrder.map((orderSet: any) => {
-                        if (orderSet.id === id2 + "#" + id + "#" + id3) {
+                        if (orderSet.id.includes(id2 + "#" + id + "#" + id3)) {
                           const orderSets: any = [];
                           [
                             ...Array(Number(numResult.replace(/[^0-9]/g, ""))),
