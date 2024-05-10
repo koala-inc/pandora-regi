@@ -151,7 +151,8 @@ export default function SeatMap() {
                   }
                   onClick={(e) => {
                     e.stopPropagation();
-                    if (isSeatExMode) {
+                    setLongFlag(false);
+                    if (isSeatExMode && !longFlag) {
                       let mySeat: any = myExSeat;
                       let flag2 = true;
                       exSeat.map((ex: any) => {
