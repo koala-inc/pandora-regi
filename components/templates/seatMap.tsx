@@ -500,20 +500,27 @@ export default function SeatMap() {
                     </>
                   ) : seatViewMode == 2 ? (
                     <>
-                      <div className="absolute w-[200%] scale-[0.5] text-center text-[1.3rem] font-bold leading-[1.5rem] text-black">
+                      <div className="absolute w-[200%] scale-[0.5] px-[10px] text-left text-[1.3rem] font-bold leading-[1.5rem] text-black">
                         {purchaseOrder.map((purchaseOrder: any) => {
                           if (purchaseOrder.id.includes(seat.name)) {
                             if (purchaseOrder.orderCast.length != 0) {
-                              return purchaseOrder.orderCast.map(
-                                (cast: any) => {
+                              return Array.from(
+                                new Map(
+                                  purchaseOrder.orderCast.map((v: any) => [
+                                    v.title,
+                                    v,
+                                  ])
+                                ).values()
+                              )
+                                .slice(0, 4)
+                                .map((cast: any) => {
                                   return (
                                     <>
                                       {cast.title.slice(1, 5)}
                                       <br />
                                     </>
                                   );
-                                }
-                              );
+                                });
                             } else {
                               return "フリー";
                             }
@@ -526,14 +533,23 @@ export default function SeatMap() {
                       <div className="absolute w-[200%] scale-[0.5] text-center text-[1.3rem] font-bold leading-[1.5rem] text-black">
                         {purchaseOrder.map((purchaseOrder: any) => {
                           if (purchaseOrder.id.includes(seat.name)) {
-                            return purchaseOrder.orderSet.map((set: any) => {
-                              return (
-                                <>
-                                  {set.title.slice(0, 5)}
-                                  <br />
-                                </>
-                              );
-                            });
+                            return Array.from(
+                              new Map(
+                                purchaseOrder.orderSet.map((v: any) => [
+                                  v.title,
+                                  v,
+                                ])
+                              ).values()
+                            )
+                              .slice(0, 4)
+                              .map((set: any) => {
+                                return (
+                                  <>
+                                    {set.title.slice(0, 5)}
+                                    <br />
+                                  </>
+                                );
+                              });
                           }
                         })}
                       </div>
