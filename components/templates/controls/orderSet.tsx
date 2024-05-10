@@ -1101,7 +1101,7 @@ export default function ControlOrderSet() {
                           ? "mx-4 h-[45px] w-[80px] rounded-md px-2 text-xl opacity-10"
                           : "mx-4 h-[45px] w-[80px] rounded-md px-2 text-xl"
                       }
-                      value={order.callTime.includes(":") ? order.endTime : ""}
+                      value={order.callTime.includes(":") ? order.callTime : ""}
                       onClick={() => {
                         setIsCalculatorSelect(6);
                         setIsCalculator(true);
