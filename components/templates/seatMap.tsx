@@ -513,7 +513,7 @@ export default function SeatMap() {
                                 ).values()
                               )
                                 .slice(0, 4)
-                                .map((cast: any) => {
+                                .map((cast: any, index: any) => {
                                   return (
                                     <>
                                       {cast.title.slice(1, 5)}
@@ -522,7 +522,11 @@ export default function SeatMap() {
                                   );
                                 });
                             } else {
-                              return "フリー";
+                              return (
+                                <p className="text-[2rem]" key={index}>
+                                  フリー
+                                </p>
+                              );
                             }
                           }
                         })}
