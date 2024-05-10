@@ -35,14 +35,15 @@ function Content({ datetime }: { datetime: any }) {
             >
               コール
             </Button>
+
             <Button
               className={"mr-[0.5em] w-[6em]"}
               onClick={() => {
-                setSeatViewMode(4);
+                setSeatViewMode(2);
               }}
               natural
             >
-              開始終了
+              指名
             </Button>
             <Button
               className={"mr-[0.5em] w-[6em]"}
@@ -56,11 +57,11 @@ function Content({ datetime }: { datetime: any }) {
             <Button
               className={"mr-[0.5em] w-[6em]"}
               onClick={() => {
-                setSeatViewMode(2);
+                setSeatViewMode(4);
               }}
               natural
             >
-              指名
+              開始終了
             </Button>
             <Button
               className={"mr-[0.5em] w-[6em]"}
