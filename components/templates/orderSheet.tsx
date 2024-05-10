@@ -1443,7 +1443,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
               if (purchaseOrderState[0]?.orderItem) {
                 setPurchaseOrder(
                   purchaseOrder.map((e: any) => {
-                    if (e.id == seatPreset) {
+                    if (e.id.includes(seatPreset)) {
                       return {
                         ...e,
                         orderItem: [...e?.orderItem, ...purchaseOrderItemAdd],
@@ -1455,7 +1455,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
               } else {
                 setPurchaseOrder(
                   purchaseOrder.map((e: any) => {
-                    if (e.id == seatPreset) {
+                    if (e.id.includes(seatPreset)) {
                       return {
                         ...e,
                         orderItem: purchaseOrderItemAdd,
@@ -2081,7 +2081,7 @@ function CastAdd() {
               if (purchaseOrderState[0]?.orderCast) {
                 setPurchaseOrder(
                   purchaseOrder.map((e: any) => {
-                    if (e.id == seatPreset) {
+                    if (e.id.includes(seatPreset)) {
                       return {
                         ...e,
                         orderCast: [
@@ -2097,7 +2097,7 @@ function CastAdd() {
               } else {
                 setPurchaseOrder(
                   purchaseOrder.map((e: any) => {
-                    if (e.id == seatPreset) {
+                    if (e.id.includes(seatPreset)) {
                       return {
                         ...e,
                         orderCast: [...purchaseOrderItemAdd, ...orderItemAdd],
