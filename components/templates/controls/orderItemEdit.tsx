@@ -27,6 +27,7 @@ import { searchMenu } from "@/gqls/query/menu";
 import usePurchaseOrderItemAddGlobal from "@/globalstates/purchaseOrderItemAdd";
 import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
+import Calculator14 from "@/components/parts/calculator14";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -37,7 +38,9 @@ function ContentHeader({ children }: { children: any }) {
 }
 
 function Content({ children }: { children: any }) {
-  return <Border size="h-[582.5px] w-full px-4 py-2">{children}</Border>;
+  return (
+    <Border size="h-[820px] w-full px-4 py-2 flex flex-col">{children}</Border>
+  );
 }
 
 const defaultVariables = {
@@ -78,8 +81,16 @@ export default function OrderItemEdit() {
   let count = 0;
   let count2 = 0;
 
+  const [isCalculatorSelect, setIsCalculatorSelect] = useState(0);
+  const [calculatorIndex, setCalculatorIndex] = useState("");
+
   return (
     <>
+      {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 1 && (
+        <Calculator14
+          result={purchaseOrderState[0].orderItem[calculatorIndex]}
+        />
+      )}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 100 }}
@@ -90,120 +101,146 @@ export default function OrderItemEdit() {
           duration: 0.15,
           delay: 0.15,
         }}
-        className="absolute left-[390px] top-1/2 z-20 min-h-[745px] min-w-[calc(100dvw-405px)] -translate-y-1/2"
+        className="absolute left-[390px] top-1/2 z-20 min-h-[745px] w-[calc(100dvw-480px)] -translate-y-1/2"
         onClick={() => {
           if (isHeader) setIsHeader(false);
           if (isFooter) setIsFooter(false);
         }}
       >
-        <ContentHeader>
-          <div className="flex items-end rounded-md border-4 border-white bg-black px-4 py-3">
-            <div className="flex w-full items-center justify-center">
-              <input
-                className="mx-4 h-[45px] w-[220px] rounded-md p-4 text-lg text-white"
-                placeholder="オーダー名を入力"
-              />
-              <div>
-                <Border
-                  rounded="rounded-full"
-                  size="h-[36px] w-[36px] p-[6px] bg-search"
-                >
-                  <Image
-                    src={"/assets/search.svg"}
-                    width={26}
-                    height={26}
-                    className="!h-full !w-full"
-                    alt=""
-                  />
-                </Border>
-              </div>
-            </div>
-          </div>
-        </ContentHeader>
-
-        <div className="mt-[-1px] flex h-[700px] w-[calc(100vw-405px)] flex-wrap items-start justify-start rounded-xl bg-primary p-4 text-white">
-          <table className="table table-xs fixed z-10 mt-[-16px] h-[45px] w-[94%] rounded-none">
-            <thead>
-              <tr className="text-accent">
-                <th className="w-[15em] align-bottom">オーダー名</th>
-                <th className="w-[10em] align-bottom">金額</th>
-                <th className="w-[10em] align-bottom">レディース</th>
-                <th className="w-[5em] align-bottom">
-                  <label>編集</label>
-                </th>
-              </tr>
-            </thead>
-          </table>
-          <table className="table table-xs mt-5">
-            <thead>
-              <tr className="text-accent">
-                <th className="w-[15em]"></th>
-                <th className="w-[10em]"></th>
-                <th className="w-[10em]"></th>
-                <th className="w-[5em]">
-                  <label></label>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {purchaseOrderState[0]?.orderItem?.map(
-                (orderItem: any, index: any) => {
-                  return (
-                    <>
-                      <tr key={index}>
-                        <td>{orderItem.title}</td>
-                        <td onClick={() => {}}>
-                          {orderItem.price?.toLocaleString()}
-                          {orderItem.isTax ? "込" : "円"}
-                        </td>
-                        <td>
-                          {orderItem.castNames && orderItem.castNames != ""
-                            ? orderItem.castNames
-                                .replace(/ /g, ",")
-                                .replace(/.$/, "")
-                            : ""}
-                        </td>
-                        <th className="flex">
-                          <button
-                            className="btn btn-ghost btn-xs"
+        <Content>
+          <Border
+            className="my-2 h-[100%] w-full"
+            rounded="border-white rounded-md h-[100%] !border-[1px]"
+            size="py-4 px-2 !items-start min-h-full max-h-full overflow-scroll"
+            black
+          >
+            <table className="table table-xs fixed z-10 mt-[-16px] h-[45px] w-[94%] rounded-none bg-neutral-900">
+              {/* head */}
+              <thead>
+                <tr className="text-accent">
+                  <th className="w-[10em] text-left align-bottom">オーダー</th>
+                  <th className="w-[10em] text-left align-bottom">価格</th>
+                  <th className="w-[25em] text-left align-bottom">キャスト</th>
+                  <th className="w-[15em] text-left align-bottom">
+                    <label>操作</label>
+                  </th>
+                </tr>
+              </thead>
+            </table>
+            <table className="table table-xs mt-5">
+              {/* head */}
+              <thead>
+                <tr className="text-accent">
+                  <th className="w-[10em] align-bottom"></th>
+                  <th className="w-[10em] align-bottom"></th>
+                  <th className="w-[25em] align-bottom"></th>
+                  <th className="w-[15em] align-bottom"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {purchaseOrderState[0]?.orderItem?.map(
+                  (orderItem: any, index: any) => {
+                    return (
+                      <>
+                        <tr key={index}>
+                          <td className=" text-base">{orderItem.title}</td>
+                          <td
+                            className=" pr-6 text-right text-base"
                             onClick={() => {
-                              delete purchaseOrderState[0].orderItem[index];
-                              purchaseOrderState[0].orderItem =
-                                purchaseOrderState[0].orderItem.filter(
-                                  (v: any) => v
-                                );
+                              purchaseOrderState[0].isTimeCalculator = true;
+                              setIsCalculatorSelect(1);
+                              setCalculatorIndex(index);
                             }}
-                            // onClick={() => {
-                            // client
-                            //   .request(deleteCast, {
-                            //     id: cast.id,
-                            //     ...defaultVariables,
-                            //   })
-                            //   .then(() => {
-                            //     searchData.mutate(
-                            //       () =>
-                            //         client.request(searchCast, {
-                            //           ...defaultVariables,
-                            //         }),
-                            //       {
-                            //         populateCache: true,
-                            //         revalidate: false,
-                            //       }
-                            //     );
-                            //   });
-                            // }}
                           >
-                            削除
-                          </button>
-                        </th>
-                      </tr>
-                    </>
-                  );
-                }
-              )}
-            </tbody>
-          </table>
-        </div>
+                            {Number(
+                              String(orderItem.price).replace(/[^0-9]/g, "")
+                            ).toLocaleString()}
+                            {orderItem.isTax ? "込" : "円"}
+                          </td>
+                          <td className="text-base">
+                            <div className="flex items-center justify-start">
+                              <Border
+                                className="mr-3 h-[40px] w-[40px]"
+                                rounded="rounded-full"
+                                stroke="lg"
+                                size="h-[32px] w-[32px] p-[6px]"
+                              >
+                                <Image
+                                  src={"/assets/add-cast.svg"}
+                                  width={36}
+                                  height={36}
+                                  alt=""
+                                  className="!h-full !w-full"
+                                />
+                              </Border>
+                              {orderItem.castNames && orderItem.castNames != ""
+                                ? orderItem.castNames
+                                    .replace(/ /g, ",")
+                                    .replace(/.$/, "")
+                                : ""}
+                            </div>
+                          </td>
+                          <td className="flex">
+                            <Button
+                              className="btn btn-ghost btn-xs mr-8 h-full p-0"
+                              onClick={() => {
+                                setPurchaseOrderItemAdd([
+                                  ...purchaseOrderItemAdd,
+                                  {
+                                    title:
+                                      purchaseOrderState[0].orderItem[index]
+                                        .title,
+                                    lot: 1,
+                                    price:
+                                      purchaseOrderState[0].orderItem[index]
+                                        .price,
+                                    isCalculator: false,
+                                    isTax:
+                                      purchaseOrderState[0].orderItem[index]
+                                        .isTax,
+                                    isNumCalculator: false,
+                                  },
+                                ]);
+                              }}
+                              natural
+                            >
+                              再注文
+                            </Button>
+                            <div
+                              className="m-[3px] flex"
+                              onClick={() => {
+                                delete purchaseOrderState[0].orderItem[index];
+                                purchaseOrderState[0].orderItem =
+                                  purchaseOrderState[0].orderItem.filter(
+                                    (v: any) => v
+                                  );
+                              }}
+                            >
+                              <Border2
+                                rounded="rounded-full"
+                                size="h-[28px] w-[28px] p-[6px]"
+                              >
+                                <div>
+                                  <Image
+                                    src={"/assets/close.svg"}
+                                    width={26}
+                                    height={26}
+                                    className="!h-full !w-full"
+                                    alt=""
+                                  />
+                                </div>
+                              </Border2>
+                            </div>
+                          </td>
+                        </tr>
+                      </>
+                    );
+                  }
+                )}
+              </tbody>
+            </table>
+          </Border>
+        </Content>
       </motion.div>
     </>
   );

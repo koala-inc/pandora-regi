@@ -60,10 +60,12 @@ function Lists({
     purchaseOrder.id.includes(seatPreset)
   );
   useEffect(() => {
-    const orderSets = [...purchaseOrderState[0]?.orderSet];
+    const orderSets2 = [...purchaseOrderState[0]?.orderSet];
 
-    setOrderSets(orderSets);
-  }, [purchaseOrderState]);
+    if (orderSets !== orderSets2) {
+      setOrderSets(orderSets2);
+    }
+  }, [purchaseOrderState, orderSets]);
 
   let mainFlag = false;
 

@@ -27,38 +27,45 @@ export default function OrderEnd() {
     purchaseOrder.id.includes(seatPreset)
   );
   let total = 0;
-  purchaseOrderState[0]?.cast?.map((cast: any) => {
-    total += Number(String(cast.price).replace(/[^0-9]/g, ""));
-  });
-  total +=
-    Number(purchaseOrderState[0]?.price) * Number(purchaseOrderState[0]?.num);
-  total += Number(purchaseOrderState[0]?.roomCharge);
-  total +=
-    Number(purchaseOrderState[0].extensionPrice) *
-    Number(purchaseOrderState[0].orderExtension);
+  let taxNoTotal = 0;
   purchaseOrderState[0]?.orderItem?.map((orderItem: any) => {
-    total += Number(orderItem.price) * Number(orderItem.lot);
+    if (!orderItem.isTax) {
+      total += Number(orderItem.price) * Number(orderItem.lot);
+    } else {
+      taxNoTotal +=
+        Number(String(orderItem.price).replace(/[^0-9]/g, "")) *
+        Number(orderItem.lot);
+    }
   });
   purchaseOrderState[0]?.orderCast?.map((cast: any) => {
-    total += Number(cast.price) * Number(cast.lot);
+    let exTax = Number(cast.orderExtension) * Number(cast.extensionPrice);
+    total += exTax;
+    if (!cast.isTax) {
+      total += Number(cast.price) * Number(cast.lot);
+    } else {
+      taxNoTotal +=
+        Number(String(cast.price).replace(/[^0-9]/g, "")) * Number(cast.lot);
+    }
+  });
+  purchaseOrderState[0]?.orderSet?.map((set: any) => {
+    let exTax = Number(set.orderExtension) * Number(set.extensionPrice);
+    total += exTax;
+    if (!set.isTax) {
+      total += Number(set.price) * Number(set.lot);
+    } else {
+      taxNoTotal +=
+        Number(String(set.price).replace(/[^0-9]/g, "")) * Number(set.lot);
+    }
   });
 
-  const totalPay =
+  const totalPay = Math.floor(
     Math.ceil(
-      Math.floor(
-        (total -
-          (purchaseOrderState[0]?.priceTax ? purchaseOrderState[0]?.price : 0) -
-          (purchaseOrderState[0]?.roomTax
-            ? purchaseOrderState[0]?.roomCharge
-            : 0)) *
-          1.3 *
-          1.1 +
-          (purchaseOrderState[0]?.priceTax ? purchaseOrderState[0]?.price : 0) +
-          (purchaseOrderState[0]?.roomTax
-            ? purchaseOrderState[0]?.roomCharge
-            : 0)
-      ) / 100
-    ) * 100;
+      (total * (Number(purchaseOrderState[0]?.serviceTax) / 100 + 1) * 1.1 +
+        taxNoTotal) /
+        100
+    ) * 100
+  );
+
   const [discount, setDiscount] = useState(0);
   const [pay, setPay] = useState(0);
 
