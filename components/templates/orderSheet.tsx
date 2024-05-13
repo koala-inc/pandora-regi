@@ -146,12 +146,6 @@ function Base() {
 
   let total = 0;
   let taxNoTotal = 0;
-  total += purchaseOrderState[0]?.isRoomCharge
-    ? Number(purchaseOrderState[0]?.roomCharge)
-    : 0;
-  total +=
-    Number(purchaseOrderState[0]?.extensionPrice) *
-    Number(purchaseOrderState[0]?.orderExtension);
   purchaseOrderState[0]?.orderItem?.map((orderItem: any) => {
     if (!orderItem.isTax) {
       total += Number(orderItem.price) * Number(orderItem.lot);
@@ -162,6 +156,8 @@ function Base() {
     }
   });
   purchaseOrderState[0]?.orderCast?.map((cast: any) => {
+    let exTax = Number(cast.orderExtension) * Number(cast.extensionPrice);
+    total += exTax;
     if (!cast.isTax) {
       total += Number(cast.price) * Number(cast.lot);
     } else {
@@ -170,6 +166,8 @@ function Base() {
     }
   });
   purchaseOrderState[0]?.orderSet?.map((set: any) => {
+    let exTax = Number(set.orderExtension) * Number(set.extensionPrice);
+    total += exTax;
     if (!set.isTax) {
       total += Number(set.price) * Number(set.lot);
     } else {
@@ -931,12 +929,6 @@ function Add({ isCalculator, setIsCalculator }: any) {
 
   let total = 0;
   let taxNoTotal = 0;
-  total += purchaseOrderState[0]?.isRoomCharge
-    ? Number(purchaseOrderState[0]?.roomCharge)
-    : 0;
-  total +=
-    Number(purchaseOrderState[0]?.extensionPrice) *
-    Number(purchaseOrderState[0]?.orderExtension);
   purchaseOrderState[0]?.orderItem?.map((orderItem: any) => {
     if (!orderItem.isTax) {
       total += Number(orderItem.price) * Number(orderItem.lot);
@@ -947,6 +939,8 @@ function Add({ isCalculator, setIsCalculator }: any) {
     }
   });
   purchaseOrderState[0]?.orderCast?.map((cast: any) => {
+    let exTax = Number(cast.orderExtension) * Number(cast.extensionPrice);
+    total += exTax;
     if (!cast.isTax) {
       total += Number(cast.price) * Number(cast.lot);
     } else {
@@ -955,6 +949,8 @@ function Add({ isCalculator, setIsCalculator }: any) {
     }
   });
   purchaseOrderState[0]?.orderSet?.map((set: any) => {
+    let exTax = Number(set.orderExtension) * Number(set.extensionPrice);
+    total += exTax;
     if (!set.isTax) {
       total += Number(set.price) * Number(set.lot);
     } else {
@@ -1507,12 +1503,6 @@ function CastAdd() {
 
   let total = 0;
   let taxNoTotal = 0;
-  total += purchaseOrderState[0]?.isRoomCharge
-    ? Number(purchaseOrderState[0]?.roomCharge)
-    : 0;
-  total +=
-    Number(purchaseOrderState[0]?.extensionPrice) *
-    Number(purchaseOrderState[0]?.orderExtension);
   purchaseOrderState[0]?.orderItem?.map((orderItem: any) => {
     if (!orderItem.isTax) {
       total += Number(orderItem.price) * Number(orderItem.lot);
@@ -1523,6 +1513,8 @@ function CastAdd() {
     }
   });
   purchaseOrderState[0]?.orderCast?.map((cast: any) => {
+    let exTax = Number(cast.orderExtension) * Number(cast.extensionPrice);
+    total += exTax;
     if (!cast.isTax) {
       total += Number(cast.price) * Number(cast.lot);
     } else {
@@ -1531,6 +1523,8 @@ function CastAdd() {
     }
   });
   purchaseOrderState[0]?.orderSet?.map((set: any) => {
+    let exTax = Number(set.orderExtension) * Number(set.extensionPrice);
+    total += exTax;
     if (!set.isTax) {
       total += Number(set.price) * Number(set.lot);
     } else {
