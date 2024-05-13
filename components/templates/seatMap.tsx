@@ -672,7 +672,7 @@ export default function SeatMap() {
                     </>
                   ) : seatViewMode == 4 ? (
                     <>
-                      <div className="absolute w-[200%] scale-[0.65] text-center text-[1.5rem] font-bold leading-[1.5rem] text-black">
+                      <div className="absolute w-[200%] scale-[0.55] text-center text-[1.5rem] font-bold leading-[1.5rem] text-black">
                         {purchaseOrder.map((purchaseOrder: any) => {
                           if (purchaseOrder.id.includes(seat.name)) {
                             return (

@@ -20,13 +20,43 @@ function Content({ datetime }: { datetime: any }) {
       onClick={(e) => e.stopPropagation()}
     >
       <div className="flex h-full w-full items-center justify-start border-y border-black">
-        <div className="px-6">
+        <div className="pl-6 pr-10">
           <div className="text-accent">時間</div>
           <div className="text-4xl text-white">
             {format(datetime, "HH:mm", { locale: ja })}
           </div>
         </div>
-        <div className="ml-auto px-6">
+        <div className="px-6">
+          <div className="text-center text-accent">出勤</div>
+          <div className="text-center text-4xl text-white">0</div>
+        </div>
+        <div className="px-0">
+          <div className="text-accent">　</div>
+          <div className="text-4xl text-white">/</div>
+        </div>
+        <div className="px-6">
+          <div className="text-center text-accent">予定</div>
+          <div className="text-right text-4xl text-white">0</div>
+        </div>
+        <div className="px-6">
+          <div className="text-center text-accent">客数</div>
+          <div className="text-center text-4xl text-white">0</div>
+        </div>
+        <div className="px-0">
+          <div className="text-accent">　</div>
+          <div className="text-4xl text-white">/</div>
+        </div>
+        <div className="px-6">
+          <div className="text-center text-accent">累計</div>
+          <div className="text-center text-4xl text-white">0</div>
+        </div>
+        <div className="px-6">
+          <div className="text-accent">店内±</div>
+          <div className=" flex text-4xl text-white">
+            <div className="mr-1 mt-[-3px]">+</div>0
+          </div>
+        </div>
+        <div className="ml-auto pl-6 pr-[190px]">
           <div className="text-accent">モード変更</div>
           <div className="flex">
             <Button
