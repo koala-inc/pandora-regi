@@ -111,19 +111,115 @@ export default function SeatMap() {
           (seat: any, index: any) => {
             let flag = true;
 
-            let colormode = "border-black";
-            let indexColor = "";
+            let indexColor = 0;
             exSeat.map((ex: any, index: any) => {
               if (ex.includes(seat.name)) {
                 flag = false;
-                indexColor = index;
+                indexColor = Number(index);
               }
             });
-            let r = Math.floor(Math.random() * 255).toString(16);
-            let g = Math.floor(Math.random() * 255).toString(16);
-            let b = Math.floor(Math.random() * 255).toString(16);
-            let color = "#" + r + g + b;
-            colormode = "border-[#ff0000]";
+            const colormode = [
+              "border-[#35d88c]",
+              "border-[#b171bc]",
+              "border-[#1e0edd]",
+              "border-[#40fc49]",
+              "border-[#155442]",
+              "border-[#78b487]",
+              "border-[#f68a74]",
+              "border-[#5347c7]",
+              "border-[#512cf3]",
+              "border-[#e83e18]",
+              "border-[#3c1628]",
+              "border-[#06039d]",
+              "border-[#e171ea]",
+              "border-[#54c659]",
+              "border-[#b372b9]",
+              "border-[#f4abed]",
+              "border-[#485057]",
+              "border-[#6040e7]",
+              "border-[#49e5ba]",
+              "border-[#5db24e]",
+              "border-[#085a64]",
+              "border-[#7f9fd7]",
+              "border-[#2eb41a]",
+              "border-[#644672]",
+              "border-[#296f28]",
+              "border-[#0e80e8]",
+              "border-[#143bd2]",
+              "border-[#5ed976]",
+              "border-[#a4718d]",
+              "border-[#9692f0]",
+              "border-[#6d7094]",
+              "border-[#d9b92d]",
+              "border-[#b61c67]",
+              "border-[#46316c]",
+              "border-[#8b3b50]",
+              "border-[#3aa641]",
+              "border-[#c9e740]",
+              "border-[#75d5e0]",
+              "border-[#3e19ec]",
+              "border-[#c8aca6]",
+              "border-[#7a8962]",
+              "border-[#1a5de9]",
+              "border-[#7782e7]",
+              "border-[#89a5ef]",
+              "border-[#bff0b9]",
+              "border-[#713010]",
+              "border-[#1d0f0f]",
+              "border-[#35c658]",
+              "border-[#00d164]",
+              "border-[#1f6006]",
+              "border-[#69b8dc]",
+              "border-[#068258]",
+              "border-[#2e0d14]",
+              "border-[#b74dae]",
+              "border-[#fb739d]",
+              "border-[#54aefb]",
+              "border-[#a5ce50]",
+              "border-[#699f8a]",
+              "border-[#6486c6]",
+              "border-[#517f4a]",
+              "border-[#4d29c4]",
+              "border-[#998576]",
+              "border-[#650270]",
+              "border-[#7abda4]",
+              "border-[#be9530]",
+              "border-[#bc17ba]",
+              "border-[#7a16ac]",
+              "border-[#3ff88d]",
+              "border-[#43a3b1]",
+              "border-[#70938d]",
+              "border-[#2b2a8e]",
+              "border-[#8508a7]",
+              "border-[#dfce64]",
+              "border-[#58272f]",
+              "border-[#be46b3]",
+              "border-[#976e46]",
+              "border-[#347e74]",
+              "border-[#352c18]",
+              "border-[#2a10aa]",
+              "border-[#c3472e]",
+              "border-[#5a709d]",
+              "border-[#bf02c5]",
+              "border-[#c786c9]",
+              "border-[#5df46b]",
+              "border-[#0aa351]",
+              "border-[#706e29]",
+              "border-[#3ff740]",
+              "border-[#26b39e]",
+              "border-[#541f88]",
+              "border-[#debd54]",
+              "border-[#1eb27b]",
+              "border-[#a45804]",
+              "border-[#a35d23]",
+              "border-[#c79fde]",
+              "border-[#190970]",
+              "border-[#de0865]",
+              "border-[#2472f5]",
+              "border-[#f71969]",
+              "border-[#ea6789]",
+              "border-[#0d52dc]",
+            ];
 
             if (seat.layer == 3) {
               return (
@@ -149,9 +245,10 @@ export default function SeatMap() {
                               purchaseOrder.callTime.split(":")[1] <=
                                 dayjs(new Date()).format("mm")
                           )
-                          ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-rose-300 text-2xl font-bold text-accent opacity-90 shadow-md"
+                          ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-2 bg-rose-300 text-2xl font-bold text-accent opacity-90 shadow-md " +
+                            colormode[indexColor]
                           : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-2 bg-blue-200 text-2xl font-bold text-accent opacity-90 shadow-md " +
-                            colormode
+                            colormode[indexColor]
                         : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-2xl font-bold text-accent opacity-90 shadow-md"
                       : myExSeat.includes(seat.name)
                       ? seatPreset == seat.name
