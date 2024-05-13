@@ -124,7 +124,6 @@ export default function SeatMap() {
               "border-[#35d88c]",
               "border-[#b171bc]",
               "border-[#1e0edd]",
-              "border-[#40fc49]",
               "border-[#155442]",
               "border-[#78b487]",
               "border-[#f68a74]",
@@ -221,6 +220,7 @@ export default function SeatMap() {
               "border-[#f71969]",
               "border-[#ea6789]",
               "border-[#0d52dc]",
+              "border-[#40fc49]",
             ];
 
             if (seat.layer == 3) {

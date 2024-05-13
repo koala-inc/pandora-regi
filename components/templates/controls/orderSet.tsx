@@ -960,9 +960,6 @@ export default function ControlOrderSet() {
                 <div className="relative flex flex-col">
                   <label className="mb-2 mt-3 text-xs font-bold text-accent">
                     セット時間　
-                    <span className="rounded-md bg-red-700 px-[5px] py-[3px] text-xs text-white">
-                      必須
-                    </span>
                   </label>
                   <input
                     type="text"
@@ -1019,9 +1016,6 @@ export default function ControlOrderSet() {
                 <div className="relative flex flex-col">
                   <label className="mb-2 mt-3 text-xs font-bold text-accent">
                     料金　
-                    <span className="rounded-md bg-red-700 px-[5px] py-[3px] text-xs text-white">
-                      必須
-                    </span>
                   </label>
                   <input
                     type="text"
@@ -1052,10 +1046,7 @@ export default function ControlOrderSet() {
                 <div className="flex">
                   <div className="flex flex-col">
                     <label className="mb-2 mt-3 text-xs font-bold text-accent">
-                      開始時間　
-                      <span className="rounded-md bg-red-700 px-[5px] py-[3px] text-xs text-white">
-                        必須
-                      </span>
+                      開始時間
                     </label>
                     <input
                       type="text"
@@ -1072,9 +1063,6 @@ export default function ControlOrderSet() {
                   <div className="flex flex-col">
                     <label className="mb-2 mt-3 text-xs font-bold text-accent">
                       終了時間　
-                      <span className="rounded-md  bg-red-700 px-[5px] py-[3px] text-xs text-white">
-                        必須
-                      </span>
                     </label>
                     <input
                       type="text"
