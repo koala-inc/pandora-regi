@@ -10,8 +10,8 @@ function Content() {
   const [isFooter, setIsFooter] = useIsFooterGlobal();
 
   return (
-    <Border size="px-5 py-3">
-      <div className="flex w-full flex-wrap items-start justify-around pr-[60px]">
+    <Border size="px-6 py-3">
+      <div className="flex w-full flex-wrap items-start justify-around">
         <Link href={"/timecard"}>
           <Button className={"w-[8em]"}>タイムカード</Button>
         </Link>
@@ -73,22 +73,6 @@ function Content() {
           </Button>
         </Link>
       </div>
-      <nav
-        className="absolute right-[25px] top-1/2 -translate-y-1/2 cursor-pointer rounded-full border border-black"
-        onClick={() => setIsFooter(false)}
-      >
-        <div className="rounded-full border-4 border-secondary">
-          <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full border border-black bg-primary p-[6px]">
-            <Image
-              src={"/assets/close.svg"}
-              width={18}
-              height={18}
-              className="z-10 !h-full !w-full"
-              alt=""
-            />
-          </span>
-        </div>
-      </nav>
     </Border>
   );
 }
@@ -104,12 +88,12 @@ export default function Footer() {
           animate={{ bottom: 15 }}
           exit={{ bottom: -160 }}
           transition={{ ease: "easeInOut", bounce: 0, duration: 0.1 }}
-          className="absolute bottom-[15px] left-1/2 z-30 h-auto w-[90%] max-w-[1010px] -translate-x-1/2"
+          className="absolute bottom-[15px] left-1/2 z-30 h-auto w-[90%] max-w-[960px] -translate-x-1/2"
         >
           <Content />
         </motion.footer>
       ) : (
-        <footer className="absolute bottom-[15px] left-1/2 z-30 h-auto w-[90%] max-w-[1010px] -translate-x-1/2">
+        <footer className="absolute bottom-[15px] left-1/2 z-30 h-auto w-[90%] max-w-[960px] -translate-x-1/2">
           <Content />
         </footer>
       )}

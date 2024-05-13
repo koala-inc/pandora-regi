@@ -15,7 +15,10 @@ function Content({ datetime }: { datetime: any }) {
   const [seatViewMode, setSeatViewMode] = useSeatViewModeGlobal();
 
   return (
-    <div className="h-full w-full border-y-4 border-secondary bg-primary">
+    <div
+      className="h-full w-full border-y-4 border-secondary bg-primary"
+      onClick={(e) => e.stopPropagation()}
+    >
       <div className="flex h-full w-full items-center justify-start border-y border-black">
         <div className="px-6">
           <div className="text-accent">時間</div>
@@ -23,7 +26,7 @@ function Content({ datetime }: { datetime: any }) {
             {format(datetime, "HH:mm", { locale: ja })}
           </div>
         </div>
-        <div className="px-6">
+        <div className="ml-auto px-6">
           <div className="text-accent">モード変更</div>
           <div className="flex">
             <Button
@@ -83,22 +86,6 @@ function Content({ datetime }: { datetime: any }) {
             </Button>
           </div>
         </div>
-        <nav
-          className="absolute right-[25px] top-[23px] cursor-pointer rounded-full border border-black"
-          onClick={() => setIsHeader(false)}
-        >
-          <div className="rounded-full border-4 border-secondary">
-            <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full border border-black bg-primary p-[6px]">
-              <Image
-                src={"/assets/close.svg"}
-                width={18}
-                height={18}
-                className="z-10 !h-full !w-full"
-                alt=""
-              />
-            </span>
-          </div>
-        </nav>
       </div>
     </div>
   );

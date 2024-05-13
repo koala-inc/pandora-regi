@@ -84,8 +84,8 @@ function Control(isControl: any) {
 }
 
 export default function Home() {
-  const [isHeader] = useIsHeaderGlobal();
-  const [isFooter] = useIsFooterGlobal();
+  const [isHeader, setIsHeader] = useIsHeaderGlobal();
+  const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isCard, setIsCard] = useIsCardGlobal();
   const [isControl] = useIsControlGlobal();
   const [isLock] = useIsLockGlobal();
@@ -117,6 +117,8 @@ export default function Home() {
           setIsCard(false);
           setSeatPreset("");
         }
+        setIsHeader(false);
+        setIsFooter(false);
       }}
     >
       <AnimatePresence>

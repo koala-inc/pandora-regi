@@ -57,6 +57,8 @@ export default function SeatMap() {
 
   const editMode = useLongPress(
     (e, { context }) => {
+      setIsHeader(false);
+      setIsFooter(false);
       if (
         purchaseOrder.some((purchaseOrder: any) =>
           purchaseOrder.id.includes(context)
