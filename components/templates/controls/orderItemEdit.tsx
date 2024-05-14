@@ -122,7 +122,7 @@ export default function OrderItemEdit() {
                   <th className="w-[10em] text-left align-bottom">価格</th>
                   <th className="w-[25em] text-left align-bottom">キャスト</th>
                   <th className="w-[15em] text-left align-bottom">
-                    <label>操作</label>
+                    <label>再注文</label>
                   </th>
                 </tr>
               </thead>
@@ -183,8 +183,8 @@ export default function OrderItemEdit() {
                             </div>
                           </td>
                           <td className="flex">
-                            <Button
-                              className="btn btn-ghost btn-xs mr-8 h-full p-0"
+                            <div
+                              className="mr-8"
                               onClick={() => {
                                 setPurchaseOrderItemAdd([
                                   ...purchaseOrderItemAdd,
@@ -204,12 +204,18 @@ export default function OrderItemEdit() {
                                   },
                                 ]);
                               }}
-                              natural
                             >
-                              再注文
-                            </Button>
+                              <Border rounded="rounded-full" stroke="lg">
+                                <Image
+                                  src={"/assets/order.svg"}
+                                  width={30}
+                                  height={30}
+                                  alt=""
+                                  className="p-[2px]"
+                                />
+                              </Border>
+                            </div>
                             <div
-                              className="m-[3px] flex"
                               onClick={() => {
                                 delete purchaseOrderState[0].orderItem[index];
                                 purchaseOrderState[0].orderItem =
@@ -218,20 +224,17 @@ export default function OrderItemEdit() {
                                   );
                               }}
                             >
-                              <Border2
-                                rounded="rounded-full"
-                                size="h-[28px] w-[28px] p-[6px]"
-                              >
+                              <Border rounded="rounded-full" stroke="lg">
                                 <div>
                                   <Image
                                     src={"/assets/close.svg"}
-                                    width={26}
-                                    height={26}
-                                    className="!h-full !w-full"
+                                    width={30}
+                                    height={30}
                                     alt=""
+                                    className="p-[6px]"
                                   />
                                 </div>
-                              </Border2>
+                              </Border>
                             </div>
                           </td>
                         </tr>

@@ -1437,6 +1437,16 @@ function Add({ isCalculator, setIsCalculator }: any) {
           className="flex w-[150px] items-center justify-center"
           onClick={(e) => {
             e.stopPropagation();
+            const orderItemAdd: any = [];
+            purchaseOrderItemAdd.map((item: any, index: any) => {
+              if (item.lot > 1) {
+                let lot = item.lot - 1;
+                item.lot = 1;
+                [...Array(lot)].map((_, i) =>
+                  orderItemAdd.push({ ...item, id: item.id + "-" + i })
+                );
+              }
+            });
             if (purchaseOrderItemAdd.length >= 1) {
               if (purchaseOrderState[0]?.orderItem) {
                 setPurchaseOrder(
@@ -1444,7 +1454,11 @@ function Add({ isCalculator, setIsCalculator }: any) {
                     if (e.id.includes(seatPreset)) {
                       return {
                         ...e,
-                        orderItem: [...e?.orderItem, ...purchaseOrderItemAdd],
+                        orderItem: [
+                          ...e?.orderItem,
+                          ...purchaseOrderItemAdd,
+                          ...orderItemAdd,
+                        ],
                       };
                     }
                     return e;
@@ -1456,7 +1470,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
                     if (e.id.includes(seatPreset)) {
                       return {
                         ...e,
-                        orderItem: purchaseOrderItemAdd,
+                        orderItem: [...purchaseOrderItemAdd, ...orderItemAdd],
                       };
                     }
                     return e;
