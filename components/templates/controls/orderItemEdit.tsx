@@ -28,6 +28,7 @@ import usePurchaseOrderItemAddGlobal from "@/globalstates/purchaseOrderItemAdd";
 import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
 import Calculator14 from "@/components/parts/calculator14";
+import Calculator17 from "@/components/parts/calculator17";
 
 function ContentHeader({ children }: { children: any }) {
   return (
@@ -89,6 +90,15 @@ export default function OrderItemEdit() {
       {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 1 && (
         <Calculator14
           result={purchaseOrderState[0].orderItem[calculatorIndex]}
+        />
+      )}
+      {purchaseOrderState[0].isTimeCalculator && isCalculatorSelect == 2 && (
+        <Calculator17
+          result={purchaseOrderState[0].orderItem[calculatorIndex]}
+          callback={(castNames: any) => {
+            purchaseOrderState[0].orderItem[calculatorIndex].castNames =
+              castNames;
+          }}
         />
       )}
       <motion.div
@@ -160,7 +170,14 @@ export default function OrderItemEdit() {
                             {orderItem.isTax ? "込" : "円"}
                           </td>
                           <td className="text-base">
-                            <div className="flex items-center justify-start">
+                            <div
+                              className="flex items-center justify-start"
+                              onClick={() => {
+                                purchaseOrderState[0].isTimeCalculator = true;
+                                setIsCalculatorSelect(2);
+                                setCalculatorIndex(index);
+                              }}
+                            >
                               <Border
                                 className="mr-3 h-[40px] w-[40px]"
                                 rounded="rounded-full"
