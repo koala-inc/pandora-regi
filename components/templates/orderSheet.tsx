@@ -59,13 +59,10 @@ function Lists({
   const purchaseOrderState = purchaseOrder.filter((purchaseOrder: any) =>
     purchaseOrder.id.includes(seatPreset)
   );
-  useEffect(() => {
-    const orderSets2 = [...purchaseOrderState[0]?.orderSet];
 
-    if (orderSets !== orderSets2) {
-      setOrderSets(orderSets2);
-    }
-  }, [purchaseOrderState, orderSets]);
+  useEffect(() => {
+    setOrderSets([...purchaseOrderState[0]?.orderSet]);
+  }, []);
 
   let mainFlag = false;
 
@@ -284,7 +281,7 @@ function Base() {
         ).values()
       )
     );
-  }, [purchaseOrderState]);
+  }, []);
 
   const [countOrderCast, setCountOrderCast] = useState<any>([]);
   useEffect(() => {
@@ -341,7 +338,7 @@ function Base() {
         ).values()
       )
     );
-  }, [purchaseOrderState]);
+  }, []);
 
   const [countOrderSet, setCountOrderSet] = useState<any>([]);
   useEffect(() => {
@@ -416,7 +413,7 @@ function Base() {
         ).values()
       )
     );
-  }, [purchaseOrderState]);
+  }, []);
 
   const [order, setOrder] = useOrderGlobal();
 
@@ -1009,7 +1006,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
         ).values()
       )
     );
-  }, [purchaseOrderState]);
+  }, []);
 
   const [countOrderCast, setCountOrderCast] = useState<any>([]);
   useEffect(() => {
@@ -1066,7 +1063,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
         ).values()
       )
     );
-  }, [purchaseOrderState]);
+  }, []);
 
   const [countOrderSet, setCountOrderSet] = useState<any>([]);
   useEffect(() => {
@@ -1141,7 +1138,7 @@ function Add({ isCalculator, setIsCalculator }: any) {
         ).values()
       )
     );
-  }, [purchaseOrderState]);
+  }, []);
 
   return (
     <>
@@ -1589,7 +1586,7 @@ function CastAdd() {
         ).values()
       )
     );
-  }, [purchaseOrderState]);
+  }, []);
 
   const [countOrderCast, setCountOrderCast] = useState<any>([]);
   useEffect(() => {
@@ -1646,7 +1643,7 @@ function CastAdd() {
         ).values()
       )
     );
-  }, [purchaseOrderState]);
+  }, []);
 
   const [orderSets, setOrderSets] = useState<any>([]);
   const [countOrderSet, setCountOrderSet] = useState<any>([]);
@@ -1722,7 +1719,7 @@ function CastAdd() {
         ).values()
       )
     );
-  }, [purchaseOrderState]);
+  }, []);
 
   return (
     <>

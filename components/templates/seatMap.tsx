@@ -624,10 +624,10 @@ export default function SeatMap() {
                                 .slice(0, 4)
                                 .map((cast: any, index: any) => {
                                   return (
-                                    <>
+                                    <div key={index}>
                                       {cast.title.slice(1, 5)}
                                       <br />
-                                    </>
+                                    </div>
                                   );
                                 });
                             } else {
@@ -660,10 +660,10 @@ export default function SeatMap() {
                               .slice(0, 4)
                               .map((set: any) => {
                                 return (
-                                  <>
+                                  <div key={index}>
                                     {set.title.slice(0, 5)}
                                     <br />
-                                  </>
+                                  </div>
                                 );
                               });
                           }
@@ -676,13 +676,13 @@ export default function SeatMap() {
                         {purchaseOrder.map((purchaseOrder: any) => {
                           if (purchaseOrder.id.includes(seat.name)) {
                             return (
-                              <>
+                              <div key={index}>
                                 {purchaseOrder.mainStartTime}
                                 <br />
                                 ~
                                 <br />
                                 {purchaseOrder.mainEndTime}
-                              </>
+                              </div>
                             );
                           }
                         })}

@@ -143,7 +143,9 @@ export default function OrderItemEdit() {
                     return (
                       <>
                         <tr key={index}>
-                          <td className=" text-base">{orderItem.title}</td>
+                          <td className=" text-base">
+                            {orderItem.title.slice(0, 9)}
+                          </td>
                           <td
                             className=" pr-6 text-right text-base"
                             onClick={() => {

@@ -237,7 +237,7 @@ export default function OrderTimeSet() {
         ).values()
       )
     );
-  }, [purchaseOrderState]);
+  }, []);
 
   return (
     <>
@@ -378,7 +378,6 @@ export default function OrderTimeSet() {
             );
             purchaseOrderState[0].orderSet.map((set: any) => {
               if (!set.isLock) {
-                set.endTime = purchaseOrderState[0]?.mainEndTime;
                 set.orderExtension = checker_new(
                   set.endTime,
                   set.startTime,
