@@ -237,7 +237,7 @@ export default function OrderTimeSet() {
         ).values()
       )
     );
-  }, []);
+  }, [purchaseOrderState]);
 
   return (
     <>
