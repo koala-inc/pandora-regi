@@ -76,6 +76,27 @@ export default function OrderEnd() {
   const [isCalculator, setIsCalculator] = useState(false);
   const [isCalculatorSelect, setIsCalculatorSelect] = useState(0);
 
+  const [checkedPaymentDetail0, setCheckedPaymentDetail0] = useState({
+    pay: 0,
+    cahrge: 0,
+    type: false,
+  });
+  const [checkedPaymentDetail1, setCheckedPaymentDetail1] = useState({
+    pay: 0,
+    cahrge: 0,
+    type: false,
+  });
+  const [checkedPaymentDetail2, setCheckedPaymentDetail2] = useState({
+    pay: 0,
+    cahrge: 0,
+    type: false,
+  });
+  const [checkedPaymentDetail3, setCheckedPaymentDetail3] = useState({
+    pay: 0,
+    cahrge: 0,
+    type: false,
+  });
+
   return (
     <>
       {isCalculator && isCalculatorSelect == 0 && (
@@ -103,10 +124,10 @@ export default function OrderEnd() {
       >
         <div className="flex h-full w-full">
           <Border
-            className="mr-1 h-[100px] w-[calc(100%-360px)]"
-            size="h-[auto] w-full"
+            className="mr-2 h-full w-[calc(100%-230px)]"
+            size="h-full w-full"
           >
-            <div className="flex w-full flex-col">
+            <div className="flex h-full w-full flex-col">
               <div className="flex w-full p-4 pb-0">
                 <Border2
                   className="my-2 mr-4 w-full"
@@ -118,48 +139,81 @@ export default function OrderEnd() {
                     <div className="w-full text-left text-accent">合計金額</div>
                     <div className="w-full text-right text-2xl">
                       {(discountType
-                        ? totalPay + Number(discount)
-                        : totalPay - Number(discount)
+                        ? totalPay +
+                          Number(discount) +
+                          ((totalPay + Number(discount)) / 100) *
+                            Math.max(
+                              checkedPaymentDetail0.cahrge,
+                              checkedPaymentDetail1.cahrge,
+                              checkedPaymentDetail2.cahrge,
+                              checkedPaymentDetail3.cahrge
+                            )
+                        : totalPay -
+                          Number(discount) +
+                          ((totalPay - Number(discount)) / 100) *
+                            Math.max(
+                              checkedPaymentDetail0.cahrge,
+                              checkedPaymentDetail1.cahrge,
+                              checkedPaymentDetail2.cahrge,
+                              checkedPaymentDetail3.cahrge
+                            )
                       ).toLocaleString()}
                       円
                     </div>
                   </div>
                   <div className="mr-4 flex w-full flex-col">
                     <div className="w-full text-left text-accent">手数料</div>
-                    <div className="w-full text-right text-2xl">{0}円</div>
+                    <div className="w-full text-right text-2xl">
+                      {discountType
+                        ? ((totalPay + Number(discount)) / 100) *
+                          Math.max(
+                            checkedPaymentDetail0.cahrge,
+                            checkedPaymentDetail1.cahrge,
+                            checkedPaymentDetail2.cahrge,
+                            checkedPaymentDetail3.cahrge
+                          )
+                        : ((totalPay - Number(discount)) / 100) *
+                          Math.max(
+                            checkedPaymentDetail0.cahrge,
+                            checkedPaymentDetail1.cahrge,
+                            checkedPaymentDetail2.cahrge,
+                            checkedPaymentDetail3.cahrge
+                          )}
+                      円
+                    </div>
                   </div>
                   <div className="flex w-full flex-col">
                     <div
-                      className="w-full text-left text-accent"
+                      className="mb-2 w-full text-left text-accent"
                       onClick={() => {
                         setDiscountType((discountType) => !discountType);
                       }}
                     >
-                      値引き
                       <span
                         className={
                           discountType
-                            ? "ml-4 px-2 opacity-50"
-                            : "mx-2 ml-4 rounded-md border border-white px-2"
+                            ? "ml-4 px-2 py-1 opacity-50"
+                            : "mx-2 ml-4 rounded-md border border-white px-2 py-1"
                         }
                       >
-                        -
+                        値引
                       </span>
                       <span
                         className={
                           !discountType
-                            ? "px-2 opacity-50"
-                            : "mx-2 rounded-md border border-white px-2"
+                            ? "px-2 py-1 opacity-50"
+                            : "mx-2 rounded-md border border-white px-2 py-1"
                         }
                       >
-                        +
+                        掛値
                       </span>
                     </div>
                     <input
-                      className="w-full rounded-md border p-[3px] text-right"
+                      className="ml-[10%] w-full max-w-[90%] rounded-md border p-[3px] text-right"
                       value={
-                        (discountType ? "" : "-") +
-                        Number(discount).toLocaleString()
+                        (discountType ? "" : "- ") +
+                        Number(discount).toLocaleString() +
+                        "円"
                       }
                       onClick={(e) => {
                         setIsCalculator(true);
@@ -171,14 +225,23 @@ export default function OrderEnd() {
                 <Border2
                   className="my-2 w-[300px]"
                   rounded="border-white rounded-md"
-                  size="p-4 flex flex-col min-h-[90px] overflow-scroll justify-center"
+                  size="p-4 flex flex-col min-h-[98px] overflow-scroll justify-center"
                   black
                 >
                   <div className="w-full text-left text-accent">残金</div>
                   <div className="w-full text-right text-2xl text-red-400">
                     {(discountType
-                      ? totalPay + Number(discount) - pay
-                      : totalPay - Number(discount) - pay
+                      ? totalPay +
+                        Number(discount) -
+                        checkedPaymentDetail0.pay -
+                        checkedPaymentDetail1.pay -
+                        checkedPaymentDetail2.pay -
+                        checkedPaymentDetail3.pay
+                      : totalPay -
+                        Number(discount) -
+                        checkedPaymentDetail1.pay -
+                        checkedPaymentDetail2.pay -
+                        checkedPaymentDetail3.pay
                     ).toLocaleString()}
                     円
                   </div>
@@ -188,21 +251,35 @@ export default function OrderEnd() {
                 <Border2
                   className="my-2 w-full"
                   rounded="border-white rounded-md"
-                  size="p-4 flex min-h-[100px] overflow-scroll flex-col !justify-end"
+                  size="p-4 flex h-[calc(95dvh-240px)] max-h-[650px] overflow-scroll flex-col !justify-start"
                   black
                 >
                   <div className="mb-4 flex w-full items-end">
                     <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-1 w-full text-left text-accent">
+                      <div className="mb-4 w-full text-left text-accent">
                         支払方法
                       </div>
                       <select
                         className="text-md w-full rounded-md p-2"
                         onChange={(e) => {
                           if (Number(e.target.value) == 1) {
-                            setType(true);
+                            setCheckedPaymentDetail0(
+                              (checkedPaymentDetail0) => {
+                                return {
+                                  ...checkedPaymentDetail0,
+                                  type: true,
+                                };
+                              }
+                            );
                           } else {
-                            setType(false);
+                            setCheckedPaymentDetail0(
+                              (checkedPaymentDetail0) => {
+                                return {
+                                  ...checkedPaymentDetail0,
+                                  type: false,
+                                };
+                              }
+                            );
                           }
                         }}
                       >
@@ -215,16 +292,16 @@ export default function OrderEnd() {
                       </select>
                     </div>
                     <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-1 w-full text-left text-accent">
+                      <div className="mb-4 w-full text-left text-accent">
                         カード種類
                       </div>
                       <select
                         className={
-                          type
+                          checkedPaymentDetail0.type
                             ? "text-md w-full rounded-md p-2"
                             : "text-md w-full rounded-md p-2 opacity-20 grayscale"
                         }
-                        disabled={!type}
+                        disabled={!checkedPaymentDetail0.type}
                       >
                         <option disabled selected>
                           選択してください。
@@ -238,35 +315,54 @@ export default function OrderEnd() {
                       </select>
                     </div>
                     <div className="mr-4 flex w-[20rem] flex-col">
-                      <div className="mb-1 w-full text-left text-accent">
+                      <div className="mb-4 w-full text-left text-accent">
                         手数料
                       </div>
                       <select
                         className={
-                          type
+                          checkedPaymentDetail0.type
                             ? "text-md w-full rounded-md p-2 text-right"
                             : "text-md w-full rounded-md p-2 text-right opacity-20 grayscale"
                         }
-                        disabled={!type}
+                        disabled={!checkedPaymentDetail0.type}
+                        onChange={(e) => {
+                          setCheckedPaymentDetail0((checkedPaymentDetail0) => {
+                            return {
+                              ...checkedPaymentDetail0,
+                              cahrge: Number(e.target.value),
+                            };
+                          });
+                        }}
                       >
-                        <option selected>0％</option>
-                        <option>10％</option>
+                        <option value={0} selected>
+                          0％
+                        </option>
+                        <option value={5}>5％</option>
+                        <option value={10}>10％</option>
+                        <option value={15}>15％</option>
                       </select>
                     </div>
                     <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="w-full text-left text-accent">預り金</div>
+                      <div className="mb-3 w-full text-left text-accent">
+                        預り金
+                      </div>
                       <input
+                        defaultValue={0}
                         className="w-full rounded-md border p-[6px] text-right"
-                        value={pay}
                         onChange={(e) => {
-                          setPay(Number(e.target.value));
+                          setCheckedPaymentDetail0((checkedPaymentDetail0) => {
+                            return {
+                              ...checkedPaymentDetail0,
+                              pay: Number(e.target.value),
+                            };
+                          });
                         }}
                       />
                     </div>
                     <div
                       className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
                       onClick={() => {
-                        setPay(totalPay - discount);
+                        // setPay(totalPay - discount);
                       }}
                     >
                       <Button natural>残金</Button>
@@ -290,34 +386,52 @@ export default function OrderEnd() {
                   </div>
                   <div className="mb-4 flex w-full items-end">
                     <div className="mr-4 flex w-[30rem] flex-col">
+                      <div className="mb-4 w-full text-left text-accent">
+                        支払方法
+                      </div>
                       <select
                         className="text-md w-full rounded-md p-2"
                         onChange={(e) => {
                           if (Number(e.target.value) == 1) {
-                            setType2(true);
+                            setCheckedPaymentDetail1(
+                              (checkedPaymentDetail1) => {
+                                return {
+                                  ...checkedPaymentDetail1,
+                                  type: true,
+                                };
+                              }
+                            );
                           } else {
-                            setType2(false);
+                            setCheckedPaymentDetail1(
+                              (checkedPaymentDetail1) => {
+                                return {
+                                  ...checkedPaymentDetail1,
+                                  type: false,
+                                };
+                              }
+                            );
                           }
                         }}
                       >
-                        <option value={1} selected>
-                          カード
+                        <option value={1}>カード</option>
+                        <option value={2} selected>
+                          現金
                         </option>
-                        <option value={2}>現金</option>
                         <option value={3}>ポイント</option>
                         <option value={4}>掛</option>
                       </select>
                     </div>
-                    <div
-                      className={
-                        type2
-                          ? "mr-4 flex w-[30rem] flex-col"
-                          : "mr-4 flex w-[30rem] flex-col opacity-20 grayscale"
-                      }
-                    >
+                    <div className="mr-4 flex w-[30rem] flex-col">
+                      <div className="mb-4 w-full text-left text-accent">
+                        カード種類
+                      </div>
                       <select
-                        className="text-md w-full rounded-md p-2"
-                        disabled={!type2}
+                        className={
+                          checkedPaymentDetail1.type
+                            ? "text-md w-full rounded-md p-2"
+                            : "text-md w-full rounded-md p-2 opacity-20 grayscale"
+                        }
+                        disabled={!checkedPaymentDetail1.type}
                       >
                         <option disabled selected>
                           選択してください。
@@ -330,36 +444,315 @@ export default function OrderEnd() {
                         <option>UNION(銀聯)</option>
                       </select>
                     </div>
-                    <div
-                      className={
-                        type2
-                          ? "mr-4 flex w-[20rem] flex-col"
-                          : "mr-4 flex w-[20rem] flex-col opacity-20 grayscale"
-                      }
-                    >
+                    <div className="mr-4 flex w-[20rem] flex-col">
+                      <div className="mb-4 w-full text-left text-accent">
+                        手数料
+                      </div>
                       <select
-                        className="text-md w-full rounded-md p-2 text-right"
-                        disabled={!type2}
+                        className={
+                          checkedPaymentDetail1.type
+                            ? "text-md w-full rounded-md p-2 text-right"
+                            : "text-md w-full rounded-md p-2 text-right opacity-20 grayscale"
+                        }
+                        disabled={!checkedPaymentDetail1.type}
+                        onChange={(e) => {
+                          setCheckedPaymentDetail1((checkedPaymentDetail1) => {
+                            return {
+                              ...checkedPaymentDetail1,
+                              cahrge: Number(e.target.value),
+                            };
+                          });
+                        }}
                       >
-                        <option selected>0％</option>
-                        <option>5％</option>
-                        <option>10％</option>
-                        <option>15％</option>
+                        <option value={0} selected>
+                          0％
+                        </option>
+                        <option value={5}>5％</option>
+                        <option value={10}>10％</option>
+                        <option value={15}>15％</option>
                       </select>
                     </div>
                     <div className="mr-4 flex w-[30rem] flex-col">
+                      <div className="mb-3 w-full text-left text-accent">
+                        預り金
+                      </div>
                       <input
+                        defaultValue={0}
                         className="w-full rounded-md border p-[6px] text-right"
-                        value={pay}
                         onChange={(e) => {
-                          setPay(Number(e.target.value));
+                          setCheckedPaymentDetail1((checkedPaymentDetail1) => {
+                            return {
+                              ...checkedPaymentDetail1,
+                              pay: Number(e.target.value),
+                            };
+                          });
                         }}
                       />
                     </div>
                     <div
                       className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
                       onClick={() => {
-                        setPay(totalPay - discount);
+                        // setPay(totalPay - discount);
+                      }}
+                    >
+                      <Button natural>残金</Button>
+                    </div>
+                    <div className="flex h-[40px] items-center">
+                      <Border2
+                        rounded="rounded-full"
+                        size="h-[28px] w-[28px] p-[6px]"
+                      >
+                        <div>
+                          <Image
+                            src={"/assets/close.svg"}
+                            width={26}
+                            height={26}
+                            className="!h-full !w-full"
+                            alt=""
+                          />
+                        </div>
+                      </Border2>
+                    </div>
+                  </div>
+                  <div className="mb-4 flex w-full items-end">
+                    <div className="mr-4 flex w-[30rem] flex-col">
+                      <div className="mb-4 w-full text-left text-accent">
+                        支払方法
+                      </div>
+                      <select
+                        className="text-md w-full rounded-md p-2"
+                        onChange={(e) => {
+                          if (Number(e.target.value) == 1) {
+                            setCheckedPaymentDetail2(
+                              (checkedPaymentDetail2) => {
+                                return {
+                                  ...checkedPaymentDetail2,
+                                  type: true,
+                                };
+                              }
+                            );
+                          } else {
+                            setCheckedPaymentDetail2(
+                              (checkedPaymentDetail2) => {
+                                return {
+                                  ...checkedPaymentDetail2,
+                                  type: false,
+                                };
+                              }
+                            );
+                          }
+                        }}
+                      >
+                        <option value={1}>カード</option>
+                        <option value={2} selected>
+                          現金
+                        </option>
+                        <option value={3}>ポイント</option>
+                        <option value={4}>掛</option>
+                      </select>
+                    </div>
+                    <div className="mr-4 flex w-[30rem] flex-col">
+                      <div className="mb-4 w-full text-left text-accent">
+                        カード種類
+                      </div>
+                      <select
+                        className={
+                          checkedPaymentDetail2.type
+                            ? "text-md w-full rounded-md p-2"
+                            : "text-md w-full rounded-md p-2 opacity-20 grayscale"
+                        }
+                        disabled={!checkedPaymentDetail2.type}
+                      >
+                        <option disabled selected>
+                          選択してください。
+                        </option>
+                        <option>JCB</option>
+                        <option>VISA</option>
+                        <option>MASTER</option>
+                        <option>AMEX</option>
+                        <option>DINERS</option>
+                        <option>UNION(銀聯)</option>
+                      </select>
+                    </div>
+                    <div className="mr-4 flex w-[20rem] flex-col">
+                      <div className="mb-4 w-full text-left text-accent">
+                        手数料
+                      </div>
+                      <select
+                        className={
+                          checkedPaymentDetail2.type
+                            ? "text-md w-full rounded-md p-2 text-right"
+                            : "text-md w-full rounded-md p-2 text-right opacity-20 grayscale"
+                        }
+                        disabled={!checkedPaymentDetail2.type}
+                        onChange={(e) => {
+                          setCheckedPaymentDetail2((checkedPaymentDetail2) => {
+                            return {
+                              ...checkedPaymentDetail2,
+                              cahrge: Number(e.target.value),
+                            };
+                          });
+                        }}
+                      >
+                        <option value={0} selected>
+                          0％
+                        </option>
+                        <option value={5}>5％</option>
+                        <option value={10}>10％</option>
+                        <option value={15}>15％</option>
+                      </select>
+                    </div>
+                    <div className="mr-4 flex w-[30rem] flex-col">
+                      <div className="mb-3 w-full text-left text-accent">
+                        預り金
+                      </div>
+                      <input
+                        defaultValue={0}
+                        className="w-full rounded-md border p-[6px] text-right"
+                        onChange={(e) => {
+                          setCheckedPaymentDetail2((checkedPaymentDetail2) => {
+                            return {
+                              ...checkedPaymentDetail2,
+                              pay: Number(e.target.value),
+                            };
+                          });
+                        }}
+                      />
+                    </div>
+                    <div
+                      className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
+                      onClick={() => {
+                        // setPay(totalPay - discount);
+                      }}
+                    >
+                      <Button natural>残金</Button>
+                    </div>
+                    <div className="flex h-[40px] items-center">
+                      <Border2
+                        rounded="rounded-full"
+                        size="h-[28px] w-[28px] p-[6px]"
+                      >
+                        <div>
+                          <Image
+                            src={"/assets/close.svg"}
+                            width={26}
+                            height={26}
+                            className="!h-full !w-full"
+                            alt=""
+                          />
+                        </div>
+                      </Border2>
+                    </div>
+                  </div>
+                  <div className="mb-4 flex w-full items-end">
+                    <div className="mr-4 flex w-[30rem] flex-col">
+                      <div className="mb-4 w-full text-left text-accent">
+                        支払方法
+                      </div>
+                      <select
+                        className="text-md w-full rounded-md p-2"
+                        onChange={(e) => {
+                          if (Number(e.target.value) == 1) {
+                            setCheckedPaymentDetail3(
+                              (checkedPaymentDetail3) => {
+                                return {
+                                  ...checkedPaymentDetail3,
+                                  type: true,
+                                };
+                              }
+                            );
+                          } else {
+                            setCheckedPaymentDetail3(
+                              (checkedPaymentDetail3) => {
+                                return {
+                                  ...checkedPaymentDetail3,
+                                  type: false,
+                                };
+                              }
+                            );
+                          }
+                        }}
+                      >
+                        <option value={1}>カード</option>
+                        <option value={2} selected>
+                          現金
+                        </option>
+                        <option value={3}>ポイント</option>
+                        <option value={4}>掛</option>
+                      </select>
+                    </div>
+                    <div className="mr-4 flex w-[30rem] flex-col">
+                      <div className="mb-4 w-full text-left text-accent">
+                        カード種類
+                      </div>
+                      <select
+                        className={
+                          checkedPaymentDetail3.type
+                            ? "text-md w-full rounded-md p-2"
+                            : "text-md w-full rounded-md p-2 opacity-20 grayscale"
+                        }
+                        disabled={!checkedPaymentDetail3.type}
+                      >
+                        <option disabled selected>
+                          選択してください。
+                        </option>
+                        <option>JCB</option>
+                        <option>VISA</option>
+                        <option>MASTER</option>
+                        <option>AMEX</option>
+                        <option>DINERS</option>
+                        <option>UNION(銀聯)</option>
+                      </select>
+                    </div>
+                    <div className="mr-4 flex w-[20rem] flex-col">
+                      <div className="mb-4 w-full text-left text-accent">
+                        手数料
+                      </div>
+                      <select
+                        className={
+                          checkedPaymentDetail3.type
+                            ? "text-md w-full rounded-md p-2 text-right"
+                            : "text-md w-full rounded-md p-2 text-right opacity-20 grayscale"
+                        }
+                        disabled={!checkedPaymentDetail3.type}
+                        onChange={(e) => {
+                          setCheckedPaymentDetail3((checkedPaymentDetail3) => {
+                            return {
+                              ...checkedPaymentDetail3,
+                              cahrge: Number(e.target.value),
+                            };
+                          });
+                        }}
+                      >
+                        <option value={0} selected>
+                          0％
+                        </option>
+                        <option value={5}>5％</option>
+                        <option value={10}>10％</option>
+                        <option value={15}>15％</option>
+                      </select>
+                    </div>
+                    <div className="mr-4 flex w-[30rem] flex-col">
+                      <div className="mb-3 w-full text-left text-accent">
+                        預り金
+                      </div>
+                      <input
+                        defaultValue={0}
+                        className="w-full rounded-md border p-[6px] text-right"
+                        onChange={(e) => {
+                          setCheckedPaymentDetail3((checkedPaymentDetail3) => {
+                            return {
+                              ...checkedPaymentDetail3,
+                              pay: Number(e.target.value),
+                            };
+                          });
+                        }}
+                      />
+                    </div>
+                    <div
+                      className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
+                      onClick={() => {
+                        // setPay(totalPay - discount);
                       }}
                     >
                       <Button natural>残金</Button>
@@ -385,20 +778,7 @@ export default function OrderEnd() {
               </div>
             </div>
           </Border>
-          <Border className="mr-2 h-[210px] w-[146px]" size="h-[200px] w-full">
-            <div className="flex w-full flex-col p-4">
-              <p className="mb-1 text-center font-bold text-accent">
-                レシート発行
-              </p>
-              <Button natural>合計</Button>
-              <Button className="mt-1" natural>
-                明細
-              </Button>
-              <Button className="mt-3" bg="green" natural>
-                領収書
-              </Button>
-            </div>
-          </Border>
+
           <div className="flex h-[300px] flex-col justify-start">
             <Border
               className="mr-2 h-[140px] w-[146px]"
@@ -414,31 +794,79 @@ export default function OrderEnd() {
               </div>
             </Border>
             <Border
-              className="mr-2 mt-3 h-[200px] w-[146px]"
-              size="h-[190px] w-full flex-col"
+              className="mr-2 mt-3 h-[140px] w-[146px]"
+              size="h-[130px] w-full flex-col"
             >
               <div className="flex w-full flex-col p-4">
-                <Button bg="red" natural>
-                  取消
-                </Button>
-                <Button className="mt-3" natural>
-                  先預り
-                </Button>
+                {purchaseOrderState[0].advanceDeposit ? (
+                  <Button
+                    bg="red"
+                    natural
+                    onClick={() => {
+                      purchaseOrderState[0].advanceDeposit = false;
+                    }}
+                  >
+                    先預取消
+                  </Button>
+                ) : (
+                  <Button
+                    natural
+                    onClick={() => {
+                      purchaseOrderState[0].advanceDeposit = true;
+                    }}
+                  >
+                    先預
+                  </Button>
+                )}
+
                 <Button
                   bg="blue"
                   className="mt-3"
                   natural
                   onClick={() => {
-                    setPurchaseOrder(
-                      purchaseOrder.filter((v: any) => v.id != seatPreset)
-                    );
-                    setSeatPreset("");
-                    setIsPurchaseOrder(true);
-                    setIsControl("");
-                    setIsCard(false);
+                    if (
+                      Number(
+                        discountType
+                          ? totalPay + Number(discount) - pay
+                          : totalPay - Number(discount) - pay
+                      ) == 0
+                    ) {
+                      purchaseOrderState[0].checkedPayment = true;
+                      setPurchaseOrder(
+                        purchaseOrder.filter((v: any) => v.id != seatPreset)
+                      );
+                      setSeatPreset("");
+                      setIsPurchaseOrder(true);
+                      setIsControl("");
+                      setIsCard(false);
+                    }
                   }}
+                  disabled={
+                    Number(
+                      discountType
+                        ? totalPay + Number(discount) - pay
+                        : totalPay - Number(discount) - pay
+                    ) != 0
+                  }
                 >
                   精算
+                </Button>
+              </div>
+            </Border>
+            <Border
+              className="mr-2 mt-3 h-[210px] w-[146px]"
+              size="h-[200px] w-full"
+            >
+              <div className="flex w-full flex-col p-4">
+                <p className="mb-1 text-center font-bold text-accent">
+                  レシート発行
+                </p>
+                <Button natural>合計</Button>
+                <Button className="mt-1" natural>
+                  明細
+                </Button>
+                <Button className="mt-3" bg="green" natural>
+                  領収書
                 </Button>
               </div>
             </Border>

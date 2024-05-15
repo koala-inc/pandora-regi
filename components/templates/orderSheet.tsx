@@ -879,6 +879,7 @@ function Base() {
           <div
             onClick={(e) => {
               e.stopPropagation();
+              purchaseOrderState[0].isAllTimeCalculator = true;
               setIsControl("END");
             }}
             className="flex h-[116px] w-[60px] flex-col items-center justify-center pl-3"

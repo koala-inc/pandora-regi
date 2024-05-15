@@ -1846,6 +1846,8 @@ export default function ControlOrderSet() {
                               num: Number(numResult.replace(/[^0-9]/g, "")),
                               order: order,
                               categoryTitle: setCategoryName,
+                              advanceDeposit: false,
+                              checkedPayment: false,
                             },
                           ]);
                           setOrder({
