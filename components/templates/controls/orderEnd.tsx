@@ -270,7 +270,7 @@ export default function OrderEnd() {
                         支払方法
                       </div>
                       <select
-                        className="text-md w-full rounded-md p-2"
+                        className="box-border h-[42px] w-full rounded-md p-2"
                         onChange={(e) => {
                           if (Number(e.target.value) == 1) {
                             setCheckedPaymentDetail0(
@@ -308,8 +308,8 @@ export default function OrderEnd() {
                       <select
                         className={
                           checkedPaymentDetail0.type
-                            ? "text-md w-full rounded-md p-2"
-                            : "text-md w-full rounded-md p-2 opacity-20 grayscale"
+                            ? "box-border h-[42px] w-full rounded-md p-2"
+                            : "box-border h-[42px] w-full rounded-md p-2 opacity-20 grayscale"
                         }
                         disabled={!checkedPaymentDetail0.type}
                       >
@@ -331,8 +331,8 @@ export default function OrderEnd() {
                       <select
                         className={
                           checkedPaymentDetail0.type
-                            ? "text-md w-full rounded-md p-2 text-right"
-                            : "text-md w-full rounded-md p-2 text-right opacity-20 grayscale"
+                            ? "box-border h-[42px] w-full rounded-md p-2 text-right"
+                            : "box-border h-[42px] w-full rounded-md p-2 text-right opacity-20 grayscale"
                         }
                         disabled={!checkedPaymentDetail0.type}
                         onChange={(e) => {
@@ -358,7 +358,7 @@ export default function OrderEnd() {
                       </div>
                       <input
                         defaultValue={0}
-                        className="w-full rounded-md border p-2 text-right"
+                        className="box-border h-[42px] w-full rounded-md border p-2 text-right"
                         onChange={(e) => {
                           setCheckedPaymentDetail0((checkedPaymentDetail0) => {
                             return {
@@ -373,7 +373,7 @@ export default function OrderEnd() {
                       <div className="mb-4 w-full text-left text-xs text-accent">
                         預り金
                       </div>
-                      <div className="w-full rounded-md p-[4px] text-right">
+                      <div className="box-border flex h-[42px] w-full items-center justify-end rounded-md p-[4px] text-right">
                         {(
                           (checkedPaymentDetail0.pay *
                             (100 + checkedPaymentDetail0.cahrge)) /
@@ -415,7 +415,7 @@ export default function OrderEnd() {
                         支払方法
                       </div>
                       <select
-                        className="text-md w-full rounded-md p-2"
+                        className="w-full rounded-md p-2"
                         onChange={(e) => {
                           if (Number(e.target.value) == 1) {
                             setCheckedPaymentDetail1(
@@ -453,8 +453,8 @@ export default function OrderEnd() {
                       <select
                         className={
                           checkedPaymentDetail1.type
-                            ? "text-md w-full rounded-md p-2"
-                            : "text-md w-full rounded-md p-2 opacity-20 grayscale"
+                            ? "w-full rounded-md p-2"
+                            : "w-full rounded-md p-2 opacity-20 grayscale"
                         }
                         disabled={!checkedPaymentDetail1.type}
                       >
@@ -476,8 +476,8 @@ export default function OrderEnd() {
                       <select
                         className={
                           checkedPaymentDetail1.type
-                            ? "text-md w-full rounded-md p-2 text-right"
-                            : "text-md w-full rounded-md p-2 text-right opacity-20 grayscale"
+                            ? "w-full rounded-md p-2 text-right"
+                            : "w-full rounded-md p-2 text-right opacity-20 grayscale"
                         }
                         disabled={!checkedPaymentDetail1.type}
                         onChange={(e) => {
@@ -558,7 +558,7 @@ export default function OrderEnd() {
                         支払方法
                       </div>
                       <select
-                        className="text-md w-full rounded-md p-2"
+                        className="w-full rounded-md p-2"
                         onChange={(e) => {
                           if (Number(e.target.value) == 1) {
                             setCheckedPaymentDetail2(
@@ -596,8 +596,8 @@ export default function OrderEnd() {
                       <select
                         className={
                           checkedPaymentDetail2.type
-                            ? "text-md w-full rounded-md p-2"
-                            : "text-md w-full rounded-md p-2 opacity-20 grayscale"
+                            ? "w-full rounded-md p-2"
+                            : "w-full rounded-md p-2 opacity-20 grayscale"
                         }
                         disabled={!checkedPaymentDetail2.type}
                       >
@@ -619,8 +619,8 @@ export default function OrderEnd() {
                       <select
                         className={
                           checkedPaymentDetail2.type
-                            ? "text-md w-full rounded-md p-2 text-right"
-                            : "text-md w-full rounded-md p-2 text-right opacity-20 grayscale"
+                            ? "w-full rounded-md p-2 text-right"
+                            : "w-full rounded-md p-2 text-right opacity-20 grayscale"
                         }
                         disabled={!checkedPaymentDetail2.type}
                         onChange={(e) => {
@@ -701,7 +701,7 @@ export default function OrderEnd() {
                         支払方法
                       </div>
                       <select
-                        className="text-md w-full rounded-md p-2"
+                        className="w-full rounded-md p-2"
                         onChange={(e) => {
                           if (Number(e.target.value) == 1) {
                             setCheckedPaymentDetail3(
@@ -739,8 +739,8 @@ export default function OrderEnd() {
                       <select
                         className={
                           checkedPaymentDetail3.type
-                            ? "text-md w-full rounded-md p-2"
-                            : "text-md w-full rounded-md p-2 opacity-20 grayscale"
+                            ? "w-full rounded-md p-2"
+                            : "w-full rounded-md p-2 opacity-20 grayscale"
                         }
                         disabled={!checkedPaymentDetail3.type}
                       >
@@ -762,8 +762,8 @@ export default function OrderEnd() {
                       <select
                         className={
                           checkedPaymentDetail3.type
-                            ? "text-md w-full rounded-md p-2 text-right"
-                            : "text-md w-full rounded-md p-2 text-right opacity-20 grayscale"
+                            ? "w-full rounded-md p-2 text-right"
+                            : "w-full rounded-md p-2 text-right opacity-20 grayscale"
                         }
                         disabled={!checkedPaymentDetail3.type}
                         onChange={(e) => {
