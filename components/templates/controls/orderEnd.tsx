@@ -141,22 +141,32 @@ export default function OrderEnd() {
                       {(discountType
                         ? totalPay +
                           Number(discount) +
-                          ((totalPay + Number(discount)) / 100) *
-                            Math.max(
-                              checkedPaymentDetail0.cahrge,
-                              checkedPaymentDetail1.cahrge,
-                              checkedPaymentDetail2.cahrge,
-                              checkedPaymentDetail3.cahrge
-                            )
+                          ((checkedPaymentDetail0.pay *
+                            checkedPaymentDetail0.cahrge) /
+                            100 +
+                            (checkedPaymentDetail1.pay *
+                              checkedPaymentDetail1.cahrge) /
+                              100 +
+                            (checkedPaymentDetail2.pay *
+                              checkedPaymentDetail2.cahrge) /
+                              100 +
+                            (checkedPaymentDetail3.pay *
+                              checkedPaymentDetail3.cahrge) /
+                              100)
                         : totalPay -
                           Number(discount) +
-                          ((totalPay - Number(discount)) / 100) *
-                            Math.max(
-                              checkedPaymentDetail0.cahrge,
-                              checkedPaymentDetail1.cahrge,
-                              checkedPaymentDetail2.cahrge,
-                              checkedPaymentDetail3.cahrge
-                            )
+                          ((checkedPaymentDetail0.pay *
+                            checkedPaymentDetail0.cahrge) /
+                            100 +
+                            (checkedPaymentDetail1.pay *
+                              checkedPaymentDetail1.cahrge) /
+                              100 +
+                            (checkedPaymentDetail2.pay *
+                              checkedPaymentDetail2.cahrge) /
+                              100 +
+                            (checkedPaymentDetail3.pay *
+                              checkedPaymentDetail3.cahrge) /
+                              100)
                       ).toLocaleString()}
                       円
                     </div>
@@ -164,21 +174,20 @@ export default function OrderEnd() {
                   <div className="mr-4 flex w-full flex-col">
                     <div className="w-full text-left text-accent">手数料</div>
                     <div className="w-full text-right text-2xl">
-                      {discountType
-                        ? ((totalPay + Number(discount)) / 100) *
-                          Math.max(
-                            checkedPaymentDetail0.cahrge,
-                            checkedPaymentDetail1.cahrge,
-                            checkedPaymentDetail2.cahrge,
-                            checkedPaymentDetail3.cahrge
-                          )
-                        : ((totalPay - Number(discount)) / 100) *
-                          Math.max(
-                            checkedPaymentDetail0.cahrge,
-                            checkedPaymentDetail1.cahrge,
-                            checkedPaymentDetail2.cahrge,
-                            checkedPaymentDetail3.cahrge
-                          )}
+                      {(
+                        (checkedPaymentDetail0.pay *
+                          checkedPaymentDetail0.cahrge) /
+                          100 +
+                        (checkedPaymentDetail1.pay *
+                          checkedPaymentDetail1.cahrge) /
+                          100 +
+                        (checkedPaymentDetail2.pay *
+                          checkedPaymentDetail2.cahrge) /
+                          100 +
+                        (checkedPaymentDetail3.pay *
+                          checkedPaymentDetail3.cahrge) /
+                          100
+                      ).toLocaleString()}
                       円
                     </div>
                   </div>
@@ -239,6 +248,7 @@ export default function OrderEnd() {
                         checkedPaymentDetail3.pay
                       : totalPay -
                         Number(discount) -
+                        checkedPaymentDetail0.pay -
                         checkedPaymentDetail1.pay -
                         checkedPaymentDetail2.pay -
                         checkedPaymentDetail3.pay
@@ -255,8 +265,8 @@ export default function OrderEnd() {
                   black
                 >
                   <div className="mb-4 flex w-full items-end">
-                    <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-4 w-full text-left text-accent">
+                    <div className="mr-4 flex w-[20rem] flex-col">
+                      <div className="mb-4 w-full text-left text-xs text-accent">
                         支払方法
                       </div>
                       <select
@@ -292,7 +302,7 @@ export default function OrderEnd() {
                       </select>
                     </div>
                     <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-4 w-full text-left text-accent">
+                      <div className="mb-4 w-full text-left text-xs text-accent">
                         カード種類
                       </div>
                       <select
@@ -314,8 +324,8 @@ export default function OrderEnd() {
                         <option>UNION(銀聯)</option>
                       </select>
                     </div>
-                    <div className="mr-4 flex w-[20rem] flex-col">
-                      <div className="mb-4 w-full text-left text-accent">
+                    <div className="mr-4 flex w-[15rem] flex-col">
+                      <div className="mb-4 w-full text-left text-xs text-accent">
                         手数料
                       </div>
                       <select
@@ -342,9 +352,9 @@ export default function OrderEnd() {
                         <option value={15}>15％</option>
                       </select>
                     </div>
-                    <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-3 w-full text-left text-accent">
-                        預り金
+                    <div className="mr-4 flex w-[25rem] flex-col">
+                      <div className="mb-3 w-full text-left text-xs text-accent">
+                        金額
                       </div>
                       <input
                         defaultValue={0}
@@ -358,6 +368,19 @@ export default function OrderEnd() {
                           });
                         }}
                       />
+                    </div>
+                    <div className="mr-4 flex w-[25rem] flex-col">
+                      <div className="mb-3 w-full text-left text-xs text-accent">
+                        預り金
+                      </div>
+                      <div className="w-full rounded-md p-[6px] text-right">
+                        {(
+                          (checkedPaymentDetail0.pay *
+                            (100 + checkedPaymentDetail0.cahrge)) /
+                          100
+                        ).toLocaleString()}
+                        円
+                      </div>
                     </div>
                     <div
                       className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
@@ -386,7 +409,7 @@ export default function OrderEnd() {
                   </div>
                   <div className="mb-4 flex w-full items-end">
                     <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-4 w-full text-left text-accent">
+                      <div className="mb-4 w-full text-left text-xs text-accent">
                         支払方法
                       </div>
                       <select
@@ -422,7 +445,7 @@ export default function OrderEnd() {
                       </select>
                     </div>
                     <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-4 w-full text-left text-accent">
+                      <div className="mb-4 w-full text-left text-xs text-accent">
                         カード種類
                       </div>
                       <select
@@ -445,7 +468,7 @@ export default function OrderEnd() {
                       </select>
                     </div>
                     <div className="mr-4 flex w-[20rem] flex-col">
-                      <div className="mb-4 w-full text-left text-accent">
+                      <div className="mb-4 w-full text-left text-xs text-accent">
                         手数料
                       </div>
                       <select
@@ -473,8 +496,8 @@ export default function OrderEnd() {
                       </select>
                     </div>
                     <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-3 w-full text-left text-accent">
-                        預り金
+                      <div className="mb-3 w-full text-left text-xs text-accent">
+                        金額
                       </div>
                       <input
                         defaultValue={0}
@@ -488,6 +511,19 @@ export default function OrderEnd() {
                           });
                         }}
                       />
+                    </div>
+                    <div className="mr-4 flex w-[30rem] flex-col">
+                      <div className="mb-3 w-full text-left text-xs text-accent">
+                        預り金
+                      </div>
+                      <div className="w-full rounded-md p-[6px] text-right">
+                        {(
+                          (checkedPaymentDetail1.pay *
+                            (100 + checkedPaymentDetail1.cahrge)) /
+                          100
+                        ).toLocaleString()}
+                        円
+                      </div>
                     </div>
                     <div
                       className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
@@ -516,7 +552,7 @@ export default function OrderEnd() {
                   </div>
                   <div className="mb-4 flex w-full items-end">
                     <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-4 w-full text-left text-accent">
+                      <div className="mb-4 w-full text-left text-xs text-accent">
                         支払方法
                       </div>
                       <select
@@ -552,7 +588,7 @@ export default function OrderEnd() {
                       </select>
                     </div>
                     <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-4 w-full text-left text-accent">
+                      <div className="mb-4 w-full text-left text-xs text-accent">
                         カード種類
                       </div>
                       <select
@@ -575,7 +611,7 @@ export default function OrderEnd() {
                       </select>
                     </div>
                     <div className="mr-4 flex w-[20rem] flex-col">
-                      <div className="mb-4 w-full text-left text-accent">
+                      <div className="mb-4 w-full text-left text-xs text-accent">
                         手数料
                       </div>
                       <select
@@ -603,8 +639,8 @@ export default function OrderEnd() {
                       </select>
                     </div>
                     <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-3 w-full text-left text-accent">
-                        預り金
+                      <div className="mb-3 w-full text-left text-xs text-accent">
+                        金額
                       </div>
                       <input
                         defaultValue={0}
@@ -618,6 +654,19 @@ export default function OrderEnd() {
                           });
                         }}
                       />
+                    </div>
+                    <div className="mr-4 flex w-[30rem] flex-col">
+                      <div className="mb-3 w-full text-left text-xs text-accent">
+                        預り金
+                      </div>
+                      <div className="w-full rounded-md p-[6px] text-right">
+                        {(
+                          (checkedPaymentDetail2.pay *
+                            (100 + checkedPaymentDetail2.cahrge)) /
+                          100
+                        ).toLocaleString()}
+                        円
+                      </div>
                     </div>
                     <div
                       className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
@@ -646,7 +695,7 @@ export default function OrderEnd() {
                   </div>
                   <div className="mb-4 flex w-full items-end">
                     <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-4 w-full text-left text-accent">
+                      <div className="mb-4 w-full text-left text-xs text-accent">
                         支払方法
                       </div>
                       <select
@@ -682,7 +731,7 @@ export default function OrderEnd() {
                       </select>
                     </div>
                     <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-4 w-full text-left text-accent">
+                      <div className="mb-4 w-full text-left text-xs text-accent">
                         カード種類
                       </div>
                       <select
@@ -705,7 +754,7 @@ export default function OrderEnd() {
                       </select>
                     </div>
                     <div className="mr-4 flex w-[20rem] flex-col">
-                      <div className="mb-4 w-full text-left text-accent">
+                      <div className="mb-4 w-full text-left text-xs text-accent">
                         手数料
                       </div>
                       <select
@@ -733,8 +782,8 @@ export default function OrderEnd() {
                       </select>
                     </div>
                     <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-3 w-full text-left text-accent">
-                        預り金
+                      <div className="mb-3 w-full text-left text-xs text-accent">
+                        金額
                       </div>
                       <input
                         defaultValue={0}
@@ -748,6 +797,19 @@ export default function OrderEnd() {
                           });
                         }}
                       />
+                    </div>
+                    <div className="mr-4 flex w-[30rem] flex-col">
+                      <div className="mb-3 w-full text-left text-xs text-accent">
+                        預り金
+                      </div>
+                      <div className="w-full rounded-md p-[6px] text-right">
+                        {(
+                          (checkedPaymentDetail3.pay *
+                            (100 + checkedPaymentDetail3.cahrge)) /
+                          100
+                        ).toLocaleString()}
+                        円
+                      </div>
                     </div>
                     <div
                       className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
@@ -779,29 +841,23 @@ export default function OrderEnd() {
             </div>
           </Border>
 
-          <div className="flex h-[300px] flex-col justify-start">
+          <div className="flex h-[600px] flex-col items-start justify-start">
             <Border
-              className="mr-2 h-[140px] w-[146px]"
-              size="h-[130px] w-full flex-col"
+              className="mb-2 h-[270px] w-[146px]"
+              size="h-[260px] w-full flex-col"
             >
               <div className="flex w-full flex-col p-4">
                 <Button bg="orange" natural>
                   伝票破棄
                 </Button>
-                <Button bg="green" className="mt-3" natural>
+                <Button className="mt-3" natural>
                   立て直し
                 </Button>
-              </div>
-            </Border>
-            <Border
-              className="mr-2 mt-3 h-[140px] w-[146px]"
-              size="h-[130px] w-full flex-col"
-            >
-              <div className="flex w-full flex-col p-4">
                 {purchaseOrderState[0].advanceDeposit ? (
                   <Button
                     bg="red"
                     natural
+                    className="mt-3"
                     onClick={() => {
                       purchaseOrderState[0].advanceDeposit = false;
                     }}
@@ -811,6 +867,7 @@ export default function OrderEnd() {
                 ) : (
                   <Button
                     natural
+                    className="mt-3"
                     onClick={() => {
                       purchaseOrderState[0].advanceDeposit = true;
                     }}
@@ -853,19 +910,16 @@ export default function OrderEnd() {
                 </Button>
               </div>
             </Border>
-            <Border
-              className="mr-2 mt-3 h-[210px] w-[146px]"
-              size="h-[200px] w-full"
-            >
-              <div className="flex w-full flex-col p-4">
-                <p className="mb-1 text-center font-bold text-accent">
+            <Border className="h-[220px] w-[146px]" size="h-[210px] w-full">
+              <div className="flex w-full flex-col p-4 py-6">
+                <p className="mb-2 text-center font-bold text-accent">
                   レシート発行
                 </p>
                 <Button natural>合計</Button>
-                <Button className="mt-1" natural>
+                <Button className="mt-3" natural>
                   明細
                 </Button>
-                <Button className="mt-3" bg="green" natural>
+                <Button className="mb-1 mt-3" natural>
                   領収書
                 </Button>
               </div>

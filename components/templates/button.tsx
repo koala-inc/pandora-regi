@@ -33,7 +33,7 @@ export default function Button({
 
   switch (bg) {
     case "red":
-      bgColor = " !bg-[#6b0012]";
+      bgColor = " !bg-[#e0231e]";
       bgText = " text-white";
       break;
     case "blue":
@@ -45,7 +45,7 @@ export default function Button({
       bgText = " text-white";
       break;
     case "orange":
-      bgColor = " !bg-[#e83929]";
+      bgColor = " !bg-[#e0231e]";
       bgText = " text-white";
       break;
   }

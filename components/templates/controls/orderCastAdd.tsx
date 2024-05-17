@@ -30,9 +30,7 @@ import useSeatPresetGlobal from "@/globalstates/seatPreset";
 
 function ContentHeader({ children }: { children: any }) {
   return (
-    <SubBorder size="mt-0 h-[100px] !w-[565px] px-10 py-2">
-      {children}
-    </SubBorder>
+    <SubBorder size="mt-0 h-[100px] !w-[565px] px-0 py-2">{children}</SubBorder>
   );
 }
 
@@ -204,7 +202,7 @@ export default function OrderCastAdd() {
         }}
       >
         <ContentHeader>
-          <div className="flex items-end rounded-md border-4 border-white bg-black px-8 py-0">
+          <div className="flex w-[535px] items-end rounded-md border-4 border-white bg-black px-8 py-0">
             <div className="flex w-full items-center justify-start">
               <div className="flex w-full flex-col">
                 <p className="text-accent">指名種別</p>
