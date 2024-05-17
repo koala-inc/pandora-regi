@@ -353,12 +353,12 @@ export default function OrderEnd() {
                       </select>
                     </div>
                     <div className="mr-4 flex w-[25rem] flex-col">
-                      <div className="mb-3 w-full text-left text-xs text-accent">
+                      <div className="mb-4 w-full text-left text-xs text-accent">
                         金額
                       </div>
                       <input
                         defaultValue={0}
-                        className="w-full rounded-md border p-[4px] text-right"
+                        className="w-full rounded-md border p-2 text-right"
                         onChange={(e) => {
                           setCheckedPaymentDetail0((checkedPaymentDetail0) => {
                             return {
@@ -370,10 +370,10 @@ export default function OrderEnd() {
                       />
                     </div>
                     <div className="mr-4 flex w-[25rem] flex-col">
-                      <div className="mb-3 w-full text-left text-xs text-accent">
+                      <div className="mb-4 w-full text-left text-xs text-accent">
                         預り金
                       </div>
-                      <div className="w-full rounded-md p-[6px] text-right">
+                      <div className="w-full rounded-md p-[4px] text-right">
                         {(
                           (checkedPaymentDetail0.pay *
                             (100 + checkedPaymentDetail0.cahrge)) /
