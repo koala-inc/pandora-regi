@@ -141,31 +141,55 @@ export default function OrderEnd() {
                       {(discountType
                         ? totalPay +
                           Number(discount) +
-                          ((checkedPaymentDetail0.pay *
-                            checkedPaymentDetail0.cahrge) /
+                          (Math.ceil(
+                            (checkedPaymentDetail0.pay *
+                              checkedPaymentDetail0.cahrge) /
+                              10000
+                          ) *
                             100 +
-                            (checkedPaymentDetail1.pay *
-                              checkedPaymentDetail1.cahrge) /
+                            Math.ceil(
+                              (checkedPaymentDetail1.pay *
+                                checkedPaymentDetail1.cahrge) /
+                                10000
+                            ) *
                               100 +
-                            (checkedPaymentDetail2.pay *
-                              checkedPaymentDetail2.cahrge) /
+                            Math.ceil(
+                              (checkedPaymentDetail2.pay *
+                                checkedPaymentDetail2.cahrge) /
+                                10000
+                            ) *
                               100 +
-                            (checkedPaymentDetail3.pay *
-                              checkedPaymentDetail3.cahrge) /
+                            Math.ceil(
+                              (checkedPaymentDetail3.pay *
+                                checkedPaymentDetail3.cahrge) /
+                                10000
+                            ) *
                               100)
                         : totalPay -
                           Number(discount) +
-                          ((checkedPaymentDetail0.pay *
-                            checkedPaymentDetail0.cahrge) /
+                          (Math.ceil(
+                            (checkedPaymentDetail0.pay *
+                              checkedPaymentDetail0.cahrge) /
+                              10000
+                          ) *
                             100 +
-                            (checkedPaymentDetail1.pay *
-                              checkedPaymentDetail1.cahrge) /
+                            Math.ceil(
+                              (checkedPaymentDetail1.pay *
+                                checkedPaymentDetail1.cahrge) /
+                                10000
+                            ) *
                               100 +
-                            (checkedPaymentDetail2.pay *
-                              checkedPaymentDetail2.cahrge) /
+                            Math.ceil(
+                              (checkedPaymentDetail2.pay *
+                                checkedPaymentDetail2.cahrge) /
+                                10000
+                            ) *
                               100 +
-                            (checkedPaymentDetail3.pay *
-                              checkedPaymentDetail3.cahrge) /
+                            Math.ceil(
+                              (checkedPaymentDetail3.pay *
+                                checkedPaymentDetail3.cahrge) /
+                                10000
+                            ) *
                               100)
                       ).toLocaleString()}
                       円
@@ -175,17 +199,29 @@ export default function OrderEnd() {
                     <div className="w-full text-left text-accent">手数料</div>
                     <div className="w-full text-right text-2xl">
                       {(
-                        (checkedPaymentDetail0.pay *
-                          checkedPaymentDetail0.cahrge) /
+                        Math.ceil(
+                          (checkedPaymentDetail0.pay *
+                            checkedPaymentDetail0.cahrge) /
+                            10000
+                        ) *
                           100 +
-                        (checkedPaymentDetail1.pay *
-                          checkedPaymentDetail1.cahrge) /
+                        Math.ceil(
+                          (checkedPaymentDetail1.pay *
+                            checkedPaymentDetail1.cahrge) /
+                            10000
+                        ) *
                           100 +
-                        (checkedPaymentDetail2.pay *
-                          checkedPaymentDetail2.cahrge) /
+                        Math.ceil(
+                          (checkedPaymentDetail2.pay *
+                            checkedPaymentDetail2.cahrge) /
+                            10000
+                        ) *
                           100 +
-                        (checkedPaymentDetail3.pay *
-                          checkedPaymentDetail3.cahrge) /
+                        Math.ceil(
+                          (checkedPaymentDetail3.pay *
+                            checkedPaymentDetail3.cahrge) /
+                            10000
+                        ) *
                           100
                       ).toLocaleString()}
                       円
@@ -239,19 +275,84 @@ export default function OrderEnd() {
                 >
                   <div className="w-full text-left text-accent">残金</div>
                   <div className="w-full text-right text-2xl text-red-400">
-                    {(discountType
-                      ? totalPay +
-                        Number(discount) -
-                        checkedPaymentDetail0.pay -
-                        checkedPaymentDetail1.pay -
-                        checkedPaymentDetail2.pay -
-                        checkedPaymentDetail3.pay
-                      : totalPay -
-                        Number(discount) -
-                        checkedPaymentDetail0.pay -
-                        checkedPaymentDetail1.pay -
-                        checkedPaymentDetail2.pay -
-                        checkedPaymentDetail3.pay
+                    {(
+                      (discountType
+                        ? totalPay +
+                          Number(discount) +
+                          (Math.ceil(
+                            (checkedPaymentDetail0.pay *
+                              checkedPaymentDetail0.cahrge) /
+                              10000
+                          ) *
+                            100 +
+                            Math.ceil(
+                              (checkedPaymentDetail1.pay *
+                                checkedPaymentDetail1.cahrge) /
+                                10000
+                            ) *
+                              100 +
+                            Math.ceil(
+                              (checkedPaymentDetail2.pay *
+                                checkedPaymentDetail2.cahrge) /
+                                10000
+                            ) *
+                              100 +
+                            Math.ceil(
+                              (checkedPaymentDetail3.pay *
+                                checkedPaymentDetail3.cahrge) /
+                                10000
+                            ) *
+                              100)
+                        : totalPay -
+                          Number(discount) +
+                          (Math.ceil(
+                            (checkedPaymentDetail0.pay *
+                              checkedPaymentDetail0.cahrge) /
+                              10000
+                          ) *
+                            100 +
+                            Math.ceil(
+                              (checkedPaymentDetail1.pay *
+                                checkedPaymentDetail1.cahrge) /
+                                10000
+                            ) *
+                              100 +
+                            Math.ceil(
+                              (checkedPaymentDetail2.pay *
+                                checkedPaymentDetail2.cahrge) /
+                                10000
+                            ) *
+                              100 +
+                            Math.ceil(
+                              (checkedPaymentDetail3.pay *
+                                checkedPaymentDetail3.cahrge) /
+                                10000
+                            ) *
+                              100)) -
+                      Math.ceil(
+                        (checkedPaymentDetail0.pay *
+                          (100 + checkedPaymentDetail0.cahrge)) /
+                          10000
+                      ) *
+                        100 -
+                      Math.ceil(
+                        (checkedPaymentDetail1.pay *
+                          (100 + checkedPaymentDetail1.cahrge)) /
+                          10000
+                      ) *
+                        100 -
+                      Math.ceil(
+                        (checkedPaymentDetail2.pay *
+                          (100 + checkedPaymentDetail2.cahrge)) /
+                          10000
+                      ) *
+                        100 -
+                      Math.ceil(
+                        (checkedPaymentDetail3.pay *
+                          (100 + checkedPaymentDetail3.cahrge)) /
+                          10000
+                      ) *
+                        100
                     ).toLocaleString()}
                     円
                   </div>
@@ -357,7 +458,7 @@ export default function OrderEnd() {
                         金額
                       </div>
                       <input
-                        defaultValue={0}
+                        value={checkedPaymentDetail0.pay}
                         className="box-border h-[42px] w-full rounded-md border p-2 text-right"
                         onChange={(e) => {
                           setCheckedPaymentDetail0((checkedPaymentDetail0) => {
@@ -375,9 +476,11 @@ export default function OrderEnd() {
                       </div>
                       <div className="box-border flex h-[42px] w-full items-center justify-end rounded-md p-[4px] text-right">
                         {(
-                          (checkedPaymentDetail0.pay *
-                            (100 + checkedPaymentDetail0.cahrge)) /
-                          100
+                          Math.ceil(
+                            (checkedPaymentDetail0.pay *
+                              (100 + checkedPaymentDetail0.cahrge)) /
+                              10000
+                          ) * 100
                         ).toLocaleString()}
                         円
                       </div>
@@ -385,6 +488,19 @@ export default function OrderEnd() {
                     <div
                       className="mr-4 flex h-full min-w-[5rem] flex-col justify-end"
                       onClick={() => {
+                        checkedPaymentDetail0.pay = discountType
+                          ? totalPay +
+                            Number(discount) -
+                            checkedPaymentDetail0.pay -
+                            checkedPaymentDetail1.pay -
+                            checkedPaymentDetail2.pay -
+                            checkedPaymentDetail3.pay
+                          : totalPay -
+                            Number(discount) -
+                            checkedPaymentDetail0.pay -
+                            checkedPaymentDetail1.pay -
+                            checkedPaymentDetail2.pay -
+                            checkedPaymentDetail3.pay;
                         // setPay(totalPay - discount);
                       }}
                     >
@@ -502,7 +618,7 @@ export default function OrderEnd() {
                         金額
                       </div>
                       <input
-                        defaultValue={0}
+                        value={checkedPaymentDetail1.pay}
                         className="w-full rounded-md border p-[6px] text-right"
                         onChange={(e) => {
                           setCheckedPaymentDetail1((checkedPaymentDetail1) => {
@@ -520,9 +636,11 @@ export default function OrderEnd() {
                       </div>
                       <div className="w-full rounded-md p-[6px] text-right">
                         {(
-                          (checkedPaymentDetail1.pay *
-                            (100 + checkedPaymentDetail1.cahrge)) /
-                          100
+                          Math.ceil(
+                            (checkedPaymentDetail1.pay *
+                              (100 + checkedPaymentDetail1.cahrge)) /
+                              10000
+                          ) * 100
                         ).toLocaleString()}
                         円
                       </div>
@@ -530,6 +648,19 @@ export default function OrderEnd() {
                     <div
                       className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
                       onClick={() => {
+                        checkedPaymentDetail1.pay = discountType
+                          ? totalPay +
+                            Number(discount) -
+                            checkedPaymentDetail0.pay -
+                            checkedPaymentDetail1.pay -
+                            checkedPaymentDetail2.pay -
+                            checkedPaymentDetail3.pay
+                          : totalPay -
+                            Number(discount) -
+                            checkedPaymentDetail0.pay -
+                            checkedPaymentDetail1.pay -
+                            checkedPaymentDetail2.pay -
+                            checkedPaymentDetail3.pay;
                         // setPay(totalPay - discount);
                       }}
                     >
@@ -645,7 +776,7 @@ export default function OrderEnd() {
                         金額
                       </div>
                       <input
-                        defaultValue={0}
+                        value={checkedPaymentDetail2.pay}
                         className="w-full rounded-md border p-[6px] text-right"
                         onChange={(e) => {
                           setCheckedPaymentDetail2((checkedPaymentDetail2) => {
@@ -663,9 +794,11 @@ export default function OrderEnd() {
                       </div>
                       <div className="w-full rounded-md p-[6px] text-right">
                         {(
-                          (checkedPaymentDetail2.pay *
-                            (100 + checkedPaymentDetail2.cahrge)) /
-                          100
+                          Math.ceil(
+                            (checkedPaymentDetail2.pay *
+                              (100 + checkedPaymentDetail2.cahrge)) /
+                              10000
+                          ) * 100
                         ).toLocaleString()}
                         円
                       </div>
@@ -673,6 +806,19 @@ export default function OrderEnd() {
                     <div
                       className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
                       onClick={() => {
+                        checkedPaymentDetail2.pay = discountType
+                          ? totalPay +
+                            Number(discount) -
+                            checkedPaymentDetail0.pay -
+                            checkedPaymentDetail1.pay -
+                            checkedPaymentDetail2.pay -
+                            checkedPaymentDetail3.pay
+                          : totalPay -
+                            Number(discount) -
+                            checkedPaymentDetail0.pay -
+                            checkedPaymentDetail1.pay -
+                            checkedPaymentDetail2.pay -
+                            checkedPaymentDetail3.pay;
                         // setPay(totalPay - discount);
                       }}
                     >
@@ -788,7 +934,7 @@ export default function OrderEnd() {
                         金額
                       </div>
                       <input
-                        defaultValue={0}
+                        value={checkedPaymentDetail3.pay}
                         className="w-full rounded-md border p-[6px] text-right"
                         onChange={(e) => {
                           setCheckedPaymentDetail3((checkedPaymentDetail3) => {
@@ -806,9 +952,11 @@ export default function OrderEnd() {
                       </div>
                       <div className="w-full rounded-md p-[6px] text-right">
                         {(
-                          (checkedPaymentDetail3.pay *
-                            (100 + checkedPaymentDetail3.cahrge)) /
-                          100
+                          Math.ceil(
+                            (checkedPaymentDetail3.pay *
+                              (100 + checkedPaymentDetail3.cahrge)) /
+                              10000
+                          ) * 100
                         ).toLocaleString()}
                         円
                       </div>
@@ -816,6 +964,19 @@ export default function OrderEnd() {
                     <div
                       className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
                       onClick={() => {
+                        checkedPaymentDetail3.pay = discountType
+                          ? totalPay +
+                            Number(discount) -
+                            checkedPaymentDetail0.pay -
+                            checkedPaymentDetail1.pay -
+                            checkedPaymentDetail2.pay -
+                            checkedPaymentDetail3.pay
+                          : totalPay -
+                            Number(discount) -
+                            checkedPaymentDetail0.pay -
+                            checkedPaymentDetail1.pay -
+                            checkedPaymentDetail2.pay -
+                            checkedPaymentDetail3.pay;
                         // setPay(totalPay - discount);
                       }}
                     >
