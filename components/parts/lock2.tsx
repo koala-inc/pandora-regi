@@ -5,9 +5,13 @@ import Button from "../templates/button";
 import Border from "../templates/border";
 import Image from "next/image";
 import useIsLockGlobal from "@/globalstates/isLock";
+import useSeatPresetGlobal from "@/globalstates/seatPreset";
+import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 
 export default function Lock2() {
   const [isLock, setIsLock] = useIsLockGlobal();
+  const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+  const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
 
   return (
     <div
@@ -15,12 +19,17 @@ export default function Lock2() {
       onClick={() => {}}
     >
       <div
-        className="h-[170px] w-[350px] flex justify-around items-center px-4 rounded-md border border-secondary bg-primary"
+        className="flex h-[170px] w-[350px] items-center justify-around rounded-md border border-secondary bg-primary px-4"
         onClick={(e) => e.stopPropagation()}
       >
         <div
           onClick={() => {
             setIsLock(0);
+            purchaseOrder.map((purchaseOrder: any) => {
+              if (purchaseOrder.id.includes(seatPreset)) {
+                purchaseOrder.checkedPayment = false;
+              }
+            });
           }}
         >
           <Border
@@ -28,18 +37,22 @@ export default function Lock2() {
             rounded="rounded-full"
             size="h-[80px] w-[80px] p-[15px]"
           >
-            <Image
+            {/* <Image
               src={"/assets/padunlock.svg"}
               width={26}
               height={26}
               className="mt-[-3px] !h-full !w-full"
               alt=""
-            />
+            /> */}
+            復帰
           </Border>
         </div>
         <div
           onClick={() => {
-            setIsLock(2);
+            setIsLock(0);
+            setPurchaseOrder(
+              purchaseOrder.filter((v: any) => v.id != seatPreset)
+            );
           }}
         >
           <Border
@@ -47,13 +60,14 @@ export default function Lock2() {
             rounded="rounded-full"
             size="h-[80px] w-[80px] p-[20px]"
           >
-            <Image
+            {/* <Image
               src={"/assets/close.svg"}
               width={26}
               height={26}
               className="!h-full !w-full"
               alt=""
-            />
+            /> */}
+            退店
           </Border>
         </div>
       </div>

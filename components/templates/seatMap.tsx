@@ -242,14 +242,21 @@ export default function SeatMap() {
                         ? purchaseOrder.some(
                             (purchaseOrder: any) =>
                               purchaseOrder.id.includes(seat.name) &&
-                              purchaseOrder.callTime.split(":")[0] <=
-                                dayjs(new Date()).format("HH") &&
-                              purchaseOrder.callTime.split(":")[1] <=
-                                dayjs(new Date()).format("mm")
+                              !purchaseOrder.checkedPayment
                           )
-                          ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-2 bg-rose-300 text-2xl font-bold text-accent opacity-90 shadow-md " +
-                            colormode[indexColor]
-                          : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-2 bg-blue-200 text-2xl font-bold text-accent opacity-90 shadow-md " +
+                          ? purchaseOrder.some(
+                              (purchaseOrder: any) =>
+                                purchaseOrder.id.includes(seat.name) &&
+                                purchaseOrder.callTime.split(":")[0] <=
+                                  dayjs(new Date()).format("HH") &&
+                                purchaseOrder.callTime.split(":")[1] <=
+                                  dayjs(new Date()).format("mm")
+                            )
+                            ? "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-2 bg-rose-300 text-2xl font-bold text-accent opacity-90 shadow-md " +
+                              colormode[indexColor]
+                            : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-2 bg-blue-200 text-2xl font-bold text-accent opacity-90 shadow-md " +
+                              colormode[indexColor]
+                          : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border-2 bg-green-200 text-2xl font-bold text-accent opacity-90 shadow-md " +
                             colormode[indexColor]
                         : "relative flex !h-[60px] !w-[60px] cursor-pointer items-center justify-center rounded-xl border border-black bg-natural text-2xl font-bold text-accent opacity-90 shadow-md"
                       : myExSeat.includes(seat.name)
@@ -436,7 +443,15 @@ export default function SeatMap() {
                             }
                           });
                         }
-                      } else if (isLock == 2) {
+                      }
+                      if (
+                        purchaseOrder.some(
+                          (purchaseOrder: any) =>
+                            purchaseOrder.id.includes(seat.name) &&
+                            purchaseOrder.checkedPayment
+                        )
+                      ) {
+                        alert();
                         setIsLock(3);
                       }
                     }

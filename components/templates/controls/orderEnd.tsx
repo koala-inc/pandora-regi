@@ -368,7 +368,7 @@ export default function OrderEnd() {
                   <div className="mb-4 flex w-full items-end">
                     <div className="mr-4 flex w-[20rem] flex-col">
                       <div className="mb-4 w-full text-left text-xs text-accent">
-                        支払方法
+                        支払種別
                       </div>
                       <select
                         className="box-border h-[42px] w-full rounded-md p-2"
@@ -388,6 +388,7 @@ export default function OrderEnd() {
                                 return {
                                   ...checkedPaymentDetail0,
                                   type: false,
+                                  cahrge: 0,
                                 };
                               }
                             );
@@ -430,6 +431,7 @@ export default function OrderEnd() {
                         手数料
                       </div>
                       <select
+                        value={checkedPaymentDetail0.cahrge}
                         className={
                           checkedPaymentDetail0.type
                             ? "box-border h-[42px] w-full rounded-md p-2 text-right"
@@ -458,13 +460,17 @@ export default function OrderEnd() {
                         金額
                       </div>
                       <input
-                        value={checkedPaymentDetail0.pay}
+                        value={
+                          checkedPaymentDetail0.pay.toLocaleString() + "円"
+                        }
                         className="box-border h-[42px] w-full rounded-md border p-2 text-right"
                         onChange={(e) => {
                           setCheckedPaymentDetail0((checkedPaymentDetail0) => {
                             return {
                               ...checkedPaymentDetail0,
-                              pay: Number(e.target.value),
+                              pay: Number(
+                                e.target.value.replace(/[^0-9]/g, "")
+                              ),
                             };
                           });
                         }}
@@ -491,13 +497,11 @@ export default function OrderEnd() {
                         checkedPaymentDetail0.pay = discountType
                           ? totalPay +
                             Number(discount) -
-                            checkedPaymentDetail0.pay -
                             checkedPaymentDetail1.pay -
                             checkedPaymentDetail2.pay -
                             checkedPaymentDetail3.pay
                           : totalPay -
                             Number(discount) -
-                            checkedPaymentDetail0.pay -
                             checkedPaymentDetail1.pay -
                             checkedPaymentDetail2.pay -
                             checkedPaymentDetail3.pay;
@@ -526,12 +530,9 @@ export default function OrderEnd() {
                     </div>
                   </div>
                   <div className="mb-4 flex w-full items-end">
-                    <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-4 w-full text-left text-xs text-accent">
-                        支払方法
-                      </div>
+                    <div className="mr-4 flex w-[20rem] flex-col">
                       <select
-                        className="w-full rounded-md p-2"
+                        className="box-border h-[42px] w-full rounded-md p-2"
                         onChange={(e) => {
                           if (Number(e.target.value) == 1) {
                             setCheckedPaymentDetail1(
@@ -548,6 +549,7 @@ export default function OrderEnd() {
                                 return {
                                   ...checkedPaymentDetail1,
                                   type: false,
+                                  cahrge: 0,
                                 };
                               }
                             );
@@ -563,14 +565,11 @@ export default function OrderEnd() {
                       </select>
                     </div>
                     <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-4 w-full text-left text-xs text-accent">
-                        カード種類
-                      </div>
                       <select
                         className={
                           checkedPaymentDetail1.type
-                            ? "w-full rounded-md p-2"
-                            : "w-full rounded-md p-2 opacity-20 grayscale"
+                            ? "box-border h-[42px] w-full rounded-md p-2"
+                            : "box-border h-[42px] w-full rounded-md p-2 opacity-20 grayscale"
                         }
                         disabled={!checkedPaymentDetail1.type}
                       >
@@ -585,15 +584,13 @@ export default function OrderEnd() {
                         <option>UNION(銀聯)</option>
                       </select>
                     </div>
-                    <div className="mr-4 flex w-[20rem] flex-col">
-                      <div className="mb-4 w-full text-left text-xs text-accent">
-                        手数料
-                      </div>
+                    <div className="mr-4 flex w-[15rem] flex-col">
                       <select
+                        value={checkedPaymentDetail1.cahrge}
                         className={
                           checkedPaymentDetail1.type
-                            ? "w-full rounded-md p-2 text-right"
-                            : "w-full rounded-md p-2 text-right opacity-20 grayscale"
+                            ? "box-border h-[42px] w-full rounded-md p-2 text-right"
+                            : "box-border h-[42px] w-full rounded-md p-2 text-right opacity-20 grayscale"
                         }
                         disabled={!checkedPaymentDetail1.type}
                         onChange={(e) => {
@@ -613,28 +610,26 @@ export default function OrderEnd() {
                         <option value={15}>15％</option>
                       </select>
                     </div>
-                    <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-3 w-full text-left text-xs text-accent">
-                        金額
-                      </div>
+                    <div className="mr-4 flex w-[25rem] flex-col">
                       <input
-                        value={checkedPaymentDetail1.pay}
-                        className="w-full rounded-md border p-[6px] text-right"
+                        value={
+                          checkedPaymentDetail1.pay.toLocaleString() + "円"
+                        }
+                        className="box-border h-[42px] w-full rounded-md border p-2 text-right"
                         onChange={(e) => {
                           setCheckedPaymentDetail1((checkedPaymentDetail1) => {
                             return {
                               ...checkedPaymentDetail1,
-                              pay: Number(e.target.value),
+                              pay: Number(
+                                e.target.value.replace(/[^0-9]/g, "")
+                              ),
                             };
                           });
                         }}
                       />
                     </div>
-                    <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-3 w-full text-left text-xs text-accent">
-                        預り金
-                      </div>
-                      <div className="w-full rounded-md p-[6px] text-right">
+                    <div className="mr-4 flex w-[25rem] flex-col">
+                      <div className="box-border flex h-[42px] w-full items-center justify-end rounded-md p-[4px] text-right">
                         {(
                           Math.ceil(
                             (checkedPaymentDetail1.pay *
@@ -646,341 +641,25 @@ export default function OrderEnd() {
                       </div>
                     </div>
                     <div
-                      className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
+                      className="mr-4 flex h-full min-w-[5rem] flex-col justify-end"
                       onClick={() => {
                         checkedPaymentDetail1.pay = discountType
                           ? totalPay +
                             Number(discount) -
                             checkedPaymentDetail0.pay -
-                            checkedPaymentDetail1.pay -
                             checkedPaymentDetail2.pay -
                             checkedPaymentDetail3.pay
                           : totalPay -
                             Number(discount) -
                             checkedPaymentDetail0.pay -
-                            checkedPaymentDetail1.pay -
                             checkedPaymentDetail2.pay -
                             checkedPaymentDetail3.pay;
                         // setPay(totalPay - discount);
                       }}
                     >
-                      <Button natural>残金</Button>
-                    </div>
-                    <div className="flex h-[40px] items-center">
-                      <Border2
-                        rounded="rounded-full"
-                        size="h-[28px] w-[28px] p-[6px]"
-                      >
-                        <div>
-                          <Image
-                            src={"/assets/close.svg"}
-                            width={26}
-                            height={26}
-                            className="!h-full !w-full"
-                            alt=""
-                          />
-                        </div>
-                      </Border2>
-                    </div>
-                  </div>
-                  <div className="mb-4 flex w-full items-end">
-                    <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-4 w-full text-left text-xs text-accent">
-                        支払方法
-                      </div>
-                      <select
-                        className="w-full rounded-md p-2"
-                        onChange={(e) => {
-                          if (Number(e.target.value) == 1) {
-                            setCheckedPaymentDetail2(
-                              (checkedPaymentDetail2) => {
-                                return {
-                                  ...checkedPaymentDetail2,
-                                  type: true,
-                                };
-                              }
-                            );
-                          } else {
-                            setCheckedPaymentDetail2(
-                              (checkedPaymentDetail2) => {
-                                return {
-                                  ...checkedPaymentDetail2,
-                                  type: false,
-                                };
-                              }
-                            );
-                          }
-                        }}
-                      >
-                        <option value={1}>カード</option>
-                        <option value={2} selected>
-                          現金
-                        </option>
-                        <option value={3}>ポイント</option>
-                        <option value={4}>掛</option>
-                      </select>
-                    </div>
-                    <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-4 w-full text-left text-xs text-accent">
-                        カード種類
-                      </div>
-                      <select
-                        className={
-                          checkedPaymentDetail2.type
-                            ? "w-full rounded-md p-2"
-                            : "w-full rounded-md p-2 opacity-20 grayscale"
-                        }
-                        disabled={!checkedPaymentDetail2.type}
-                      >
-                        <option disabled selected>
-                          未選択
-                        </option>
-                        <option>JCB</option>
-                        <option>VISA</option>
-                        <option>MASTER</option>
-                        <option>AMEX</option>
-                        <option>DINERS</option>
-                        <option>UNION(銀聯)</option>
-                      </select>
-                    </div>
-                    <div className="mr-4 flex w-[20rem] flex-col">
-                      <div className="mb-4 w-full text-left text-xs text-accent">
-                        手数料
-                      </div>
-                      <select
-                        className={
-                          checkedPaymentDetail2.type
-                            ? "w-full rounded-md p-2 text-right"
-                            : "w-full rounded-md p-2 text-right opacity-20 grayscale"
-                        }
-                        disabled={!checkedPaymentDetail2.type}
-                        onChange={(e) => {
-                          setCheckedPaymentDetail2((checkedPaymentDetail2) => {
-                            return {
-                              ...checkedPaymentDetail2,
-                              cahrge: Number(e.target.value),
-                            };
-                          });
-                        }}
-                      >
-                        <option value={0} selected>
-                          0％
-                        </option>
-                        <option value={5}>5％</option>
-                        <option value={10}>10％</option>
-                        <option value={15}>15％</option>
-                      </select>
-                    </div>
-                    <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-3 w-full text-left text-xs text-accent">
-                        金額
-                      </div>
-                      <input
-                        value={checkedPaymentDetail2.pay}
-                        className="w-full rounded-md border p-[6px] text-right"
-                        onChange={(e) => {
-                          setCheckedPaymentDetail2((checkedPaymentDetail2) => {
-                            return {
-                              ...checkedPaymentDetail2,
-                              pay: Number(e.target.value),
-                            };
-                          });
-                        }}
-                      />
-                    </div>
-                    <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-3 w-full text-left text-xs text-accent">
-                        預り金
-                      </div>
-                      <div className="w-full rounded-md p-[6px] text-right">
-                        {(
-                          Math.ceil(
-                            (checkedPaymentDetail2.pay *
-                              (100 + checkedPaymentDetail2.cahrge)) /
-                              10000
-                          ) * 100
-                        ).toLocaleString()}
-                        円
-                      </div>
-                    </div>
-                    <div
-                      className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
-                      onClick={() => {
-                        checkedPaymentDetail2.pay = discountType
-                          ? totalPay +
-                            Number(discount) -
-                            checkedPaymentDetail0.pay -
-                            checkedPaymentDetail1.pay -
-                            checkedPaymentDetail2.pay -
-                            checkedPaymentDetail3.pay
-                          : totalPay -
-                            Number(discount) -
-                            checkedPaymentDetail0.pay -
-                            checkedPaymentDetail1.pay -
-                            checkedPaymentDetail2.pay -
-                            checkedPaymentDetail3.pay;
-                        // setPay(totalPay - discount);
-                      }}
-                    >
-                      <Button natural>残金</Button>
-                    </div>
-                    <div className="flex h-[40px] items-center">
-                      <Border2
-                        rounded="rounded-full"
-                        size="h-[28px] w-[28px] p-[6px]"
-                      >
-                        <div>
-                          <Image
-                            src={"/assets/close.svg"}
-                            width={26}
-                            height={26}
-                            className="!h-full !w-full"
-                            alt=""
-                          />
-                        </div>
-                      </Border2>
-                    </div>
-                  </div>
-                  <div className="mb-4 flex w-full items-end">
-                    <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-4 w-full text-left text-xs text-accent">
-                        支払方法
-                      </div>
-                      <select
-                        className="w-full rounded-md p-2"
-                        onChange={(e) => {
-                          if (Number(e.target.value) == 1) {
-                            setCheckedPaymentDetail3(
-                              (checkedPaymentDetail3) => {
-                                return {
-                                  ...checkedPaymentDetail3,
-                                  type: true,
-                                };
-                              }
-                            );
-                          } else {
-                            setCheckedPaymentDetail3(
-                              (checkedPaymentDetail3) => {
-                                return {
-                                  ...checkedPaymentDetail3,
-                                  type: false,
-                                };
-                              }
-                            );
-                          }
-                        }}
-                      >
-                        <option value={1}>カード</option>
-                        <option value={2} selected>
-                          現金
-                        </option>
-                        <option value={3}>ポイント</option>
-                        <option value={4}>掛</option>
-                      </select>
-                    </div>
-                    <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-4 w-full text-left text-xs text-accent">
-                        カード種類
-                      </div>
-                      <select
-                        className={
-                          checkedPaymentDetail3.type
-                            ? "w-full rounded-md p-2"
-                            : "w-full rounded-md p-2 opacity-20 grayscale"
-                        }
-                        disabled={!checkedPaymentDetail3.type}
-                      >
-                        <option disabled selected>
-                          未選択
-                        </option>
-                        <option>JCB</option>
-                        <option>VISA</option>
-                        <option>MASTER</option>
-                        <option>AMEX</option>
-                        <option>DINERS</option>
-                        <option>UNION(銀聯)</option>
-                      </select>
-                    </div>
-                    <div className="mr-4 flex w-[20rem] flex-col">
-                      <div className="mb-4 w-full text-left text-xs text-accent">
-                        手数料
-                      </div>
-                      <select
-                        className={
-                          checkedPaymentDetail3.type
-                            ? "w-full rounded-md p-2 text-right"
-                            : "w-full rounded-md p-2 text-right opacity-20 grayscale"
-                        }
-                        disabled={!checkedPaymentDetail3.type}
-                        onChange={(e) => {
-                          setCheckedPaymentDetail3((checkedPaymentDetail3) => {
-                            return {
-                              ...checkedPaymentDetail3,
-                              cahrge: Number(e.target.value),
-                            };
-                          });
-                        }}
-                      >
-                        <option value={0} selected>
-                          0％
-                        </option>
-                        <option value={5}>5％</option>
-                        <option value={10}>10％</option>
-                        <option value={15}>15％</option>
-                      </select>
-                    </div>
-                    <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-3 w-full text-left text-xs text-accent">
-                        金額
-                      </div>
-                      <input
-                        value={checkedPaymentDetail3.pay}
-                        className="w-full rounded-md border p-[6px] text-right"
-                        onChange={(e) => {
-                          setCheckedPaymentDetail3((checkedPaymentDetail3) => {
-                            return {
-                              ...checkedPaymentDetail3,
-                              pay: Number(e.target.value),
-                            };
-                          });
-                        }}
-                      />
-                    </div>
-                    <div className="mr-4 flex w-[30rem] flex-col">
-                      <div className="mb-3 w-full text-left text-xs text-accent">
-                        預り金
-                      </div>
-                      <div className="w-full rounded-md p-[6px] text-right">
-                        {(
-                          Math.ceil(
-                            (checkedPaymentDetail3.pay *
-                              (100 + checkedPaymentDetail3.cahrge)) /
-                              10000
-                          ) * 100
-                        ).toLocaleString()}
-                        円
-                      </div>
-                    </div>
-                    <div
-                      className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
-                      onClick={() => {
-                        checkedPaymentDetail3.pay = discountType
-                          ? totalPay +
-                            Number(discount) -
-                            checkedPaymentDetail0.pay -
-                            checkedPaymentDetail1.pay -
-                            checkedPaymentDetail2.pay -
-                            checkedPaymentDetail3.pay
-                          : totalPay -
-                            Number(discount) -
-                            checkedPaymentDetail0.pay -
-                            checkedPaymentDetail1.pay -
-                            checkedPaymentDetail2.pay -
-                            checkedPaymentDetail3.pay;
-                        // setPay(totalPay - discount);
-                      }}
-                    >
-                      <Button natural>残金</Button>
+                      <Button natural className={"w-[5em]"}>
+                        残金
+                      </Button>
                     </div>
                     <div className="flex h-[40px] items-center">
                       <Border2
@@ -1045,16 +724,89 @@ export default function OrderEnd() {
                   natural
                   onClick={() => {
                     if (
-                      Number(
-                        discountType
-                          ? totalPay + Number(discount) - pay
-                          : totalPay - Number(discount) - pay
-                      ) == 0
+                      (discountType
+                        ? totalPay +
+                          Number(discount) +
+                          (Math.ceil(
+                            (checkedPaymentDetail0.pay *
+                              checkedPaymentDetail0.cahrge) /
+                              10000
+                          ) *
+                            100 +
+                            Math.ceil(
+                              (checkedPaymentDetail1.pay *
+                                checkedPaymentDetail1.cahrge) /
+                                10000
+                            ) *
+                              100 +
+                            Math.ceil(
+                              (checkedPaymentDetail2.pay *
+                                checkedPaymentDetail2.cahrge) /
+                                10000
+                            ) *
+                              100 +
+                            Math.ceil(
+                              (checkedPaymentDetail3.pay *
+                                checkedPaymentDetail3.cahrge) /
+                                10000
+                            ) *
+                              100)
+                        : totalPay -
+                          Number(discount) +
+                          (Math.ceil(
+                            (checkedPaymentDetail0.pay *
+                              checkedPaymentDetail0.cahrge) /
+                              10000
+                          ) *
+                            100 +
+                            Math.ceil(
+                              (checkedPaymentDetail1.pay *
+                                checkedPaymentDetail1.cahrge) /
+                                10000
+                            ) *
+                              100 +
+                            Math.ceil(
+                              (checkedPaymentDetail2.pay *
+                                checkedPaymentDetail2.cahrge) /
+                                10000
+                            ) *
+                              100 +
+                            Math.ceil(
+                              (checkedPaymentDetail3.pay *
+                                checkedPaymentDetail3.cahrge) /
+                                10000
+                            ) *
+                              100)) -
+                        Math.ceil(
+                          (checkedPaymentDetail0.pay *
+                            (100 + checkedPaymentDetail0.cahrge)) /
+                            10000
+                        ) *
+                          100 -
+                        Math.ceil(
+                          (checkedPaymentDetail1.pay *
+                            (100 + checkedPaymentDetail1.cahrge)) /
+                            10000
+                        ) *
+                          100 -
+                        Math.ceil(
+                          (checkedPaymentDetail2.pay *
+                            (100 + checkedPaymentDetail2.cahrge)) /
+                            10000
+                        ) *
+                          100 -
+                        Math.ceil(
+                          (checkedPaymentDetail3.pay *
+                            (100 + checkedPaymentDetail3.cahrge)) /
+                            10000
+                        ) *
+                          100 ==
+                      0
                     ) {
                       purchaseOrderState[0].checkedPayment = true;
-                      setPurchaseOrder(
-                        purchaseOrder.filter((v: any) => v.id != seatPreset)
-                      );
+                      // setPurchaseOrder(
+                      //   purchaseOrder.filter((v: any) => v.id != seatPreset)
+                      // );
                       setSeatPreset("");
                       setIsPurchaseOrder(true);
                       setIsControl("");
@@ -1062,11 +814,84 @@ export default function OrderEnd() {
                     }
                   }}
                   disabled={
-                    Number(
-                      discountType
-                        ? totalPay + Number(discount) - pay
-                        : totalPay - Number(discount) - pay
-                    ) != 0
+                    (discountType
+                      ? totalPay +
+                        Number(discount) +
+                        (Math.ceil(
+                          (checkedPaymentDetail0.pay *
+                            checkedPaymentDetail0.cahrge) /
+                            10000
+                        ) *
+                          100 +
+                          Math.ceil(
+                            (checkedPaymentDetail1.pay *
+                              checkedPaymentDetail1.cahrge) /
+                              10000
+                          ) *
+                            100 +
+                          Math.ceil(
+                            (checkedPaymentDetail2.pay *
+                              checkedPaymentDetail2.cahrge) /
+                              10000
+                          ) *
+                            100 +
+                          Math.ceil(
+                            (checkedPaymentDetail3.pay *
+                              checkedPaymentDetail3.cahrge) /
+                              10000
+                          ) *
+                            100)
+                      : totalPay -
+                        Number(discount) +
+                        (Math.ceil(
+                          (checkedPaymentDetail0.pay *
+                            checkedPaymentDetail0.cahrge) /
+                            10000
+                        ) *
+                          100 +
+                          Math.ceil(
+                            (checkedPaymentDetail1.pay *
+                              checkedPaymentDetail1.cahrge) /
+                              10000
+                          ) *
+                            100 +
+                          Math.ceil(
+                            (checkedPaymentDetail2.pay *
+                              checkedPaymentDetail2.cahrge) /
+                              10000
+                          ) *
+                            100 +
+                          Math.ceil(
+                            (checkedPaymentDetail3.pay *
+                              checkedPaymentDetail3.cahrge) /
+                              10000
+                          ) *
+                            100)) -
+                      Math.ceil(
+                        (checkedPaymentDetail0.pay *
+                          (100 + checkedPaymentDetail0.cahrge)) /
+                          10000
+                      ) *
+                        100 -
+                      Math.ceil(
+                        (checkedPaymentDetail1.pay *
+                          (100 + checkedPaymentDetail1.cahrge)) /
+                          10000
+                      ) *
+                        100 -
+                      Math.ceil(
+                        (checkedPaymentDetail2.pay *
+                          (100 + checkedPaymentDetail2.cahrge)) /
+                          10000
+                      ) *
+                        100 -
+                      Math.ceil(
+                        (checkedPaymentDetail3.pay *
+                          (100 + checkedPaymentDetail3.cahrge)) /
+                          10000
+                      ) *
+                        100 !=
+                    0
                   }
                 >
                   精算
