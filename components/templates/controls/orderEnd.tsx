@@ -314,7 +314,7 @@ export default function OrderEnd() {
                         disabled={!checkedPaymentDetail0.type}
                       >
                         <option disabled selected>
-                          選択してください。
+                          未選択
                         </option>
                         <option>JCB</option>
                         <option>VISA</option>
@@ -383,12 +383,14 @@ export default function OrderEnd() {
                       </div>
                     </div>
                     <div
-                      className="mr-4 flex h-full min-w-[6rem] flex-col justify-end"
+                      className="mr-4 flex h-full min-w-[5rem] flex-col justify-end"
                       onClick={() => {
                         // setPay(totalPay - discount);
                       }}
                     >
-                      <Button natural>残金</Button>
+                      <Button natural className={"w-[5em]"}>
+                        残金
+                      </Button>
                     </div>
                     <div className="flex h-[40px] items-center">
                       <Border2
@@ -457,7 +459,7 @@ export default function OrderEnd() {
                         disabled={!checkedPaymentDetail1.type}
                       >
                         <option disabled selected>
-                          選択してください。
+                          未選択
                         </option>
                         <option>JCB</option>
                         <option>VISA</option>
@@ -600,7 +602,7 @@ export default function OrderEnd() {
                         disabled={!checkedPaymentDetail2.type}
                       >
                         <option disabled selected>
-                          選択してください。
+                          未選択
                         </option>
                         <option>JCB</option>
                         <option>VISA</option>
@@ -743,7 +745,7 @@ export default function OrderEnd() {
                         disabled={!checkedPaymentDetail3.type}
                       >
                         <option disabled selected>
-                          選択してください。
+                          未選択
                         </option>
                         <option>JCB</option>
                         <option>VISA</option>

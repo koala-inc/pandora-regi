@@ -538,7 +538,7 @@ export default function OrderTimeDesignate() {
                                   );
                               }}
                             >
-                              <option value={""}>選択してください。</option>
+                              <option value={""}>未選択</option>
                               {orderSets.map((orderSet: any, index: any) => {
                                 if (
                                   !orderSet.title.includes("延長") &&

@@ -114,7 +114,7 @@ export default function OrderAdd() {
                   });
                 }}
               >
-                <option value={0}>選択してください。</option>
+                <option value={0}>未選択</option>
                 {searchData2?.data?.category[0]?.store_category[0]?.category?.map(
                   (category: any, index: any) => {
                     if (
@@ -187,7 +187,7 @@ export default function OrderAdd() {
                   });
                 }}
               >
-                <option value={0}>選択してください。</option>
+                <option value={0}>未選択</option>
                 {syokai.map((pref) => {
                   return (
                     <option key={pref.prefCode} value={pref.prefName}>
@@ -438,7 +438,7 @@ export default function OrderAdd() {
                   }}
                 >
                   <option selected disabled>
-                    選択してください。
+                    未選択
                   </option>
                   {searchData2?.data?.category[0]?.store_category[0]?.category?.map(
                     (category: any, index: any) => {
@@ -500,7 +500,7 @@ export default function OrderAdd() {
                   }}
                 >
                   <option selected disabled>
-                    選択してください。
+                    未選択
                   </option>
                   {syokai.map((pref) => {
                     return (
@@ -624,7 +624,7 @@ export default function OrderAdd() {
                   value={updateForm?.item_category_id || 0}
                 >
                   <option value={0} selected disabled>
-                    選択してください。
+                    未選択
                   </option>
                   {searchData2?.data?.category[0]?.store_category[0]?.category?.map(
                     (category: any, index: any) => {
@@ -703,7 +703,7 @@ export default function OrderAdd() {
                   }
                 >
                   <option selected disabled>
-                    選択してください。
+                    未選択
                   </option>
                   {syokai.map((pref) => {
                     return (

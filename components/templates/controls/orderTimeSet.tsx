@@ -810,7 +810,7 @@ export default function OrderTimeSet() {
                           </select>
                           {status != "なし" && (
                             <select className="mr-2 h-[40px] w-[120px] rounded-md px-1 text-left text-sm">
-                              <option>選択してください</option>
+                              <option>未選択</option>
                               {status == "外販" ? (
                                 <option>外販1</option>
                               ) : status == "案内所" ? (

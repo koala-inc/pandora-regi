@@ -112,7 +112,7 @@ export default function BottleAdd() {
                 }}
                 value={searchForm?.item_category_id || 0}
               >
-                <option value={0}>選択してください。</option>
+                <option value={0}>未選択</option>
                 {searchData2?.data?.category[0]?.store_category[0]?.category?.map(
                   (category: any, index: any) => {
                     if (
@@ -179,7 +179,7 @@ export default function BottleAdd() {
                     : "-" || 0
                 }
               >
-                <option value={0}>選択してください。</option>
+                <option value={0}>未選択</option>
                 {kikan.map((pref) => {
                   return (
                     <option key={pref.prefCode} value={pref.prefName}>
@@ -441,7 +441,7 @@ export default function BottleAdd() {
                   }}
                 >
                   <option selected disabled>
-                    選択してください。
+                    未選択
                   </option>
                   {searchData2?.data?.category[0]?.store_category[0]?.category?.map(
                     (category: any, index: any) => {
@@ -502,7 +502,7 @@ export default function BottleAdd() {
                   }}
                 >
                   <option value={0} selected>
-                    選択してください。
+                    未選択
                   </option>
                   {kikan.map((pref) => {
                     return (
