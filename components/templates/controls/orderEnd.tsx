@@ -358,7 +358,7 @@ export default function OrderEnd() {
                       </div>
                       <input
                         defaultValue={0}
-                        className="w-full rounded-md border p-[6px] text-right"
+                        className="w-full rounded-md border p-[4px] text-right"
                         onChange={(e) => {
                           setCheckedPaymentDetail0((checkedPaymentDetail0) => {
                             return {
