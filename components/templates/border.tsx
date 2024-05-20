@@ -7,6 +7,7 @@ export default function Border({
   stroke = "xl",
   black = false,
   complate = false,
+  red = false,
 }: {
   children: any;
   className?: string;
@@ -16,9 +17,12 @@ export default function Border({
   stroke?: string;
   black?: boolean;
   complate?: boolean;
+  red?: boolean;
 }) {
   const text = natural ? "text-black" : "text-white";
-  const bg = complate
+  const bg = red
+    ? "bg-red"
+    : complate
     ? "bg-complate"
     : natural
     ? "bg-natural"

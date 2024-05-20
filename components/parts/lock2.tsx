@@ -23,7 +23,7 @@ export default function Lock2() {
       onClick={() => {}}
     >
       <div
-        className="flex h-[170px] w-[350px] items-center justify-around rounded-md border border-secondary bg-primary px-4"
+        className="flex h-[170px] w-[350px] items-center justify-around rounded-md border-4 border-secondary bg-primary px-4"
         onClick={(e) => e.stopPropagation()}
       >
         <div
@@ -39,7 +39,8 @@ export default function Lock2() {
           <Border
             className="ml-2"
             rounded="rounded-full"
-            size="h-[80px] w-[80px] p-[15px]"
+            size="h-[80px] w-[80px] p-[15px] text-xl"
+            complate
           >
             {/* <Image
               src={"/assets/padunlock.svg"}
@@ -48,7 +49,7 @@ export default function Lock2() {
               className="mt-[-3px] !h-full !w-full"
               alt=""
             /> */}
-            復帰
+            復 帰
           </Border>
         </div>
         <div
@@ -66,7 +67,8 @@ export default function Lock2() {
           <Border
             className="ml-2"
             rounded="rounded-full"
-            size="h-[80px] w-[80px] p-[20px]"
+            size="h-[80px] w-[80px] p-[15px] text-xl"
+            red
           >
             {/* <Image
               src={"/assets/close.svg"}
@@ -75,7 +77,7 @@ export default function Lock2() {
               className="!h-full !w-full"
               alt=""
             /> */}
-            退店
+            退 店
           </Border>
         </div>
       </div>

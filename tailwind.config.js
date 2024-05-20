@@ -19,6 +19,7 @@ module.exports = {
         search: "#00698a",
         reset: "#cc6666",
         complate: "#006400",
+        red: "#d0130e",
       },
       gridTemplateRows: {
         7: "repeat(7, minmax(0, 1fr))",
