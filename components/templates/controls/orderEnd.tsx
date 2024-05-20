@@ -907,26 +907,26 @@ export default function OrderEnd() {
                           checkedPaymentDetail0.pay = discountType
                             ? totalPay +
                               Number(discount) -
-                              checkedPaymentDetail1.pay -
-                              checkedPaymentDetail2.pay -
-                              checkedPaymentDetail3.pay -
-                              checkedPaymentDetail4.pay -
-                              checkedPaymentDetail5.pay -
-                              checkedPaymentDetail6.pay -
-                              checkedPaymentDetail7.pay -
-                              checkedPaymentDetail8.pay -
-                              checkedPaymentDetail9.pay
+                              Math.ceil(checkedPaymentDetail1.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail2.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail3.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail4.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail5.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail6.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail7.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail8.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail9.pay / 100) * 100
                             : totalPay -
                               Number(discount) -
-                              checkedPaymentDetail1.pay -
-                              checkedPaymentDetail2.pay -
-                              checkedPaymentDetail3.pay -
-                              checkedPaymentDetail4.pay -
-                              checkedPaymentDetail5.pay -
-                              checkedPaymentDetail6.pay -
-                              checkedPaymentDetail7.pay -
-                              checkedPaymentDetail8.pay -
-                              checkedPaymentDetail9.pay;
+                              Math.ceil(checkedPaymentDetail1.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail2.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail3.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail4.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail5.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail6.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail7.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail8.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail9.pay / 100) * 100;
                           // setPay(totalPay - discount);
                         }}
                       >
@@ -1821,26 +1821,26 @@ export default function OrderEnd() {
                           checkedPaymentDetail5.pay = discountType
                             ? totalPay +
                               Number(discount) -
-                              checkedPaymentDetail0.pay -
-                              checkedPaymentDetail1.pay -
-                              checkedPaymentDetail2.pay -
-                              checkedPaymentDetail3.pay -
-                              checkedPaymentDetail4.pay -
-                              checkedPaymentDetail6.pay -
-                              checkedPaymentDetail7.pay -
-                              checkedPaymentDetail8.pay -
-                              checkedPaymentDetail9.pay
+                              Math.ceil(checkedPaymentDetail0.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail1.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail2.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail3.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail4.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail6.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail7.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail8.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail9.pay / 100) * 100
                             : totalPay -
                               Number(discount) -
-                              checkedPaymentDetail0.pay -
-                              checkedPaymentDetail1.pay -
-                              checkedPaymentDetail2.pay -
-                              checkedPaymentDetail3.pay -
-                              checkedPaymentDetail4.pay -
-                              checkedPaymentDetail6.pay -
-                              checkedPaymentDetail7.pay -
-                              checkedPaymentDetail8.pay -
-                              checkedPaymentDetail9.pay;
+                              Math.ceil(checkedPaymentDetail0.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail1.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail2.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail3.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail4.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail6.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail7.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail8.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail9.pay / 100) * 100;
                           // setPay(totalPay - discount);
                         }}
                       >
@@ -2004,26 +2004,26 @@ export default function OrderEnd() {
                           checkedPaymentDetail6.pay = discountType
                             ? totalPay +
                               Number(discount) -
-                              checkedPaymentDetail0.pay -
-                              checkedPaymentDetail1.pay -
-                              checkedPaymentDetail2.pay -
-                              checkedPaymentDetail3.pay -
-                              checkedPaymentDetail4.pay -
-                              checkedPaymentDetail5.pay -
-                              checkedPaymentDetail7.pay -
-                              checkedPaymentDetail8.pay -
-                              checkedPaymentDetail9.pay
+                              Math.ceil(checkedPaymentDetail0.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail1.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail2.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail3.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail4.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail5.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail7.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail8.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail9.pay / 100) * 100
                             : totalPay -
                               Number(discount) -
-                              checkedPaymentDetail0.pay -
-                              checkedPaymentDetail1.pay -
-                              checkedPaymentDetail2.pay -
-                              checkedPaymentDetail3.pay -
-                              checkedPaymentDetail4.pay -
-                              checkedPaymentDetail5.pay -
-                              checkedPaymentDetail7.pay -
-                              checkedPaymentDetail8.pay -
-                              checkedPaymentDetail9.pay;
+                              Math.ceil(checkedPaymentDetail0.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail1.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail2.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail3.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail4.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail5.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail7.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail8.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail9.pay / 100) * 100;
                           // setPay(totalPay - discount);
                         }}
                       >
@@ -2187,26 +2187,26 @@ export default function OrderEnd() {
                           checkedPaymentDetail7.pay = discountType
                             ? totalPay +
                               Number(discount) -
-                              checkedPaymentDetail0.pay -
-                              checkedPaymentDetail1.pay -
-                              checkedPaymentDetail2.pay -
-                              checkedPaymentDetail3.pay -
-                              checkedPaymentDetail4.pay -
-                              checkedPaymentDetail5.pay -
-                              checkedPaymentDetail6.pay -
-                              checkedPaymentDetail8.pay -
-                              checkedPaymentDetail9.pay
+                              Math.ceil(checkedPaymentDetail0.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail1.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail2.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail3.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail4.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail5.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail6.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail8.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail9.pay / 100) * 100
                             : totalPay -
                               Number(discount) -
-                              checkedPaymentDetail0.pay -
-                              checkedPaymentDetail1.pay -
-                              checkedPaymentDetail2.pay -
-                              checkedPaymentDetail3.pay -
-                              checkedPaymentDetail4.pay -
-                              checkedPaymentDetail5.pay -
-                              checkedPaymentDetail6.pay -
-                              checkedPaymentDetail8.pay -
-                              checkedPaymentDetail9.pay;
+                              Math.ceil(checkedPaymentDetail0.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail1.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail2.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail3.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail4.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail5.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail6.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail8.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail9.pay / 100) * 100;
                           // setPay(totalPay - discount);
                         }}
                       >
@@ -2370,26 +2370,26 @@ export default function OrderEnd() {
                           checkedPaymentDetail8.pay = discountType
                             ? totalPay +
                               Number(discount) -
-                              checkedPaymentDetail0.pay -
-                              checkedPaymentDetail1.pay -
-                              checkedPaymentDetail2.pay -
-                              checkedPaymentDetail3.pay -
-                              checkedPaymentDetail4.pay -
-                              checkedPaymentDetail5.pay -
-                              checkedPaymentDetail6.pay -
-                              checkedPaymentDetail7.pay -
-                              checkedPaymentDetail9.pay
+                              Math.ceil(checkedPaymentDetail0.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail1.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail2.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail3.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail4.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail5.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail6.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail7.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail9.pay / 100) * 100
                             : totalPay -
                               Number(discount) -
-                              checkedPaymentDetail0.pay -
-                              checkedPaymentDetail1.pay -
-                              checkedPaymentDetail2.pay -
-                              checkedPaymentDetail3.pay -
-                              checkedPaymentDetail4.pay -
-                              checkedPaymentDetail5.pay -
-                              checkedPaymentDetail6.pay -
-                              checkedPaymentDetail7.pay -
-                              checkedPaymentDetail9.pay;
+                              Math.ceil(checkedPaymentDetail0.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail1.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail2.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail3.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail4.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail5.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail6.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail7.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail9.pay / 100) * 100;
                           // setPay(totalPay - discount);
                         }}
                       >
@@ -2553,26 +2553,26 @@ export default function OrderEnd() {
                           checkedPaymentDetail9.pay = discountType
                             ? totalPay +
                               Number(discount) -
-                              checkedPaymentDetail0.pay -
-                              checkedPaymentDetail1.pay -
-                              checkedPaymentDetail2.pay -
-                              checkedPaymentDetail3.pay -
-                              checkedPaymentDetail4.pay -
-                              checkedPaymentDetail5.pay -
-                              checkedPaymentDetail6.pay -
-                              checkedPaymentDetail7.pay -
-                              checkedPaymentDetail8.pay
+                              Math.ceil(checkedPaymentDetail0.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail1.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail2.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail3.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail4.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail5.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail6.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail7.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail8.pay / 100) * 100
                             : totalPay -
                               Number(discount) -
-                              checkedPaymentDetail0.pay -
-                              checkedPaymentDetail1.pay -
-                              checkedPaymentDetail2.pay -
-                              checkedPaymentDetail3.pay -
-                              checkedPaymentDetail4.pay -
-                              checkedPaymentDetail5.pay -
-                              checkedPaymentDetail6.pay -
-                              checkedPaymentDetail7.pay -
-                              checkedPaymentDetail8.pay;
+                              Math.ceil(checkedPaymentDetail0.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail1.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail2.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail3.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail4.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail5.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail6.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail7.pay / 100) * 100 -
+                              Math.ceil(checkedPaymentDetail8.pay / 100) * 100;
                           // setPay(totalPay - discount);
                         }}
                       >
