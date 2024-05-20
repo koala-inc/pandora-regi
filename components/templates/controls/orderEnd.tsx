@@ -884,7 +884,7 @@ export default function OrderEnd() {
                           }
                           className="box-border h-[42px] w-full rounded-md border p-2 text-right"
                           onClick={(e) => {
-                            setIsCalculatorSelect(2);
+                            setIsCalculatorSelect(1);
                             setIsCalculator(true);
                           }}
                         />
