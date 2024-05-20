@@ -289,6 +289,7 @@ export default function OrderEnd() {
                         "円"
                       }
                       onClick={(e) => {
+                        setIsCalculatorSelect(0);
                         setIsCalculator(true);
                       }}
                       readOnly
