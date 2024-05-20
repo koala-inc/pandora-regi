@@ -913,22 +913,21 @@ export default function OrderEnd() {
                         setPayNum((payNum) => payNum - 1);
                       }}
                     >
-                      {payNum > 1 && (
-                        <Border2
-                          rounded="rounded-full"
-                          size="h-[28px] w-[28px] p-[6px]"
-                        >
-                          <div>
-                            <Image
-                              src={"/assets/close.svg"}
-                              width={26}
-                              height={26}
-                              className="!h-full !w-full"
-                              alt=""
-                            />
-                          </div>
-                        </Border2>
-                      )}
+                      <Border2
+                        className={payNum < 2 ? "opacity-0" : ""}
+                        rounded="rounded-full"
+                        size="h-[28px] w-[28px] p-[6px]"
+                      >
+                        <div>
+                          <Image
+                            src={"/assets/close.svg"}
+                            width={26}
+                            height={26}
+                            className="!h-full !w-full"
+                            alt=""
+                          />
+                        </div>
+                      </Border2>
                     </div>
                   </div>
                   {payNum > 1 && (
@@ -1078,22 +1077,21 @@ export default function OrderEnd() {
                           setPayNum((payNum) => payNum - 1);
                         }}
                       >
-                        {payNum > 1 && (
-                          <Border2
-                            rounded="rounded-full"
-                            size="h-[28px] w-[28px] p-[6px]"
-                          >
-                            <div>
-                              <Image
-                                src={"/assets/close.svg"}
-                                width={26}
-                                height={26}
-                                className="!h-full !w-full"
-                                alt=""
-                              />
-                            </div>
-                          </Border2>
-                        )}
+                        <Border2
+                          className={payNum < 2 ? "opacity-0" : ""}
+                          rounded="rounded-full"
+                          size="h-[28px] w-[28px] p-[6px]"
+                        >
+                          <div>
+                            <Image
+                              src={"/assets/close.svg"}
+                              width={26}
+                              height={26}
+                              className="!h-full !w-full"
+                              alt=""
+                            />
+                          </div>
+                        </Border2>
                       </div>
                     </div>
                   )}
@@ -1244,22 +1242,21 @@ export default function OrderEnd() {
                           setPayNum((payNum) => payNum - 1);
                         }}
                       >
-                        {payNum > 1 && (
-                          <Border2
-                            rounded="rounded-full"
-                            size="h-[28px] w-[28px] p-[6px]"
-                          >
-                            <div>
-                              <Image
-                                src={"/assets/close.svg"}
-                                width={26}
-                                height={26}
-                                className="!h-full !w-full"
-                                alt=""
-                              />
-                            </div>
-                          </Border2>
-                        )}
+                        <Border2
+                          className={payNum < 2 ? "opacity-0" : ""}
+                          rounded="rounded-full"
+                          size="h-[28px] w-[28px] p-[6px]"
+                        >
+                          <div>
+                            <Image
+                              src={"/assets/close.svg"}
+                              width={26}
+                              height={26}
+                              className="!h-full !w-full"
+                              alt=""
+                            />
+                          </div>
+                        </Border2>
                       </div>
                     </div>
                   )}
@@ -1410,22 +1407,21 @@ export default function OrderEnd() {
                           setPayNum((payNum) => payNum - 1);
                         }}
                       >
-                        {payNum > 1 && (
-                          <Border2
-                            rounded="rounded-full"
-                            size="h-[28px] w-[28px] p-[6px]"
-                          >
-                            <div>
-                              <Image
-                                src={"/assets/close.svg"}
-                                width={26}
-                                height={26}
-                                className="!h-full !w-full"
-                                alt=""
-                              />
-                            </div>
-                          </Border2>
-                        )}
+                        <Border2
+                          className={payNum < 2 ? "opacity-0" : ""}
+                          rounded="rounded-full"
+                          size="h-[28px] w-[28px] p-[6px]"
+                        >
+                          <div>
+                            <Image
+                              src={"/assets/close.svg"}
+                              width={26}
+                              height={26}
+                              className="!h-full !w-full"
+                              alt=""
+                            />
+                          </div>
+                        </Border2>
                       </div>
                     </div>
                   )}
@@ -1576,22 +1572,21 @@ export default function OrderEnd() {
                           setPayNum((payNum) => payNum - 1);
                         }}
                       >
-                        {payNum > 1 && (
-                          <Border2
-                            rounded="rounded-full"
-                            size="h-[28px] w-[28px] p-[6px]"
-                          >
-                            <div>
-                              <Image
-                                src={"/assets/close.svg"}
-                                width={26}
-                                height={26}
-                                className="!h-full !w-full"
-                                alt=""
-                              />
-                            </div>
-                          </Border2>
-                        )}
+                        <Border2
+                          className={payNum < 2 ? "opacity-0" : ""}
+                          rounded="rounded-full"
+                          size="h-[28px] w-[28px] p-[6px]"
+                        >
+                          <div>
+                            <Image
+                              src={"/assets/close.svg"}
+                              width={26}
+                              height={26}
+                              className="!h-full !w-full"
+                              alt=""
+                            />
+                          </div>
+                        </Border2>
                       </div>
                     </div>
                   )}
@@ -1742,22 +1737,21 @@ export default function OrderEnd() {
                           setPayNum((payNum) => payNum - 1);
                         }}
                       >
-                        {payNum > 1 && (
-                          <Border2
-                            rounded="rounded-full"
-                            size="h-[28px] w-[28px] p-[6px]"
-                          >
-                            <div>
-                              <Image
-                                src={"/assets/close.svg"}
-                                width={26}
-                                height={26}
-                                className="!h-full !w-full"
-                                alt=""
-                              />
-                            </div>
-                          </Border2>
-                        )}
+                        <Border2
+                          className={payNum < 2 ? "opacity-0" : ""}
+                          rounded="rounded-full"
+                          size="h-[28px] w-[28px] p-[6px]"
+                        >
+                          <div>
+                            <Image
+                              src={"/assets/close.svg"}
+                              width={26}
+                              height={26}
+                              className="!h-full !w-full"
+                              alt=""
+                            />
+                          </div>
+                        </Border2>
                       </div>
                     </div>
                   )}
@@ -1908,22 +1902,21 @@ export default function OrderEnd() {
                           setPayNum((payNum) => payNum - 1);
                         }}
                       >
-                        {payNum > 1 && (
-                          <Border2
-                            rounded="rounded-full"
-                            size="h-[28px] w-[28px] p-[6px]"
-                          >
-                            <div>
-                              <Image
-                                src={"/assets/close.svg"}
-                                width={26}
-                                height={26}
-                                className="!h-full !w-full"
-                                alt=""
-                              />
-                            </div>
-                          </Border2>
-                        )}
+                        <Border2
+                          className={payNum < 2 ? "opacity-0" : ""}
+                          rounded="rounded-full"
+                          size="h-[28px] w-[28px] p-[6px]"
+                        >
+                          <div>
+                            <Image
+                              src={"/assets/close.svg"}
+                              width={26}
+                              height={26}
+                              className="!h-full !w-full"
+                              alt=""
+                            />
+                          </div>
+                        </Border2>
                       </div>
                     </div>
                   )}
@@ -2074,22 +2067,21 @@ export default function OrderEnd() {
                           setPayNum((payNum) => payNum - 1);
                         }}
                       >
-                        {payNum > 1 && (
-                          <Border2
-                            rounded="rounded-full"
-                            size="h-[28px] w-[28px] p-[6px]"
-                          >
-                            <div>
-                              <Image
-                                src={"/assets/close.svg"}
-                                width={26}
-                                height={26}
-                                className="!h-full !w-full"
-                                alt=""
-                              />
-                            </div>
-                          </Border2>
-                        )}
+                        <Border2
+                          className={payNum < 2 ? "opacity-0" : ""}
+                          rounded="rounded-full"
+                          size="h-[28px] w-[28px] p-[6px]"
+                        >
+                          <div>
+                            <Image
+                              src={"/assets/close.svg"}
+                              width={26}
+                              height={26}
+                              className="!h-full !w-full"
+                              alt=""
+                            />
+                          </div>
+                        </Border2>
                       </div>
                     </div>
                   )}
@@ -2240,22 +2232,21 @@ export default function OrderEnd() {
                           setPayNum((payNum) => payNum - 1);
                         }}
                       >
-                        {payNum > 1 && (
-                          <Border2
-                            rounded="rounded-full"
-                            size="h-[28px] w-[28px] p-[6px]"
-                          >
-                            <div>
-                              <Image
-                                src={"/assets/close.svg"}
-                                width={26}
-                                height={26}
-                                className="!h-full !w-full"
-                                alt=""
-                              />
-                            </div>
-                          </Border2>
-                        )}
+                        <Border2
+                          className={payNum < 2 ? "opacity-0" : ""}
+                          rounded="rounded-full"
+                          size="h-[28px] w-[28px] p-[6px]"
+                        >
+                          <div>
+                            <Image
+                              src={"/assets/close.svg"}
+                              width={26}
+                              height={26}
+                              className="!h-full !w-full"
+                              alt=""
+                            />
+                          </div>
+                        </Border2>
                       </div>
                     </div>
                   )}
@@ -2406,22 +2397,21 @@ export default function OrderEnd() {
                           setPayNum((payNum) => payNum - 1);
                         }}
                       >
-                        {payNum > 1 && (
-                          <Border2
-                            rounded="rounded-full"
-                            size="h-[28px] w-[28px] p-[6px]"
-                          >
-                            <div>
-                              <Image
-                                src={"/assets/close.svg"}
-                                width={26}
-                                height={26}
-                                className="!h-full !w-full"
-                                alt=""
-                              />
-                            </div>
-                          </Border2>
-                        )}
+                        <Border2
+                          className={payNum < 2 ? "opacity-0" : ""}
+                          rounded="rounded-full"
+                          size="h-[28px] w-[28px] p-[6px]"
+                        >
+                          <div>
+                            <Image
+                              src={"/assets/close.svg"}
+                              width={26}
+                              height={26}
+                              className="!h-full !w-full"
+                              alt=""
+                            />
+                          </div>
+                        </Border2>
                       </div>
                     </div>
                   )}
