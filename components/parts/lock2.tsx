@@ -7,11 +7,15 @@ import Image from "next/image";
 import useIsLockGlobal from "@/globalstates/isLock";
 import useSeatPresetGlobal from "@/globalstates/seatPreset";
 import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
+import useIsCardGlobal from "@/globalstates/isCard";
+import useIsControlGlobal from "@/globalstates/isControl";
+import useExSeatGlobal from "@/globalstates/exSeat";
 
 export default function Lock2() {
   const [isLock, setIsLock] = useIsLockGlobal();
   const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
   const [seatPreset, setSeatPreset] = useSeatPresetGlobal();
+  const [exSeat, setExSeat] = useExSeatGlobal();
 
   return (
     <div
@@ -53,6 +57,10 @@ export default function Lock2() {
             setPurchaseOrder(
               purchaseOrder.filter((v: any) => v.id != seatPreset)
             );
+            const exSeatData = exSeat.filter(
+              (v: any) => !v.includes(seatPreset)
+            );
+            setExSeat(exSeatData);
           }}
         >
           <Border
