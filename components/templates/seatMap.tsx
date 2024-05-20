@@ -309,7 +309,15 @@ export default function SeatMap() {
                     }
                     if (!isSeatExMode) {
                       setSeatPreset(seat.name);
-                      if (isLock < 2) {
+                      if (
+                        purchaseOrder.some(
+                          (purchaseOrder: any) =>
+                            purchaseOrder.id.includes(seat.name) &&
+                            purchaseOrder.checkedPayment
+                        )
+                      ) {
+                        setIsLock(3);
+                      } else {
                         setIsCard(true);
 
                         const purchaseOrderState = purchaseOrder.filter(
@@ -443,15 +451,6 @@ export default function SeatMap() {
                             }
                           });
                         }
-                      }
-                      if (
-                        purchaseOrder.some(
-                          (purchaseOrder: any) =>
-                            purchaseOrder.id.includes(seat.name) &&
-                            purchaseOrder.checkedPayment
-                        )
-                      ) {
-                        setIsLock(3);
                       }
                     }
                     // setSeatPreset(seat.name);
