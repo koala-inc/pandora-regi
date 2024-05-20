@@ -451,7 +451,6 @@ export default function SeatMap() {
                             purchaseOrder.checkedPayment
                         )
                       ) {
-                        alert();
                         setIsLock(3);
                       }
                     }

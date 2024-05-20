@@ -11,3 +11,64 @@
         "◯めぐ##3000"
     ]
 }
+
+{
+    "startTime": "",
+    "endTime": "",
+    "callTime": "",
+    "num": 0,
+    "setTime": 0,
+    "price": 0,
+    "roomCharge": 0,
+    "cast": [],
+    "state": {
+        "result": "0",
+        "selectCast": [],
+        "timeResult": "0",
+        "numResult": "0",
+        "roomResult": "0",
+        "setName": "",
+        "roomName": "",
+        "setStatus": "なし"
+    }
+}
+
+{
+    "setTime": 60,
+    "price": 5000,
+    "roomCharge": "0",
+    "extensionPrice": 5000,
+    "serviceTax": 20,
+    "startTime": "14:25",
+    "endTime": "15:25",
+    "callTime": "15:15",
+    "cast": [
+        "◯めぐ##3000"
+    ],
+    "id": "D#9#",
+    "toggle": false,
+    "setName": "メイン5000",
+    "roomName": "",
+    "status": "なし",
+    "mainStartTime": "14:25",
+    "mainEndTime": "15:25",
+    "orderItem": [],
+    "orderCast": [],
+    "orderExtension": 0,
+    "priceTax": false,
+    "roomTax": false,
+    "num": 1,
+    "order": {
+        "setTime": 60,
+        "price": 5000,
+        "roomCharge": 0,
+        "extensionPrice": 5000,
+        "serviceTax": 20,
+        "startTime": "14:25",
+        "endTime": "15:25",
+        "callTime": "15:15",
+        "cast": [
+            "◯めぐ##3000"
+        ]
+    }
+}
