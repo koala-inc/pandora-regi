@@ -106,6 +106,34 @@ export default function OrderEnd() {
           setIsCalculator={setIsCalculator}
         />
       )}
+      {isCalculator && isCalculatorSelect == 1 && (
+        <Calculator4
+          result={checkedPaymentDetail0.pay}
+          setResult={(v: any) => {
+            setCheckedPaymentDetail0((checkedPaymentDetail0) => {
+              return {
+                ...checkedPaymentDetail0,
+                pay: Number(v.replace(/[^0-9]/g, "")),
+              };
+            });
+          }}
+          setIsCalculator={setIsCalculator}
+        />
+      )}
+      {isCalculator && isCalculatorSelect == 2 && (
+        <Calculator4
+          result={checkedPaymentDetail1.pay}
+          setResult={(v: any) => {
+            setCheckedPaymentDetail1((checkedPaymentDetail1) => {
+              return {
+                ...checkedPaymentDetail1,
+                pay: Number(v.replace(/[^0-9]/g, "")),
+              };
+            });
+          }}
+          setIsCalculator={setIsCalculator}
+        />
+      )}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 100 }}
@@ -464,15 +492,9 @@ export default function OrderEnd() {
                           checkedPaymentDetail0.pay.toLocaleString() + "円"
                         }
                         className="box-border h-[42px] w-full rounded-md border p-2 text-right"
-                        onChange={(e) => {
-                          setCheckedPaymentDetail0((checkedPaymentDetail0) => {
-                            return {
-                              ...checkedPaymentDetail0,
-                              pay: Number(
-                                e.target.value.replace(/[^0-9]/g, "")
-                              ),
-                            };
-                          });
+                        onClick={(e) => {
+                          setIsCalculatorSelect(1);
+                          setIsCalculator(true);
                         }}
                       />
                     </div>
@@ -616,15 +638,9 @@ export default function OrderEnd() {
                           checkedPaymentDetail1.pay.toLocaleString() + "円"
                         }
                         className="box-border h-[42px] w-full rounded-md border p-2 text-right"
-                        onChange={(e) => {
-                          setCheckedPaymentDetail1((checkedPaymentDetail1) => {
-                            return {
-                              ...checkedPaymentDetail1,
-                              pay: Number(
-                                e.target.value.replace(/[^0-9]/g, "")
-                              ),
-                            };
-                          });
+                        onClick={(e) => {
+                          setIsCalculatorSelect(2);
+                          setIsCalculator(true);
                         }}
                       />
                     </div>

@@ -219,9 +219,9 @@ export default function Calculator4({
               className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white bg-neutral-700 text-black shadow-2xl"
               onClick={() => {
                 if (result2 != "") {
-                  setResult(result2);
+                  setResult(result2.replace(/[^0-9]/g, ""));
                 } else {
-                  setResult(result);
+                  setResult(result.replace(/[^0-9]/g, ""));
                 }
                 setIsCalculator(false);
               }}
