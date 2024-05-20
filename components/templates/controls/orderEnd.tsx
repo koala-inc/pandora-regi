@@ -706,7 +706,7 @@ export default function OrderEnd() {
                           10000
                       ) *
                         100 -
-                      -Math.ceil(
+                      Math.ceil(
                         (checkedPaymentDetail4.pay *
                           (100 + checkedPaymentDetail4.cahrge)) /
                           10000
