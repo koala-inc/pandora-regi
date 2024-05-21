@@ -995,8 +995,8 @@ export default function TimeCard() {
                                         />
                                       </th>
                                       <th className="min-w-[4em] text-center text-sm">
-                                        <Button
-                                          natural
+                                        <div
+                                          className="relative w-[36px]"
                                           onClick={() => {
                                             client
                                               .request(
@@ -1023,8 +1023,21 @@ export default function TimeCard() {
                                               });
                                           }}
                                         >
-                                          削除
-                                        </Button>
+                                          <Border
+                                            rounded="rounded-full"
+                                            stroke="lg"
+                                          >
+                                            <div>
+                                              <Image
+                                                src={"/assets/close.svg"}
+                                                width={24}
+                                                height={24}
+                                                alt=""
+                                                className="!h-full !w-full p-[6px]"
+                                              />
+                                            </div>
+                                          </Border>
+                                        </div>
                                       </th>
                                     </tr>
                                   );
