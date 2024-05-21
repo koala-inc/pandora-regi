@@ -227,7 +227,7 @@ export default function TimeCard() {
                 >
                   体入/ヘルプ
                 </Button>
-                <Button className="min-w-[6rem]" natural>
+                <Button className="min-w-[6rem] grayscale" natural disabled>
                   他店ヘルプ
                 </Button>
               </>
@@ -452,7 +452,7 @@ export default function TimeCard() {
           <div className="my-4 flex w-full">
             <Line />
           </div>
-          <div className="flex flex-wrap justify-start">
+          <div className="flex flex-wrap justify-start overflow-scroll">
             {activeTab == 0 ? (
               <>
                 {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(

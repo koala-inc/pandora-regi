@@ -459,8 +459,91 @@ export default function StaffList() {
             <tbody>
               {searchData?.data?.staff[0]?.store_staff[0]?.staff?.map(
                 (staff: any) => {
-                  if (leave) {
-                    if (staff.leaving_date == null) {
+                  if (staff.employment_type == 2) {
+                    if (leave) {
+                      if (staff.leaving_date == null) {
+                        return (
+                          <>
+                            {staff.staff_code != 0 && (
+                              <>
+                                <tr key={staff.staff_code}>
+                                  <td>{staff.staff_code}</td>
+                                  <td>
+                                    {staff.section == 0
+                                      ? "アルバイトスタッフ"
+                                      : "販売促進"}
+                                  </td>
+                                  <td>{staff.name}</td>
+                                  <td>{staff.entry_date}</td>
+                                  <td>{staff.leaving_date}</td>
+                                  <th className="flex">
+                                    <button
+                                      className="btn btn-ghost btn-xs"
+                                      onClick={() => {
+                                        setUpdateForm(() => staff);
+                                        setUpdateModal(true);
+                                      }}
+                                    >
+                                      編集
+                                    </button>
+                                    <button
+                                      className="btn btn-ghost btn-xs"
+                                      onClick={() => {
+                                        client
+                                          .request(deleteStaff, {
+                                            id: staff.id,
+                                            ...defaultVariables,
+                                          })
+                                          .then(() => {
+                                            searchData.mutate(
+                                              () =>
+                                                client.request(searchStaff, {
+                                                  ...defaultVariables,
+                                                }),
+                                              {
+                                                populateCache: true,
+                                                revalidate: false,
+                                              }
+                                            );
+                                          });
+                                      }}
+                                    >
+                                      削除
+                                    </button>
+                                  </th>
+                                </tr>
+                                {detail && (
+                                  <>
+                                    <tr
+                                      key={staff.staff_code + "1"}
+                                      className="mt-3 border-b-0 border-t border-gray-300 opacity-50"
+                                    >
+                                      <th>生年月日</th>
+                                      <th>住所</th>
+                                      <th>電話番号</th>
+                                      <th>その他</th>
+                                      <th>媒体</th>
+                                      <th>紹介者</th>
+                                    </tr>
+                                    <tr
+                                      key={staff.staff_code + "2"}
+                                      className="border-b border-gray-500 opacity-50"
+                                    >
+                                      <td>{staff.birthday}</td>
+                                      <td>{staff.address}</td>
+                                      <td>{staff.phone_number}</td>
+                                      <td>{staff.remarks}</td>
+                                      <td>-</td>
+                                      <td>-</td>
+                                    </tr>
+                                  </>
+                                )}
+                              </>
+                            )}
+                          </>
+                        );
+                      }
+                    } else {
                       return (
                         <>
                           {staff.staff_code != 0 && (
@@ -514,7 +597,7 @@ export default function StaffList() {
                               {detail && (
                                 <>
                                   <tr
-                                    key={staff.staff_code + "1"}
+                                    key={staff.cast_code + "1"}
                                     className="mt-3 border-b-0 border-t border-gray-300 opacity-50"
                                   >
                                     <th>生年月日</th>
@@ -525,7 +608,7 @@ export default function StaffList() {
                                     <th>紹介者</th>
                                   </tr>
                                   <tr
-                                    key={staff.staff_code + "2"}
+                                    key={staff.cast_code + "2"}
                                     className="border-b border-gray-500 opacity-50"
                                   >
                                     <td>{staff.birthday}</td>
@@ -542,87 +625,6 @@ export default function StaffList() {
                         </>
                       );
                     }
-                  } else {
-                    return (
-                      <>
-                        {staff.staff_code != 0 && (
-                          <>
-                            <tr key={staff.staff_code}>
-                              <td>{staff.staff_code}</td>
-                              <td>
-                                {staff.section == 0
-                                  ? "アルバイトスタッフ"
-                                  : "販売促進"}
-                              </td>
-                              <td>{staff.name}</td>
-                              <td>{staff.entry_date}</td>
-                              <td>{staff.leaving_date}</td>
-                              <th className="flex">
-                                <button
-                                  className="btn btn-ghost btn-xs"
-                                  onClick={() => {
-                                    setUpdateForm(() => staff);
-                                    setUpdateModal(true);
-                                  }}
-                                >
-                                  編集
-                                </button>
-                                <button
-                                  className="btn btn-ghost btn-xs"
-                                  onClick={() => {
-                                    client
-                                      .request(deleteStaff, {
-                                        id: staff.id,
-                                        ...defaultVariables,
-                                      })
-                                      .then(() => {
-                                        searchData.mutate(
-                                          () =>
-                                            client.request(searchStaff, {
-                                              ...defaultVariables,
-                                            }),
-                                          {
-                                            populateCache: true,
-                                            revalidate: false,
-                                          }
-                                        );
-                                      });
-                                  }}
-                                >
-                                  削除
-                                </button>
-                              </th>
-                            </tr>
-                            {detail && (
-                              <>
-                                <tr
-                                  key={staff.cast_code + "1"}
-                                  className="mt-3 border-b-0 border-t border-gray-300 opacity-50"
-                                >
-                                  <th>生年月日</th>
-                                  <th>住所</th>
-                                  <th>電話番号</th>
-                                  <th>その他</th>
-                                  <th>媒体</th>
-                                  <th>紹介者</th>
-                                </tr>
-                                <tr
-                                  key={staff.cast_code + "2"}
-                                  className="border-b border-gray-500 opacity-50"
-                                >
-                                  <td>{staff.birthday}</td>
-                                  <td>{staff.address}</td>
-                                  <td>{staff.phone_number}</td>
-                                  <td>{staff.remarks}</td>
-                                  <td>-</td>
-                                  <td>-</td>
-                                </tr>
-                              </>
-                            )}
-                          </>
-                        )}
-                      </>
-                    );
                   }
                 }
               )}
@@ -654,7 +656,7 @@ export default function StaffList() {
           >
             <p className="w-full text-left">
               新規アルバイトスタッフ登録
-              <small className="ml-5 text-red-600">＊は必須項目です。</small>
+              <small className="text-red-600 ml-5">＊は必須項目です。</small>
             </p>
             <div className="flex w-full flex-wrap">
               <div className="flex flex-col">
@@ -854,6 +856,7 @@ export default function StaffList() {
                   client
                     .request(createStaff, {
                       ...createForm,
+                      employment_type: 2,
                       ...defaultVariables,
                     })
                     .then(() => {
@@ -904,7 +907,7 @@ export default function StaffList() {
           >
             <p className="w-full text-left">
               アルバイトスタッフ編集
-              <small className="ml-5 text-red-600">＊は必須項目です。</small>
+              <small className="text-red-600 ml-5">＊は必須項目です。</small>
             </p>
             <div className="flex w-full flex-wrap">
               <div className="flex flex-col">
@@ -1122,6 +1125,7 @@ export default function StaffList() {
                   client
                     .request(updateStaff, {
                       ...updateForm,
+                      employment_type: 2,
                       ...defaultVariables,
                     })
                     .then(() => {

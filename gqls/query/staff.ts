@@ -34,6 +34,7 @@ const searchStaff = gql`
           address
           birthday
           staff_code
+          employment_type
           id
           introducer_id
           leaving_date
