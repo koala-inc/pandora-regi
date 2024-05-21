@@ -24,6 +24,7 @@ import useSWR, { preload } from "swr";
 import { ja } from "date-fns/locale/ja";
 import {
   createAttendanceManagementCast,
+  deleteAttendanceManagementCast,
   updateAttendanceManagementCast,
 } from "@/gqls/mutation/cast";
 import useIsFooterGlobal from "@/globalstates/isFooter";
@@ -540,16 +541,30 @@ export default function TimeCard() {
                                 size
                               }
                               onClick={() => {
+                                const work_date_time_start_date = new Date();
+                                work_date_time_start_date.setHours(
+                                  Number(datetimeH)
+                                );
+                                work_date_time_start_date.setMinutes(
+                                  Number(datetimeM)
+                                );
                                 client
                                   .request(createAttendanceManagementCast, {
                                     cast_id: Number(cast.id),
                                     working_date: format(new Date(), "Y-m-d", {
                                       locale: ja,
                                     }),
+                                    work_date_time_start: format(
+                                      work_date_time_start_date,
+                                      "Y-m-d HH:mm:ss",
+                                      {
+                                        locale: ja,
+                                      }
+                                    ),
                                     attendance_status: 0,
                                     ...defaultVariables,
                                   })
-                                  .then(() => {
+                                  .then((e: any) => {
                                     searchAData.mutate(
                                       () =>
                                         client.request(
@@ -591,12 +606,26 @@ export default function TimeCard() {
                                 size
                               }
                               onClick={() => {
+                                const work_date_time_start_date = new Date();
+                                work_date_time_start_date.setHours(
+                                  Number(datetimeH)
+                                );
+                                work_date_time_start_date.setMinutes(
+                                  Number(datetimeM)
+                                );
                                 client
                                   .request(createAttendanceManagementStaff, {
                                     staff_id: Number(staff.id),
                                     working_date: format(new Date(), "Y-m-d", {
                                       locale: ja,
                                     }),
+                                    work_date_time_start: format(
+                                      work_date_time_start_date,
+                                      "Y-m-d HH:mm",
+                                      {
+                                        locale: ja,
+                                      }
+                                    ),
                                     ...defaultVariables,
                                   })
                                   .then(() => {
@@ -920,6 +949,38 @@ export default function TimeCard() {
                                           type="checkbox"
                                           className="mt-[8px] h-[20px] w-[20px]"
                                         />
+                                      </th>
+                                      <th className="min-w-[4em] text-center text-sm">
+                                        <Button
+                                          natural
+                                          onClick={() => {
+                                            client
+                                              .request(
+                                                deleteAttendanceManagementCast,
+                                                {
+                                                  id: amc.id,
+                                                  ...defaultVariables,
+                                                }
+                                              )
+                                              .then(() => {
+                                                searchAData.mutate(
+                                                  () =>
+                                                    client.request(
+                                                      searchAttendanceManagementCast,
+                                                      {
+                                                        ...defaultVariables,
+                                                      }
+                                                    ),
+                                                  {
+                                                    populateCache: true,
+                                                    revalidate: false,
+                                                  }
+                                                );
+                                              });
+                                          }}
+                                        >
+                                          削除
+                                        </Button>
                                       </th>
                                     </tr>
                                   );
