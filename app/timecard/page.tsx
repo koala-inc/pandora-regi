@@ -113,7 +113,13 @@ export default function TimeCard() {
 
   const [searchForm, setSearchForm] = useState<any>({});
 
-  const searchData = useSWR<any>(searchCast, fetcher);
+  const searchData = useSWR<any>(searchCast, () => {
+    client.request(searchCast, {
+      section: 1,
+      ...defaultVariables,
+    });
+  });
+
   const searchData2 = useSWR<any>(searchCast2, fetcher);
   const searchSData = useSWR<any>(searchStaff, fetcher);
   const searchAData = useSWR<any>(searchAttendanceManagementCast, fetcher);
@@ -220,7 +226,7 @@ export default function TimeCard() {
                     searchData.mutate(
                       () =>
                         client.request(searchCast, {
-                          section: 2,
+                          section: [2, 3],
                           ...defaultVariables,
                         }),
                       {
@@ -238,10 +244,42 @@ export default function TimeCard() {
               </>
             ) : (
               <>
-                <Button className="min-w-[10rem]" natural>
+                <Button
+                  className="min-w-[10rem]"
+                  natural
+                  onClick={() => {
+                    searchSData.mutate(
+                      () =>
+                        client.request(searchStaff, {
+                          employment_type: 1,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  }}
+                >
                   在籍
                 </Button>
-                <Button className="min-w-[10rem]" natural>
+                <Button
+                  className="min-w-[10rem]"
+                  natural
+                  onClick={() => {
+                    searchSData.mutate(
+                      () =>
+                        client.request(searchStaff, {
+                          employment_type: 2,
+                          ...defaultVariables,
+                        }),
+                      {
+                        populateCache: true,
+                        revalidate: false,
+                      }
+                    );
+                  }}
+                >
                   体入/アルバイト
                 </Button>
               </>

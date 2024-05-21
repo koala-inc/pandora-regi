@@ -10,6 +10,7 @@ const searchStaff = gql`
     $leaving_date_to: String
     $entry_date_from: String
     $entry_date_to: String
+    $employment_type: [Int]
     $section: Int
     $name: String
     $phone_number: String
@@ -23,6 +24,7 @@ const searchStaff = gql`
       leaving_date_to: $leaving_date_to
       entry_date_from: $entry_date_from
       entry_date_to: $entry_date_to
+      employment_type: $employment_type
       section: $section
       name: $name
       phone_number: $phone_number
