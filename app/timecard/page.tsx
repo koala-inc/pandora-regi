@@ -35,6 +35,8 @@ import {
   searchStaff,
 } from "@/gqls/query/staff";
 import { createAttendanceManagementStaff } from "@/gqls/mutation/staff";
+import useTimeCardCalcGlobal from "@/globalstates/timecard";
+import Calculator18 from "@/components/parts/calculator18";
 
 function Line({ ml }: { ml?: string }) {
   return (
@@ -97,6 +99,7 @@ export default function TimeCard() {
   const [isFooter, setIsFooter] = useIsFooterGlobal();
   const [isCard, setIsCard] = useIsCardGlobal();
   const [isControl, setIsControl] = useIsControlGlobal();
+  const [timeCardCalc, setTimeCardCalc] = useTimeCardCalcGlobal();
 
   if (isHeader || isFooter || isCard || isControl) {
     setIsHeader(false);
@@ -144,6 +147,16 @@ export default function TimeCard() {
   return (
     <main className="relative h-full w-full">
       <Background />
+      {timeCardCalc && (
+        <Calculator18
+          setResult={setTimeCardCalc}
+          time={datetimeH + ":" + datetimeM}
+          callback={(hour: any, minite: any) => {
+            setDatetimeH(hour);
+            setDatetimeM(minite);
+          }}
+        />
+      )}
       <Card>
         <div className="relative mt-[30px] flex h-full w-[360px] flex-col rounded-md rounded-tl-none border border-white bg-black p-4 py-0 font-bold">
           <div className="absolute left-[3px] top-[-32px]">
@@ -172,30 +185,45 @@ export default function TimeCard() {
               スタッフ
             </a>
           </div>
-          <div className="my-6 flex justify-center rounded-md border-2 border-white bg-gray-800 px-2 py-6">
+          <div className="my-4 flex justify-center rounded-md border-2 border-white bg-gray-800 px-2 py-6">
             <input
               type="text"
-              className="flex h-[40px] w-[50px] items-center justify-center text-center text-4xl"
+              className="flex h-[50px] w-[65px] cursor-pointer items-center justify-center rounded-l bg-neutral-900 py-3 pl-2 text-center text-4xl outline-none"
               value={datetimeH}
+              onClick={() => {
+                setTimeCardCalc(true);
+              }}
+              readOnly
             />
-            <div className="flex h-[35px] w-[15px] items-center justify-center text-center text-4xl">
+            <div
+              onClick={() => {
+                setTimeCardCalc(true);
+              }}
+              className="flex h-[50px] w-[15px] cursor-pointer items-center justify-center bg-neutral-900 py-3 pt-[-2.5px] text-center text-4xl"
+            >
               :
             </div>
             <input
-              type="text"
-              className="flex h-[40px] w-[50px] items-center justify-center text-center text-4xl"
-              value={datetimeM}
-            />
-            <Button
-              className="ml-6 min-w-[6rem]"
-              natural
               onClick={() => {
-                setDatetimeH(format(new Date(), "HH", { locale: ja }));
-                setDatetimeM(format(new Date(), "mm", { locale: ja }));
+                setTimeCardCalc(true);
               }}
-            >
-              現在時刻
-            </Button>
+              type="text"
+              className="flex h-[50px] w-[65px] cursor-pointer items-center justify-center rounded-r bg-neutral-900 py-3 pr-2 text-center text-4xl outline-none"
+              value={datetimeM}
+              readOnly
+            />
+            <div className="relative flex h-[50px] items-center justify-center">
+              <Button
+                className="ml-6 min-w-[6rem]"
+                natural
+                onClick={() => {
+                  setDatetimeH(format(new Date(), "HH", { locale: ja }));
+                  setDatetimeM(format(new Date(), "mm", { locale: ja }));
+                }}
+              >
+                現在時刻
+              </Button>
+            </div>
           </div>
           <div className="mb-3 flex justify-around">
             {activeTab == 0 ? (
@@ -858,7 +886,7 @@ export default function TimeCard() {
                                         <input
                                           type="text"
                                           value="0"
-                                          className="w-[2em]"
+                                          className="w-[2em] text-right"
                                         />
                                         分
                                       </th>
