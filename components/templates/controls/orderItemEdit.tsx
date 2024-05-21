@@ -132,7 +132,8 @@ export default function OrderItemEdit() {
                   <th className="w-[10em] text-left align-bottom">価格</th>
                   <th className="w-[25em] text-left align-bottom">キャスト</th>
                   <th className="w-[15em] text-left align-bottom">
-                    <label>再注文</label>
+                    <label className="ml-1">再注文</label>{" "}
+                    <label className="ml-10">削除</label>
                   </th>
                 </tr>
               </thead>
