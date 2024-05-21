@@ -38,6 +38,7 @@ import {
 import { createAttendanceManagementStaff } from "@/gqls/mutation/staff";
 import useTimeCardCalcGlobal from "@/globalstates/timecard";
 import Calculator18 from "@/components/parts/calculator18";
+import Calculator19 from "@/components/parts/calculator19";
 
 function Line({ ml }: { ml?: string }) {
   return (
@@ -145,6 +146,10 @@ export default function TimeCard() {
   const createData = useSWR<any>(createAttendanceManagementCast, fetcher);
   const updateData = useSWR<any>(updateAttendanceManagementCast, fetcher);
 
+  const [selectIndex, setSelectIndex] = useState(0);
+  const [selectID, setSelectID] = useState(0);
+  const [calcurator, setCalcurator] = useState(false);
+
   return (
     <main className="relative h-full w-full">
       <Background />
@@ -155,6 +160,37 @@ export default function TimeCard() {
           callback={(hour: any, minite: any) => {
             setDatetimeH(hour);
             setDatetimeM(minite);
+          }}
+        />
+      )}
+      {calcurator && (
+        <Calculator19
+          setIsCalculator={setCalcurator}
+          result={
+            searchAData?.data?.attendanceManagementCast[0]
+              ?.store_attendance_management_cast[0]?.attendance_management_cast[
+              selectIndex
+            ].late_time
+          }
+          callback={(result: any) => {
+            client
+              .request(updateAttendanceManagementCast, {
+                id: Number(selectID),
+                late_time: Number(result),
+                ...defaultVariables,
+              })
+              .then((e: any) => {
+                searchAData.mutate(
+                  () =>
+                    client.request(searchAttendanceManagementCast, {
+                      ...defaultVariables,
+                    }),
+                  {
+                    populateCache: true,
+                    revalidate: false,
+                  }
+                );
+              });
           }}
         />
       )}
@@ -859,7 +895,7 @@ export default function TimeCard() {
                   {activeTab == 0 ? (
                     <>
                       {searchAData?.data?.attendanceManagementCast[0]?.store_attendance_management_cast[0]?.attendance_management_cast?.map(
-                        (amc: any, index: any) => (
+                        (amc: any, index2: any) => (
                           <>
                             {searchData2?.data?.cast[0]?.store_cast[0]?.cast?.map(
                               (cast: any, index: any) => {
@@ -911,11 +947,19 @@ export default function TimeCard() {
                                       <th className="min-w-[2em] text-center text-sm">
                                         ×
                                       </th>
-                                      <th className="min-w-[3.5em] text-center text-sm">
+                                      <th
+                                        className="min-w-[3.5em] cursor-pointer text-center text-sm"
+                                        onClick={() => {
+                                          setSelectID(amc.id);
+                                          setSelectIndex(index2);
+                                          setCalcurator(true);
+                                        }}
+                                      >
                                         <input
                                           type="text"
-                                          value="0"
-                                          className="w-[2em] text-right"
+                                          value={amc.late_time}
+                                          className="w-[2em] text-right outline-none"
+                                          readOnly
                                         />
                                         分
                                       </th>
@@ -994,7 +1038,7 @@ export default function TimeCard() {
                   ) : (
                     <>
                       {searchASData?.data?.attendanceManagementStaff[0]?.store_attendance_management_staff[0]?.attendance_management_staff?.map(
-                        (amc: any, index: any) => {
+                        (amc: any, index2: any) => {
                           <>
                             {searchSData?.data?.staff[0]?.store_staff[0]?.staff?.map(
                               (staff: any, index: any) => {
