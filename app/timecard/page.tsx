@@ -554,7 +554,7 @@ export default function TimeCard() {
                                     working_date: format(new Date(), "Y-m-d", {
                                       locale: ja,
                                     }),
-                                    work_date_time_start: format(
+                                    work_schedule_date_time_start: format(
                                       work_date_time_start_date,
                                       "Y-m-d HH:mm:ss",
                                       {
@@ -619,7 +619,7 @@ export default function TimeCard() {
                                     working_date: format(new Date(), "Y-m-d", {
                                       locale: ja,
                                     }),
-                                    work_date_time_start: format(
+                                    work_schedule_date_time_start: format(
                                       work_date_time_start_date,
                                       "Y-m-d HH:mm",
                                       {
