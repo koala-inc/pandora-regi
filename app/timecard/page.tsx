@@ -807,14 +807,14 @@ export default function TimeCard() {
                             {searchData2?.data?.cast[0]?.store_cast[0]?.cast?.map(
                               (cast: any, index: any) => {
                                 const size =
-                                  cast.name.length > 4 ? "text-xs" : "text-lg";
+                                  cast.name.length > 4 ? "text-xs" : "text-sm";
                                 if (cast.id == amc.cast_id) {
                                   return (
                                     <tr key={index}>
-                                      <th className="min-w-[2em] text-center text-lg">
+                                      <th className="min-w-[2em] text-center text-sm">
                                         {cast.cast_code}
                                       </th>
-                                      <th className="min-w-[2em] text-center text-lg">
+                                      <th className="min-w-[2em] text-center text-sm">
                                         -
                                       </th>
                                       <th
@@ -824,37 +824,37 @@ export default function TimeCard() {
                                       >
                                         {cast.name}
                                       </th>
-                                      <th className="min-w-[4em] text-center text-lg">
+                                      <th className="min-w-[4em] text-center text-sm">
                                         在籍
                                       </th>
-                                      <th className="min-w-[3.5em] text-center text-lg opacity-60">
+                                      <th className="min-w-[3.5em] text-center text-sm opacity-60">
                                         {format(
                                           amc.work_schedule_date_time_start,
                                           "HH:mm"
                                         )}
                                       </th>
-                                      <th className="min-w-[3.5em] text-center text-lg opacity-60">
+                                      <th className="min-w-[3.5em] text-center text-sm opacity-60">
                                         {format(
                                           amc.work_schedule_date_time_end,
                                           "HH:mm"
                                         )}
                                       </th>
-                                      <th className="min-w-[3.5em] text-center text-lg">
+                                      <th className="min-w-[3.5em] text-center text-sm">
                                         {format(
                                           amc.work_date_time_start,
                                           "HH:mm"
                                         )}
                                       </th>
-                                      <th className="min-w-[3.5em] text-center text-lg">
+                                      <th className="min-w-[3.5em] text-center text-sm">
                                         {format(
                                           amc.work_date_time_end,
                                           "HH:mm"
                                         )}
                                       </th>
-                                      <th className="min-w-[2em] text-center text-lg">
+                                      <th className="min-w-[2em] text-center text-sm">
                                         ×
                                       </th>
-                                      <th className="min-w-[3.5em] text-center text-lg">
+                                      <th className="min-w-[3.5em] text-center text-sm">
                                         <input
                                           type="text"
                                           value="0"
@@ -862,10 +862,10 @@ export default function TimeCard() {
                                         />
                                         分
                                       </th>
-                                      <th className="min-w-[4em] text-center text-lg">
+                                      <th className="min-w-[4em] text-center text-sm">
                                         -
                                       </th>
-                                      <th className="flex min-w-[4em] items-center justify-center text-center text-lg">
+                                      <th className="flex min-w-[4em] items-center justify-center text-center text-sm">
                                         {amc.attendance_status == 0
                                           ? ""
                                           : amc.attendance_status == 1
@@ -887,7 +887,7 @@ export default function TimeCard() {
                                             : ""}
                                         </Button>
                                       </th>
-                                      <th className="min-w-[4em] text-center text-lg">
+                                      <th className="min-w-[4em] text-center text-sm">
                                         <input
                                           type="checkbox"
                                           className="mt-[8px] h-[20px] w-[20px]"
