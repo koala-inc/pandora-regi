@@ -1,6 +1,11 @@
 import { gql } from "graphql-request";
 
-export { searchCast, searchSalaryCast, searchAttendanceManagementCast };
+export {
+  searchCast,
+  searchCast2,
+  searchSalaryCast,
+  searchAttendanceManagementCast,
+};
 
 const searchCast = gql`
   query (
@@ -43,6 +48,34 @@ const searchCast = gql`
       introducer_id: $introducer_id
       display: $display
     ) {
+      store_cast {
+        cast {
+          address
+          birthday
+          cast_code
+          staff_id
+          id
+          introducer_id
+          leaving_date
+          media_id
+          name
+          name_ruby
+          phone_number
+          real_name
+          real_name_ruby
+          remarks
+          display
+          section
+          entry_date
+        }
+      }
+    }
+  }
+`;
+
+const searchCast2 = gql`
+  query ($store_code: [Int]!) {
+    cast(store_code: $store_code) {
       store_cast {
         cast {
           address

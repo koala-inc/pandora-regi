@@ -11,7 +11,11 @@ import Card from "@/components/templates/card";
 import HomeButton from "@/components/templates/homeButton";
 import SubBorder from "@/components/templates/subBorder";
 import client from "@/connection";
-import { searchAttendanceManagementCast, searchCast } from "@/gqls/query/cast";
+import {
+  searchAttendanceManagementCast,
+  searchCast,
+  searchCast2,
+} from "@/gqls/query/cast";
 import { format } from "date-fns";
 import { RequestDocument } from "graphql-request";
 import Image from "next/image";
@@ -110,6 +114,7 @@ export default function TimeCard() {
   const [searchForm, setSearchForm] = useState<any>({});
 
   const searchData = useSWR<any>(searchCast, fetcher);
+  const searchData2 = useSWR<any>(searchCast2, fetcher);
   const searchSData = useSWR<any>(searchStaff, fetcher);
   const searchAData = useSWR<any>(searchAttendanceManagementCast, fetcher);
   const searchASData = useSWR<any>(searchAttendanceManagementStaff, fetcher);
@@ -190,7 +195,7 @@ export default function TimeCard() {
             {activeTab == 0 ? (
               <>
                 <Button
-                  className="min-w-[6rem]"
+                  className="min-w-[7rem]"
                   natural
                   onClick={() => {
                     searchData.mutate(
@@ -209,7 +214,7 @@ export default function TimeCard() {
                   在籍
                 </Button>
                 <Button
-                  className="min-w-[6rem]"
+                  className="min-w-[7rem]"
                   natural
                   onClick={() => {
                     searchData.mutate(
@@ -227,17 +232,17 @@ export default function TimeCard() {
                 >
                   体入/ヘルプ
                 </Button>
-                <Button className="min-w-[6rem] grayscale" natural disabled>
+                <Button className="min-w-[7rem] grayscale" natural disabled>
                   他店ヘルプ
                 </Button>
               </>
             ) : (
               <>
-                <Button className="min-w-[6rem]" natural>
+                <Button className="min-w-[10rem]" natural>
                   在籍
                 </Button>
-                <Button className="min-w-[6rem]" natural>
-                  アルバイト
+                <Button className="min-w-[10rem]" natural>
+                  体入/アルバイト
                 </Button>
               </>
             )}
@@ -761,7 +766,7 @@ export default function TimeCard() {
                       {searchAData?.data?.attendanceManagementCast[0]?.store_attendance_management_cast[0]?.attendance_management_cast?.map(
                         (amc: any, index: any) => (
                           <>
-                            {searchData?.data?.cast[0]?.store_cast[0]?.cast?.map(
+                            {searchData2?.data?.cast[0]?.store_cast[0]?.cast?.map(
                               (cast: any, index: any) => {
                                 const size =
                                   cast.name.length > 4 ? "text-xs" : "text-lg";
