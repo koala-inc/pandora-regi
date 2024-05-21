@@ -20,14 +20,18 @@ export default function Lock2() {
   return (
     <div
       className="absolute left-0 top-0 z-40 flex h-[100dvh] w-[100dvw] items-center justify-center bg-black/70 p-10 text-white"
-      onClick={() => {}}
+      onClick={(e) => {
+        e.stopPropagation();
+        setIsLock(0);
+      }}
     >
       <div
         className="flex h-[170px] w-[350px] items-center justify-around rounded-md border-4 border-secondary bg-primary px-4"
         onClick={(e) => e.stopPropagation()}
       >
         <div
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             setIsLock(0);
             purchaseOrder.map((purchaseOrder: any) => {
               if (purchaseOrder.id.includes(seatPreset)) {
@@ -53,10 +57,11 @@ export default function Lock2() {
           </Border>
         </div>
         <div
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             setIsLock(0);
             setPurchaseOrder(
-              purchaseOrder.filter((v: any) => v.id != seatPreset)
+              purchaseOrder.filter((v: any) => !v.id.includes(seatPreset))
             );
             const exSeatData = exSeat.filter(
               (v: any) => !v.includes(seatPreset)
