@@ -14,12 +14,12 @@ export {
 const createCast = gql`
   mutation (
     $store_code: Int!
-    $cast_code: Int!
+    $cast_code: Int
     $name: String!
     $name_ruby: String
     $real_name: String
     $real_name_ruby: String
-    $section: Int
+    $section: Int!
     $entry_date: String
     $birthday: String
     $phone_number: String

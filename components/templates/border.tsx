@@ -21,7 +21,7 @@ export default function Border({
 }) {
   const text = natural ? "text-black" : "text-white";
   const bg = red
-    ? "bg-redss"
+    ? "bg-redc"
     : complate
     ? "bg-complate"
     : natural

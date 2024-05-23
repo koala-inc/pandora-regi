@@ -43,7 +43,7 @@ export default function Calculator19({
           </span>
         </div>
         <div className="flex h-[60px] w-full items-center justify-end rounded-md bg-neutral-900 px-3 text-4xl text-white">
-          {Number(result) != 0 && Number(result2) == 0
+          {Number(result) != 0 && result2 == ""
             ? Number(result).toLocaleString()
             : Number(result2).toLocaleString()}
         </div>
