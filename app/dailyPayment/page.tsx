@@ -104,17 +104,19 @@ export default function Mater() {
           </nav>
         </div>
       </SubBorder>
-      <div className="mx-auto my-2 flex w-[98%]">
-        <Border
-          className="w-[240px]"
-          size="p-4 flex !justify-start flex-col min-h-[100px] overflow-scroll"
-        >
+      <Border
+        className="mx-auto my-2 w-[98%]"
+        size="p-4 flex !justify-start !items-start flex-col min-h-[calc(98dvh-250px)] overflow-scroll"
+      >
+        <div className="mb-4 flex w-[300px] justify-start">
           <form
-            className="flex h-[70px] w-full flex-wrap"
+            className="mr-6 flex h-[90px] w-full flex-wrap rounded-md border-4 border-white bg-neutral-900 p-4"
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="flex h-full w-[190px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-accent">表示切替</label>
+              <label className="mb-1 text-xs font-bold text-accent">
+                表示切替
+              </label>
               <div className="flex">
                 <Button natural>
                   <input type="button" value="スタッフ" />
@@ -125,65 +127,58 @@ export default function Mater() {
               </div>
             </div>
           </form>
-        </Border>
-        <Border
-          className="ml-[1%] w-[265px]"
-          size="p-4 flex !justify-start flex-col min-h-[100px] overflow-scroll"
-        >
+
           <form
-            className="flex h-[70px] w-full flex-wrap"
+            className="mr-6 flex h-[90px] w-[265px] flex-wrap rounded-md border-4 border-white bg-neutral-900 p-4"
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="flex h-full w-[265px] flex-col items-start justify-center">
               <div className="flex">
                 <div className="flex w-[4em] flex-col items-center justify-center">
-                  <label className="text-xs font-bold text-accent">在籍</label>
+                  <label className="mb-1 text-xs font-bold text-accent">
+                    在籍
+                  </label>
                   <input
                     type="checkbox"
                     {...register("check")}
-                    className="h-[30px] w-[30px] rounded-md px-2 text-sm"
+                    className="h-[23.5px] w-[30px] rounded-md px-2 text-sm"
                   />
                 </div>
                 <div className="ml-[10px] flex w-[4em] flex-col items-center justify-center">
-                  <label className="text-xs font-bold text-accent">
+                  <label className="mb-1 text-xs font-bold text-accent">
                     体入ヘルプ
                   </label>
                   <input
                     type="checkbox"
                     {...register("check")}
-                    className="h-[30px] w-[30px] rounded-md px-2 text-sm"
+                    className="h-[23.5px] w-[30px] rounded-md px-2 text-sm"
                   />
                 </div>
                 <div className="ml-[10px] flex w-[4em] flex-col items-center justify-center">
-                  <label className="text-xs font-bold text-accent">
+                  <label className="mb-1 text-xs font-bold text-accent">
                     チェック済
                   </label>
                   <input
                     type="checkbox"
                     {...register("check")}
-                    className="h-[30px] w-[30px] rounded-md px-2 text-sm"
+                    className="h-[23.5px] w-[30px] rounded-md px-2 text-sm"
                   />
                 </div>
               </div>
             </div>
           </form>
-        </Border>
-        <Border
-          className="ml-[1%] w-[705px]"
-          size="p-4 flex !justify-start flex-col min-h-[100px] overflow-scroll"
-        >
           <form
-            className="flex h-[70px] w-full flex-wrap"
+            className="mr-2 flex h-[90px] w-[750px] flex-wrap rounded-md border-4 border-white bg-neutral-900 p-4"
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="flex h-full w-full flex-col items-start justify-center">
-              <label className="text-xs font-bold text-accent">
+              <label className="mb-1 text-xs font-bold text-accent">
                 フィルター
               </label>
               <div className="flex w-full items-center justify-around">
                 <div
                   className={
-                    "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    "mr-2 flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
                   }
                   onClick={() => {}}
                 >
@@ -191,7 +186,7 @@ export default function Mater() {
                 </div>
                 <div
                   className={
-                    "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    "mr-2 flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
                   }
                   onClick={() => {}}
                 >
@@ -199,7 +194,7 @@ export default function Mater() {
                 </div>
                 <div
                   className={
-                    "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    "mr-2 flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
                   }
                   onClick={() => {}}
                 >
@@ -207,7 +202,7 @@ export default function Mater() {
                 </div>
                 <div
                   className={
-                    "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    "mr-2 flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
                   }
                   onClick={() => {}}
                 >
@@ -215,7 +210,7 @@ export default function Mater() {
                 </div>
                 <div
                   className={
-                    "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    "mr-2 flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
                   }
                   onClick={() => {}}
                 >
@@ -223,7 +218,7 @@ export default function Mater() {
                 </div>
                 <div
                   className={
-                    "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    "mr-2 flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
                   }
                   onClick={() => {}}
                 >
@@ -231,7 +226,7 @@ export default function Mater() {
                 </div>
                 <div
                   className={
-                    "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    "mr-2 flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
                   }
                   onClick={() => {}}
                 >
@@ -239,7 +234,7 @@ export default function Mater() {
                 </div>
                 <div
                   className={
-                    "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    "mr-2 flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
                   }
                   onClick={() => {}}
                 >
@@ -247,7 +242,7 @@ export default function Mater() {
                 </div>
                 <div
                   className={
-                    "flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
+                    "mr-2 flex cursor-pointer items-center justify-center rounded-md bg-natural p-4 text-2xl leading-4 tracking-wider text-accent"
                   }
                   onClick={() => {}}
                 >
@@ -264,92 +259,91 @@ export default function Mater() {
               </div>
             </div>
           </form>
-        </Border>
-      </div>
-      <Border
-        className="mx-auto my-2 w-[98%]"
-        size="p-4 flex !justify-start flex-col min-h-[calc(98dvh-250px)] overflow-scroll"
-      >
+        </div>
         <div className="h-[625px] w-full rounded-md border-4 border-white bg-neutral-900 p-4">
           <form
             className="flex h-[70px] w-full flex-wrap justify-start"
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="flex h-full w-[110px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-accent">ID</label>
+              <label className="mb-1 text-xs font-bold text-accent">ID</label>
               000000
             </div>
             <div className="flex h-full w-[110px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-accent">
+              <label className="mb-1 text-xs font-bold text-accent">
                 キャスト名
               </label>
               あい
             </div>
             <div className="flex h-full w-[110px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-accent">日払い</label>
+              <label className="mb-1 text-xs font-bold text-accent">
+                日払い
+              </label>
               <input
                 type="number"
                 {...register("age")}
-                className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                className="h-[23.5px] w-[6rem] rounded-md px-2 text-sm"
                 placeholder="0"
               />
             </div>
             <div className="flex h-full w-[70px] flex-col items-center justify-center">
-              <label className="text-xs font-bold text-accent">
+              <label className="mb-1 text-xs font-bold text-accent">
                 ヘアメイク
               </label>
               <input
                 type="checkbox"
                 {...register("check")}
-                className="h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                className="h-[23.5px] w-[8rem] rounded-md px-2 text-sm"
               />
               {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
             </div>
             <div className="flex h-full w-[70px] flex-col items-center justify-center">
-              <label className="text-xs font-bold text-accent">貸ドレス</label>
+              <label className="mb-1 text-xs font-bold text-accent">
+                貸ドレス
+              </label>
               <input
                 type="checkbox"
                 {...register("check")}
-                className="h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                className="h-[23.5px] w-[8rem] rounded-md px-2 text-sm"
               />
               {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
             </div>
             <div className="flex h-full w-[70px] flex-col items-center justify-center">
-              <label className="text-xs font-bold text-accent">店靴</label>
+              <label className="mb-1 text-xs font-bold text-accent">店靴</label>
               <input
                 type="checkbox"
                 {...register("check")}
-                className="h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                className="h-[23.5px] w-[8rem] rounded-md px-2 text-sm"
               />
               {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
             </div>
             <div className="flex h-full w-[110px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-accent">送り</label>
+              <label className="mb-1 text-xs font-bold text-accent">送り</label>
               <input
                 type="number"
                 {...register("age")}
-                className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                className="h-[23.5px] w-[6rem] rounded-md px-2 text-sm"
                 placeholder="0"
               />
             </div>
             <div className="flex h-full w-[140px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-secondary-accent">
+              <label className="mb-1 text-xs font-bold text-secondary-accent">
                 その他（領収なし控除）
               </label>
               <input
                 type="number"
                 {...register("age")}
-                className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                className="h-[23.5px] w-[6rem] rounded-md px-2 text-sm"
                 placeholder="0"
               />
             </div>
             <div className="flex h-full w-[110px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-accent">
+              <label className="mb-1 text-xs font-bold text-accent">
                 全日支給額
               </label>
               000000
             </div>
-            <div className="flex h-full w-[110px] flex-col items-start justify-center">
+            <div className="flex h-full w-[110px] flex-col items-start justify-center pt-5">
               <Button natural>
                 <input
                   type="button"
@@ -359,157 +353,168 @@ export default function Mater() {
               </Button>
             </div>
             <div className="flex h-full w-[70px] flex-col items-center justify-center">
-              <label className="text-xs font-bold text-accent">済</label>
+              <label className="mb-1 text-xs font-bold text-accent">済</label>
               <input
                 type="checkbox"
                 {...register("check")}
-                className="h-[30px] w-[8rem] rounded-md px-2 text-sm"
+                className="h-[23.5px] w-[8rem] rounded-md px-2 text-sm"
               />
               {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
             </div>
           </form>
+
+          {modal && (
+            <form
+              className="ml-[100px] flex h-[70px] w-full flex-wrap justify-start"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <div className="flex h-full w-[20px] flex-col items-start justify-center">
+                ∟
+              </div>
+              <div className="flex h-full w-[80px] flex-col items-start justify-center">
+                <label className="mb-1 text-xs font-bold text-accent">
+                  時給日給
+                </label>
+                時給
+              </div>
+              <div className="flex h-full w-[100px] flex-col items-start justify-center">
+                <label className="mb-1 text-xs font-bold text-accent">
+                  基本
+                </label>
+                <input
+                  type="number"
+                  {...register("age")}
+                  className="h-[23.5px] w-[6rem] rounded-md px-2 text-sm"
+                  placeholder="0"
+                />
+              </div>
+              <div className="flex h-full w-[100px] flex-col items-start justify-center">
+                <label className="mb-1 text-xs font-bold text-accent">
+                  バック
+                </label>
+                <input
+                  type="number"
+                  {...register("age")}
+                  className="h-[23.5px] w-[6rem] rounded-md px-2 text-sm"
+                  placeholder="0"
+                />
+              </div>
+              <div className="flex h-full w-[100px] flex-col items-start justify-center">
+                <label className="mb-1 text-xs font-bold text-accent">
+                  他支給
+                </label>
+                <input
+                  type="number"
+                  {...register("age")}
+                  className="h-[23.5px] w-[6rem] rounded-md px-2 text-sm"
+                  placeholder="0"
+                />
+              </div>
+              <div className="flex h-full w-[100px] flex-col items-start justify-center">
+                <label className="mb-1 text-xs font-bold text-accent">
+                  総支給
+                </label>
+                <input
+                  type="number"
+                  {...register("age")}
+                  className="h-[23.5px] w-[6rem] rounded-md px-2 text-sm"
+                  placeholder="0"
+                />
+              </div>
+              <div className="flex h-full w-[100px] flex-col items-start justify-center">
+                <label className="mb-1 text-xs font-bold text-secondary-accent">
+                  源泉徴収
+                </label>
+                <input
+                  type="number"
+                  {...register("age")}
+                  className="h-[23.5px] w-[6rem] rounded-md px-2 text-sm"
+                  placeholder="0"
+                />
+              </div>
+              <div className="flex h-full w-[100px] flex-col items-start justify-center">
+                <label className="mb-1 text-xs font-bold text-secondary-accent">
+                  厚生費
+                </label>
+                <input
+                  type="number"
+                  {...register("age")}
+                  className="h-[23.5px] w-[6rem] rounded-md px-2 text-sm"
+                  placeholder="0"
+                />
+              </div>
+              <div className="flex h-full w-[100px] flex-col items-start justify-center">
+                <label className="mb-1 text-xs font-bold text-secondary-accent">
+                  他控除
+                </label>
+                <input
+                  type="number"
+                  {...register("age")}
+                  className="h-[23.5px] w-[6rem] rounded-md px-2 text-sm"
+                  placeholder="0"
+                />
+              </div>
+              <div className="flex h-full w-[100px] flex-col items-start justify-center">
+                <label className="mb-1 text-xs font-bold text-secondary-accent">
+                  控除計
+                </label>
+                <input
+                  type="number"
+                  {...register("age")}
+                  className="h-[23.5px] w-[6rem] rounded-md px-2 text-sm"
+                  placeholder="0"
+                />
+              </div>
+              <div className="flex h-full w-[100px] flex-col items-start justify-center">
+                <label className="mb-1 text-xs font-bold text-thirdary-accent">
+                  差引
+                </label>
+                <input
+                  type="number"
+                  {...register("age")}
+                  className="h-[23.5px] w-[6rem] rounded-md px-2 text-sm"
+                  placeholder="0"
+                />
+              </div>
+              <div className="flex h-full w-[70px] flex-col items-center justify-center pt-4">
+                <Button natural>
+                  <input
+                    type="button"
+                    onClick={() => setModal(false)}
+                    value="明細"
+                  />
+                </Button>
+              </div>
+              <div className="flex h-full w-[70px] flex-col items-center justify-center pt-4">
+                <Button natural>
+                  <input
+                    type="button"
+                    onClick={() => setModal(false)}
+                    value="消去"
+                  />
+                </Button>
+              </div>
+              <div className="flex h-full w-[70px] flex-col items-center justify-center pt-4">
+                <Button natural>
+                  <input
+                    type="button"
+                    onClick={() => setModal(false)}
+                    value="固定"
+                  />
+                </Button>
+              </div>
+              <div className="flex h-full w-[70px] flex-col items-center justify-center pt-4">
+                <Button natural>
+                  <input
+                    type="button"
+                    onClick={() => setModal(false)}
+                    value="割振"
+                  />
+                </Button>
+              </div>
+            </form>
+          )}
         </div>
-        {modal && (
-          <form
-            className="ml-[100px] flex h-[70px] w-full flex-wrap justify-start"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <div className="flex h-full w-[20px] flex-col items-start justify-center">
-              ∟
-            </div>
-            <div className="flex h-full w-[80px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-accent">時給日給</label>
-              時給
-            </div>
-            <div className="flex h-full w-[100px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-accent">基本</label>
-              <input
-                type="number"
-                {...register("age")}
-                className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                placeholder="0"
-              />
-            </div>
-            <div className="flex h-full w-[100px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-accent">バック</label>
-              <input
-                type="number"
-                {...register("age")}
-                className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                placeholder="0"
-              />
-            </div>
-            <div className="flex h-full w-[100px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-accent">他支給</label>
-              <input
-                type="number"
-                {...register("age")}
-                className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                placeholder="0"
-              />
-            </div>
-            <div className="flex h-full w-[100px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-accent">総支給</label>
-              <input
-                type="number"
-                {...register("age")}
-                className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                placeholder="0"
-              />
-            </div>
-            <div className="flex h-full w-[100px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-secondary-accent">
-                源泉徴収
-              </label>
-              <input
-                type="number"
-                {...register("age")}
-                className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                placeholder="0"
-              />
-            </div>
-            <div className="flex h-full w-[100px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-secondary-accent">
-                厚生費
-              </label>
-              <input
-                type="number"
-                {...register("age")}
-                className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                placeholder="0"
-              />
-            </div>
-            <div className="flex h-full w-[100px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-secondary-accent">
-                他控除
-              </label>
-              <input
-                type="number"
-                {...register("age")}
-                className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                placeholder="0"
-              />
-            </div>
-            <div className="flex h-full w-[100px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-secondary-accent">
-                控除計
-              </label>
-              <input
-                type="number"
-                {...register("age")}
-                className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                placeholder="0"
-              />
-            </div>
-            <div className="flex h-full w-[100px] flex-col items-start justify-center">
-              <label className="text-xs font-bold text-thirdary-accent">
-                差引
-              </label>
-              <input
-                type="number"
-                {...register("age")}
-                className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-                placeholder="0"
-              />
-            </div>
-            <div className="flex h-full w-[70px] flex-col items-center justify-center">
-              <Button natural>
-                <input
-                  type="button"
-                  onClick={() => setModal(false)}
-                  value="明細"
-                />
-              </Button>
-            </div>
-            <div className="flex h-full w-[70px] flex-col items-center justify-center">
-              <Button natural>
-                <input
-                  type="button"
-                  onClick={() => setModal(false)}
-                  value="消去"
-                />
-              </Button>
-            </div>
-            <div className="flex h-full w-[70px] flex-col items-center justify-center">
-              <Button natural>
-                <input
-                  type="button"
-                  onClick={() => setModal(false)}
-                  value="固定"
-                />
-              </Button>
-            </div>
-            <div className="flex h-full w-[70px] flex-col items-center justify-center">
-              <Button natural>
-                <input
-                  type="button"
-                  onClick={() => setModal(false)}
-                  value="割振"
-                />
-              </Button>
-            </div>
-          </form>
-        )}
       </Border>
 
       <HomeButton />
