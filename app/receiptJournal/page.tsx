@@ -105,99 +105,106 @@ export default function Mater() {
       <Border
         className="mx-auto my-2 w-[98%]"
         size="p-4 flex !justify-start flex-col min-h-[calc(98dvh-250px)] overflow-scroll"
-        black
       >
-        <form
-          className="flex h-[70px] w-full flex-wrap justify-start"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <div className="flex h-full w-[110px] flex-col items-start justify-center">
-            <label className="text-xs font-bold text-accent">ID</label>
-            000000
-          </div>
-          <div className="flex h-full w-[110px] flex-col items-start justify-center">
-            <label className="text-xs font-bold text-accent">キャスト名</label>
-            あい
-          </div>
-          <div className="flex h-full w-[110px] flex-col items-start justify-center">
-            <label className="text-xs font-bold text-accent">日払い</label>
-            <input
-              type="number"
-              {...register("age")}
-              className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-              placeholder="0"
-            />
-          </div>
-          <div className="flex h-full w-[70px] flex-col items-center justify-center">
-            <label className="text-xs font-bold text-accent">ヘアメイク</label>
-            <input
-              type="checkbox"
-              {...register("check")}
-              className="h-[30px] w-[8rem] rounded-md px-2 text-sm"
-            />
-            {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
-          </div>
-          <div className="flex h-full w-[70px] flex-col items-center justify-center">
-            <label className="text-xs font-bold text-accent">貸ドレス</label>
-            <input
-              type="checkbox"
-              {...register("check")}
-              className="h-[30px] w-[8rem] rounded-md px-2 text-sm"
-            />
-            {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
-          </div>
-          <div className="flex h-full w-[70px] flex-col items-center justify-center">
-            <label className="text-xs font-bold text-accent">店靴</label>
-            <input
-              type="checkbox"
-              {...register("check")}
-              className="h-[30px] w-[8rem] rounded-md px-2 text-sm"
-            />
-            {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
-          </div>
-          <div className="flex h-full w-[110px] flex-col items-start justify-center">
-            <label className="text-xs font-bold text-accent">送り</label>
-            <input
-              type="number"
-              {...register("age")}
-              className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-              placeholder="0"
-            />
-          </div>
-          <div className="flex h-full w-[140px] flex-col items-start justify-center">
-            <label className="text-xs font-bold text-secondary-accent">
-              その他（領収なし控除）
-            </label>
-            <input
-              type="number"
-              {...register("age")}
-              className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
-              placeholder="0"
-            />
-          </div>
-          <div className="flex h-full w-[110px] flex-col items-start justify-center">
-            <label className="text-xs font-bold text-accent">全日支給額</label>
-            000000
-          </div>
-          <div className="flex h-full w-[110px] flex-col items-start justify-center">
-            <Button natural>
+        <div className="rounded-md border-4 border-white bg-neutral-800 p-4">
+          <form
+            className="flex h-[70px] w-full flex-wrap justify-start"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <div className="flex h-full w-[110px] flex-col items-start justify-center">
+              <label className="text-xs font-bold text-accent">ID</label>
+              000000
+            </div>
+            <div className="flex h-full w-[110px] flex-col items-start justify-center">
+              <label className="text-xs font-bold text-accent">
+                キャスト名
+              </label>
+              あい
+            </div>
+            <div className="flex h-full w-[110px] flex-col items-start justify-center">
+              <label className="text-xs font-bold text-accent">日払い</label>
               <input
-                type="button"
-                value="全日詳細"
-                onClick={() => setModal(true)}
+                type="number"
+                {...register("age")}
+                className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                placeholder="0"
               />
-            </Button>
-          </div>
-          <div className="flex h-full w-[70px] flex-col items-center justify-center">
-            <label className="text-xs font-bold text-accent">済</label>
-            <input
-              type="checkbox"
-              {...register("check")}
-              className="h-[30px] w-[8rem] rounded-md px-2 text-sm"
-            />
-            {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
-          </div>
-        </form>
+            </div>
+            <div className="flex h-full w-[70px] flex-col items-center justify-center">
+              <label className="text-xs font-bold text-accent">
+                ヘアメイク
+              </label>
+              <input
+                type="checkbox"
+                {...register("check")}
+                className="h-[30px] w-[8rem] rounded-md px-2 text-sm"
+              />
+              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
+            </div>
+            <div className="flex h-full w-[70px] flex-col items-center justify-center">
+              <label className="text-xs font-bold text-accent">貸ドレス</label>
+              <input
+                type="checkbox"
+                {...register("check")}
+                className="h-[30px] w-[8rem] rounded-md px-2 text-sm"
+              />
+              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
+            </div>
+            <div className="flex h-full w-[70px] flex-col items-center justify-center">
+              <label className="text-xs font-bold text-accent">店靴</label>
+              <input
+                type="checkbox"
+                {...register("check")}
+                className="h-[30px] w-[8rem] rounded-md px-2 text-sm"
+              />
+              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
+            </div>
+            <div className="flex h-full w-[110px] flex-col items-start justify-center">
+              <label className="text-xs font-bold text-accent">送り</label>
+              <input
+                type="number"
+                {...register("age")}
+                className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                placeholder="0"
+              />
+            </div>
+            <div className="flex h-full w-[140px] flex-col items-start justify-center">
+              <label className="text-xs font-bold text-secondary-accent">
+                その他（領収なし控除）
+              </label>
+              <input
+                type="number"
+                {...register("age")}
+                className="h-[30px] w-[6rem] rounded-md px-2 text-sm"
+                placeholder="0"
+              />
+            </div>
+            <div className="flex h-full w-[110px] flex-col items-start justify-center">
+              <label className="text-xs font-bold text-accent">
+                全日支給額
+              </label>
+              000000
+            </div>
+            <div className="flex h-full w-[110px] flex-col items-start justify-center">
+              <Button natural>
+                <input
+                  type="button"
+                  value="全日詳細"
+                  onClick={() => setModal(true)}
+                />
+              </Button>
+            </div>
+            <div className="flex h-full w-[70px] flex-col items-center justify-center">
+              <label className="text-xs font-bold text-accent">済</label>
+              <input
+                type="checkbox"
+                {...register("check")}
+                className="h-[30px] w-[8rem] rounded-md px-2 text-sm"
+              />
+              {errors.firstName?.message && <p>{errors.firstName?.message}</p>}
+            </div>
+          </form>
+        </div>
         {modal && (
           <form
             className="ml-[100px] flex h-[70px] w-full flex-wrap justify-start"
