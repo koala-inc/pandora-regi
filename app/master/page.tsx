@@ -37,6 +37,7 @@ import useIsCardGlobal from "@/globalstates/isCard";
 import useIsControlGlobal from "@/globalstates/isControl";
 import SeatEditor from "@/components/master/(system)/seatEditor";
 import ReactFullScreenComponent from "react-easyfullscreen";
+import TimeAdd from "@/components/master/(system)/timeadd";
 
 export default function Mater() {
   const [settings, setSettings] = useSettingsGlobal();
@@ -305,7 +306,7 @@ export default function Mater() {
         },
         {
           name: "時間設定",
-          component: <></>,
+          component: <TimeAdd />,
           disabled: true,
         },
         {

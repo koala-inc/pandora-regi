@@ -9,10 +9,17 @@ import { ja } from "date-fns/locale/ja";
 import useIsHeaderGlobal from "@/globalstates/isHeader";
 import useSeatViewModeGlobal from "@/globalstates/seatViewMode";
 import Button from "../templates/button";
+import usePurchaseOrderGlobal from "@/globalstates/purchaseOrder";
 
 function Content({ datetime }: { datetime: any }) {
   const [, setIsHeader] = useIsHeaderGlobal();
   const [seatViewMode, setSeatViewMode] = useSeatViewModeGlobal();
+  const [purchaseOrder, setPurchaseOrder] = usePurchaseOrderGlobal();
+
+  let customernum = 0;
+  purchaseOrder.map((order: any) => {
+    customernum += order.num;
+  });
 
   return (
     <div
@@ -40,7 +47,9 @@ function Content({ datetime }: { datetime: any }) {
         </div>
         <div className="px-6">
           <div className="text-center text-accent">客数</div>
-          <div className="text-center text-4xl text-white">0</div>
+          <div className="text-center text-4xl text-white">
+            {Number(customernum).toLocaleString()}
+          </div>
         </div>
         <div className="px-0">
           <div className="text-accent">　</div>
