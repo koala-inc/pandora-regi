@@ -62,7 +62,10 @@ function Content({ datetime }: { datetime: any }) {
         <div className="px-6">
           <div className="text-accent">店内±</div>
           <div className=" flex text-4xl text-white">
-            <div className="mr-1 mt-[-3px]">+</div>0
+            <div className="mr-1 mt-[-3px]">
+              {0 - customernum >= 0 ? "+" : "-"}
+            </div>
+            {Math.abs(0 - customernum)}
           </div>
         </div>
         <div className="ml-auto pl-6 pr-[190px]">
