@@ -27,7 +27,7 @@ const createCast = gql`
     $media_id: Int
     $introducer_id: Int
     $display: Int
-    $remarks: String
+    $remarks_cast: String
   ) {
     createCast(
       input: {
@@ -45,7 +45,7 @@ const createCast = gql`
         media_id: $media_id
         introducer_id: $introducer_id
         display: $display
-        remarks: $remarks
+        remarks_cast: $remarks_cast
       }
     ) {
       __typename
@@ -128,7 +128,7 @@ const updateCast = gql`
     $address: String
     $media_id: Int
     $introducer_id: Int
-    $remarks: String
+    $remarks_cast: String
     $display: Int
   ) {
     updateCast(
@@ -148,7 +148,7 @@ const updateCast = gql`
         address: $address
         media_id: $media_id
         introducer_id: $introducer_id
-        remarks: $remarks
+        remarks_cast: $remarks_cast
         display: $display
       }
     ) {

@@ -11,7 +11,8 @@ type CAST = {
   phone_number: string;
   real_name: string;
   real_name_ruby: string;
-  remarks: string;
+  remarks_cast: string;
+  remarks_staff: string;
   display: number;
   section: number;
   entry_date: string | null;

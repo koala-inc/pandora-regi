@@ -606,7 +606,7 @@ export default function CastList() {
                                     >
                                       <td>{cast.birthday}</td>
                                       <td>{cast.address}</td>
-                                      <td>{cast.remarks}</td>
+                                      <td>{cast.remarks_cast}</td>
                                       <td>{cast.phone_number}</td>
                                       <td>-</td>
                                       <td>-</td>
@@ -688,7 +688,7 @@ export default function CastList() {
                                     <td>{cast.birthday}</td>
                                     <td>{cast.address}</td>
                                     <td>{cast.phone_number}</td>
-                                    <td>{cast.remarks}</td>
+                                    <td>{cast.remarks_cast}</td>
                                     <td>-</td>
                                     <td>-</td>
                                   </tr>
@@ -1125,11 +1125,11 @@ export default function CastList() {
                       setCreateForm((createForm: any) => {
                         return {
                           ...createForm,
-                          remarks: e.target.value,
+                          remarks_cast: e.target.value,
                         };
                       });
                     }}
-                    value={createForm?.remarks || ""}
+                    value={createForm?.remarks_cast || ""}
                   />
                 </div>
                 <div className="flex flex-col">
@@ -1439,11 +1439,11 @@ export default function CastList() {
                       setUpdateForm((updateForm: any) => {
                         return {
                           ...updateForm,
-                          remarks: e.target.value,
+                          remarks_cast: e.target.value,
                         };
                       });
                     }}
-                    value={updateForm?.remarks || ""}
+                    value={updateForm?.remarks_cast || ""}
                   />
                 </div>
                 <div className="flex flex-col">

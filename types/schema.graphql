@@ -434,7 +434,8 @@ type Cast {
   media_id: Int
   introducer_id: Int
   display: Int
-  remarks: String
+  remarks_cast: String
+  remarks_staff: String
   deleted_at: DateTime
   created_at: DateTime
   edited_at: DateTime
@@ -1823,7 +1824,7 @@ type Mutation {
     media_id: Int
     introducer_id: Int
     display: Int
-    remarks: String
+    remarks_cast: String
   ): Cast
   updateCast(
     id: Int!
@@ -1841,7 +1842,7 @@ type Mutation {
     media_id: Int
     introducer_id: Int
     display: Int
-    remarks: String
+    remarks_cast: String
   ): Cast
   deleteCast(id: Int!): Cast
   createCategory(name: String!, parent_id: Int): ItemCategory

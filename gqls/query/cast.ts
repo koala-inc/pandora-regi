@@ -63,7 +63,8 @@ const searchCast = gql`
           phone_number
           real_name
           real_name_ruby
-          remarks
+          remarks_cast
+          remarks_staff
           display
           section
           entry_date
@@ -91,7 +92,8 @@ const searchCast2 = gql`
           phone_number
           real_name
           real_name_ruby
-          remarks
+          remarks_cast
+          remarks_staff
           display
           section
           entry_date
